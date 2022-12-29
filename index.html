@@ -1,7 +1,65 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+    <title>John Della Rosa</title>
+    <style>
+        h1 {text-align: center;}
+        p {text-align: center;}
+        nav {text-align: center;}
 
-<p>Hello!</p>
+        /* Reference: https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
+        .navbar {
+            overflow:hidden;
+            position:fixed;
+            top:0;
+            width: 100%;
+        }
+        .navbar a {
+            float: center;
+            display: inline;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#biography">Biography</a><a href="#resume">Resume</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+    </div> 
+    
+    <div id="biography">
+
+    </div>
+
+
+    <div id="resume"><h1><a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Resume</a></h1>
+        <div id="education">
+            <li>MS Financial Mathematics - University of Chicago 2022</li>
+            <li>BS Chemical Biology - University of California, Berkeley 2019</li>
+            <li>Transfer - Sacramento City College 2017</li>
+        </div>
+
+        <div id="experience">
+            <!-- <li>US Bank - June 2022-August 2022</li>
+            <li>University of Chica</li> -->
+        </div>
+
+    </div>
+
+
+
+    <div id="skills"><h1></h1>
+
+
+    </div>
+
+    <div id="projects">
+
+    </div>
+
 </body>
 </html>
