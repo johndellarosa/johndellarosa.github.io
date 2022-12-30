@@ -26,6 +26,8 @@
             position:fixed;
             top:0;
             width: 100%;
+            height:auto;
+            background-color: #ffffff;
         }
 
 
@@ -93,7 +95,8 @@
     </div>
 
 
-    <div id="resume"><h1><a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Resume</a></h1>
+    <div id="resume"><br>
+        <h1><a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Resume</a></h1>
         <div id="education">
             <h2>Education</h2>
             <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
@@ -137,7 +140,7 @@
                     <br>
                     Quantitative Modeling Intern - June 2022 - August 2022
                     <ul>
-                        <li>Created portfolio credit default rate rpediction models using machine learning libraries in Python</li>
+                        <li>Created portfolio credit default rate prediction models using machine learning libraries in Python</li>
                         <li>Developed custom algorithms in Python to improve current feature selection methods</li>
                     </ul>
                     
@@ -170,19 +173,66 @@
 
         <div id="skills">
             <h2>Skills</h2>
-
+                <ul>
+                    <li>Programming Languages
+                        <ul>
+                            <li>Python (Advanced)</li>
+                            <li>C++ (Intermediate)</li>
+                            <li>HTML (Beginner)</li>
+                            <li>Rust (Beginner)</li>
+                            <li>SQL (Beginner)</li>
+                            <li>C# (Beginner)</li>
+                        </ul>
+                    </li>
+                    <li>Libraries
+                        <ul>
+                            <li>Pandas</li>
+                            <li>Numpy</li>
+                            <li>Matplotlib</li>
+                            <li>Scikit-Learn</li>
+                            <li>LightGBM</li>
+                        </ul>
+                    </li>
+                    <li>Software
+                        <ul>
+                            <li>Anaconda</li>
+                            <li>Jupyter</li>
+                            <li>MS Office</li>
+                            <li>Git (Beginner)</li>
+                        </ul>
+                    </li>
+                </ul>
 
         </div>
     </div>
 
 
 
+
+
     
 
     <div id="projects">
+        <br><h1>Projects</h1>
+        <button type="button" class="collapsible">Stochastic Variable Classes Library </button>
+            <div class="content">
+                <h2><a style="text-align:center" href="https://github.com/johndellarosa/DistributionLibrary" target="_blank">Link</a></h2>
+                <h2>Goal</h2>
+                Make a Python library that allows for representation of random variables as classes and allows for common operations
+                <h2>Working Features</h2>
+                <ul>
+                    <li>Random variables with common distributions can be instantiated with appropriate parameters</li>
+                    <li>Support for some common operations such as addition of random variables to yield new instance with appropriate properties</li>
 
+                </ul>
+                <h2>Future directions</h2>
+                <ul>
+                    <li>Fix numerical integration issues</li>
+                    <li>Allow for representation of random variables with more difficult to represent supports</li>
+                </ul>
+            </div>
     </div>
-
+    <br><br><br><br>
     <script>
         var coll = document.getElementsByClassName("collapsible");
         var i;
