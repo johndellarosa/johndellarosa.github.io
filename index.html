@@ -26,8 +26,10 @@
             position:fixed;
             top:0;
             width: 100%;
-            height:auto;
-            background-color: #ffffff;
+            /* height:3%; */
+            background-color: rgb(20, 20, 20);
+            color: #ccc;
+            /* font-size: 24; */
         }
 
 
@@ -37,6 +39,17 @@
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
+            font-size: 20px;
+            
+        }
+
+        .navbar a:link{
+            color: rgb(109, 179, 255)
+            
+        }
+
+        .navbar a:visited{
+            color: white
         }
 
         /* Collapsible button 
@@ -96,7 +109,7 @@
 
 
     <div id="resume"><br>
-        <h1><a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Resume</a></h1>
+        <h1>Resume</h1>
         <div id="education">
             <h2>Education</h2>
             <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
@@ -172,6 +185,7 @@
         </div>
 
         <div id="skills">
+            <br>
             <h2>Skills</h2>
                 <ul>
                     <li>Programming Languages
@@ -218,7 +232,10 @@
             <div class="content">
                 <h2><a style="text-align:center" href="https://github.com/johndellarosa/DistributionLibrary" target="_blank">Link</a></h2>
                 <h2>Goal</h2>
-                Make a Python library that allows for representation of random variables as classes and allows for common operations
+                <ul>
+                    <li>Make a Python library that allows for representation of random variables as classes and allows for common operations</li>
+                    <!-- <li></li> -->
+                </ul>
                 <h2>Working Features</h2>
                 <ul>
                     <li>Random variables with common distributions can be instantiated with appropriate parameters</li>
