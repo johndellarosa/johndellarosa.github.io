@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html>
+
+<!-- 
+    References:
+    https://www.w3schools.com/howto/howto_js_collapsible.asp
+
+
+ -->
+<html> 
 <head>
     <title>John Della Rosa</title>
     
@@ -12,7 +19,7 @@
         h2 {text-align: center;}
         p {text-align: center;}
         nav {text-align: center;}
-
+        /* Top Nav Bar */
         /* Reference: https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
         .navbar {
             overflow:hidden;
@@ -20,6 +27,8 @@
             top:0;
             width: 100%;
         }
+
+
         .navbar a {
             float: center;
             display: inline;
@@ -28,7 +37,45 @@
             text-decoration: none;
         }
 
+        /* Collapsible button 
+        Reference: https://www.w3schools.com/howto/howto_js_collapsible.asp
+        */
+        .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: center;
+            outline: none;
+            font-size: 15px;
+            }
+
+        .active, .collapsible:hover {
+            background-color: #ccc;
+            }
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+            }
+        .collapsible:after {
+                content: '\02795'; /* Unicode character for "plus" sign (+) */
+                font-size: 13px;
+                color: white;
+                float: right;
+                margin-left: 5px;
+            }
+
+        .active:after {
+                content: "\2796"; /* Unicode character for "minus" sign (-) */
+            }
+
+
     </style>
+    
 </head>
 <body>
     <div class="navbar">
@@ -49,11 +96,36 @@
     <div id="resume"><h1><a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Resume</a></h1>
         <div id="education">
             <h2>Education</h2>
-            <ul>
-                <li>MS Financial Mathematics - University of Chicago 2022</li>
-                <li>BS Chemical Biology - University of California, Berkeley 2019</li>
-                <li>Transfer - Sacramento City College 2017</li>
-            </ul>
+            <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+            <button type="button" class="collapsible">MS Financial Mathematics - The University of Chicago - 2022</button>
+            <div class="content">
+                <h4>Courses</h4>
+                <ul>
+                    <li>Portfolio Theory</li>
+                    <li>Option Pricing</li>
+                    <li>Python for Finance</li>
+                </ul>
+              </div>
+              <button type="button" class="collapsible">BS Chemical Biology - UC Berkeley - 2019</button>
+              <div class="content">
+                  <h4>Courses</h4>
+                  <ul>
+                      <li>Portfolio Theory</li>
+                      <li>Option Pricing</li>
+                      <li>Python for Finance</li>
+                  </ul>
+                </div>
+                <button type="button" class="collapsible">Transfer - Sacramento City College - 2017</button>
+                <div class="content">
+                  <h4>Courses</h4>
+                  <ul>
+                      <li>Portfolio Theory</li>
+                      <li>Option Pricing</li>
+                      <li>Python for Finance</li>
+                  </ul>
+                </div>
+
+
         </div>
 
         <div id="experience">
@@ -82,7 +154,7 @@
                     Junior Specialist- June 2018 - June 2021
                     <ul>
                         <li>Analyzed common environmental toxins' impairment of male fertility; published results in peer-reviewed journal</li>
-                        <li>Utilized R to identify genes being expressed at abnormal levels in brain of ALzheimer's patients</li>
+                        <li>Utilized R to identify genes being expressed at abnormal levels in brain of Alzheimer's patients</li>
                     </ul>
                     <br>
                     Research Assistant - January 2018 - May 2018
@@ -109,5 +181,21 @@
 
     </div>
 
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
 </body>
 </html>
