@@ -1,8 +1,9 @@
 
         h1 {text-align: center;}
         h2 {text-align: center;}
-        p {text-align: center;
-        font-size: 14px;}
+        p {
+            /* text-align: center; */
+        font-size: 16px;}
         nav {text-align: center;}
         li {font-size: 16px;}
         /* Top Nav Bar */
