@@ -1,8 +1,10 @@
 
         h1 {text-align: center;}
         h2 {text-align: center;}
-        p {text-align: center;}
+        p {text-align: center;
+        font-size: 14px;}
         nav {text-align: center;}
+        li {font-size: 16px;}
         /* Top Nav Bar */
         /* Reference: https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
         .navbar {
@@ -16,7 +18,7 @@
             font-size: 20px;
             text-decoration: none;
             text-align: center;
-            padding: 8px 20px;
+            padding: 8px 10px;
             /* margin-bottom: 40px; */
         }
 
@@ -25,7 +27,7 @@
             float: center;
             display: inline;
             text-align: center;
-            padding: 0px 20px;
+            padding: 0px 10px;
             text-decoration: none;
             font-size: 20px;
             
