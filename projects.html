@@ -19,93 +19,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
 <link rel="manifest" href="./site.webmanifest">
     
-    <style>
-        h1 {text-align: center;}
-        img {text-align: center;}
-        h2 {text-align: center;}
-        p {text-align: center;}
-        nav {display: block;
-    margin-left: auto;
-    margin-right: auto;}
-        /* Top Nav Bar */
-        /* Reference: https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
-        .navbar {
-            overflow:hidden;
-            /* position:fixed; */
-            top:0;
-            width: 100%;
-            /* height:3%; */
-            background-color: rgb(20, 20, 20);
-            color: #ccc;
-            font-size: 20px;
-            text-decoration: none;
-            text-align: center;
-            padding: 8px 20px;
-            /* margin-bottom: 40px; */
-        }
+    <link rel="stylesheet" href="style.css">
 
-
-        .navbar a {
-            float: center;
-            display: inline;
-            text-align: center;
-            padding: 0px 20px;
-            text-decoration: none;
-            font-size: 20px;
-            
-        }
-
-        .navbar a:link{
-            color: rgb(109, 179, 255)
-            
-        }
-
-        .navbar a:visited{
-            color: white
-        }
-
-        /* Collapsible button 
-        Reference: https://www.w3schools.com/howto/howto_js_collapsible.asp
-        */
-        .collapsible {
-            background-color: #eee;
-            color: #444;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: none;
-            text-align: center;
-            outline: none;
-            font-size: 15px;
-            }
-
-        .active, .collapsible:hover {
-            background-color: #ccc;
-            }
-        .content {
-            padding: 0 18px;
-            display: none;
-            overflow: hidden;
-            background-color: #f1f1f1;
-            }
-        .collapsible:after {
-                content: '\02795'; /* Unicode character for "plus" sign (+) */
-                font-size: 13px;
-                color: white;
-                float: left;
-                margin-left: 5px;
-            }
-
-        .active:after {
-                content: "\2796"; /* Unicode character for "minus" sign (-) */
-            }
-        .content img {
-            display: block;
-    margin-left: auto;
-    margin-right: auto
-        }
-
-    </style>
+    
 </head>
 <body>
     <div class="navbar">
@@ -135,12 +51,13 @@
                 <ul>
                     <li>Random variables with common distributions can be instantiated with appropriate parameters</li>
                     <li>Support for some common operations such as addition of random variables to yield new instance with appropriate properties</li>
-
+                    <li>Sampling for some distributions</li>
                 </ul>
                 <h2>Future directions</h2>
                 <ul>
                     <li>Fix numerical integration issues</li>
                     <li>Allow for representation of random variables with more difficult to represent supports</li>
+                    <li>Allow for sampling from more types of distributions</li>
                 </ul>
                 <h2>Sample</h2>
                 <figure>
