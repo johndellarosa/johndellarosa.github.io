@@ -6,6 +6,13 @@
         font-size: 16px;}
         nav {text-align: center;}
         li {font-size: 16px;}
+        /* li li:hover{
+            color:rgb(97, 135, 205);
+            font-weight: bold;
+        } */
+        /* li:hover{
+            color:grey;
+        } */
         /* Top Nav Bar */
         /* Reference: https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
         .navbar {
@@ -39,10 +46,15 @@
             
         }
 
+
+
         .navbar a:visited{
             color: white
         }
 
+        .navbar a:hover{
+            color: rgb(109, 179, 255)
+        }
         /* Collapsible button 
         Reference: https://www.w3schools.com/howto/howto_js_collapsible.asp
         */
