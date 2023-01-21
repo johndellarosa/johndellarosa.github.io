@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html lang="en-US">
+
+<!-- 
+    References:
+    https://www.w3schools.com/howto/howto_js_collapsible.asp
+
+
+ -->
+<html lang="en-US"> 
 <head>
     <meta charset="UTF-8">
     <!-- Google tag (gtag.js) -->
@@ -11,22 +18,25 @@
 
     gtag('config', 'G-RDM65P2C47');
     </script>
-        <title>John Della Rosa - Biography</title>
-
-    <!-- Meta tags -->
-    
+    <title>John Della Rosa</title>
+    <!-- Meta tags-->
     <meta name="keywords" content="John Della Rosa">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="John Della Rosa biography">
+    <meta name="description" content="John Della Rosa personal page">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="google-site-verification" content="xmRhgeMA6cKjpHPsW1L1vNWAbPD-xnHWVeCCs8IjImg" />
+    
+    
+    
+    <!-- https://favicon.io/favicon-generator/ -->
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
-    <link rel="manifest" href="./site.webmanifest">
-        
-    <link rel="stylesheet" href="style.css">    
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="style.css">
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
     crossorigin
@@ -48,21 +58,31 @@
         <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
         <a href="https://github.com/johndellarosa" target="_blank">Github</a>
     
-    </div> <br>
-        <img src="Portrait.jpg" style="width:40%; margin-left: auto;margin-right: auto;display: block;" alt="Headshot">
-    <h2>Background</h2>
-    <p>
-        I am a recent graduate of the University of Chicago's Financial Mathematics MS program with a concentration in Financial Computing. I studied Chemical Biology for my undergraduate degree at UC Berkeley, graduating with highest honors, before pivoting to the financial data science field.
-    </p>
-    <h2>Professional Interests</h2>
-    <p>
-        My academic interests are in stochastic processes, machine learning, and general data science applications.
-    </p>
+    </div>
 
-    <h2>Other Interests</h2>
-    <p>
-        Other interests include learning new programming languages, video games, and weightlifting.
-    </p>
+    <div id="recommended">
+        <h1>Recommeded Resources</h1><hr>
+        <h2><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning by Christoph Molnar</a></h2>
+        <p style="text-align:center">This book is a personal favorite of mine and is an excellent summary of interpretability and feature interactions. The author recently came out with another <a href="https://www.amazon.com/dp/B0BMGSF52B">book</a>, which I have not read yet.</p>
+    </div>
 
+
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
 </body>
 </html>
