@@ -18,7 +18,7 @@
         /* Top Nav Bar */
         /* Reference: https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
         .navbar {
-            overflow:hidden;
+            /* overflow:hidden; */
             /* position:fixed; */
             top:0;
             /* width: 95%; */
@@ -33,7 +33,8 @@
             display: inline-block;
             margin: 0 auto;
             justify-content: center;
-            display: flex;
+            /* display: flex; */
+            
             /* float:center; */
             /* margin-bottom: 40px; */
         }
