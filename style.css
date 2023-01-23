@@ -1,4 +1,4 @@
-
+/* https://www.w3schools.com */
         h1 {text-align: center;}
         h2 {text-align: center;}
         h3 {text-align: center;}
@@ -21,7 +21,7 @@
             overflow:hidden;
             /* position:fixed; */
             top:0;
-            width: 100%;
+            /* width: 95%; */
             /* height:3%; */
             background-color: rgb(20, 20, 20);
             color: #ccc;
@@ -29,6 +29,12 @@
             text-decoration: none;
             text-align: center;
             padding: 8px 10px;
+            object-position: center;
+            display: inline-block;
+            margin: 0 auto;
+            justify-content: center;
+            display: flex;
+            /* float:center; */
             /* margin-bottom: 40px; */
         }
 
@@ -40,6 +46,7 @@
             padding: 0px 10px;
             text-decoration: none;
             font-size: 20px;
+            transition-duration: 250ms;
             
         }
 
@@ -61,7 +68,7 @@
         Reference: https://www.w3schools.com/howto/howto_js_collapsible.asp
         */
         .collapsible {
-            background-color: #eee;
+            background-color: rgba(216, 216, 216, 0.775);
             color: #444;
             cursor: pointer;
             padding: 18px;
@@ -99,5 +106,61 @@
     margin-right: auto
         }
 
+        /* Grid items */
+        .grid-container {
+            display: grid;
+            background-color: rgb(20, 20, 20);
+            padding: 10px;
+            object-position: center;
+            
+            /* width: 100%; */
+            /* display: inline-block; */
+            /* margin: 0 auto; */
+            /* justify-content: center; */
+            /* display: flex; */
+          }
+        .grid-item {
+        background-color: #f1f1f1;
+        border: 10px solid rgb(20, 20, 20);
+        padding: 10px;
+        font-size: 20px;
+        text-align: center;
+        }
+        /* .grid-item a:visited{
+            color: white
+        }
+        .grid-item a:hover{
+            color: rgb(109, 179, 255)
+        } */
+        .grid-item button{
+            font-size: 20px;
+            border-radius: 2px;
+        }
+
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+          }
+
+          .button2 {
+            background-color: white; 
+            color: black; 
+            border: 2px solid #008CBA;
+          }
+          
+          .button2:hover {
+            background-color: #008CBA;
+            color: white;
+          }
 
  
