@@ -16,14 +16,14 @@ jobs:
           fetch-depth: 0
       - name: Setup Pages
         uses: actions/configure-pages@v2
-              - name: Build with Jekyll
+      - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
-        
+
       - name: Generate the sitemap
         id: sitemap
         uses: cicirello/generate-sitemap@v1
