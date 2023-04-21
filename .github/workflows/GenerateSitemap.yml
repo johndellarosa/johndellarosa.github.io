@@ -40,7 +40,7 @@ jobs:
             [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub action.
   automerge:
     runs-on: ubuntu-latest
-    if: github.actor == 'johndellarosa'
+    if: github.triggering_actor == 'johndellarosa'
     steps:
       - uses: peter-evans/enable-pull-request-automerge@v3
         with:
