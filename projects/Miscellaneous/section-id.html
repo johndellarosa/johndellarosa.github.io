@@ -101,10 +101,19 @@
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  
+  display: flex;
+
   margin:auto;
+  max-width: 40%;
+  font-size: clamp(6px,3vw, 24px);
+  justify-content: center;
         }
+
+        .bb-button text {
+          margin: auto;
+        }
+
 
         .app {
           text-align: center;
@@ -155,7 +164,7 @@
 
 
     <div class="app">
-<h1 style=" text-align: center; justify-content: center;">Section ID Calculator</h1>
+<h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Section ID Calculator</h1>
 
     <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button>
 
