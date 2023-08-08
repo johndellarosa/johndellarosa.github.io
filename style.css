@@ -12,6 +12,9 @@
             justify-content: center;
             display: block;
             margin: auto;
+            min-width: 40%;
+            aspect-ratio: calc(16/9);
+
             
         }
         nav {text-align: center;}
