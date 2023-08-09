@@ -1,10 +1,199 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="math.js" type="text/javascript"></script>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+            <title>Option Value Calculator</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Option Value Calculator">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Option Value Calculator">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+        <script>
+            function Norm_CDF(x){
+                // https://stackoverflow.com/questions/457408/is-there-an-easily-available-implementation-of-erf-for-python
+
+                return (1+erf(x/math.sqrt(2)))/2; // erf(-x) = -erf(x)
+            }
+
+            function erf(x){
+                var sign = x>=0 ? 1 : -1;
+                // console.log(`sign of norm_cdf: ${sign}`);
+                var abs_x = Math.abs(x);
+                // console.log(abs_x);
+                // constants
+                const a1 =  0.254829592;
+                const a2 = -0.284496736;
+                const a3 =  1.421413741;
+                const a4 = -1.453152027;
+                const a5 =  1.061405429;
+                const p  =  0.3275911;
+
+                // A&S formula 7.1.26
+                var t = 1.0/(1.0 + p*abs_x);
+                console.log(t);
+                var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*math.exp(-abs_x*abs_x);
+                // console.log(sign*y);
+                //console.log(`Norm cdf for ${x} is ${sign*y}`);
+                return sign*y; // erf(-x) = -erf(x)
+            }
+
+            function Norm_PDF(x){
+                return 1/math.sqrt(2*math.pi)*math.exp(-0.5*math.pow(x,2));
+            }
+
+            function BS_Call(s, k, sigma, r, t){
+                //console.log(`Argument for BS_Call function: ${s}, ${k}, ${sigma}, ${r},${t}`);
+                //console.log(math.pow(sigma,2));
+                //console.log(math.log(s/k));
+
+                //console.log((r+math.pow(sigma,2)/2));
+                //console.log(t);
+                //console.log(typeof(r));
+                //console.log(typeof((math.pow(sigma,2)/2)));
+                // console.log(typeof(r+math.pow(sigma,2)/2));
+                // console.log((r+math.pow(sigma,2)/2)*t);
+                // console.log(`${math.log(s/k)+(r+math.pow(sigma,2)/2)*t}`);
+                var d1 = math.log(s/k)+(r+math.pow(sigma,2)/2)*t;
+                console.log(`d1: ${d1}`);
+                d1 /= sigma*math.sqrt(t);
+                console.log(`d1: ${d1}`);
+                var d2 = d1 - sigma*math.sqrt(t);
+                console.log(`d1=${d1}; d2=${d2}`);
+                console.log(`${math.exp(1)}`);
+                console.log(`exp(-r*t)=${math.exp(-1*r*t)}`);
+                console.log(`Norm_CDF(d1)*s = ${Norm_CDF(d1)*s}; Norm_CDF(d2)*k..=${Norm_CDF(d2)*k*math.exp(-1*r*t)}`);
+                return Norm_CDF(d1)*s-Norm_CDF(d2)*k*math.exp(-1*r*t);
+            }
+
+            function BS_Put(s, k, sigma, r, t){
+                var d1 = math.log(s/k)+(r+math.pow(sigma,2)/2)*t;
+                d1 /= sigma*math.sqrt(t);
+                var d2 = d1 - sigma*math.sqrt(t);
+                console.log(`d1=${d1}; d2=${d2}`);
+                return k*math.exp(-1*r*t)*Norm_CDF(-1*d2)-s*Norm_CDF(-1*d1);
+            }
+
+            var optionType = 'bs_call';
+
+
+            function selectOptionType() {
+                var mylist = document.getElementById("myList");
+                optionType = mylist.options[mylist.selectedIndex].value;
+                console.log(optionType);
+                }
+
+            function BSPrice(){
+                var s0 = parseFloat($("#s0_input")[0].value);
+                console.log(s0);
+                var k = parseFloat($("#k_input")[0].value);
+                var sigma = parseFloat($("#sigma_input")[0].value);
+                var r = parseFloat($("#r_input")[0].value);
+                var t = parseFloat($("#t_input")[0].value);
+                console.log(t);
+                switch (optionType) {
+                    case "bs_call":
+                        $("#bs-value")[0].innerText = "$"+BS_Call(s0,k,sigma,r,t).toFixed(4);
+                        break;
+                    case "bs_put":
+                        $("#bs-value")[0].innerText = "$"+BS_Put(s0,k,sigma,r,t).toFixed(4);
+                        break;
+                    default:
+                        $("#bs-value")[0].innerText = "$"+BS_Call(s0,k,sigma,r,t).toFixed(4);
+                        break;
+                }
+            }
+
+
+
+        </script>
     </head>
     <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
          
+        <div class="app" style="display: grid; width: 50%; margin-left: auto;margin-right: auto;">
+            <h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Option Value Calculator</h1>
+            <!-- <form> -->
+            <label for="myList">Option Type</label>
+            <select id = "myList" class="dropdown" onchange = "selectOptionType()" >
+                <option value="bs_call"> Euro Call </option>
+                <option value="bs_put"> Euro Put </option>
+                </select>
+            <br>
+            <label for="s0_input">Stock Price</label>
+            <input id="s0_input" type="number" min="0", step="0.00001" value="100"><br>
 
+            <label for="k_input">Strike Price</label>
+            <input id="k_input" type="number" min="0", step="0.00001" value="110"><br>
+
+            <label for="sigma_input">Volatility</label>
+            <input id="sigma_input" type="number" min="0", step="0.00001" value="0.2"><br>
+
+            <label for="r_input">Interest Rate</label>
+            <input id="r_input" type="number" min="0", step="0.00001" value="0.05"><br>
+
+            <label for="t_input">Time to Expiry</label>
+            <input id="t_input" type="number" min="0", step="0.00001" value="0.5"><br>
+
+            <button id="calculate_price" onclick="BSPrice()">Calculate Value</button><br>
+        <!-- </form> -->
+
+        Result: <span id="bs-value">$0.00</span>
+        </div>
+
+        
+        <script>
+                        selectOptionType();
+                        BSPrice();
+        </script>
     </body>
 </html>
