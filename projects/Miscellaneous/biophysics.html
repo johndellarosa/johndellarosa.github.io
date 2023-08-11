@@ -70,12 +70,15 @@
             <h2>Introductory Thermodynamics</h2>
 
             <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
+            <h4> Deriving the Thermodynamic Definition of Entropy</h4>
             By the differential form of the first law of Thermodynamics, we have
             $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV=TdS-p_{ext}dV$$
-            *Negative sign for pressure since our dV is pointing in opposite direction of pext
-            
+            *Negative sign for pressure since our dV is pointing in opposite direction of \(p_{ext}\).
+            By our definition of Enthalpy:
             $$H\equiv U+PV$$
+            Through the product rule for differentiation:
             $$dH=dU+d(PV)=dU+(pdV+Vdp)$$
+            Substituting in the total differential form of the first law from above for dU:
             $$=(TdS-pdV)+pdV+Vdp$$
             $$=TdS+Vdp$$
             If we are working in a constant temperature environment, we can let dp=0, yielding the formula
@@ -84,12 +87,26 @@
             $$dS=\frac{dq_{rev}}{T}$$
             This is the so-called "Thermodynamic definition of Entropy" which holds for a reversible process at constant pressure<br>
 
+<h4>Aside on Legendre Transforms</h4>
+    In the first law, we had
+    $$dU=TdS-pdV$$
+    and when we defined Enthalpy as \(H\equiv U+PV\), we ended up getting
+    $$dH=TdS+Vdp$$
+    By adding PV, we were able to switch the positions of the Volume and Pressure variables (along with a sign change). 
+    By doing this, we can now have a quantity that is more convenient to work with when we assume different conditions (e.g. constant pressure instead of constant volume). 
+    This is from which we got heat being the change in energy at a fixed volume and the change in enthalpy at fixed pressure equivalencies (set dV=0 or dP=0 in the above equations). 
+<br><br>
+    This is a theme that will recur for the Helmholtz and Gibbs free energies where instead we will switch temperature and entropy. 
+    These paired variables are known as "conjugate variables," and the process of switching is known as a Legendre transformation.
+
+<h4>Irreversible Processes</h4>
+
             However, what about for irreversible processes? The first law still holds such that 
             $$U=q+w$$
             but
-            $$q_{rev}\neq q_{irr}$$
-            and
-            $$w_{rev}\neq w_{irr}$$
+            \(q_{rev}\neq q_{irr}\) 
+            and 
+            \(w_{rev}\neq w_{irr}\).
             A more general statement which holds for irreversible processes is
             $$dS\geq \frac{\delta Q}{T}$$
             This is known as the Clausius Inequality.<br>
