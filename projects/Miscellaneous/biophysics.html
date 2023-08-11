@@ -65,8 +65,12 @@
             <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
         
         </div>
-
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
         <div>
+            <h2>Introductory Thermodynamics</h2>
+
+            <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
+            By the differential form of the first law of Thermodynamics, we have
             $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV=TdS-p_{ext}dV$$
             *Negative sign for pressure since our dV is pointing in opposite direction of pext
             
@@ -75,9 +79,21 @@
             $$=(TdS-pdV)+pdV+Vdp$$
             $$=TdS+Vdp$$
             If we are working in a constant temperature environment, we can let dp=0, yielding the formula
-            $$dH=TdS=q$$
-            This is the so-called "Thermodynamic definition of Entropy"
+            $$dH=TdS=dq$$
 
+            $$dS=\frac{dq_{rev}}{T}$$
+            This is the so-called "Thermodynamic definition of Entropy" which holds for a reversible process at constant pressure<br>
+
+            However, what about for irreversible processes? The first law still holds such that 
+            $$U=q+w$$
+            but
+            $$q_{rev}\neq q_{irr}$$
+            and
+            $$w_{rev}\neq w_{irr}$$
+            A more general statement which holds for irreversible processes is
+            $$dS\geq \frac{\delta Q}{T}$$
+            This is known as the Clausius Inequality.<br>
+            
         </div>
 
 </body>
