@@ -116,7 +116,7 @@
                 console.log(optionType);
                 }
 
-            function BSPrice(){
+            function BSPrice(){ // pressing the button
                 var s0 = parseFloat($("#s0_input")[0].value);
                 console.log(s0);
                 var k = parseFloat($("#k_input")[0].value);
@@ -134,7 +134,15 @@
                 }
             }
 
+            function BarrierOption(s, k, sigma, r, t, h, N){
+                var observation_interval = 0.02;
+                var deltat = T / N;
+                var estimated_delta_x = sigma * math.sqrt(3 * t / N);
+                var j = math.round((math.log(h)-math.log(s))/estimated_delta_x-0.5);
+                var deltax = (math.log(h)-math.log(s)/(j+0.5));
 
+
+            }
 
         </script>
     </head>
