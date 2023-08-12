@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
 
         <meta charset="UTF-8">
@@ -68,22 +68,90 @@
 <h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
 <h3>by John Della Rosa</h3>
         <div>
+            <h2>Introduction</h2>
+            <h3>Requirements</h3>
+            <h4>Math</h4>
+            <ul>
+            <li>This textbook will assume knowledge of single variable calculus.</li> 
+            <li>Multivariable calculus will be used for derivations, especially in the physics-focused chapters.</li> 
+            <li>Properties of logarithms and exponentiatials will be used</li> 
+            <li>Differential equations will appear, but will not require understanding for how to solve, merely recognizing what the equation mean. </li>
+            </ul>
+            <h4>Physics</h4>
+            Not much physics is required, just understanding the concept of energy, force, etc.
+
+            <h4>Chemistry</h4>
+            <ul>
+                <li>General chemmistry knowledge will be assumed</li>
+                <li>Basics of organic chemistry will be assumed.
+                    <ul>
+                        <li>Ability to understand shorthand for structures</li>
+                        <li>Nucleophile, electrophile concepts</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <h4>Biology</h4>
+            <ul>
+                <li>Familiarity with central dogma of biology</li>
+                <li>Basic knowledge of nucleic acids</li>
+                <li>Basic knowledge of proteins</li>
+            </ul>
+
 
             <h2>Probability, Statistics, and Entropy</h2>
 
-            <h3>Multiplicity</h3>
+            <h3>Entropy</h3>
+            <h4>Multiplicity</h4>
             A generalized multiplicity formula for arranging Z types of things in M spaces is
             $$W=\frac{M!}{\prod N_{i}!}=\frac{M!}{N_{1}!*N_{2}!*...*N_{Z}!}$$
             If there are only two possible types and M total and N of type 1, then \(N_2=M-N\) and it reduces to
             $$W=\frac{M!}{N!(M-N)!}$$
-            
+            <h4>Extensive and Intensive Properties</h4>
+            A property of a system is said to be <b>extensive</b> if it is proportional to the size of the system. One example is mass; if the system is 1L of water, going to 2L of water will double the mass. These properties are often not ratios and can often be intuited via thought experiment. 
+<br><br>
+            A property of a system is said to be <b>intensive</b> if it remains constant when a system is scaled. Density is an example of an intensive property. In the previous example, the density of the system does not change when you go from 1L of water to 2L of water. Mass and volume of the system both double, which cancel out when you take the ratio to get density. 
+<br><br>
+            Some properties are neither extensive not intensive if they scale but in a non-linear proportional way. 
+            The most notable example is multiplicity. This can be shown if every number in the above calculation is doubled due to the factorial operator. 
+            Entropy at large scales behaves like an extensive property, but at very small scales, this does not always hold. 
 
             <h2>Introductory Thermodynamics</h2>
+            <h3>Laws of Thermodynamics</h3>
+            <h4>First Law of Thermodynamics</h4>
+
+            The first law can be formulated in different ways. A common source of confusion for students is the seemingly inconsistent formula. 
+<br><br>
+            Variant 1:
+            $$\Delta U=q+w$$
+            Variant 2:
+            $$\Delta U=q-w$$
+            So why will you see both? This is due to differences between authors in how they define the quantities in the equation. 
+
+            Let's start by defining q, which we will call "heat," since this is less controversial. q will be the heat added to the system. Heat flowing into the system will increase the amount of internal energy intuitively, so a positive q will contribute to an increase in energy. 
+<br><br>
+            Now, for defining w, which is the "work" term. Here are the two equations again with their definition
+            <ol>
+                <li>\(\Delta U=q+w\), positive w here is defined as work done <b>to</b> the system and negative w is defined as work done <b>by</b> the system</li>
+                <li>\(\Delta U=q-w\), positive w here is defined as work done <b>by</b> the system and negative w is defined as work done <b>to</b> the system</li>
+            </ol>
+
+            Regardless of your definition of w, if work is being performed on the system, energy is being transferred to it, but if the system is expending energy to do work, then it will lose energy. 
+            From here on out, the textbook will use variant 1.
+            <br><br>
+            Now, the terms work and heat have not been preicsely defined yet. 
+            Working definitions for the terms at this point will be:
+            <ul>
+                <li>Work is controlled, harnessed transfer of energy</li>
+                <li>Heat is uncontrolled transfer of energy</li>
+            </ul>
+
 
             <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
             <h4> Deriving the Thermodynamic Definition of Entropy</h4>
             By the differential form of the first law of Thermodynamics, we have
-            $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV=TdS-p_{ext}dV$$
+            $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV+\sum(\frac{\partial U}{\partial N_i})_{S,V}dN_i=TdS-p_{ext}dV+\sum\mu_idN_i$$
             *Negative sign for pressure since our dV is pointing in opposite direction of \(p_{ext}\).
             Let us define a quantity called Enthalpy, denoted by H, as follows:
             $$H\equiv U+PV$$
@@ -99,17 +167,6 @@
             $$dS=\frac{dq_{rev}}{T}$$
             This is the so-called "Thermodynamic definition of Entropy" which holds for a reversible process at constant pressure<br>
 
-<h4>An Aside on Legendre Transforms</h4>
-    In the first law, we had
-    $$dU=TdS-pdV$$
-    and when we defined Enthalpy as \(H\equiv U+PV\), we ended up getting
-    $$dH=TdS+Vdp$$
-    By adding PV, we were able to switch the positions of the Volume and Pressure variables (along with a sign change). 
-    By doing this, we can now have a quantity that is more convenient to work with when we assume different conditions (e.g. constant pressure instead of constant volume). 
-    This is from which we got heat being the change in energy at a fixed volume and the change in enthalpy at fixed pressure equivalencies (set dV=0 or dP=0 in the above equations). 
-<br><br>
-    This is a theme that will recur for the Helmholtz and Gibbs free energies where instead we will switch temperature and entropy, as dT=0 is more feasible than dS=0. 
-    These paired variables are known as "conjugate variables," and the process of switching is known as a Legendre transformation.
 
 <h4>Irreversible Processes</h4>
 
@@ -121,8 +178,48 @@
             \(w_{rev}\neq w_{irr}\).
             A more general statement which holds for irreversible processes is
             $$dS\geq \frac{\delta Q}{T}$$
-            This is known as the Clausius Inequality, which is another way of formulating the 2nd law.<br>
+            with equality when the process is reversible. This is known as the Clausius Inequality, which is another way of formulating the 2nd law.<br>
             
+            <h4>An Aside on Legendre Transforms</h4>
+            In the first law, we had
+            $$dU=TdS-pdV$$
+            and when we defined Enthalpy as \(H\equiv U+PV\), we ended up getting
+            $$dH=TdS+Vdp$$
+            By adding PV, we were able to switch the positions of the Volume and Pressure variables (along with a sign change). 
+            By doing this, we can now have a quantity that is more convenient to work with when we assume different conditions (e.g. constant pressure instead of constant volume). 
+            This is from which we got heat being the change in energy at a fixed volume and the change in enthalpy at fixed pressure equivalencies (set dV=0 or dP=0 in the above equations). 
+        <br><br>
+            This is a theme that will recur for the Helmholtz and Gibbs free energies where instead we will switch temperature and entropy, as dT=0 is more feasible than dS=0. 
+            These paired variables are known as "conjugate variables," and the process of switching the differential between the extensive and intensive variable is known as a Legendre transformation.
+
+            <h4>Helmholtz Free Energy and Gibbs Free Energy</h4>
+
+            Let us define a quantity Helmholtz Free Energy, denoted by A (The letter A was chosen for the German word for work as H was already being used for Enthalpy; some books use F for free energy):
+            $$A\equiv U-TS$$
+            Doing a similar trick as we did for Enthalpy - taking the derivative of both sides and using the linearity of the derivative operator:
+            $$dA=dU-d(TS)$$
+            Substituting in for dU using the first law; product rule for d(TS)
+            $$dA=(TdS-pdV)-(TdS+SdT+dSdT)$$
+            Canceling out TdS terms and dSdT goes to 0
+            $$dA=-pdV-SdT$$
+
+            If we are working in a constant temperature system (dT=0), then we find that the change in Helmholtz free energy is the amount of work being done. 
+            <br><br>
+            It is also possible to do what we did for Enthalpy and Helmholtz for a single quantity. 
+            Let us define a quantity Gibbs Free Energy, denoted by G:
+
+            $$G\equiv U+PV-TS=A+PV=H-TS$$
+            In general chemistry, Gibbs free energy is often introduced as
+            $$G=H-TS$$
+            so the derivation will go from that point.
+
+            $$dG=dH-d(TS)$$
+            Substituting in our above result for dH; product rule for d(TS)
+            $$dG=(TdS+Vdp)-(TdS+SdT+dSdT)$$
+            Cancelling out TdS terms; dSdT goes to 0
+            $$dG=Vdp-SdT$$
+
+
 
             <h2>Biochemistry</h2>
             <h3>Acid-Base Chemistry</h3>
@@ -137,9 +234,33 @@
             The Lewis definition is also very important and its acids and bases are also referred to as electrophiles and nucleophiles respectively. 
             For clarity, future uses of the words "acid" and "base" will refer to the Bronsted-Lowry definition; Lewis acids and bases will be referred to by their aforementioned organic chemistry terms.
 
-            <h4>Equilibrium Constants and pKa</h4>
+            <h4>Equilibrium Constants</h4>
 
             To be filled later
+
+            <h4>Henderson-Hasselbach Equation and pKa</h4>
+
+            Let us start with a generic acid dissociation equation from before with an acid dissociation constant \(K_A\):
+
+            $$HA+H_2O\rightleftharpoons A^-+H_3O^+$$
+
+            The associated equilibrium equation is 
+
+            $$K_A=\frac{[A^-][H_3O^+]}{HA}$$
+            There are various ways you can algebriacally manipulate the equation and take logs in order to get to the final equation, but I will get things on the right side prior to taking the log
+            $$\frac{1}{[H_3O^+]}=\frac{1}{K_A}\times\frac{[A^-]}{[HA]}$$
+            Taking the log of both sides.
+            $$\log(\frac{1}{[H^+]})=\log(\frac{1}{K_A}\times\frac{[A^-]}{[HA]})$$
+            Using the multiplication and division rule for the argument:
+            $$\log(\frac{1}{[H^+]})=\log(\frac{1}{K_A})+\log(\frac{[A^-]}{[HA]})$$
+            Using a specific case of the log power rule, there is the relationship \(\log(1/a)=-\log(a)\), we get
+            $$-\log([H^+])=-\log(K_A)+\log(\frac{[A^-]}{[HA]})$$
+            By definition, \(pKa\equiv -\log(K_A)\) and \(pH\equiv -\log([H^+])\). Thus, we arrive at the Henderson-Hasselbach equation:
+            $$pH=pKa+\log(\frac{[A^-]}{[HA]})$$
+
+            This equation allows us to relate the pH of an environment, the pKa of an acid, and the ratio of deprotonated to protonated occurences of that acid
+
+            
 
             <h4>Amino Acids and Acid-Base Chemistry</h4>
             As amino acids have both amine and carboxylic acid groups, they can all act as both acids and bases to some extent. 
