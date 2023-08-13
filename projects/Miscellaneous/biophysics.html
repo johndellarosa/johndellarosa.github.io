@@ -96,7 +96,8 @@
             <li>Multivariable calculus will be used for derivations, especially in the physics-focused chapters.</li> 
             <li>Properties of logarithms and exponentiatials will be used</li> 
             <li>Differential equations will appear, but will not require understanding for how to solve, merely recognizing what the equation mean. </li>
-            </ul>
+            <li>Linear Algebra will be used in the some of the later probability-focused chapters, such as Markov Chains</li>
+        </ul>
             <h4>Physics</h4>
             <ul>
                 <li>
@@ -154,7 +155,8 @@
             $$\Delta U=q-w$$
             So why will you see both? This is due to differences between authors in how they define the quantities in the equation. 
 
-            Let's start by defining q, which we will call "heat," since this is less controversial. q will be the heat added to the system. Heat flowing into the system will increase the amount of internal energy intuitively, so a positive q will contribute to an increase in energy. 
+            Let's start by defining q, which we will call "heat," since this is less controversial. q will be the heat added to the system. Heat flowing (positive q) into the system will increase the amount of internal energy intuitively, so a positive q will contribute to an increase in energy. 
+            Heat flowing out of the system (negative q) will decrease the amount of internal energy.
 <br><br>
             Now, for defining w, which is the "work" term. Here are the two equations again with their definition
             <ol>
@@ -340,7 +342,97 @@
         </div>
 
         <div id="Stochastic-Processes">
+            <h3>Introduction to Discrete Stochastic Processes</h3>
+            <h4>Distributions</h4>
+            <h4>Markov Chains</h4>
 
+            Imagine a system where a protein is in one of two states: A or E. Each minute you observe its state, and it has the ability to go from state A to E or E to A, but it does not necessarily switch. We will denote these observational periods at \(t=0, 1, \ldots\)
+            <br><br>
+            An important assumption that we will make is that only the current state determines the probability of switching conformations by the second; the state that it was in prior to this observation have <b>no</b> impact on the chances. 
+            E.g. if we are at t=n, the state that the protein was in at t=n-1 has no impact on the probability for t=n+1. 
+            This is called the <b>Markov property</b>.
+            
+            <br><br>
+            
+            For simplicity's state, we will assume that these observations are discrete events and not worry about what happens outside of our regular 1-minute interval observations. 
+            
+
+            <figure><a href="https://commons.wikimedia.org/wiki/File:Markovkate_01.svg#/media/File:Markovkate_01.svg"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Markovkate_01.svg" alt="Markovkate 01.svg" style="max-height: 300px;" ></a><br>By <a href="//commons.wikimedia.org/wiki/User:Joxemai4" title="User:Joxemai4">Joxemai4</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=10284158">Link</a></figure>
+
+            We are given the dynamics of the protein conformational changes: 
+                        <ul>
+                <li>If the protein is in state A, it has a 40% chance of switching to the E state by the next observation and a 60% chance of remaining in the A state. 
+                </li>
+                <li>If the protein is in state E, it has a 70% chance of switching to the A conformation by the next observation and a 30% chance of remaining in the E state</li>
+                        </ul>
+
+            Given a start state, we can determine the probability, not just of the next minute, but subsequent observations as well. 
+            
+            This can be represented naturally using Linear Algebra. 
+
+            $$\begin{bmatrix}
+            0.6 & 0.4\\ 
+            0.7 & 0.3
+            \end{bmatrix}$$
+
+            Where the row is the starting state and the column is the final state. 
+
+            If we are in the A state, we can put a 1 in the first column and a 0 elsewhere:
+
+            $$\begin{bmatrix}
+            1 & 0
+            \end{bmatrix}$$
+            It is not actually necessary to know the starting state to make statements on the probability of the state over time. We can have our start be a probability distribution instead. 
+            
+            To get the probability of being in each state after 1 interval, we can multiply the two:
+            $$\begin{bmatrix}
+            1 & 0
+            \end{bmatrix}\begin{bmatrix}
+                        0.6 & 0.4\\ 
+                        0.7 & 0.3
+                        \end{bmatrix}=\begin{bmatrix}
+            0.6 & 0.4
+            \end{bmatrix}$$
+
+            We observe a 60% chance of remaining in state A and a 40% chance of transitioning to state E as expected at t=1. 
+            
+            We can use this result to see what the probability of being in each state are at t=2
+
+            $$\begin{bmatrix}
+            0.6 & 0.4
+            \end{bmatrix}\begin{bmatrix}
+                        0.6 & 0.4\\ 
+                        0.7 & 0.3
+                        \end{bmatrix}=\begin{bmatrix}
+            0.6*0.6+0.7*0.4 & 0.6*0.4+0.4*0.3
+            \end{bmatrix}$$
+            $$=\begin{bmatrix}
+            0.64 & 0.36
+            \end{bmatrix}$$
+            We can view this as plugging in a probability distribution into a Markov chain rather than knowing the initial state.
+            A general formula for the probability distribution at time t=n would thus be:
+
+            $$\begin{bmatrix}
+            p_{A,t=0} & p_{E,t=0}
+            \end{bmatrix}\begin{bmatrix}
+                        p_{A\rightarrow A} & p_{A\rightarrow E}\\ 
+                        p_{E\rightarrow A} & p_{E\rightarrow E}
+                        \end{bmatrix}^n$$
+            But what are the long-run probabilities? What if we just came across this in natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
+
+            <br><br>
+
+
+            Additionally, we are not restricted to just 2 states, our probability vector could have m columns for m possible states and our transition matrix would be mxm. 
+            Markov chains can even be abstracted to infinite-state versions, although some properties change, which are beyond the scope of this textbook.
+            <br><br>
+
+
+
+
+
+            <h4>Advanced Applications in Biology</h4>
+            
         </div>
 
 
