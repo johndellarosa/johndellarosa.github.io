@@ -28,9 +28,9 @@
     
         <!-- Meta tags -->
         
-        <meta name="keywords" content="Biophysics textbook">
+        <meta name="keywords" content="Biophysics chemistry textbook">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Biophysics e-textbook">
+        <meta name="description" content="Biophysical chemistry textbook">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -67,7 +67,25 @@
         </div>
 <h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
 <h3>by John Della Rosa</h3>
-        <div>
+        <div id="text-contents" style="width:90%; margin:auto">
+
+            <div id="Table-of-Contents">
+                <ol>
+                    <li><a href="#Introduction">Introduction</a></li>
+                    <li><a href="#Probability">Probability, Statistics, & Entropy</a></li>
+                    <li><a href="#Thermodynamics">Thermodynamics</a></li>
+                    <li><a href="#Biochemistry">Biochemistry</a></li>
+
+                
+                
+                
+                </ol>
+
+
+            </div>
+
+
+            <div id="Introduction">
             <h2>Introduction</h2>
             <h3>Who this text is for</h3>
             This text is aimed at students at junior level or higher who are interested in biophysical chemistry or want a free supplemental text on the subject.
@@ -104,8 +122,8 @@
                 <li>Basic knowledge of nucleic acids</li>
                 <li>Basic knowledge of proteins</li>
             </ul>
-
-
+            </div>
+            <div id="Probability">
             <h2>Probability, Statistics, and Entropy</h2>
 
             <h3>Entropy</h3>
@@ -122,7 +140,8 @@
             Some properties are neither extensive not intensive if they scale but in a non-linear proportional way. 
             The most notable example is multiplicity. This can be shown if every number in the above calculation is doubled due to the factorial operator. 
             Entropy at large scales behaves like an extensive property, but at very small scales, this does not always hold. 
-
+            </div>
+            <div id="Thermodynamics">
             <h2>Introductory Thermodynamics</h2>
             <h3>Laws of Thermodynamics</h3>
             <h4>First Law of Thermodynamics</h4>
@@ -152,6 +171,22 @@
                 <li>Work is controlled, harnessed transfer of energy</li>
                 <li>Heat is uncontrolled transfer of energy</li>
             </ul>
+
+            Work can take various forms, but the ones we will be considering will be 
+            <ol>
+                <li>Expansion work or "pV work," such as a piston moving due to a pressure difference.
+                </li>
+                <li>Chemical work, which harnesses energy from chemical reactions</li>
+            </ol>
+
+            <h4>Second Law of Thermodynamics</h4>
+            The second law of thermodynamics states that total entropy is non-decreasing over time. 
+            $$\Delta S_{universe}\geq 0$$
+            This is sometimes put into formula by breaking down the universe into the "system" or thing of interest and the "surroundings" or everything else. 
+            $$\Delta S_{sys}+\Delta S_{surr} \geq 0$$
+            A common mistake that students make is interpreting it as saying that entropy cannot decrease locally. 
+            This is <b>not</b> true. Entropy can very well decrease in a system, but it will be offset by a greater increase in the surroundings. 
+            In fact, much of biology involves this very trade-off.
 
 
             <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
@@ -225,8 +260,8 @@
             Cancelling out TdS terms; dSdT goes to 0
             $$dG=Vdp-SdT$$
 
-
-
+        </div>
+        <div id="Biochemistry">
             <h2>Biochemistry</h2>
             <h3>Acid-Base Chemistry</h3>
             <h4>Definitions of Acid and Base</h4>
@@ -274,13 +309,40 @@
             <br>
             However, a number of the proteogenic amino acids can also participate in acid-base chemistry through their sidechains. 
 
-            <p style="width: 70%; text-align: center; margin: auto;"><a href="https://commons.wikimedia.org/wiki/File:Proteinogenic_Amino_Acid_Table.png#/media/File:Proteinogenic_Amino_Acid_Table.png"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Proteinogenic_Amino_Acid_Table.png" alt="Proteinogenic Amino Acid Table.png" style="max-width: 100%;"></a><br>By <a href="https://commons.wikimedia.org/w/index.php?title=User:Thomas.ryckmans68&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Thomas.ryckmans68 (page does not exist)">Thomas.ryckmans68 <span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=117084381">Link</a></p>
+            <p style="width: 90%; text-align: center; margin: auto;"><a href="https://commons.wikimedia.org/wiki/File:Proteinogenic_Amino_Acid_Table.png#/media/File:Proteinogenic_Amino_Acid_Table.png"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Proteinogenic_Amino_Acid_Table.png" alt="Proteinogenic Amino Acid Table.png" style="max-width: 100%;"></a><br>By <a href="https://commons.wikimedia.org/w/index.php?title=User:Thomas.ryckmans68&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Thomas.ryckmans68 (page does not exist)">Thomas.ryckmans68 <span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=117084381">Link</a></p>
             <br>
             <br>
 
             One might ask - why do the amide groups in Asparagine and Glutamine not participate in acid-base chemistry? 
             The answer has to do with conjugated pi systems. The lone pair on the nitrogen is not "available" to grab a proton because it prefers to be in a conjugated system with the carbonyl. 
             For the same reason, in proteins, you will not see the amide backbone being charged, only the N and C termini.
+
+        </div>
+
+        <div id="Kinetics">
+            <h2>Kinetics</h2>
+            <h3>Refresher on Kinetics</h3>
+                <h4>Rate Laws</h4>
+
+                <h4>Relationship with Equilibrium Constant</h4>
+
+                <h4>Integrated Rate Laws</h4>
+
+
+
+            <h3>Michaelis-Menten Kinetics</h3>
+            <h4>Binding and Unbinding</h4>
+            <h4>Derivation</h4>
+            <h4>More Complicated Dynamics</h4>
+
+            <h3>Diffusion</h3>
+        </div>
+
+        <div id="Stochastic-Processes">
+
+        </div>
+
+
 
 
         </div>
