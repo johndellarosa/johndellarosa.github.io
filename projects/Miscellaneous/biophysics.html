@@ -343,9 +343,10 @@
         </div>
 
         <div id="Stochastic-Processes">
-            <h3>Introduction to Discrete Stochastic Processes</h3>
-            <h4>Distributions</h4>
-            <h4>Markov Chains</h4>
+            <h2>Stochastic Processes</h2>
+            <h3>Discrete Time Stochastic Processes</h3>
+
+            <h4>Discrete-Time Markov Chains</h4>
 
             Imagine a system where a protein is in one of two states: A or E. Each minute you observe its state, and it has the ability to go from state A to E or E to A, but it does not necessarily switch. We will denote these observational periods at \(t=0, 1, \ldots\)
             <br><br>
@@ -421,20 +422,54 @@
                         p_{A\rightarrow A} & p_{A\rightarrow E}\\ 
                         p_{E\rightarrow A} & p_{E\rightarrow E}
                         \end{bmatrix}^n$$
-            But what are the long-run probabilities? What if we just came across this in natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
+            But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
 
             <br><br>
 
 
             Additionally, we are not restricted to just 2 states, our probability vector could have m columns for m possible states and our transition matrix would be mxm. 
             Markov chains can even be abstracted to infinite-state versions, although some properties change, which are beyond the scope of this textbook.
+
+            Furthermore, the concept can be extended to continuous time processes. 
             <br><br>
 
+
+
+            <h3>Continuous-Time Stochastic Processes</h3>
+
+            When we were working with discrete-time Markov chains, we had a matrix or depiction of
+            $$P(X_{i,t=n+1}|X_{j,t=n})$$
+            where \(X_i\) is the new possible state and \(X_j\) is the current state. 
+            These probabilities are implicitly given based on the time interval. We do not consider what happens in between observation periods; it is possible that we observe the same state in consecutive observations, but the protein went from A to E then back to A in between.
+            To get to continuous-time stochastic processes, we can take the limit as the time between observation periods goes to 0.
+<br><br>
+            For a full derivation, see <a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">Lawler's Stochastic Calculus book</a> chapter 6.
+            
+<br><br>
+            Let us first consider a process that can only increase. In a biology context, we can say that this is the total amount of mRNA produced over a period (not the mRNA level since mRNA can degrade and would go down). 
+            Let assume that there is an mRNA production rate \(\lambda\) and define \(p(s)\) to be the probability that at least 1 mRNA moecule is produced during the interval [t,t+s]. 
+            Then the probability of 1 mRNA molecule being produced in a short interval is approximately the rate times the duration of time. This can be formalized as 
+            $$p(\Delta t)=\lambda \Delta t+o(\Delta t)$$
+
+            Let \(X_s\) be the total number of molecules of mRNA produced by time t=s, T be the first time that a molecule of mRNA is produced, or formally:
+
+            $$T=\text{inf}\{s:X_s=1\}$$
+
+            From this, it can be shown that the probability that no molecules have been produced during an interval of length t is
+            
+            $$P\{T>t\}=e^{-\lambda*t}$$
+            Thus, the time for between mRNA production is exponentially distributed like 
+            $$f(t)=\lambda e^{-\lambda t}$$
+            
+            This distribution is nice as it has the "memory-less" property that our discrete-time Markov chains had.
+            Now, this has only given us a distribution of how long it takes between transcription events, not a total amount. 
 
 
 
 
             <h4>Advanced Applications in Biology</h4>
+            The classical example of stochastic processes in biology is mRNA expression levels - as it is a quantity that can both degrade and be produced at irregular intervals constantly. 
+
             
         </div>
 
@@ -442,6 +477,11 @@
 
 
         </div>
+
+        <h2>Works Cited</h2>
+        <ol>
+            <li><a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">https://www.math.uchicago.edu/~lawler/finbook.pdf</a></li>
+        </ol>
 
 </body>
 </html>
