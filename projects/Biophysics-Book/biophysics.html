@@ -714,6 +714,24 @@
             But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
 
             <br><br>
+            <img src="Markov_states.png" style="margin:auto; display: block;"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+initial_prob_vector = np.array([1,0])
+transition_matrix = np.array([[0.6,0.4],[0.7,0.3]])
+time_points = np.arange(10)
+markov_df = pd.DataFrame(index=time_points,columns=['A','E'])
+current_prob = initial_prob_vector
+for i in range(len(time_points)):
+    markov_df.loc[i] = current_prob
+    current_prob = np.matmul(current_prob, transition_matrix)
+markov_df.plot(xlabel="Iteration",
+    ylabel="Fraction",
+    title="Evolution of State Makeup Over Time")
+plt.show()</pre>
+            </code>
+
+            What happens if the initial state were [0,1] instead of [1,0]? This can be checked using the code provided, but it will end up converging to the same values.
 
 
             Additionally, we are not restricted to just 2 states, our probability vector could have m columns for m possible states and our transition matrix would be mxm. 
