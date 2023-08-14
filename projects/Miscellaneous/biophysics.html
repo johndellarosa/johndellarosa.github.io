@@ -290,10 +290,17 @@
                 <h2>Advanced Thermodynamics</h2>
                 <h3>Introduction</h3>
                 This section will delve deeper into thermodynamics. Multivariable calculus will be used to expand upon topics covered earlier as well as introduce new topics. 
-            <h3>Laws of Thermodynamics Revisited</h3>
+                The <b>Fundamental Thermodynamic Relation</b> will be covered as an extension of the first law.
+                <h3>Laws of Thermodynamics Revisited</h3>
             <h4>Total derivatives</h4>
 
+            While the derivation is outside the scope of this textbook, the first law can be expressed as the following total derivative:
+            $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV+\sum(\frac{\partial U}{\partial N_i})_{S,V}dN_i$$
+            $$=TdS-p_{ext}dV+\sum\mu_idN_i$$
+            where T is temperature, \(p_{ext}\) is external pressure, V is volume, \(\mu_i\) is the chemical potential for a chemical species i, and \(N_i\) is the number of species i
+
             <h4>Temperature and Entropy</h4>
+            From the Fundamental Thermodynamic Relation, we have:
             $$(\frac{\partial S}{\partial U})_{N,V}=\frac{1}{T}$$
             If \(T_{A}>T_{B}\), then \(\frac{1}{T_{A}}<\frac{1}{T_{B}}\)
             $$(\frac{\partial S_{A}}{\partial U_{A}})_{N,V}<(\frac{\partial S_{B}}{\partial U_{B}})_{N,V}$$
@@ -452,17 +459,169 @@
         <div id="Kinetics">
             <h2>Kinetics</h2>
             <h3>Refresher on Kinetics</h3>
-                <h4>Rate Laws</h4>
+                <h4>Elementary Reactions</h4>
+
+                Let us consider elementary reactions - that is they have no intermediate steps:
+                Let A, B be the reactants and P be the product (not Phosphorus). 
+
+
+
+                For <b>single step</b> unidirectional reactions, we can write an equation that describes the rate of change in chemical species:
+
+                $$A\rightarrow P$$
+
+                Instinctively, if this is the only reaction taking place, the concentration of A should be going down by the same rate by which the concentration of P goes up.
+
+
+                $$\frac{d[A]}{dt}=-\frac{d[P]}{dt}$$
+
+                It would also be intuitive to think that the higher the concentration of A, the faster the reaction would go. 
+                Probabilitistically, a justification would be that each A molecule has a chance per unit time of converting to P. 
+                Then if each conversion is independent, you would expect the rate of conversion to be directly proportional to the number of A. 
+                Thus, we also get the relationship.
+
+                $$\frac{d[P]}{dt}=k[A]$$
+
+                where k is a constant of proportionality which is specific to the reaction. We will call this the <b>rate constant</b>.
+
+                Let us now consider a bimolecular, <b>single-step</b> unidirectional reaction:
+
+                $$A+B\rightarrow P$$
+
+                By similar logic, we can write the following relationships:
+
+                $$\frac{d[A]}{dt}=\frac{d[B]}{dt}=-\frac{d[P]}{dt}$$
+
+                $$\frac{d[P]}{dt}=k[A][B]$$
+
+                <h4>Multiple Step Reactions</h4>
+
 
                 <h4>Relationship with Equilibrium Constant</h4>
 
                 <h4>Integrated Rate Laws</h4>
 
+                This section will involve solving a few simple differential equations. 
+                As thsi section is more concerned with the results and logic rather than the math, the derivations will not be especially rigorous and will be playing fast and loose with some math.
 
+
+                Let us consider the simplest case, a reaction that has a rate-limiting step that is independent of concentration.
+
+                $$\frac{d[P]}{dt}=k$$
+                
+                If the mathematicians aren't watching, you can "multiply" by dt to get
+
+                $$d[P]=kdt$$
+                While not good notation, we can itegrate from time t=0 to a a generic time t=t.
+
+                $$\int_0^td[P]=\int_0^tkdt$$
+                $$[P]_t-[P]_0=kt$$
+
+                We would expect this as it is a constant rate process, so it should just be the rate multiplied by the amount of time.
+
+                <br><br>
+                Now for a more realistic example.
+
+                Consider a reaction with the rate law:
+
+                $$\frac{d[A]}{dt}=-k[A]$$
+
+                Again we will want each variable to be on its own side. Using some algebra and abuse of notation, we get
+
+                $$\frac{d[A]}{[A]}=-kdt$$
+
+                We can treat it as if we were integrating each side seperately.
+
+                $$\int \frac{d[A]}{[A]}=\int-kdt$$
+
+                While it may appear intimidating, we are essentially just integrating \(\frac{1}{x}\) and a constant.
+
+                $$ln([A]_t)-ln([A]_0)=-kt$$
+
+                In these sorts of problems, once we integrate, we then try to isolate the concentration at time t.
+
+                $$ln([A]_t)=ln([A]_0)-kt$$
+                Exponentiating things, we get
+                $$[A]_t=[A]_0e^{-kt}$$
+                This is the <b>first order integrated rate law</b>
+                Now, we have an equation that describes the concentration over time, not just the rate.
+
+                For completeness, consider a rate law corresponding to a reaction with the rate law:
+
+                $$\frac{d[A]}{dt}=-k[A]^2$$
+
+                $$\frac{d[A]}{[A]^2}=-kdt$$
+
+                $$\int\frac{d[A]}{[A]^2}=\int-kdt$$
+
+                $$\frac{-1}{[A]_t}-\frac{-1}{[A]_0}=-kt$$
+                $$\frac{1}{[A]_t}=\frac{1}{[A]_0}+kt$$
+                $$[A]_t=\frac{1}{\frac{1}{[A]_0}+kt}$$
+
+                So far, the integrated rate laws have been univariate. Differential equations with multiple variables are possible and are called "Partial Differential Equations" or PDEs. 
 
             <h3>Michaelis-Menten Kinetics</h3>
             <h4>Binding and Unbinding</h4>
+
+            Let us picture a an enzymatic reaction. We have a substrate, S, which binds to an Enzyme, E, resulting in a bound complex, \(E\cdot S\). After some amount of time, the substrate is transformed into product, P, and the enzyme unbinds. 
+            We will have the formation of the Enzyme-substrate complex be reversible, but consider the product formation to be irreversible.
+
+            $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+
+            
+
             <h4>Derivation</h4>
+
+            There is a fixed amount of enzyme - either the enzyme is bound or unbound. Let us call the total amount of Enzyme, \(E_0\)
+
+            $$E_0=[E]+[E\cdot S]$$
+            We can write general, complex rate laws by looking at the flux into and out of each state
+            $$\frac{d[X]}{dt}=\sum R_i-\sum R_{j}$$
+            where R_i is the rate for a reaction step that produces X and R_j is the rate for a reaction step that depletes X. 
+
+            $$\frac{d[S]}{dt}=k_{-1}[E\cdot S]-k_1[E][S]$$
+            $$\frac{d[E]}{dt}=k_{-1}[E\cdot S]+k_{cat}[E\cdot S]-k_{1}[E][S]$$
+            $$=(k_{-1}+k_{cat})[E\cdot S]-k_1[E][S]$$
+            $$\frac{d[P]}{dt}=k_{cat}[E\cdot S]$$
+            $$\frac{d[E\cdot S]}{dt}=k_1[E][S]-k_{-1}[E\cdot S]-k_{cat}[E\cdot S]$$
+
+            A "steady-state approximation" is then made; that is, we treat the intermediate complex's concentration as a constant. 
+            $$\text{Let }\frac{d[E\cdot S]}{dt}=0$$
+            Using our above equations, we can then get
+            $$k_{1}[E][S]=(k_{-1}+k_{cat})[E\cdot S]$$
+            Since we are ultimately interested in the rate of product formation, we should look to that equation for a possible next step. 
+            $$\frac{d[P]}{dt}=k_{cat}[E\cdot S]$$
+            Since we see that there is \([E\cdot S]\), we should manipulate the previous equation to find \([E\cdot S]\) in terms of [E] and [S], especially since we do not directly know the concentration of the enzyme-substrate complex. We know how much substrate and enzyme there are initially. We also do not necessarily know how much unbound enzyme there is either as that would also require knowledge of how much bound enzyme there was. So let's try to reduce it from 2 unknowns to 1 unknown. 
+            By using our total enzyme equation above, we can get
+            $$k_{1}(E_0-[E\cdot S])[S]=(k_{-1}+k_{cat})[E\cdot S]$$
+            Let's now algebraically manipulate the equation to isolate \(E\cdot S\)..
+            $$k_{1}E_0[S]-k_{1}[E\cdot S][S]=(k_{-1}+k_{cat})[E\cdot S]$$
+            $$k_{1}E_0[S]=(k_{1}[S]+(k_{-1}+k_{cat}))[E\cdot S]$$
+            $$[E\cdot S]=\frac{k_1E_0[S]}{k_1[S]+(k_{-1}+k_{cat})}$$
+            For simplicity, we will divide the numerator and denominator of the right side by \(k_1\)
+            $$[E\cdot S]=\frac{E_0[S]}{\frac{k_{-1}+k_2}{k_1}+[S]}$$
+            We can then plug \(E\cdot S\) in to the rate of product formation equation
+            $$\frac{dP}{dt}=k_{cat}[E\cdot S]$$
+            $$=\frac{k_{cat}E_0[S]}{\frac{k_{-1}+k_2}{k_1}+[S]}$$
+
+            While this result may look unruly, it does tell us some nice properties. 
+            Let us define a constant \(k_M\)
+            $$k_M=\frac{k_{-1}+k_{cat}}{k_1}$$
+            $$\frac{dP}{dt}=\frac{k_{cat}E_0[S]}{k_M+[S]}$$
+            When the susbtrate concentration is equal to \(k_M\), the rate of production is at 50% of max rate.
+
+            $$V_{max}\equiv k_{cat}E_0$$
+
+            $$v=\frac{V_{max}[S]}{k_M+[S]}$$
+
+
+
+
+
+
+
+
+
             <h4>More Complicated Dynamics</h4>
 
             <h3>Diffusion</h3>
