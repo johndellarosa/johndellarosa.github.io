@@ -74,6 +74,7 @@
                     <li><a href="#Introduction">Introduction</a></li>
                     <li><a href="#Probability">Probability, Statistics, & Entropy</a></li>
                     <li><a href="#Thermodynamics">Thermodynamics</a></li>
+                    <li><a href="#Advanced-Thermodynamics">Advanced Thermodynamics</a></li>
                     <li><a href="#Biochemistry">Biochemistry</a></li>
                     <li><a href="#Kinetics">Kinetics</a></li>
                     <li><a href="#Stochastic-Processes">Stochastic Processes</a></li>
@@ -98,6 +99,7 @@
             <li>Properties of logarithms and exponentiatials will be used</li> 
             <li>Differential equations will appear, but will not require understanding for how to solve, merely recognizing what the equation mean. </li>
             <li>Linear Algebra will be used in the some of the later probability-focused chapters, such as Markov Chains</li>
+            <li>Basics of probability and statistics will be assumed</li>
         </ul>
             <h4>Physics</h4>
             <ul>
@@ -127,6 +129,43 @@
             </div>
             <div id="Probability">
             <h2>Probability, Statistics, and Entropy</h2>
+            <h3>Probability</h3>
+            <h4>Defining terms</h4>
+            Before we show any equations, we must define some terms. Let A and B be events.
+
+            <ul>
+                <li>P(A) is the probability of event A occurring</li>
+                <li>\(P(A\cup B)\) is the probability of A or B or both occurring. The \(\lor\) can also be seen instead of \(\cup\)</li>
+                <li>\(P(A\cap B)\) is the probability of A <b>and</b> B both occurring. The \(\land\) can also be seen instead of \(\cap\)</li>
+                <li>\(P(\neg A)\) is the probability of A not occurring. This can also be written as a bar above the A</li>
+            </ul>
+
+            <h4>De Morgan's Laws</h4>
+            De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
+
+            "If neither A nor B happened, then that means A didn't happen and B didn't happen"
+            $$\neg(A \lor B)=(\neg A)\land (\neg B)$$
+
+            "If A and B didn't both happen, then that means either A didn't happen, B didn't happen, or neither happened"
+            $$\neg(A \land B)=(\neg A)\lor (\neg B)$$
+
+
+            <h4>Conditional Probability</h4>
+            Let A and B be two events. We denote the conditional probability of A occurring given B having occurred as \(P(A|B)\)
+
+            This is defined mathematically as:
+
+            $$P(A|B)\equiv \frac{P(A \cap B)}{P(B)}$$
+            where \(P(A\cap B)\) is the probability of both A and B occurring.
+            
+
+
+            <h4>Bayes' Theorem</h4>
+            Bayes' Theorem relates two events and the conditional probabilities of one upon another. 
+            Let A and B two events with non-zero probabilities
+            $$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$
+
+
 
             <h3>Entropy</h3>
             <h4>Multiplicity</h4>
@@ -190,6 +229,86 @@
             A common mistake that students make is interpreting it as saying that entropy cannot decrease locally. 
             This is <b>not</b> true. Entropy can very well decrease in a system, but it will be offset by a greater increase in the surroundings. 
             In fact, much of biology involves this very trade-off.
+
+            <h3>Energy</h3>
+            <h4>Forms of Energy</h4>
+            Energy can take different forms. The two main categories are Kinetic and Potential energy. 
+            As its name suggests, kinetic energy is associated with movement. Here are 3 forms which we will consider throughout the book:
+            <ol>
+                <li>Translational: a molecule's movement through space</li>
+                <li>Rotational: a molecule rotating about some axis</li>
+                <li>Vibrational: bonded atoms vibrating</li>
+            </ol>
+            Potential energy is associated with position rather than movement. This can also take several forms, including but not limited to:
+            <ol>
+                <li>Chemical bonds</li>
+                <li>Gravitational</li>
+                <li>Concentration gradients</li>
+                <li>Electrostatic interactions</li>
+                <li>Compressed spring</li>
+            </ol>
+            <h4>Physics Equations</h4>
+            As one formulation of the First Law states, there is conservation of energy with no input or removal from the system. 
+            However, energy can be converted from one form to another. Imagine a ball rolling off of a table; its gravitational potential energy gets converted into kinetic energy, sending it downward. 
+            U sometimes refers to potential energy, but also internal energy in general. In this section, U will refer to <b>Potential energy</b> and E will refer to <b>Total energy</b>.
+            
+            <br><br>
+            In this section, positive work will refer to work <b>done</b> by the system which is opposite what we had before, but it is common convention. 
+
+            $$W=-\Delta U$$
+
+            How is are work required and potential energy related to forces?
+
+            $$W=\int F\cdot dx$$
+
+            The work done is the integral of the force, F, applied over the distance. This force may be a function of the position, x. 
+
+            <h4>Hooke's Law</h4>
+            Hooke's law describes the restoring force in a spring. In plain English, Hooke's law states that the restoring force a spring has is proportional to the displacement from the rest length.
+            $$F=-k(x-x_0)$$
+            where x is the length of the spring, \(x_0\) is the rest length of the spring, k is the spring constant, and F is the force. The sign is negative as the force counteracts the stretching and applies a force in the opposite direction. 
+            We can also call \(x-x_0\) to be simply x by having our coordinate system have x_0=0; longer is positive x; compressed is negative x.
+
+            Using our formula for work, we can calculate the work required to stretch a spring.
+            $$W=\int_0^z (-k x) \cdot dx$$
+            Because the force is in the opposite direction as the dx vector, we get an additional negative sign which cancels things out. 
+            $$W=\int_0^z(kx)dx$$
+            $$=\frac{1}{2}kz^2$$
+            The work required is \(\frac{1}{2}kz^2\) which will be converted into potential energy.
+
+            <h4>Electrostatics</h4>
+            Another common force is electrostatic. The electrostatic force between two point charges is described by Coulomb's Law. 
+            $$F=\frac{1}{4\pi D\varepsilon_0}\frac{q_1q_2}{r^2}$$
+            where F is the force, D is the dielectric constant for the medium, \(\varepsilon_0\) is the vacuum permittivity (a constant), \(q_i\) is the charge of particle i, and r is the distance between the two charged particles. 
+            In this form of Coulomb's Law, a negative value for F means an attractive force and a positive F means a repulsive force. 
+
+
+
+
+            </div>
+            <div id="Advanced-Thermodynamics">
+                <h2>Advanced Thermodynamics</h2>
+                <h3>Introduction</h3>
+                This section will delve deeper into thermodynamics. Multivariable calculus will be used to expand upon topics covered earlier as well as introduce new topics. 
+            <h3>Laws of Thermodynamics Revisited</h3>
+            <h4>Total derivatives</h4>
+
+            <h4>Temperature and Entropy</h4>
+            $$(\frac{\partial S}{\partial U})_{N,V}=\frac{1}{T}$$
+            If \(T_{A}>T_{B}\), then \(\frac{1}{T_{A}}<\frac{1}{T_{B}}\)
+            $$(\frac{\partial S_{A}}{\partial U_{A}})_{N,V}<(\frac{\partial S_{B}}{\partial U_{B}})_{N,V}$$
+            by substituting in the thermodynamic definition for temperature, we see that the lower temperature system, B, would have a greater change in entropy for the same change in energy. This means that there would be a net entropy increase if energy were to flow from A to B. 
+            So when would this heat flow stop? When entropy is maximized/equilibrium. The termination condition would be when there is no net increase in entropy due to heat flow or in mathematical terms:
+            $$(\frac{\partial S_{A}}{\partial U_{A}})_{N,V}=(\frac{\partial S_{B}}{\partial U_{B}})_{N,V}$$
+            which is equivalent to saying
+            $$\frac{1}{T_{A}}=\frac{1}{T_{B}}$$
+            or alternatively
+            $$T_{A}=T_{B}$$
+
+            In plain English to summarize: For the same amount of energy added to a system, the one with the lower temperature would increase in entropy more. 
+            Conversely, for the same amount of energy taken out of a system, the one with a higher entropy would decrease in energy less. Therefore, if you take energy from the higher temperature system and put it into the lower temperature system, there will be a net increase in entropy. 
+            This will change the temperatures of the systems, bringing them closer together. This exchange in energy will stop when the temperatures are the same, or when there is no longer a possible increase in energy from taking energy from one system and putting it in another.
+
 
 
             <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
@@ -263,6 +382,13 @@
             $$dG=(TdS+Vdp)-(TdS+SdT+dSdT)$$
             Cancelling out TdS terms; dSdT goes to 0
             $$dG=Vdp-SdT$$
+
+        </div>
+        <div id="Statistical-Mechanics">
+            <h2>Statistical Mechanics</h2>
+            <h3>Boltzmann Distribution</h3>
+
+
 
         </div>
         <div id="Biochemistry">
@@ -436,7 +562,7 @@
 
 
             <h3>Continuous-Time Stochastic Processes</h3>
-
+            <h4>Poisson Process</h4>
             When we were working with discrete-time Markov chains, we had a matrix or depiction of
             $$P(X_{i,t=n+1}|X_{j,t=n})$$
             where \(X_i\) is the new possible state and \(X_j\) is the current state. 
@@ -463,8 +589,19 @@
             
             This distribution is nice as it has the "memory-less" property that our discrete-time Markov chains had.
             Now, this has only given us a distribution of how long it takes between transcription events, not a total amount. 
+<br><br>
+            Without deriving it, it can be shown that the distribution for the total number of "events" with exponentially distributed events has the following distribution:
 
+            $$P(X_{t+s}-X_s=k)=e^{-\lambda t}\frac{(\lambda t)^k}{k!}$$
 
+            This is known as a Poisson distribution, which is parameterized by \(\lambda\), the rate constant. 
+            The distribution has the following properties:
+            <ol>
+                <li>Mean of \(\lambda t\) </li>
+                <li>Variance of \(\lambda t\)</li>
+            </ol>
+            The Poisson process can be further generalized to allow for variable-sized jumps rather than just jumps of 1. 
+            This is known as a "Compound Poisson Process." 
 
 
             <h4>Advanced Applications in Biology</h4>
