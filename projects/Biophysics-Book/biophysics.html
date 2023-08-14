@@ -558,6 +558,8 @@
                 $$\frac{1}{[A]_t}=\frac{1}{[A]_0}+kt$$
                 $$[A]_t=\frac{1}{\frac{1}{[A]_0}+kt}$$
 
+                <img src="Rate_Law_Comparison.png" style="margin:auto; display: block;"/>
+
                 So far, the integrated rate laws have been univariate. Differential equations with multiple variables are possible and are called "Partial Differential Equations" or PDEs. 
 
             <h3>Michaelis-Menten Kinetics</h3>
@@ -591,7 +593,7 @@
             $$k_{1}[E][S]=(k_{-1}+k_{cat})[E\cdot S]$$
             Since we are ultimately interested in the rate of product formation, we should look to that equation for a possible next step. 
             $$\frac{d[P]}{dt}=k_{cat}[E\cdot S]$$
-            Since we see that there is \([E\cdot S]\), we should manipulate the previous equation to find \([E\cdot S]\) in terms of [E] and [S], especially since we do not directly know the concentration of the enzyme-substrate complex. We know how much substrate and enzyme there are initially. We also do not necessarily know how much unbound enzyme there is either as that would also require knowledge of how much bound enzyme there was. So let's try to reduce it from 2 unknowns to 1 unknown. 
+            Since we see that there is \([E\cdot S]\), we should manipulate the previous equation to find \([E\cdot S]\) in terms of [E] and [S], especially since we do not directly know the concentration of the enzyme-substrate complex. We know how much substrate and enzyme there are initially. We also do not necessarily know how much unbound enzyme there is either as that would also require knowledge of how much bound enzyme there was. So let's try to reduce it from 2 unknowns to 1 unknown. Another assumption that we will make is that \([S]\gg E_0\) since technically \(S_0=[S]+[E\cdot S]\), but we shall say \([S]+[E\cdot S]\approx [S]\). 
             By using our total enzyme equation above, we can get
             $$k_{1}(E_0-[E\cdot S])[S]=(k_{-1}+k_{cat})[E\cdot S]$$
             Let's now algebraically manipulate the equation to isolate \(E\cdot S\)..
@@ -606,23 +608,25 @@
 
             While this result may look unruly, it does tell us some nice properties. 
             Let us define a constant \(k_M\)
-            $$k_M=\frac{k_{-1}+k_{cat}}{k_1}$$
+            $$k_M\equiv\frac{k_{-1}+k_{cat}}{k_1}$$
             $$\frac{dP}{dt}=\frac{k_{cat}E_0[S]}{k_M+[S]}$$
             When the susbtrate concentration is equal to \(k_M\), the rate of production is at 50% of max rate.
 
             $$V_{max}\equiv k_{cat}E_0$$
 
             $$v=\frac{V_{max}[S]}{k_M+[S]}$$
+            <h4>Competitive Inhibition</h4>
+            We had previously just considered the scenario where the substrate had no competition for binding to the active site, but the equation can be extended easily to include the presence of another moelecule that can bind to the same active site as the substrate, but will not undergo the catalytic reaction. 
+
+            Let us assume the same dynamics, but with the addition of a side reaction:
+            $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+
+            $$E+I\rightleftharpoons_{k_I}^{k_{-I}} E\cdot I$$
+            Since there is a new state can consume E to enter and product E when it leaves, this will change our equation for \(\frac{d[E]}{dt}\) as well as create new equations for \(\frac{d[E\cdot I]}{dt}\) and \(\frac{d[I]}{dt}\). 
 
 
 
 
-
-
-
-
-
-            <h4>More Complicated Dynamics</h4>
 
             <h3>Diffusion</h3>
         </div>
@@ -749,7 +753,7 @@
             This distribution is nice as it has the "memory-less" property that our discrete-time Markov chains had.
             Now, this has only given us a distribution of how long it takes between transcription events, not a total amount. 
 <br><br>
-            Without deriving it, it can be shown that the distribution for the total number of "events" with exponentially distributed events has the following distribution:
+            Without deriving it, it can be shown that the distribution for the total number of "events" with exponentially distributed wait times has the following distribution:
 
             $$P(X_{t+s}-X_s=k)=e^{-\lambda t}\frac{(\lambda t)^k}{k!}$$
 
