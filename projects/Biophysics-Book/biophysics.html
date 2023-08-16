@@ -292,7 +292,23 @@
             where F is the force, D is the dielectric constant for the medium, \(\varepsilon_0\) is the vacuum permittivity (a constant), \(q_i\) is the charge of particle i, and r is the distance between the two charged particles. 
             In this form of Coulomb's Law, a negative value for F means an attractive force and a positive F means a repulsive force. 
 
+            <h4>Morse Potential</h4>
+            The harmonic oscillator/Hooke's law model is treating a molecule as if it were two nuclei connected by a spring in a classical sense. The potential energy is 
+            $$U=\frac{1}{2}k(r-r_e)^2$$
+            where U is your potential energy of the spring, k is your spring constant, r is the distance between the atoms and \(r_e\) is the equilibrium bond distance. So this energy function looks like a parabola with a minimum at \(r=r_e\).
+<br><br>
 
+            This model is pretty decent at describing behavior close to the equilibrium bond distance, but as r gets further away from \(r_e\), we need a better model. This is where the Morse potential comes in. This is an improved version which takes into account things like nuclear-nuclear repulsion from Pauli's exclusion principle and bond dissociation. When r is too small, the Morse potential jumps in potential energy quicker than with a simple Hooke's law approximation. Bonds can't stretch infinitely; bonds break if separation grows too large. The Morse potential takes this into account by having U asymptotically approach a value in the limit as r goes to infinity instead of continuing to increase quadratically. The limit as r approaches infinity is your bond dissociation energy.
+The equation for the morse potential is given by 
+$$U(r)=D_e (1-e^{-a(r-r_e)})^2$$
+where \(D_e\) is related to the dissociation energy. 
+
+
+<h4>Lennard-Jones Potential</h4>
+The Lennard-Jones potential describes Van der Waals interactions between two molecules. 
+The potential is given by
+
+$$U(r)=4\varepsilon \left[(\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right]$$
 
 
             </div>
@@ -407,6 +423,10 @@
         <div id="Statistical-Mechanics">
             <h2>Statistical Mechanics</h2>
             <h3>Boltzmann Distribution</h3>
+
+            A system at equilibrium obeys what is known as a <b>Boltzmann Distribution</b>. 
+            This distribution maximizes <b>total entropy</b>, not the entropy of the system. 
+
 
 
 
@@ -635,9 +655,9 @@
 k_M = 4e-4
 k_cat = 10
 E_0 = 1e-12
-S_array = np.geomspace(1e-10,1e-2,200)
+S_array = np.geomspace(1e-5,1e-2,100)
 v_array = k_cat*E_0*S_array/(k_M+S_array)
-noise = np.random.normal(size=(200))*1e-14
+noise = np.random.normal(size=(100))*5e-14
 v_array = v_array + noise
 plt.figure(figsize=(14,8))
 plt.scatter(S_array, v_array,s=5)
@@ -662,9 +682,9 @@ plt.show()</pre>
 k_M = 4e-4
 k_cat = 10
 E_0 = 1e-12
-S_array = np.geomspace(1e-10,1e-2,200)
+S_array = np.geomspace(1e-5,1e-2,100)
 v_array = k_cat*E_0*S_array/(k_M+S_array)
-noise = np.random.normal(size=(200))*3e-19
+noise = np.random.normal(size=(100))*5e-14
 v_array = v_array + noise
 S_array_inverse = 1/S_array
 v_array_inverse = 1/v_array
@@ -683,18 +703,121 @@ plt.show()</pre>
             One thing to note is the heteroskedasticity in the graph. Ordinary Least Squares (OLS) is the best, unbiased linear model when the Gauss-Markov conditions are satisfied - one of which is homoskedasticity (variance of errors is constant over X). 
             In practice, this can lead to bad estimates as the noisy values on the right can drastically affect the best-fit parameters.
 
+<h3>Inhibition</h3>
+
+<figure><a href="https://commons.wikimedia.org/wiki/File:Inhibition-types.jpg#/media/File:Inhibition-types.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Inhibition-types.jpg" alt="Inhibition-types.jpg" style="max-height: 300px;"></a><br>By <a href="//commons.wikimedia.org/w/index.php?title=User:Athel_cb&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Athel cb (page does not exist)">Athel cb</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=130486959">Link</a></figure>
+
             <h4>Competitive Inhibition</h4>
             We had previously just considered the scenario where the substrate had no competition for binding to the active site, but the equation can be extended easily to include the presence of another moelecule that can bind to the same active site as the substrate, but will not undergo the catalytic reaction. 
 
             Let us assume the same dynamics, but with the addition of a side reaction:
             $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
 
-            $$E+I\rightleftharpoons_{k_I}^{k_{-I}} E\cdot I$$
+            $$E+I\rightleftharpoons_{k_2}^{k_{-2}} E\cdot I$$
             Since there is a new state can consume E to enter and product E when it leaves, this will change our equation for \(\frac{d[E]}{dt}\) as well as create new equations for \(\frac{d[E\cdot I]}{dt}\) and \(\frac{d[I]}{dt}\). 
+            We can denote the equilibrium constant for the association of the Enzyme-Inhibitor complex to be \(K_I\).
+
+            $$K_I=\frac{k_{-2}}{k_2}$$
+            $$\frac{[E][I]}{[E\cdot I]}=K_I\sim\frac{[E]I_0}{[Y]}$$
+            $$E_0=[E]+[E\cdot S] +[E\cdot I]$$
+            $$[E]=E_0-[E\cdot S]-[Y]$$
+            $$[E]=E_0-[E\cdot S]-\frac{[E]I_0}{K_I}$$
+            $$[E](1+\frac{I_0}{K_I})=E_0-[E\cdot S]$$
 
 
 
+            $$[E]=\frac{E_0-[E\cdot S]}{1+\frac{I_0}{K_I}}$$
+            Let us define a constant \(\alpha\) such that
+            $$\alpha\equiv 1+\frac{I_0}{K_I}$$
+            $$[E]=\frac{E_0-[E\cdot S]}{\alpha}$$
 
+            $$0=\frac{d[E\cdot S]}{dt}=k_1[E][S]-k_{cat}[E\cdot S]-k_{-1}[E\cdot S]$$
+            $$[E\cdot S](k_{cat}+k_{-1})=k_1[E][S]$$
+            $$[E\cdot S]=\frac{1}{K_M}[E][S]$$
+            $$\approx \frac{1}{k_M}[E]S_0$$
+            $$[E\cdot S]_{ss}=\frac{S_0}{k_M}\times\frac{E_0-[E\cdot S]_{ss}}{\alpha}$$
+            $$[E\cdot S]_{ss}(1+\frac{S_0}{k_M\alpha})=\frac{S_0E_0}{\alpha k_M}$$
+            $$[E\cdot S]_{ss}=\frac{\frac{S_0E_0}{k_M\alpha}}{1+\frac{S_0}{k_M\alpha}}$$
+            $$=\frac{E_0}{1+\frac{\alpha k_M}{S_0}}$$
+
+            Now finally plugging in the concentration into the product formation kinetic equation:
+
+            $$v_0=k_{cat}[E\cdot S]_{ss}=\frac{k_{cat}E_0}{1+\frac{\alpha k_M}{S_0}}$$
+
+            <img src="LineweaverBurkInhib.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(5e-3,1e-2,200)
+test_points = 1/np.array([-0.1,5e-3])
+
+alpha = 1
+v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
+noise = np.random.normal(size=(200))*.5e-16
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+ax = plt.figure(figsize=(14,8))
+plt.scatter(S_array_inverse, v_array_inverse,s=5)
+model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+results = model.fit()
+plt.plot(test_points, results.predict(sm.add_constant(test_points)),color='green')
+
+alpha = 1.5
+v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
+noise = np.random.normal(size=(200))*.5e-16
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+plt.scatter(S_array_inverse, v_array_inverse,s=5,color='red')
+model2 = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+results2 = model2.fit()
+plt.plot(test_points, results2.predict(sm.add_constant(test_points)),color='orange')
+
+
+plt.title("Lineweaver-Burk plot")
+plt.xlabel("1/[S] ($M^{-1}$)")
+plt.ylabel(f"$1/v_0$ (s/M)")
+plt.legend(['Data (No inhib)',f'OLS: y={results.params[0]:.2E}x+{results.params[1]}','Data (Inhib)', f'OLS: y={results2.params[0]}x+{results2.params[1]}'])
+plt.show()</pre>
+            </code>
+
+While it is not apparent in the figure, as the inhibitor is added, the line rotates counter-clockwise, with the y-intercept remaining the same. 
+The following are the effects of competitive inhibition:
+<ol>
+    <li>v_max stays the same</li>
+    <li>k_M <b>increases</b> as more substrate is required to reach half max velocity</li>
+</ol>
+
+        <h4>Uncompetitive Inhibition</h4>
+
+        Uncompetitive inhibition involves the following dynamics:
+
+        $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+
+        $$E\cdot S+I\rightleftharpoons_{k_2}^{k_{-2}} E\cdot S\cdot I$$
+
+        With this form of inhibition, the inhibitor binds to the \(E\cdot S\) complex, not E, and prevents enzyme activity as well as substrate dissociation. In a Lineweaver-Burk plot, this would appear as a parallel shift downward. 
+
+        The following are the effects of uncompetitive inhibition:
+        <ol>
+            <li>v_max decreases</li>
+            <li>k_M <b>decreases</b></li>
+        </ol>
+
+        <h4>Non-competitive Inhibition</h4>
+        While similar in name to uncompetitive, non-competitive inhibition is distinct from it. 
+        Non-competitive inhibition does not involve the inhibitor binding to the active site, instead it binds to an "allosteric site." 
+        The inhibitor can bind to both E and \(E\cdot S\). Similarly, the substrate is able to bind and unbind to both E and \(E\cdot I\). 
+<br><br>
+This has the effect of essentially reducing the amount of enzyme present, as if less had been added in the first place. 
+The following are the effects of non-competitive inhibition:
+<ol>
+    <li>v_max decreases</li>
+    <li>k_M is unaffected</li>
+</ol>
 
 
 
