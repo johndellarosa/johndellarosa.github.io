@@ -331,21 +331,21 @@
             <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
             <h4> Deriving the Thermodynamic Definition of Entropy</h4>
             By the differential form of the first law of Thermodynamics, we have
-            $$dE=(\frac{\partial E}{\partial S})_{V,N}dS+(\frac{\partial E}{\partial V})_{S,N}dV+\sum(\frac{\partial E}{\partial N_i})_{S,V}dN_i$$
+            $$dE=(\frac{\partial E}{\partial S})_{V,N}dS+(\frac{\partial E}{\partial V})_{S,N}dV+\sum(\frac{\partial E}{\partial N_i})dN_i$$
             $$=TdS-p_{ext}dV+\sum\mu_idN_i$$
             *Negative sign for pressure since our dV is pointing in opposite direction of \(p_{ext}\).
             Let us define a quantity called Enthalpy, denoted by H, as follows:
             $$H\equiv E+PV$$
             Through the <a href="https://en.wikipedia.org/wiki/Product_rule">product rule</a> for differentiation:
-            $$dH=dU+d(PV)=dE+(pdV+Vdp+dVdp)$$
+            $$dH=dE+d(PV)=dE+(pdV+Vdp+dVdp)$$
             Substituting in the total differential form of the first law from above for dU:
-            $$=(TdS-pdV)+pdV+Vdp+dVdp$$
+            $$=(TdS-pdV+\sum\mu_idN_i)+pdV+Vdp+dVdp$$
             The dVdp term goes to 0 in the limit. The pdV term from work cancels out with one of the terms from the product rule for d(PV).
-            $$=TdS+Vdp$$
-            If we are working in a constant temperature environment, we can let dp=0, yielding the formula
-            $$dH=TdS=dq$$
+            $$=TdS+Vdp\sum\mu_idN_i$$
+            If we are working in a constant temperature environment and no chemical reactions are taking place, we can let dp=0 and \(dN_i=0\forall i\), yielding the formula
+            $$dH=TdS=\delta q$$
 
-            $$dS=\frac{dq_{rev}}{T}$$
+            $$dS=\frac{\delta q_{rev}}{T}$$
             This is the so-called "Thermodynamic definition of Entropy" which holds for a reversible process at constant pressure<br>
 
 
@@ -363,9 +363,9 @@
             
             <h4>An Aside on Legendre Transforms</h4>
             In the first law, we had
-            $$dU=TdS-pdV$$
+            $$dU=TdS-pdV+\sum\mu_idN_i$$
             and when we defined Enthalpy as \(H\equiv U+PV\), we ended up getting
-            $$dH=TdS+Vdp$$
+            $$dH=TdS+Vdp+\sum\mu_idN_i$$
             By adding PV, we were able to switch the positions of the Volume and Pressure variables (along with a sign change). 
             By doing this, we can now have a quantity that is more convenient to work with when we assume different conditions (e.g. constant pressure instead of constant volume). 
             This is from which we got heat being the change in energy at a fixed volume and the change in enthalpy at fixed pressure equivalencies (set dV=0 or dP=0 in the above equations). 
@@ -380,11 +380,11 @@
             Doing a similar trick as we did for Enthalpy - taking the derivative of both sides and using the linearity of the derivative operator:
             $$dA=dU-d(TS)$$
             Substituting in for dU using the first law; product rule for d(TS)
-            $$dA=(TdS-pdV)-(TdS+SdT+dSdT)$$
+            $$dA=(TdS-pdV+\sum\mu_idN_i)-(TdS+SdT+dSdT)$$
             Canceling out TdS terms and dSdT goes to 0
-            $$dA=-pdV-SdT$$
+            $$dA=-pdV-SdT+\sum\mu_idN_i$$
 
-            If we are working in a constant temperature system (dT=0), then we find that the change in Helmholtz free energy is the amount of work being done. 
+            If we are working in a constant temperature system (dT=0) and constant Volume, then we find that the change in Helmholtz free energy is the amount of chemical work being done. 
             <br><br>
             It is also possible to do what we did for Enthalpy and Helmholtz for a single quantity. 
             Let us define a quantity Gibbs Free Energy, denoted by G:
@@ -396,9 +396,12 @@
 
             $$dG=dH-d(TS)$$
             Substituting in our above result for dH; product rule for d(TS)
-            $$dG=(TdS+Vdp)-(TdS+SdT+dSdT)$$
+            $$dG=(TdS+Vdp+\sum\mu_idN_i)-(TdS+SdT+dSdT)$$
             Cancelling out TdS terms; dSdT goes to 0
-            $$dG=Vdp-SdT$$
+            $$dG=Vdp-SdT+\sum\mu_idN_i$$
+
+            If we are working in a constant temperature system and constant pressure, then the change in Gibbs free energy is the amount of chemical work. 
+
 
         </div>
         <div id="Statistical-Mechanics">
@@ -625,6 +628,61 @@
             $$V_{max}\equiv k_{cat}E_0$$
 
             $$v=\frac{V_{max}[S]}{k_M+[S]}$$
+
+            <img src="MichaelisMentenGraph.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-10,1e-2,200)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+noise = np.random.normal(size=(200))*1e-14
+v_array = v_array + noise
+plt.figure(figsize=(14,8))
+plt.scatter(S_array, v_array,s=5)
+plt.title("Michaelis-Menten plot")
+plt.xlabel("Substrate Concentration (M)")
+plt.ylabel(f"$v_0$ (M/s)")
+plt.xticks([i*5e-4 for i in range(0,21)])
+plt.show()</pre>
+            </code>
+
+            As shown in the generated data above, the value of [S] at which the velocity is half of the asymptotic max is roughly 40 mM. 
+
+            <h5>Lineweaver-Burk plots</h5>
+
+            Since trying to estimate the half-max of a curve can be difficult, we might choose to linearize the data and use regression to find the best fit line and calculate the parameters from that. 
+            One common method is Lineweaver-Burk plots, which are also called double-recipricol plots. As the name suggests, 1/[S] is plotted against 1/v. 
+            The y-intercept is v_max. This is evident since as [S] goes to infinity, 1/[S] goes to 0. The slope is \(k_M/V_\text{max}\). The x-intercept is \(-1/k_M\). 
+
+            <img src="LineweaverBurkPlot.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-10,1e-2,200)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+noise = np.random.normal(size=(200))*3e-19
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+plt.figure(figsize=(14,8))
+plt.scatter(S_array_inverse, v_array_inverse,s=5)
+model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+results = model.fit()
+plt.plot(S_array_inverse, results.predict(sm.add_constant(S_array_inverse)),color='orange')
+plt.title("Lineweaver-Burk plot")
+plt.xlabel("1/[S] ($M^{-1}$)")
+plt.ylabel(f"$1/v_0$ (s/M)")
+plt.legend(['Data',f'OLS: y={results.params[0]}x+{results.params[1]}'])
+plt.show()</pre>
+            </code>
+
+            One thing to note is the heteroskedasticity in the graph. Ordinary Least Squares (OLS) is the best, unbiased linear model when the Gauss-Markov conditions are satisfied - one of which is homoskedasticity (variance of errors is constant over X). 
+            In practice, this can lead to bad estimates as the noisy values on the right can drastically affect the best-fit parameters.
+
             <h4>Competitive Inhibition</h4>
             We had previously just considered the scenario where the substrate had no competition for binding to the active site, but the equation can be extended easily to include the presence of another moelecule that can bind to the same active site as the substrate, but will not undergo the catalytic reaction. 
 
