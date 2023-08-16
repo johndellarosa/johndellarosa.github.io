@@ -764,11 +764,11 @@ plt.show()</pre>
             then we can conclude that every individual path is equally likely. However, the number of paths you can take to get to x=0 after 10 steps is not the same number of paths where you'd end up at x=10. 
             We can alternatively parameterize the paths in terms of lefts and rights, similar to a coin flip. This ends up being a Bernoulli distribution and the multiplicity of paths is given by the binomial distribution. 
             
-            <br>
+            <br><br>
             This is an application of Markov chains where each state is connected to the two adjacent numbered states. 
             
 
-
+            <br><br>
 
             The following depicts a simulation of 5000 particles at various time points using Python.
             <img src="Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
@@ -843,6 +843,38 @@ plt.show()</pre>
             This will be more precisely defined later.
 
             <h3>Continuous-Time Stochastic Processes</h3>
+
+            <h4>Brownian Motion</h4>
+            Brownian motion can be thought of as the continuous analogue of random walks. 
+            It is defined by the following properties (<a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">https://www.math.uchicago.edu/~lawler/finbook.pdf</a>):
+            <ol>
+                <li>\(B_0=0\)</li>
+                <li>\(B_t\) is almost surely continuous</li>
+                <li>\(B_t\) has independent increments</li>
+                <li>\(B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{where }0\leq s\leq t\)</li>
+            </ol>
+
+            Now to explain the properties in further detail.
+
+            $$B_0=0$$
+            This is mainly a convention, as it is possible to have a process undergoing Brownian Motion starting elsewhere, but you would just have to add a constant.
+
+            $$B_t\text{ is almost surely continuous}$$
+            This is more of a theoretical property which we need not be concerned with. For the intents and purposes of this book, 
+            we can just interpret this as stating that Brownian motion is a continuous path with no jumps. 
+
+            $$B_t\text{ has independent increments}$$
+            Let \(0< s< t\).
+            The value of \(B_s-B_0\) is independent of \(B_t-B_s\). It is important that when we select the two intervals that they do not overlap. 
+            It is fine to have the endpoint of one be the start of the other however.
+
+            $$B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{where }0\leq s\leq t$$
+
+            A segment of Brownian motion is normally distributed with a variance equal to the time between the start and end points with mean 0. 
+            
+
+
+
             <h4>Poisson Process</h4>
             When we were working with discrete-time Markov chains, we had a matrix or depiction of
             $$P(X_{i,t=n+1}|X_{j,t=n})$$
