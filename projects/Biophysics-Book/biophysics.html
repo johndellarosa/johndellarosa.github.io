@@ -126,6 +126,9 @@
                 <li>Basic knowledge of nucleic acids</li>
                 <li>Basic knowledge of proteins</li>
             </ul>
+            <h4>Programming</h4>
+            Programming knowledge is <b>not</b> a prerequisite for understanding the material in the book. <br><br>
+            In order to generate many of the figures, I have used programming, mainly Python. Code will be sometimes be displayed if you wish to run simulations yourself similar to the figures; however, it is not crucial. 
             </div>
             <div id="Probability">
             <h2>Probability, Statistics, and Entropy</h2>
@@ -200,8 +203,8 @@
 <br><br>
             Now, for defining w, which is the "work" term. Here are the two equations again with their definition
             <ol>
-                <li>\(\Delta U=q+w\), positive w here is defined as work done <b>to</b> the system and negative w is defined as work done <b>by</b> the system</li>
-                <li>\(\Delta U=q-w\), positive w here is defined as work done <b>by</b> the system and negative w is defined as work done <b>to</b> the system</li>
+                <li>\(\Delta E=q+w\), positive w here is defined as work done <b>to</b> the system and negative w is defined as work done <b>by</b> the system</li>
+                <li>\(\Delta E=q-w\), positive w here is defined as work done <b>by</b> the system and negative w is defined as work done <b>to</b> the system</li>
             </ol>
 
             Regardless of your definition of w, if work is being performed on the system, energy is being transferred to it, but if the system is expending energy to do work, then it will lose energy. 
@@ -220,6 +223,13 @@
                 </li>
                 <li>Chemical work, which harnesses energy from chemical reactions</li>
             </ol>
+
+            There is a differential form of the equation which is expressed as:
+
+            $$dE=\delta q + \delta w$$
+
+            The heat and work variables have \(\delta\) instead because they are <b>inexact differentials</b>. That is to say, they have path-dependent integration. 
+            While the change in energy will be the same, the contribution from work vs heat depends on how the process is done. 
 
             <h4>Second Law of Thermodynamics</h4>
             The second law of thermodynamics states that total entropy is non-decreasing over time. 
@@ -295,18 +305,18 @@
             <h4>Total derivatives</h4>
 
             While the derivation is outside the scope of this textbook, the first law can be expressed as the following total derivative:
-            $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV+\sum(\frac{\partial U}{\partial N_i})_{S,V}dN_i$$
+            $$dE=(\frac{\partial E}{\partial S})_{V,N}dS+(\frac{\partial E}{\partial V})_{S,N}dV+\sum(\frac{\partial E}{\partial N_i})_{S,V}dN_i$$
             $$=TdS-p_{ext}dV+\sum\mu_idN_i$$
             where T is temperature, \(p_{ext}\) is external pressure, V is volume, \(\mu_i\) is the chemical potential for a chemical species i, and \(N_i\) is the number of species i
 
             <h4>Temperature and Entropy</h4>
             From the Fundamental Thermodynamic Relation, we have:
-            $$(\frac{\partial S}{\partial U})_{N,V}=\frac{1}{T}$$
+            $$(\frac{\partial S}{\partial E})_{N,V}=\frac{1}{T}$$
             If \(T_{A}>T_{B}\), then \(\frac{1}{T_{A}}<\frac{1}{T_{B}}\)
-            $$(\frac{\partial S_{A}}{\partial U_{A}})_{N,V}<(\frac{\partial S_{B}}{\partial U_{B}})_{N,V}$$
+            $$(\frac{\partial S_{A}}{\partial E_{A}})_{N,V}<(\frac{\partial S_{B}}{\partial E_{B}})_{N,V}$$
             by substituting in the thermodynamic definition for temperature, we see that the lower temperature system, B, would have a greater change in entropy for the same change in energy. This means that there would be a net entropy increase if energy were to flow from A to B. 
             So when would this heat flow stop? When entropy is maximized/equilibrium. The termination condition would be when there is no net increase in entropy due to heat flow or in mathematical terms:
-            $$(\frac{\partial S_{A}}{\partial U_{A}})_{N,V}=(\frac{\partial S_{B}}{\partial U_{B}})_{N,V}$$
+            $$(\frac{\partial S_{A}}{\partial E_{A}})_{N,V}=(\frac{\partial S_{B}}{\partial E_{B}})_{N,V}$$
             which is equivalent to saying
             $$\frac{1}{T_{A}}=\frac{1}{T_{B}}$$
             or alternatively
@@ -321,13 +331,13 @@
             <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
             <h4> Deriving the Thermodynamic Definition of Entropy</h4>
             By the differential form of the first law of Thermodynamics, we have
-            $$dU=(\frac{\partial U}{\partial S})_{V,N}dS+(\frac{\partial U}{\partial V})_{S,N}dV+\sum(\frac{\partial U}{\partial N_i})_{S,V}dN_i$$
+            $$dE=(\frac{\partial E}{\partial S})_{V,N}dS+(\frac{\partial E}{\partial V})_{S,N}dV+\sum(\frac{\partial E}{\partial N_i})_{S,V}dN_i$$
             $$=TdS-p_{ext}dV+\sum\mu_idN_i$$
             *Negative sign for pressure since our dV is pointing in opposite direction of \(p_{ext}\).
             Let us define a quantity called Enthalpy, denoted by H, as follows:
-            $$H\equiv U+PV$$
+            $$H\equiv E+PV$$
             Through the <a href="https://en.wikipedia.org/wiki/Product_rule">product rule</a> for differentiation:
-            $$dH=dU+d(PV)=dU+(pdV+Vdp+dVdp)$$
+            $$dH=dU+d(PV)=dE+(pdV+Vdp+dVdp)$$
             Substituting in the total differential form of the first law from above for dU:
             $$=(TdS-pdV)+pdV+Vdp+dVdp$$
             The dVdp term goes to 0 in the limit. The pdV term from work cancels out with one of the terms from the product rule for d(PV).
@@ -344,9 +354,9 @@
             However, what about for irreversible processes? The first law still holds such that 
             $$U=q+w$$
             but
-            \(q_{rev}\neq q_{irr}\) 
+            \(q_{rev}\leq q_{irr}\) 
             and 
-            \(w_{rev}\neq w_{irr}\).
+            \(w_{rev}\geq w_{irr}\).
             A more general statement which holds for irreversible processes is
             $$dS\geq \frac{\delta Q}{T}$$
             with equality when the process is reversible. This is known as the Clausius Inequality, which is another way of formulating the 2nd law.<br>
@@ -628,7 +638,8 @@
 
 
 
-            <h3>Diffusion</h3>
+
+
         </div>
 
         <div id="Stochastic-Processes">
@@ -741,6 +752,95 @@ plt.show()</pre>
             <br><br>
 
 
+            <h4>Random Walks and Diffusion</h4>
+            Let us consider a number line containing all integers, centered at 0. 
+            Place a particle at x=0. At every time increment, there is a change to its x position according to the following dynamics:
+            $$P(\Delta x_t=1)=0.5$$
+            $$P(\Delta x_t=-1)=0.5$$
+            What will the resulting distribution look like? 
+            If you are familiar with probability theory and remember the Central Limit Theorem, you might be able to predict that it will begin to approach a Gaussian distribution. 
+            Well, the maximum possible deviation should be t if all the \(\Delta x_t\) are the same. 
+            If each step is independent and the probability of a left movement is the same as a right movement, 
+            then we can conclude that every individual path is equally likely. However, the number of paths you can take to get to x=0 after 10 steps is not the same number of paths where you'd end up at x=10. 
+            We can alternatively parameterize the paths in terms of lefts and rights, similar to a coin flip. This ends up being a Bernoulli distribution and the multiplicity of paths is given by the binomial distribution. 
+            
+            <br>
+            This is an application of Markov chains where each state is connected to the two adjacent numbered states. 
+            
+
+
+
+            The following depicts a simulation of 5000 particles at various time points using Python.
+            <img src="Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+particles = np.zeros(5000)
+fig, axes = plt.subplots(4,figsize=(16,12))
+bins = [-31+2*i for i in range(0,31)]
+for i in range(31):
+    if (i % 10 == 0):
+        axes[i//10].hist(particles, bins = bins,density=True,histtype='step')
+        axes[i//10].set(ylabel='Density',title=f't={i}')
+    dice_rolls = np.random.rand(5000)
+    movement = np.where(dice_rolls < 0.5,1,-1)
+    particles += movement
+axes[-1].set(xlabel="x")
+plt.show()</pre>
+            </code>
+            <br>
+
+            We can easily extend this model to a higher number of dimensions by having independent random walks along each axis. 
+
+<img src="Diffusion2D.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+Python code:
+<code style="margin: auto; width: 50%;"><pre>
+particles_x = np.zeros(5000)
+particles_y = np.zeros(5000)
+bins = [-31+2*i for i in range(0,31)]
+fig, axes = plt.subplots(2,2,figsize=(16,12))
+axes = axes.flatten()
+j=0
+for i in range(51):
+    if (i in [0,10,25,50]):
+        ax = axes[j].hist2d(particles_x,particles_y, bins = bins,density=True)
+        axes[j].set(ylabel='y',title=f't={i}')
+        fig.colorbar(ax[3])
+        j+=1
+    dice_rolls = np.random.rand(5000)
+    movement = np.where(dice_rolls < 0.5,1,-1)
+    particles_x += movement
+    dice_rolls = np.random.rand(5000)
+    movement = np.where(dice_rolls < 0.5,1,-1)
+    particles_y += movement
+axes[-1].set(xlabel="x")
+plt.show()</pre>
+</code>
+<br>
+
+
+            Another area is the concept of a biased walk; i.e. one where the jumps in one direction are favored. We used 50% probabilities for each direction in our initial model, but there's no need for it to be this way. 
+            We could have just as easily set \(P(\Delta x=+1)=0.75\) instead. We would observe a fraction still winding up in the negative integers.
+
+            <img src="Biased_Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+particles = np.zeros(5000)
+fig, axes = plt.subplots(4,sharex=True,figsize=(16,12))
+bins = [-31+2*i for i in range(0,31)]
+for i in range(31):
+    if (i % 10 == 0):
+        axes[i//10].hist(particles, bins = bins,density=True,histtype='step')
+        axes[i//10].set(ylabel='Density',title=f't={i}')
+    dice_rolls = np.random.rand(5000)
+    movement = np.where(dice_rolls < 0.75,1,-1) # changed from 0.5 to 0.75
+    particles += movement
+axes[-1].set(xlabel="x")
+plt.show()</pre>
+            </code>
+            <br>
+
+            Of course, this is not a realistic model, as particles don't discretely jump, but it becomes a better approximation as the limit as the scale of distance and time go to 0. 
+            This will be more precisely defined later.
 
             <h3>Continuous-Time Stochastic Processes</h3>
             <h4>Poisson Process</h4>
