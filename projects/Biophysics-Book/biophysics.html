@@ -75,8 +75,9 @@
                     <li><a href="#Probability">Probability, Statistics, & Entropy</a></li>
                     <li><a href="#Thermodynamics">Thermodynamics</a></li>
                     <li><a href="#Advanced-Thermodynamics">Advanced Thermodynamics</a></li>
-                    <li><a href="#Biochemistry">Biochemistry</a></li>
                     <li><a href="#Kinetics">Kinetics</a></li>
+                    <li><a href="#Equilibrium">Equilbrium</a></li>
+                    <li><a href="#Michaelis-Menten">Michaelis-Menten Kinetics</a></li>
                     <li><a href="#Stochastic-Processes">Stochastic Processes</a></li>
                 
                 
@@ -172,10 +173,36 @@
 
             <h3>Entropy</h3>
             <h4>Multiplicity</h4>
+
+            If we flip a coin twice, the most likely outcome for the number of heads we get is 1. 
+            How is this possible if the coins are fair and independent? The answer has to do with that there are two possible sequences which will give you 1 head, TH and HT, while there are only 1 sequence each for 0 heads and 2 heads. 
+            We will call this phenomenon of their being different number of sequences for each outcome "multiplicity."
+            To further use the coin analogy, we will call the specific sequence the <b>microstate</b> and the total number of heads to be the <b>state</b> or <b>macrostate</b>. 
+            Each microstate is equally likely, but there are 2 microstates that correspond to the 1 heads macrostate. 
+            
+            <br><br>
+            Given M coin flips, the number of ways to get N heads would be given as:
+            $$W=\frac{M!}{N!(M-N)!}$$
+            
+            However, this restricts us to only 2 outcomes. What if we require more? <br><br>
+
             A generalized multiplicity formula for arranging Z types of things in M spaces is
             $$W=\frac{M!}{\prod N_{i}!}=\frac{M!}{N_{1}!*N_{2}!*...*N_{Z}!}$$
             If there are only two possible types and M total and N of type 1, then \(N_2=M-N\) and it reduces to
             $$W=\frac{M!}{N!(M-N)!}$$
+
+            <h4>Definitions of Entropy</h4>
+            Entropy is typically described as being a measure of "disorder," but how does that manifest? 
+            With words, we can describe entropy for now as a measure of how mixed a system is or how many microstates a given macrostate has. 
+            <br><br>
+
+            There are 3 main formulas that we will be considering:
+            $$S=k_B\ln(W)$$
+            $$S=-k_B\sum p\ln(p)$$
+            $$dS=\frac{dq}{T}$$
+            These will be called the statistical definition, the probabilistic definition, and thermodynamic definition respectively. 
+
+
             <h4>Extensive and Intensive Properties</h4>
             A property of a system is said to be <b>extensive</b> if it is proportional to the size of the system. One example is mass; if the system is 1L of water, going to 2L of water will double the mass. These properties are often not ratios and can often be intuited via thought experiment. 
 <br><br>
@@ -431,7 +458,7 @@ $$U(r)=4\varepsilon \left[(\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right]$$
 
 
         </div>
-        <div id="Biochemistry">
+        <div id="Equilibrium">
             <h2>Biochemistry</h2>
             <h3>Acid-Base Chemistry</h3>
             <h4>Definitions of Acid and Base</h4>
@@ -594,8 +621,9 @@ $$U(r)=4\varepsilon \left[(\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right]$$
                 <img src="Rate_Law_Comparison.png" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
 
                 So far, the integrated rate laws have been univariate. Differential equations with multiple variables are possible and are called "Partial Differential Equations" or PDEs. 
-
-            <h3>Michaelis-Menten Kinetics</h3>
+        </div>
+        <div id="Michaelis-Menten">
+            <h2>Michaelis-Menten Kinetics</h2>
             <h4>Binding and Unbinding</h4>
 
             Let us picture a an enzymatic reaction. We have a substrate, S, which binds to an Enzyme, E, resulting in a bound complex, \(E\cdot S\). After some amount of time, the substrate is transformed into product, P, and the enzyme unbinds. 
@@ -819,6 +847,7 @@ The following are the effects of non-competitive inhibition:
     <li>k_M is unaffected</li>
 </ol>
 
+        
 
 
         </div>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Biophysics chemistry textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Biophysical chemistry textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Advanced-Thermodynamics">
+                <h2>Advanced Thermodynamics</h2>
+                <h3>Introduction</h3>
+                This section will delve deeper into thermodynamics. Multivariable calculus will be used to expand upon topics covered earlier as well as introduce new topics. 
+                The <b>Fundamental Thermodynamic Relation</b> will be covered as an extension of the first law.
+                <h3>Laws of Thermodynamics Revisited</h3>
+            <h4>Total derivatives</h4>
+
+            While the derivation is outside the scope of this textbook, the first law can be expressed as the following total derivative:
+            $$dE=(\frac{\partial E}{\partial S})_{V,N}dS+(\frac{\partial E}{\partial V})_{S,N}dV+\sum(\frac{\partial E}{\partial N_i})_{S,V}dN_i$$
+            $$=TdS-p_{ext}dV+\sum\mu_idN_i$$
+            where T is temperature, \(p_{ext}\) is external pressure, V is volume, \(\mu_i\) is the chemical potential for a chemical species i, and \(N_i\) is the number of species i
+
+            <h4>Temperature and Entropy</h4>
+            From the Fundamental Thermodynamic Relation, we have:
+            $$(\frac{\partial S}{\partial E})_{N,V}=\frac{1}{T}$$
+            If \(T_{A}>T_{B}\), then \(\frac{1}{T_{A}}<\frac{1}{T_{B}}\)
+            $$(\frac{\partial S_{A}}{\partial E_{A}})_{N,V}<(\frac{\partial S_{B}}{\partial E_{B}})_{N,V}$$
+            by substituting in the thermodynamic definition for temperature, we see that the lower temperature system, B, would have a greater change in entropy for the same change in energy. This means that there would be a net entropy increase if energy were to flow from A to B. 
+            So when would this heat flow stop? When entropy is maximized/equilibrium. The termination condition would be when there is no net increase in entropy due to heat flow or in mathematical terms:
+            $$(\frac{\partial S_{A}}{\partial E_{A}})_{N,V}=(\frac{\partial S_{B}}{\partial E_{B}})_{N,V}$$
+            which is equivalent to saying
+            $$\frac{1}{T_{A}}=\frac{1}{T_{B}}$$
+            or alternatively
+            $$T_{A}=T_{B}$$
+
+            In plain English to summarize: For the same amount of energy added to a system, the one with the lower temperature would increase in entropy more. 
+            Conversely, for the same amount of energy taken out of a system, the one with a higher entropy would decrease in energy less. Therefore, if you take energy from the higher temperature system and put it into the lower temperature system, there will be a net increase in entropy. 
+            This will change the temperatures of the systems, bringing them closer together. This exchange in energy will stop when the temperatures are the same, or when there is no longer a possible increase in energy from taking energy from one system and putting it in another.
+
+
+
+            <h3>Enthalpy and the Thermodynamic Definition of Entropy</h3>
+            <h4> Deriving the Thermodynamic Definition of Entropy</h4>
+            By the differential form of the first law of Thermodynamics, we have
+            $$dE=(\frac{\partial E}{\partial S})_{V,N}dS+(\frac{\partial E}{\partial V})_{S,N}dV+\sum(\frac{\partial E}{\partial N_i})dN_i$$
+            $$=TdS-p_{ext}dV+\sum\mu_idN_i$$
+            *Negative sign for pressure since our dV is pointing in opposite direction of \(p_{ext}\).
+            Let us define a quantity called Enthalpy, denoted by H, as follows:
+            $$H\equiv E+PV$$
+            Through the <a href="https://en.wikipedia.org/wiki/Product_rule">product rule</a> for differentiation:
+            $$dH=dE+d(PV)=dE+(pdV+Vdp+dVdp)$$
+            Substituting in the total differential form of the first law from above for dU:
+            $$=(TdS-pdV+\sum\mu_idN_i)+pdV+Vdp+dVdp$$
+            The dVdp term goes to 0 in the limit. The pdV term from work cancels out with one of the terms from the product rule for d(PV).
+            $$=TdS+Vdp\sum\mu_idN_i$$
+            If we are working in a constant temperature environment and no chemical reactions are taking place, we can let dp=0 and \(dN_i=0\forall i\), yielding the formula
+            $$dH=TdS=\delta q$$
+
+            $$dS=\frac{\delta q_{rev}}{T}$$
+            This is the so-called "Thermodynamic definition of Entropy" which holds for a reversible process at constant pressure<br>
+
+
+<h4>Irreversible Processes</h4>
+
+            However, what about for irreversible processes? The first law still holds such that 
+            $$U=q+w$$
+            but
+            \(q_{rev}\leq q_{irr}\) 
+            and 
+            \(w_{rev}\geq w_{irr}\).
+            A more general statement which holds for irreversible processes is
+            $$dS\geq \frac{\delta Q}{T}$$
+            with equality when the process is reversible. This is known as the Clausius Inequality, which is another way of formulating the 2nd law.<br>
+            
+            <h4>An Aside on Legendre Transforms</h4>
+            In the first law, we had
+            $$dU=TdS-pdV+\sum\mu_idN_i$$
+            and when we defined Enthalpy as \(H\equiv U+PV\), we ended up getting
+            $$dH=TdS+Vdp+\sum\mu_idN_i$$
+            By adding PV, we were able to switch the positions of the Volume and Pressure variables (along with a sign change). 
+            By doing this, we can now have a quantity that is more convenient to work with when we assume different conditions (e.g. constant pressure instead of constant volume). 
+            This is from which we got heat being the change in energy at a fixed volume and the change in enthalpy at fixed pressure equivalencies (set dV=0 or dP=0 in the above equations). 
+        <br><br>
+            This is a theme that will recur for the Helmholtz and Gibbs free energies where instead we will switch temperature and entropy, as dT=0 is more feasible than dS=0. 
+            These paired variables are known as "conjugate variables," and the process of switching the differential between the extensive and intensive variable is known as a Legendre transformation.
+
+            <h4>Helmholtz Free Energy and Gibbs Free Energy</h4>
+
+            Let us define a quantity Helmholtz Free Energy, denoted by A (The letter A was chosen for the German word for work as H was already being used for Enthalpy; some books use F for free energy):
+            $$A\equiv U-TS$$
+            Doing a similar trick as we did for Enthalpy - taking the derivative of both sides and using the linearity of the derivative operator:
+            $$dA=dU-d(TS)$$
+            Substituting in for dU using the first law; product rule for d(TS)
+            $$dA=(TdS-pdV+\sum\mu_idN_i)-(TdS+SdT+dSdT)$$
+            Canceling out TdS terms and dSdT goes to 0
+            $$dA=-pdV-SdT+\sum\mu_idN_i$$
+
+            If we are working in a constant temperature system (dT=0) and constant Volume, then we find that the change in Helmholtz free energy is the amount of chemical work being done. 
+            <br><br>
+            It is also possible to do what we did for Enthalpy and Helmholtz for a single quantity. 
+            Let us define a quantity Gibbs Free Energy, denoted by G:
+
+            $$G\equiv U+PV-TS=A+PV=H-TS$$
+            In general chemistry, Gibbs free energy is often introduced as
+            $$G=H-TS$$
+            so the derivation will go from that point.
+
+            $$dG=dH-d(TS)$$
+            Substituting in our above result for dH; product rule for d(TS)
+            $$dG=(TdS+Vdp+\sum\mu_idN_i)-(TdS+SdT+dSdT)$$
+            Cancelling out TdS terms; dSdT goes to 0
+            $$dG=Vdp-SdT+\sum\mu_idN_i$$
+
+            If we are working in a constant temperature system and constant pressure, then the change in Gibbs free energy is the amount of chemical work. 
+
+
+        </div>
+
+        </div>
+</body>
+</html>

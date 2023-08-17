@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Biophysics chemistry textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Biophysical chemistry textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Stochastic-Processes">
+                <h2>Stochastic Processes</h2>
+                <h3>Discrete Time Stochastic Processes</h3>
+    
+                <h4>Discrete-Time Markov Chains</h4>
+    
+                Imagine a system where a protein is in one of two states: A or E. Each minute you observe its state, and it has the ability to go from state A to E or E to A, but it does not necessarily switch. We will denote these observational periods at \(t=0, 1, \ldots\)
+                <br><br>
+                An important assumption that we will make is that only the current state determines the probability of switching conformations by the second; the state that it was in prior to this observation have <b>no</b> impact on the chances. 
+                E.g. if we are at t=n, the state that the protein was in at t=n-1 has no impact on the probability for t=n+1. 
+                This is called the <b>Markov property</b>.
+                
+                <br><br>
+                
+                For simplicity's state, we will assume that these observations are discrete events and not worry about what happens outside of our regular 1-minute interval observations. 
+                
+    
+                <figure><a href="https://commons.wikimedia.org/wiki/File:Markovkate_01.svg#/media/File:Markovkate_01.svg"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Markovkate_01.svg" alt="Markovkate 01.svg" style="max-height: 300px;" ></a><br>By <a href="//commons.wikimedia.org/wiki/User:Joxemai4" title="User:Joxemai4">Joxemai4</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=10284158">Link</a></figure>
+    
+                We are given the dynamics of the protein conformational changes: 
+                            <ul>
+                    <li>If the protein is in state A, it has a 40% chance of switching to the E state by the next observation and a 60% chance of remaining in the A state. 
+                    </li>
+                    <li>If the protein is in state E, it has a 70% chance of switching to the A conformation by the next observation and a 30% chance of remaining in the E state</li>
+                            </ul>
+    
+                Given a start state, we can determine the probability, not just of the next minute, but subsequent observations as well. 
+                
+                This can be represented naturally using Linear Algebra. 
+    
+                $$\begin{bmatrix}
+                0.6 & 0.4\\ 
+                0.7 & 0.3
+                \end{bmatrix}$$
+    
+                Where the row is the starting state and the column is the final state. 
+    <br><br>
+                
+                For our starting state vector, if we are in the A state, we can put a 1 in the first column and a 0 elsewhere:
+    
+                $$\begin{bmatrix}
+                1 & 0
+                \end{bmatrix}$$
+                It is not actually necessary to know the starting state to make statements on the probability of the state over time. We can have our start be a probability distribution instead. 
+                
+                To get the probability of being in each state after 1 interval, we can multiply the two:
+                $$\begin{bmatrix}
+                1 & 0
+                \end{bmatrix}\begin{bmatrix}
+                            0.6 & 0.4\\ 
+                            0.7 & 0.3
+                            \end{bmatrix}=\begin{bmatrix}
+                0.6 & 0.4
+                \end{bmatrix}$$
+    
+                We observe a 60% chance of remaining in state A and a 40% chance of transitioning to state E as expected at t=1. 
+                
+                We can use this result to see what the probability of being in each state are at t=2
+    
+                $$\begin{bmatrix}
+                0.6 & 0.4
+                \end{bmatrix}\begin{bmatrix}
+                            0.6 & 0.4\\ 
+                            0.7 & 0.3
+                            \end{bmatrix}$$
+                            $$=\begin{bmatrix}
+                0.6*0.6+0.7*0.4 & 0.6*0.4+0.4*0.3
+                \end{bmatrix}$$
+                $$=\begin{bmatrix}
+                0.64 & 0.36
+                \end{bmatrix}$$
+                We can view this as plugging in a probability distribution into a Markov chain rather than knowing the initial state.
+                A general formula for the probability distribution at time t=n would thus be:
+    
+                $$\begin{bmatrix}
+                p_{A,t=0} & p_{E,t=0}
+                \end{bmatrix}\begin{bmatrix}
+                            p_{A\rightarrow A} & p_{A\rightarrow E}\\ 
+                            p_{E\rightarrow A} & p_{E\rightarrow E}
+                            \end{bmatrix}^n$$
+                But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
+    
+                <br><br>
+                <img src="Markov_states.png" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+    initial_prob_vector = np.array([1,0])
+    transition_matrix = np.array([[0.6,0.4],[0.7,0.3]])
+    time_points = np.arange(10)
+    markov_df = pd.DataFrame(index=time_points,columns=['A','E'])
+    current_prob = initial_prob_vector
+    for i in range(len(time_points)):
+        markov_df.loc[i] = current_prob
+        current_prob = np.matmul(current_prob, transition_matrix)
+    markov_df.plot(xlabel="Iteration",
+        ylabel="Fraction",
+        title="Evolution of State Makeup Over Time")
+    plt.show()</pre>
+                </code>
+    
+                What happens if the initial state were [0,1] instead of [1,0]? This can be checked using the code provided, but it will end up converging to the same values.
+    
+    
+                Additionally, we are not restricted to just 2 states, our probability vector could have m columns for m possible states and our transition matrix would be mxm. 
+                Markov chains can even be abstracted to infinite-state versions, although some properties change, which are beyond the scope of this textbook.
+    
+                Furthermore, the concept can be extended to continuous time processes. 
+                <br><br>
+    
+    
+                <h4>Random Walks and Diffusion</h4>
+                Let us consider a number line containing all integers, centered at 0. 
+                Place a particle at x=0. At every time increment, there is a change to its x position according to the following dynamics:
+                $$P(\Delta x_t=1)=0.5$$
+                $$P(\Delta x_t=-1)=0.5$$
+                What will the resulting distribution look like? 
+                If you are familiar with probability theory and remember the Central Limit Theorem, you might be able to predict that it will begin to approach a Gaussian distribution. 
+                Well, the maximum possible deviation should be t if all the \(\Delta x_t\) are the same. 
+                If each step is independent and the probability of a left movement is the same as a right movement, 
+                then we can conclude that every individual path is equally likely. However, the number of paths you can take to get to x=0 after 10 steps is not the same number of paths where you'd end up at x=10. 
+                We can alternatively parameterize the paths in terms of lefts and rights, similar to a coin flip. This ends up being a Bernoulli distribution and the multiplicity of paths is given by the binomial distribution. 
+                
+                <br><br>
+                This is an application of Markov chains where each state is connected to the two adjacent numbered states. 
+                
+    
+                <br><br>
+    
+                The following depicts a simulation of 5000 particles at various time points using Python.
+                <img src="Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+    particles = np.zeros(5000)
+    fig, axes = plt.subplots(4,figsize=(16,12))
+    bins = [-31+2*i for i in range(0,31)]
+    for i in range(31):
+        if (i % 10 == 0):
+            axes[i//10].hist(particles, bins = bins,density=True,histtype='step')
+            axes[i//10].set(ylabel='Density',title=f't={i}')
+        dice_rolls = np.random.rand(5000)
+        movement = np.where(dice_rolls < 0.5,1,-1)
+        particles += movement
+    axes[-1].set(xlabel="x")
+    plt.show()</pre>
+                </code>
+                <br>
+    
+                We can easily extend this model to a higher number of dimensions by having independent random walks along each axis. 
+    
+    <img src="Diffusion2D.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+    Python code:
+    <code style="margin: auto; width: 50%;"><pre>
+    particles_x = np.zeros(5000)
+    particles_y = np.zeros(5000)
+    bins = [-31+2*i for i in range(0,31)]
+    fig, axes = plt.subplots(2,2,figsize=(16,12))
+    axes = axes.flatten()
+    j=0
+    for i in range(51):
+        if (i in [0,10,25,50]):
+            ax = axes[j].hist2d(particles_x,particles_y, bins = bins,density=True)
+            axes[j].set(ylabel='y',title=f't={i}')
+            fig.colorbar(ax[3])
+            j+=1
+        dice_rolls = np.random.rand(5000)
+        movement = np.where(dice_rolls < 0.5,1,-1)
+        particles_x += movement
+        dice_rolls = np.random.rand(5000)
+        movement = np.where(dice_rolls < 0.5,1,-1)
+        particles_y += movement
+    axes[-1].set(xlabel="x")
+    plt.show()</pre>
+    </code>
+    <br>
+    
+    
+                Another area is the concept of a biased walk; i.e. one where the jumps in one direction are favored. We used 50% probabilities for each direction in our initial model, but there's no need for it to be this way. 
+                We could have just as easily set \(P(\Delta x=+1)=0.75\) instead. We would observe a fraction still winding up in the negative integers.
+    
+                <img src="Biased_Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+    particles = np.zeros(5000)
+    fig, axes = plt.subplots(4,sharex=True,figsize=(16,12))
+    bins = [-31+2*i for i in range(0,31)]
+    for i in range(31):
+        if (i % 10 == 0):
+            axes[i//10].hist(particles, bins = bins,density=True,histtype='step')
+            axes[i//10].set(ylabel='Density',title=f't={i}')
+        dice_rolls = np.random.rand(5000)
+        movement = np.where(dice_rolls < 0.75,1,-1) # changed from 0.5 to 0.75
+        particles += movement
+    axes[-1].set(xlabel="x")
+    plt.show()</pre>
+                </code>
+                <br>
+    
+                Of course, this is not a realistic model, as particles don't discretely jump, but it becomes a better approximation as the limit as the scale of distance and time go to 0. 
+                This will be more precisely defined later.
+    
+                <h3>Continuous-Time Stochastic Processes</h3>
+    
+                <h4>Brownian Motion</h4>
+                Brownian motion can be thought of as the continuous analogue of random walks. 
+                It is defined by the following properties (<a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">https://www.math.uchicago.edu/~lawler/finbook.pdf</a>):
+                <ol>
+                    <li>\(B_0=0\)</li>
+                    <li>\(B_t\) is almost surely continuous</li>
+                    <li>\(B_t\) has independent increments</li>
+                    <li>\(B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{where }0\leq s\leq t\)</li>
+                </ol>
+    
+                Now to explain the properties in further detail.
+    
+                $$B_0=0$$
+                This is mainly a convention, as it is possible to have a process undergoing Brownian Motion starting elsewhere, but you would just have to add a constant.
+    
+                $$B_t\text{ is almost surely continuous}$$
+                This is more of a theoretical property which we need not be concerned with. For the intents and purposes of this book, 
+                we can just interpret this as stating that Brownian motion is a continuous path with no jumps. 
+    
+                $$B_t\text{ has independent increments}$$
+                Let \(0< s< t\).
+                The value of \(B_s-B_0\) is independent of \(B_t-B_s\). It is important that when we select the two intervals that they do not overlap. 
+                It is fine to have the endpoint of one be the start of the other however.
+    
+                $$B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{where }0\leq s\leq t$$
+    
+                A segment of Brownian motion is normally distributed with a variance equal to the time between the start and end points with mean 0. 
+                
+    
+    
+    
+                <h4>Poisson Process</h4>
+                When we were working with discrete-time Markov chains, we had a matrix or depiction of
+                $$P(X_{i,t=n+1}|X_{j,t=n})$$
+                where \(X_i\) is the new possible state and \(X_j\) is the current state. 
+                These probabilities are implicitly given based on the time interval. We do not consider what happens in between observation periods; it is possible that we observe the same state in consecutive observations, but the protein went from A to E then back to A in between.
+                To get to continuous-time stochastic processes, we can take the limit as the time between observation periods goes to 0.
+    <br><br>
+                For a full derivation, see <a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">Lawler's Stochastic Calculus book</a> chapter 6.
+                
+    <br><br>
+                Let us first consider a process that can only increase. In a biology context, we can say that this is the total amount of mRNA produced over a period (not the mRNA level since mRNA can degrade and would go down). 
+                Let assume that there is an mRNA production rate \(\lambda\) and define \(p(s)\) to be the probability that at least 1 mRNA moecule is produced during the interval [t,t+s]. 
+                Then the probability of 1 mRNA molecule being produced in a short interval is approximately the rate times the duration of time. This can be formalized as 
+                $$p(\Delta t)=\lambda \Delta t+o(\Delta t)$$
+    
+                Let \(X_s\) be the total number of molecules of mRNA produced by time t=s, T be the first time that a molecule of mRNA is produced, or formally:
+    
+                $$T=\text{inf}\{s:X_s=1\}$$
+    
+                From this, it can be shown that the probability that no molecules have been produced during an interval of length t is
+                
+                $$P\{T>t\}=e^{-\lambda*t}$$
+                Thus, the time for between mRNA production is exponentially distributed like 
+                $$f(t)=\lambda e^{-\lambda t}$$
+                
+                This distribution is nice as it has the "memory-less" property that our discrete-time Markov chains had.
+                Now, this has only given us a distribution of how long it takes between transcription events, not a total amount. 
+    <br><br>
+                Without deriving it, it can be shown that the distribution for the total number of "events" with exponentially distributed wait times has the following distribution:
+    
+                $$P(X_{t+s}-X_s=k)=e^{-\lambda t}\frac{(\lambda t)^k}{k!}$$
+    
+                This is known as a Poisson distribution, which is parameterized by \(\lambda\), the rate constant. 
+                The distribution has the following properties:
+                <ol>
+                    <li>Mean of \(\lambda t\) </li>
+                    <li>Variance of \(\lambda t\)</li>
+                </ol>
+                The Poisson process can be further generalized to allow for variable-sized jumps rather than just jumps of 1. 
+                This is known as a "Compound Poisson Process." 
+    
+    
+                <h4>Advanced Applications in Biology</h4>
+                The classical example of stochastic processes in biology is mRNA expression levels - as it is a quantity that can both degrade and be produced at irregular intervals constantly. 
+    
+                
+            </div>
+    
+    
+    
+    
+            
+    
+            <h2>Works Cited</h2>
+            <ol>
+                <li><a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">https://www.math.uchicago.edu/~lawler/finbook.pdf</a></li>
+            </ol>
+
+        </div>
+</body>
+</html>

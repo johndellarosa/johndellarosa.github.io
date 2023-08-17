@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Biophysics chemistry textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Biophysical chemistry textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Kinetics">
+                <h2>Kinetics</h2>
+                <h3>Refresher on Kinetics</h3>
+                    <h4>Elementary Reactions</h4>
+    
+                    Let us consider elementary reactions - that is they have no intermediate steps:
+                    Let A, B be the reactants and P be the product (not Phosphorus). 
+    
+    
+    
+                    For <b>single step</b> unidirectional reactions, we can write an equation that describes the rate of change in chemical species:
+    
+                    $$A\rightarrow P$$
+    
+                    Instinctively, if this is the only reaction taking place, the concentration of A should be going down by the same rate by which the concentration of P goes up.
+    
+    
+                    $$\frac{d[A]}{dt}=-\frac{d[P]}{dt}$$
+    
+                    It would also be intuitive to think that the higher the concentration of A, the faster the reaction would go. 
+                    Probabilitistically, a justification would be that each A molecule has a chance per unit time of converting to P. 
+                    Then if each conversion is independent, you would expect the rate of conversion to be directly proportional to the number of A. 
+                    Thus, we also get the relationship.
+    
+                    $$\frac{d[P]}{dt}=k[A]$$
+    
+                    where k is a constant of proportionality which is specific to the reaction. We will call this the <b>rate constant</b>.
+    
+                    Let us now consider a bimolecular, <b>single-step</b> unidirectional reaction:
+    
+                    $$A+B\rightarrow P$$
+    
+                    By similar logic, we can write the following relationships:
+    
+                    $$\frac{d[A]}{dt}=\frac{d[B]}{dt}=-\frac{d[P]}{dt}$$
+    
+                    $$\frac{d[P]}{dt}=k[A][B]$$
+    
+                    <h4>Multiple Step Reactions</h4>
+    
+    
+                    <h4>Relationship with Equilibrium Constant</h4>
+    
+                    <h4>Integrated Rate Laws</h4>
+    
+                    This section will involve solving a few simple differential equations. 
+                    As thsi section is more concerned with the results and logic rather than the math, the derivations will not be especially rigorous and will be playing fast and loose with some math.
+    
+    
+                    Let us consider the simplest case, a reaction that has a rate-limiting step that is independent of concentration.
+    
+                    $$\frac{d[P]}{dt}=k$$
+                    
+                    If the mathematicians aren't watching, you can "multiply" by dt to get
+    
+                    $$d[P]=kdt$$
+                    While not good notation, we can itegrate from time t=0 to a a generic time t=t.
+    
+                    $$\int_0^td[P]=\int_0^tkdt$$
+                    $$[P]_t-[P]_0=kt$$
+    
+                    We would expect this as it is a constant rate process, so it should just be the rate multiplied by the amount of time.
+    
+                    <br><br>
+                    Now for a more realistic example.
+    
+                    Consider a reaction with the rate law:
+    
+                    $$\frac{d[A]}{dt}=-k[A]$$
+    
+                    Again we will want each variable to be on its own side. Using some algebra and abuse of notation, we get
+    
+                    $$\frac{d[A]}{[A]}=-kdt$$
+    
+                    We can treat it as if we were integrating each side seperately.
+    
+                    $$\int \frac{d[A]}{[A]}=\int-kdt$$
+    
+                    While it may appear intimidating, we are essentially just integrating \(\frac{1}{x}\) and a constant.
+    
+                    $$ln([A]_t)-ln([A]_0)=-kt$$
+    
+                    In these sorts of problems, once we integrate, we then try to isolate the concentration at time t.
+    
+                    $$ln([A]_t)=ln([A]_0)-kt$$
+                    Exponentiating things, we get
+                    $$[A]_t=[A]_0e^{-kt}$$
+                    This is the <b>first order integrated rate law</b>
+                    Now, we have an equation that describes the concentration over time, not just the rate.
+    
+                    For completeness, consider a rate law corresponding to a reaction with the rate law:
+    
+                    $$\frac{d[A]}{dt}=-k[A]^2$$
+    
+                    $$\frac{d[A]}{[A]^2}=-kdt$$
+    
+                    $$\int\frac{d[A]}{[A]^2}=\int-kdt$$
+    
+                    $$\frac{-1}{[A]_t}-\frac{-1}{[A]_0}=-kt$$
+                    $$\frac{1}{[A]_t}=\frac{1}{[A]_0}+kt$$
+                    $$[A]_t=\frac{1}{\frac{1}{[A]_0}+kt}$$
+    
+                    <img src="Rate_Law_Comparison.png" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
+    
+                    So far, the integrated rate laws have been univariate. Differential equations with multiple variables are possible and are called "Partial Differential Equations" or PDEs. 
+            
+                    <h2>Dynamic Equilibrium</h2>
+                    Until now, we have been considering reactions that only go in one direction. In many reactions, however, products are also undergoing the reverse reaction. Eventually the concentrations of the products and reactants will no longer change. However, this does not mean that chemical reactions are not still going on. 
+                    What is actually happening is the forward reaction is happening at the same rate as the reverse reaction. This is known as <b>dynamic equilibrium</b>.
+
+                    <br><br>
+                    Let us consider a system where two elementary reactions are going on:
+                    $$A\rightarrow^{k_1} B$$
+                    $$B\rightarrow^{k_{-1}} A$$
+                    As shorthand, we can combine these two lines into one:
+                    $$A\rightleftharpoons_{k_{-1}}^{k_1} B$$
+
+                    We can now introduce a more general form of writing rate laws:
+                    <ol>
+                        <li>Write the rate laws for all the unidirectional reactions</li>
+                        <li>Write the change in concentration for a species as the sum of the simple rate laws where it is a product minus the sum of all the simple rate laws where it is a reactant</li>
+                    </ol>
+            
+                    Now let's write the simple rate laws for each component:
+                    <br>
+                    A:
+                    <ol>
+                        <li>Produced
+                            <ol>
+                                <li>k_{-1}[B]</li>
+                            </ol>
+
+                        </li>
+                        <li>Consumed
+                            <ol>
+                                <li>k_1[A]</li>
+                            </ol>
+                        </li>
+                    </ol>
+                    B:
+                    <ol>
+                        <li>Produced
+                            <ol>
+                                <li>k_1[A]</li>
+                            </ol>
+                        </li>
+                        <li>Consumed
+                            <ol>
+                                <li>k_{-1}[B]</li>
+                            </ol>
+
+                        </li>
+
+                    </ol>
+
+                    Thus,
+                    $$\frac{d[A]}{dt}=k_{-1}[B]-k_1[A]$$
+                    $$\frac{d[B]}{dt}=k_{1}[A]-k_{-1}[B]$$
+                    Sometimes you will hear about a "rate-limiting step" in reactions which is an approximation to simplify the equation when one reaction is much slower.
+
+                    Now, due to the simplicity of the problem, there is a symmetry, but it can get much more complex. Now let's set the rate of change to be 0 to see what will happen once we reach dynamic equilibrium. 
+
+                    $$0=k_{-1}[B]-k_{1}[A]$$
+                    $$\frac{[B]}{[A]}=\frac{k_1}{k_{-1}}$$
+
+                    This ratio of rate constants is called the equilirbium constant, denoted with a capital K, which gives some sort of ratio of products to reactants. 
+
+                    In a later chapter, we will look at kinetics for more complicated series of reactions. 
+
+
+
+                </div>
+
+        </div>
+</body>
+</html>

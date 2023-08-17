@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Biophysics chemistry textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Biophysical chemistry textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Michaelis-Menten">
+                <h2>Michaelis-Menten Kinetics</h2>
+                <h4>Binding and Unbinding</h4>
+    
+                Let us picture a an enzymatic reaction. We have a substrate, S, which binds to an Enzyme, E, resulting in a bound complex, \(E\cdot S\). After some amount of time, the substrate is transformed into product, P, and the enzyme unbinds. 
+                We will have the formation of the Enzyme-substrate complex be reversible, but consider the product formation to be irreversible.
+    
+                $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+    
+                
+    
+                <h4>Derivation</h4>
+    
+                There is a fixed amount of enzyme - either the enzyme is bound or unbound. Let us call the total amount of Enzyme, \(E_0\)
+    
+                $$E_0=[E]+[E\cdot S]$$
+                We can write general, complex rate laws by looking at the flux into and out of each state
+                $$\frac{d[X]}{dt}=\sum R_i-\sum R_{j}$$
+                where R_i is the rate for a reaction step that produces X and R_j is the rate for a reaction step that depletes X. 
+    
+                $$\frac{d[S]}{dt}=k_{-1}[E\cdot S]-k_1[E][S]$$
+                $$\frac{d[E]}{dt}=k_{-1}[E\cdot S]+k_{cat}[E\cdot S]-k_{1}[E][S]$$
+                $$=(k_{-1}+k_{cat})[E\cdot S]-k_1[E][S]$$
+                $$\frac{d[P]}{dt}=k_{cat}[E\cdot S]$$
+                $$\frac{d[E\cdot S]}{dt}=k_1[E][S]-k_{-1}[E\cdot S]-k_{cat}[E\cdot S]$$
+    
+                A "steady-state approximation" is then made; that is, we treat the intermediate complex's concentration as a constant. 
+                $$\text{Let }\frac{d[E\cdot S]}{dt}=0$$
+                Using our above equations, we can then get
+                $$k_{1}[E][S]=(k_{-1}+k_{cat})[E\cdot S]$$
+                Since we are ultimately interested in the rate of product formation, we should look to that equation for a possible next step. 
+                $$\frac{d[P]}{dt}=k_{cat}[E\cdot S]$$
+                Since we see that there is \([E\cdot S]\), we should manipulate the previous equation to find \([E\cdot S]\) in terms of [E] and [S], especially since we do not directly know the concentration of the enzyme-substrate complex. We know how much substrate and enzyme there are initially. We also do not necessarily know how much unbound enzyme there is either as that would also require knowledge of how much bound enzyme there was. So let's try to reduce it from 2 unknowns to 1 unknown. Another assumption that we will make is that \([S]\gg E_0\) since technically \(S_0=[S]+[E\cdot S]\), but we shall say \([S]+[E\cdot S]\approx [S]\). 
+                By using our total enzyme equation above, we can get
+                $$k_{1}(E_0-[E\cdot S])[S]=(k_{-1}+k_{cat})[E\cdot S]$$
+                Let's now algebraically manipulate the equation to isolate \(E\cdot S\)..
+                $$k_{1}E_0[S]-k_{1}[E\cdot S][S]=(k_{-1}+k_{cat})[E\cdot S]$$
+                $$k_{1}E_0[S]=(k_{1}[S]+(k_{-1}+k_{cat}))[E\cdot S]$$
+                $$[E\cdot S]=\frac{k_1E_0[S]}{k_1[S]+(k_{-1}+k_{cat})}$$
+                For simplicity, we will divide the numerator and denominator of the right side by \(k_1\)
+                $$[E\cdot S]=\frac{E_0[S]}{\frac{k_{-1}+k_2}{k_1}+[S]}$$
+                We can then plug \(E\cdot S\) in to the rate of product formation equation
+                $$\frac{dP}{dt}=k_{cat}[E\cdot S]$$
+                $$=\frac{k_{cat}E_0[S]}{\frac{k_{-1}+k_2}{k_1}+[S]}$$
+    
+                While this result may look unruly, it does tell us some nice properties. 
+                Let us define a constant \(k_M\)
+                $$k_M\equiv\frac{k_{-1}+k_{cat}}{k_1}$$
+                $$\frac{dP}{dt}=\frac{k_{cat}E_0[S]}{k_M+[S]}$$
+                When the susbtrate concentration is equal to \(k_M\), the rate of production is at 50% of max rate.
+    
+                $$V_{max}\equiv k_{cat}E_0$$
+    
+                $$v=\frac{V_{max}[S]}{k_M+[S]}$$
+    
+                <img src="MichaelisMentenGraph.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+    k_M = 4e-4
+    k_cat = 10
+    E_0 = 1e-12
+    S_array = np.geomspace(1e-5,1e-2,100)
+    v_array = k_cat*E_0*S_array/(k_M+S_array)
+    noise = np.random.normal(size=(100))*5e-14
+    v_array = v_array + noise
+    plt.figure(figsize=(14,8))
+    plt.scatter(S_array, v_array,s=5)
+    plt.title("Michaelis-Menten plot")
+    plt.xlabel("Substrate Concentration (M)")
+    plt.ylabel(f"$v_0$ (M/s)")
+    plt.xticks([i*5e-4 for i in range(0,21)])
+    plt.show()</pre>
+                </code>
+    
+                As shown in the generated data above, the value of [S] at which the velocity is half of the asymptotic max is roughly 40 mM. 
+    
+                <h5>Lineweaver-Burk plots</h5>
+    
+                Since trying to estimate the half-max of a curve can be difficult, we might choose to linearize the data and use regression to find the best fit line and calculate the parameters from that. 
+                One common method is Lineweaver-Burk plots, which are also called double-recipricol plots. As the name suggests, 1/[S] is plotted against 1/v. 
+                The y-intercept is v_max. This is evident since as [S] goes to infinity, 1/[S] goes to 0. The slope is \(k_M/V_\text{max}\). The x-intercept is \(-1/k_M\). 
+    
+                <img src="LineweaverBurkPlot.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+    k_M = 4e-4
+    k_cat = 10
+    E_0 = 1e-12
+    S_array = np.geomspace(1e-5,1e-2,100)
+    v_array = k_cat*E_0*S_array/(k_M+S_array)
+    noise = np.random.normal(size=(100))*5e-14
+    v_array = v_array + noise
+    S_array_inverse = 1/S_array
+    v_array_inverse = 1/v_array
+    plt.figure(figsize=(14,8))
+    plt.scatter(S_array_inverse, v_array_inverse,s=5)
+    model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+    results = model.fit()
+    plt.plot(S_array_inverse, results.predict(sm.add_constant(S_array_inverse)),color='orange')
+    plt.title("Lineweaver-Burk plot")
+    plt.xlabel("1/[S] ($M^{-1}$)")
+    plt.ylabel(f"$1/v_0$ (s/M)")
+    plt.legend(['Data',f'OLS: y={results.params[0]}x+{results.params[1]}'])
+    plt.show()</pre>
+                </code>
+    
+                One thing to note is the heteroskedasticity in the graph. Ordinary Least Squares (OLS) is the best, unbiased linear model when the Gauss-Markov conditions are satisfied - one of which is homoskedasticity (variance of errors is constant over X). 
+                In practice, this can lead to bad estimates as the noisy values on the right can drastically affect the best-fit parameters.
+    
+    <h3>Inhibition</h3>
+    
+    <figure><a href="https://commons.wikimedia.org/wiki/File:Inhibition-types.jpg#/media/File:Inhibition-types.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Inhibition-types.jpg" alt="Inhibition-types.jpg" style="max-height: 300px;"></a><br>By <a href="//commons.wikimedia.org/w/index.php?title=User:Athel_cb&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Athel cb (page does not exist)">Athel cb</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=130486959">Link</a></figure>
+    
+                <h4>Competitive Inhibition</h4>
+                We had previously just considered the scenario where the substrate had no competition for binding to the active site, but the equation can be extended easily to include the presence of another moelecule that can bind to the same active site as the substrate, but will not undergo the catalytic reaction. 
+    
+                Let us assume the same dynamics, but with the addition of a side reaction:
+                $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+    
+                $$E+I\rightleftharpoons_{k_2}^{k_{-2}} E\cdot I$$
+                Since there is a new state can consume E to enter and product E when it leaves, this will change our equation for \(\frac{d[E]}{dt}\) as well as create new equations for \(\frac{d[E\cdot I]}{dt}\) and \(\frac{d[I]}{dt}\). 
+                We can denote the equilibrium constant for the association of the Enzyme-Inhibitor complex to be \(K_I\).
+    
+                $$K_I=\frac{k_{-2}}{k_2}$$
+                $$\frac{[E][I]}{[E\cdot I]}=K_I\sim\frac{[E]I_0}{[Y]}$$
+                $$E_0=[E]+[E\cdot S] +[E\cdot I]$$
+                $$[E]=E_0-[E\cdot S]-[Y]$$
+                $$[E]=E_0-[E\cdot S]-\frac{[E]I_0}{K_I}$$
+                $$[E](1+\frac{I_0}{K_I})=E_0-[E\cdot S]$$
+    
+    
+    
+                $$[E]=\frac{E_0-[E\cdot S]}{1+\frac{I_0}{K_I}}$$
+                Let us define a constant \(\alpha\) such that
+                $$\alpha\equiv 1+\frac{I_0}{K_I}$$
+                $$[E]=\frac{E_0-[E\cdot S]}{\alpha}$$
+    
+                $$0=\frac{d[E\cdot S]}{dt}=k_1[E][S]-k_{cat}[E\cdot S]-k_{-1}[E\cdot S]$$
+                $$[E\cdot S](k_{cat}+k_{-1})=k_1[E][S]$$
+                $$[E\cdot S]=\frac{1}{K_M}[E][S]$$
+                $$\approx \frac{1}{k_M}[E]S_0$$
+                $$[E\cdot S]_{ss}=\frac{S_0}{k_M}\times\frac{E_0-[E\cdot S]_{ss}}{\alpha}$$
+                $$[E\cdot S]_{ss}(1+\frac{S_0}{k_M\alpha})=\frac{S_0E_0}{\alpha k_M}$$
+                $$[E\cdot S]_{ss}=\frac{\frac{S_0E_0}{k_M\alpha}}{1+\frac{S_0}{k_M\alpha}}$$
+                $$=\frac{E_0}{1+\frac{\alpha k_M}{S_0}}$$
+    
+                Now finally plugging in the concentration into the product formation kinetic equation:
+    
+                $$v_0=k_{cat}[E\cdot S]_{ss}=\frac{k_{cat}E_0}{1+\frac{\alpha k_M}{S_0}}$$
+    
+                <img src="LineweaverBurkInhib.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+    k_M = 4e-4
+    k_cat = 10
+    E_0 = 1e-12
+    S_array = np.geomspace(5e-3,1e-2,200)
+    test_points = 1/np.array([-0.1,5e-3])
+    
+    alpha = 1
+    v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
+    noise = np.random.normal(size=(200))*.5e-16
+    v_array = v_array + noise
+    S_array_inverse = 1/S_array
+    v_array_inverse = 1/v_array
+    ax = plt.figure(figsize=(14,8))
+    plt.scatter(S_array_inverse, v_array_inverse,s=5)
+    model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+    results = model.fit()
+    plt.plot(test_points, results.predict(sm.add_constant(test_points)),color='green')
+    
+    alpha = 1.5
+    v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
+    noise = np.random.normal(size=(200))*.5e-16
+    v_array = v_array + noise
+    S_array_inverse = 1/S_array
+    v_array_inverse = 1/v_array
+    plt.scatter(S_array_inverse, v_array_inverse,s=5,color='red')
+    model2 = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+    results2 = model2.fit()
+    plt.plot(test_points, results2.predict(sm.add_constant(test_points)),color='orange')
+    
+    
+    plt.title("Lineweaver-Burk plot")
+    plt.xlabel("1/[S] ($M^{-1}$)")
+    plt.ylabel(f"$1/v_0$ (s/M)")
+    plt.legend(['Data (No inhib)',f'OLS: y={results.params[0]:.2E}x+{results.params[1]}','Data (Inhib)', f'OLS: y={results2.params[0]}x+{results2.params[1]}'])
+    plt.show()</pre>
+                </code>
+    
+    While it is not apparent in the figure, as the inhibitor is added, the line rotates counter-clockwise, with the y-intercept remaining the same. 
+    The following are the effects of competitive inhibition:
+    <ol>
+        <li>v_max stays the same</li>
+        <li>k_M <b>increases</b> as more substrate is required to reach half max velocity</li>
+    </ol>
+    
+            <h4>Uncompetitive Inhibition</h4>
+    
+            Uncompetitive inhibition involves the following dynamics:
+    
+            $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+    
+            $$E\cdot S+I\rightleftharpoons_{k_2}^{k_{-2}} E\cdot S\cdot I$$
+    
+            With this form of inhibition, the inhibitor binds to the \(E\cdot S\) complex, not E, and prevents enzyme activity as well as substrate dissociation. In a Lineweaver-Burk plot, this would appear as a parallel shift downward. 
+    
+            The following are the effects of uncompetitive inhibition:
+            <ol>
+                <li>v_max decreases</li>
+                <li>k_M <b>decreases</b></li>
+            </ol>
+    
+            <h4>Non-competitive Inhibition</h4>
+            While similar in name to uncompetitive, non-competitive inhibition is distinct from it. 
+            Non-competitive inhibition does not involve the inhibitor binding to the active site, instead it binds to an "allosteric site." 
+            The inhibitor can bind to both E and \(E\cdot S\). Similarly, the substrate is able to bind and unbind to both E and \(E\cdot I\). 
+    <br><br>
+    This has the effect of essentially reducing the amount of enzyme present, as if less had been added in the first place. 
+    The following are the effects of non-competitive inhibition:
+    <ol>
+        <li>v_max decreases</li>
+        <li>k_M is unaffected</li>
+    </ol>
+    
+            
+    
+    
+            </div>
+
+        </div>
+</body>
+</html>

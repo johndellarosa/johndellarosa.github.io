@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Biophysics chemistry textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Biophysical chemistry textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Probability">
+                <h2>Probability, Statistics, and Entropy</h2>
+                <h3>Probability</h3>
+                <h4>Defining terms</h4>
+                Before we show any equations, we must define some terms. Let A and B be events.
+    
+                <ul>
+                    <li>P(A) is the probability of event A occurring</li>
+                    <li>\(P(A\cup B)\) is the probability of A or B or both occurring. The \(\lor\) can also be seen instead of \(\cup\)</li>
+                    <li>\(P(A\cap B)\) is the probability of A <b>and</b> B both occurring. The \(\land\) can also be seen instead of \(\cap\)</li>
+                    <li>\(P(\neg A)\) is the probability of A not occurring. This can also be written as a bar above the A</li>
+                </ul>
+    
+                <h4>De Morgan's Laws</h4>
+                De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
+    
+                "If neither A nor B happened, then that means A didn't happen and B didn't happen"
+                $$\neg(A \lor B)=(\neg A)\land (\neg B)$$
+    
+                "If A and B didn't both happen, then that means either A didn't happen, B didn't happen, or neither happened"
+                $$\neg(A \land B)=(\neg A)\lor (\neg B)$$
+    
+    
+                <h4>Conditional Probability</h4>
+                Let A and B be two events. We denote the conditional probability of A occurring given B having occurred as \(P(A|B)\)
+    
+                This is defined mathematically as:
+    
+                $$P(A|B)\equiv \frac{P(A \cap B)}{P(B)}$$
+                where \(P(A\cap B)\) is the probability of both A and B occurring.
+                
+    
+    
+                <h4>Bayes' Theorem</h4>
+                Bayes' Theorem relates two events and the conditional probabilities of one upon another. 
+                Let A and B two events with non-zero probabilities
+                $$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$
+    
+    
+    
+                <h3>Entropy</h3>
+                <h4>Multiplicity</h4>
+    
+                If we flip a coin twice, the most likely outcome for the number of heads we get is 1. 
+                How is this possible if the coins are fair and independent? The answer has to do with that there are two possible sequences which will give you 1 head, TH and HT, while there are only 1 sequence each for 0 heads and 2 heads. 
+                We will call this phenomenon of their being different number of sequences for each outcome "multiplicity."
+                To further use the coin analogy, we will call the specific sequence the <b>microstate</b> and the total number of heads to be the <b>state</b> or <b>macrostate</b>. 
+                Each microstate is equally likely, but there are 2 microstates that correspond to the 1 heads macrostate. 
+                
+                <br><br>
+                Given M coin flips, the number of ways to get N heads would be given as:
+                $$W=\frac{M!}{N!(M-N)!}$$
+                
+                However, this restricts us to only 2 outcomes. What if we require more? <br><br>
+    
+                A generalized multiplicity formula for arranging Z types of things in M spaces is
+                $$W=\frac{M!}{\prod N_{i}!}=\frac{M!}{N_{1}!*N_{2}!*...*N_{Z}!}$$
+                If there are only two possible types and M total and N of type 1, then \(N_2=M-N\) and it reduces to
+                $$W=\frac{M!}{N!(M-N)!}$$
+    
+                <h4>Definitions of Entropy</h4>
+                Entropy is typically described as being a measure of "disorder," but how does that manifest? 
+                With words, we can describe entropy for now as a measure of how mixed a system is or how many microstates a given macrostate has. 
+                <br><br>
+    
+                There are 3 main formulas that we will be considering:
+                $$S=k_B\ln(W)$$
+                $$S=-k_B\sum p\ln(p)$$
+                $$dS=\frac{dq}{T}$$
+                These will be called the statistical definition, the probabilistic definition, and thermodynamic definition respectively. 
+    
+    
+                <h4>Extensive and Intensive Properties</h4>
+                A property of a system is said to be <b>extensive</b> if it is proportional to the size of the system. One example is mass; if the system is 1L of water, going to 2L of water will double the mass. These properties are often not ratios and can often be intuited via thought experiment. 
+    <br><br>
+                A property of a system is said to be <b>intensive</b> if it remains constant when a system is scaled. Density is an example of an intensive property. In the previous example, the density of the system does not change when you go from 1L of water to 2L of water. Mass and volume of the system both double, which cancel out when you take the ratio to get density. 
+    <br><br>
+                Some properties are neither extensive not intensive if they scale but in a non-linear proportional way. 
+                The most notable example is multiplicity. This can be shown if every number in the above calculation is doubled due to the factorial operator. 
+                Entropy at large scales behaves like an extensive property, but at very small scales, this does not always hold. 
+                </div>
+
+        </div>
+</body>
+</html>
