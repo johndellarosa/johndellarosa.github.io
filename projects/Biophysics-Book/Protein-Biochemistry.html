@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDM65P2C47"></script>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-SYJL7ZYKXB');
+    </script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RDM65P2C47');
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Biophysics chemistry textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Biophysical chemistry textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io//biography.html">About</a>|
+            <a href="https://johndellarosa.github.io//projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io//Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Table-of-Contents">
+                <H1>Protein Biochemsitry</H1>
+                <h2>Acid-Base Chemistry</h3>
+                <h3>Definitions of Acid and Base</h4>
+                There are 3 main basic definitions of acid-base chemistry:
+                <ul>
+                    <li>Arrhenius: increases concentration of H+ (acid) or OH- (base)</li>
+                    <li>Bronsted-Lowry: proton donor (acid) and proton acceptor (base)</li>
+                    <li>Lewis: electron pair acceptor (acid) and electron pair donor (base)</li>
+                </ul>
+                The Arrhenius definition has been supplanted by the Bronsted-Lowry one, as it's more general. 
+                The Lewis definition is also very important and its acids and bases are also referred to as electrophiles and nucleophiles respectively. 
+                For clarity, future uses of the words "acid" and "base" will refer to the Bronsted-Lowry definition; Lewis acids and bases will be referred to by their aforementioned organic chemistry terms.
+    
+                <h3>Henderson-Hasselbach Equation and pKa</h4>
+    
+                Let us start with a generic acid dissociation equation from before with an acid dissociation constant \(K_A\):
+    
+                $$HA+H_2O\rightleftharpoons A^-+H_3O^+$$
+    
+                The associated equilibrium equation is 
+    
+                $$K_A=\frac{[A^-][H_3O^+]}{HA}$$
+                There are various ways you can algebraically manipulate the equation and take logs in order to get to the final equation, but I will get things on the right side prior to taking the log
+                $$\frac{1}{[H_3O^+]}=\frac{1}{K_A}\times\frac{[A^-]}{[HA]}$$
+                Taking the log of both sides.
+                $$\log(\frac{1}{[H^+]})=\log(\frac{1}{K_A}\times\frac{[A^-]}{[HA]})$$
+                Using the multiplication and division rule for the argument:
+                $$\log(\frac{1}{[H^+]})=\log(\frac{1}{K_A})+\log(\frac{[A^-]}{[HA]})$$
+                Using a specific case of the log power rule, there is the relationship \(\log(1/a)=-\log(a)\), we get
+                $$-\log([H^+])=-\log(K_A)+\log(\frac{[A^-]}{[HA]})$$
+                By definition, \(pKa\equiv -\log(K_A)\) and \(pH\equiv -\log([H^+])\). Thus, we arrive at the Henderson-Hasselbach equation:
+                $$pH=pKa+\log(\frac{[A^-]}{[HA]})$$
+    
+                This equation allows us to relate the pH of an environment, the pKa of an acid, and the ratio of deprotonated to protonated occurences of that acid
+    
+                
+    
+                <h3>Amino Acids and Acid-Base Chemistry</h4>
+                As amino acids have both amine and carboxylic acid groups, they can all act as both acids and bases to some extent. 
+                In fact, at a neutral pH, amino acids will be predominantly Zwitterions (molecules that have both positive and negative charges); the amine group next to the alpha carbon will be protonated and the carboxylic acid group next to the alpha carbon will be deprotonated. 
+                <br>
+                However, a number of the proteogenic amino acids can also participate in acid-base chemistry through their sidechains. 
+    
+                <p style="width: 90%; text-align: center; margin: auto;"><a href="https://commons.wikimedia.org/wiki/File:Proteinogenic_Amino_Acid_Table.png#/media/File:Proteinogenic_Amino_Acid_Table.png"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Proteinogenic_Amino_Acid_Table.png" alt="Proteinogenic Amino Acid Table.png" style="max-width: 100%;"></a><br>By <a href="https://commons.wikimedia.org/w/index.php?title=User:Thomas.ryckmans68&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Thomas.ryckmans68 (page does not exist)">Thomas.ryckmans68 <span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=117084381">Link</a></p>
+                <br>
+                <br>
+    
+                One might ask - why do the amide groups in Asparagine and Glutamine not participate in acid-base chemistry? 
+                The answer has to do with conjugated pi systems. The lone pair on the nitrogen is not "available" to grab a proton because it prefers to be in a conjugated system with the carbonyl. 
+                For the same reason, in proteins, you will not see the amide backbone being charged, only the N and C termini.
+                    <br><br>
+                    For a simpler non-biological example, you can look at aniline which is benzene with an amine group. The pKa of its conjugate acid is much lower than that of a normal amine due to the above mentioned principles.
+                    However, there are cases like Histidine, which has a conjugated system, but is able to have the double-bonded nitrogen protonated as well. For histidine, the lone pair is not part of the conjugated system since you have a p orbital already with the double bond. This allows it to act as a base. Tryptophan also has a nitrogen containing heterocyclic R group, but it's not ever positively charged. You can explain this with the logic previously mentioned in this post. Simple non-biological analogous examples are pyrrole versus pyridine and why they have different basicity.
+                <h3>Basic pKa Example in Proteins</h3>
+                    Let use consider Histidine (assume pKa=6.0) in an environment at pH=7.0.
+
+                    Let \(His^0\) denote the uncharged version and \(His\cdot H^+\) denote the protonated version. 
+
+                    $$pH=pKa+\log(\frac{[His^0]}{[His\cdot H^+]})$$
+
+                    $$pH-pKa=\log(\frac{[His^0]}{[His\cdot H^+]})$$
+
+                    $$\frac{[His^0]}{[His\cdot H^+]}=10^{pH-pKa}$$
+                    $$\frac{[His^0]}{[His\cdot H^+]}=10^{7-6}$$
+                    $$=10$$
+
+                    At pH=7.0, there are 10 uncharged histidine residues for every positively charged histidine. 
+                    <br><br>
+                    Now what about if pH were lower by 2; i.e., pH=5.0:
+
+                    $$\frac{[His^0]}{[His\cdot H^+]}=10^{5-6}$$
+                    $$=0.1$$
+
+                    Now, there are 10 <b>charged</b> histidines for every <b>uncharged</b> one by lowering the pH by 2.
+
+                <h3>Effect of Local Environment on pKa</h3>
+                    The pKa values quoted in the previous figure were for the lone amino acid. The pKa values in proteins can drastically differ based on the environment. 
+                    Imagine a histidine that is in proximity to an aspartic acid residue. Thie histidine can take a proton off of the aspartic acid, resulting in a positive charged histidine next to a negatively charged aspartate. 
+                    This creates a favorable electrostatic interaction. Because of this, we would expect that the histidine would have a higher affinity for protons. 
+                    This would lead to the histidine residue having a higher pKa (more likely to be protonated). 
+                    <br><br>
+                    This is a classic example of a common occurrence in biology used to enhance reactivity of side chains in proteins. 
+                    These two residues can be joined by a Serine residue to form something known as a <b>catalytic triad</b>. 
+                    This more basic histidine can help deprotonate the serine residue, causing it to be a stronger nucleophile (think H2O versus OH- in terms of nucleophilic strength). 
+                    <br><br>
+                    The opposite can occur as well. Imagine a histidine next to an arginine. 
+                    Arginine has a very high pKa and is almost always positively charged. If the histidine were to also become protonated, then you would have two like charged together, which is not energetically favorable. Because of this, we would expect this particular histidine to be have less affinity for protons. 
+                    The pKa for this histidine would thus be <b>lower</b>.                     
+
+
+            </div>
+
+        </div>
+</body>
+</html>
