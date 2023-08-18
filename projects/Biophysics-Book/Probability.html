@@ -65,7 +65,8 @@
             <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
         
         </div>
-<h1>Biophysical Chemistry Textbook (Work in Progress)</h1>
+        <h1><a href= "Table-of-Contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h1>
+
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Probability">
@@ -73,14 +74,44 @@
                 <h3>Probability</h3>
                 <h4>Defining terms</h4>
                 Before we show any equations, we must define some terms. Let A and B be events.
-    
+                We will also denote \(\Omega\) to be the set of all possible outcomes. 
                 <ul>
                     <li>P(A) is the probability of event A occurring</li>
                     <li>\(P(A\cup B)\) is the probability of A or B or both occurring. The \(\lor\) can also be seen instead of \(\cup\)</li>
                     <li>\(P(A\cap B)\) is the probability of A <b>and</b> B both occurring. The \(\land\) can also be seen instead of \(\cap\)</li>
                     <li>\(P(\neg A)\) is the probability of A not occurring. This can also be written as a bar above the A</li>
                 </ul>
-    
+
+
+
+                <h4>Basic Rules</h4>
+                The sum of the probabilities of all possible outcomes must equal 1. For discrete distributions this can be stated as 
+                $$\sum P(x_i)=1$$
+                and for continuous distributions, we can write
+                $$\int_{-\infty}^{\infty}p(x)dx=1$$
+Inclusion-Exclussion Principle
+                $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
+                
+                <h4>Cumulative Density Function</h4>
+                The cumulative density function states the probability of getting the outcome being less than or equal to a given x. 
+                We will define a <b>Cumulative Density Function</b> (CDF) formally as 
+                
+                $$F(x)=P(X\leq x)$$
+                where X is the value of the random variable and x is a chosen value or cutoff point of interest.
+
+                For discrete variables, we can formulate this as 
+
+                $$F(x)=\sum_{x_i\leq x}p(x_i)$$
+                where \(x_i\) is a possible value that X takes.
+
+
+                For continuous variables, we have 
+
+                $$F(x)=\int_{-\infty}^xf(y)dy$$
+
+                where f(y) is the probability density at y.
+
+
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
     
@@ -106,7 +137,44 @@
                 Let A and B two events with non-zero probabilities
                 $$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$
     
-    
+                <h3>Expected Value and Variance</h3>
+                Given a probability distribution, what properties can we discern? 
+
+                Let E[f(x)] denote the "Expected value," which can be thought of as the density-weighted mean, for a function f(x) on a distribution X. 
+
+                We can calculate this as 
+
+                $$E[f(x)]=\sum_{x_i}f(x)\times p(x_i)$$
+                or in the continuous case
+                $$E[f(x)]=\int_{-\infty}^{\infty}f(x)p(x)dx$$
+
+                If we wanted to calculate the mean of a distribution, we can use f(x)=x and calculate the expectation.
+
+                $$E[X]=\int_{-\infty}^{\infty}xp(x)dx$$
+
+                Another common statistic that is used to describe a distribution is the variance.
+
+                $$\text{Var}(X)=E[X^2]-(E[X])^2$$
+
+                We can calculate this by separately calculating the expectations for \(E[X^2]\) and E[X].
+
+                <h3>Multivariate Distributions</h3>
+
+                
+
+                A distribution can output a set of random variables.
+                $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
+                We say that \(X_1,\dots,X_n\) are independent if
+
+                
+                
+                $$F(x_1,\dots,x_n)=\prod_{x_i}P(X_i\leq x_i)$$
+
+                We can use the notation
+
+                $$F_{X_i}(x_i)=\equiv P(X_i\leq x_i)$$
+
+                
     
                 <h3>Entropy</h3>
                 <h4>Multiplicity</h4>
@@ -148,8 +216,49 @@
                 Some properties are neither extensive not intensive if they scale but in a non-linear proportional way. 
                 The most notable example is multiplicity. This can be shown if every number in the above calculation is doubled due to the factorial operator. 
                 Entropy at large scales behaves like an extensive property, but at very small scales, this does not always hold. 
-                </div>
+                
+            
+                <h3>Normal Distribution</h3>
+
+                Also called a Gaussian or Bell-curve, the Normal distribution is an essential distribution to know. 
+                It is parameterized by two values:
+                <ul>
+                    <li>The mean, \(\mu\), which states the center of the distribution</li>
+                    <li>The variance, \(\sigma^2\), which describes the width of the distribution</li>
+                </ul>
+
+                Some conventions will parameterize it using the standard deviation rather than its variance. 
+                These are equivalent as the standard deviation is the square root of the variance and there is a 1-to-1 mapping. 
+                In this book, we will use the following notation to state that a variable X is distributed normally with mean, \(\mu\) and variance \(\sigma^2\):
+
+                $$X\sim N(\mu,\sigma^2)$$
+
+                Again, in some sources, the second parameter will be the standard deviation instead, but in this text, it will always be the variance.
+                If the normal distribution has parameters \(\mu=0\) and \(\sigma^2=1\) then we refer to it as a <b>standard normal distribution</b>.
+                <br><br>
+
+                This is a continuous probability distribution whose density is given by
+
+                $$f(x)=\frac{1}{\sqrt{2\pi \sigma^2}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}$$
+
+                <br><br>
+
+                <h4>Properties</h4>
+                
+                <ul>
+                    <li>Has non-zero probability density everywhere</li>
+                    <li>Symmetric</li>
+                    <li>Antiderivative does not have a closed-form</li>
+                </ul>
+
+            </div>
+            <div id="Practice Problems">
+
+
+            </div>
 
         </div>
+        <br>
+        <br>
 </body>
 </html>
