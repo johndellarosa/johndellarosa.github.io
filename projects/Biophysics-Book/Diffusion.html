@@ -70,27 +70,37 @@
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Table-of-Contents">
-                <ol>
-                    Part 0: Introduction
-                    <li><a href="./Introduction.html">Introduction</a></li>
-                    Part I: Foundations
-                    <li><a href="./Probability.html">Probability, Statistics, & Entropy</a></li>
-                    <li><a href="./Basic-Thermodynamics.html">Thermodynamics</a></li>
-                    <li><a href="./Advanced-Thermodynamics.html">Advanced Thermodynamics</a></li>
+                <h2>Diffusion Equation</h2>
+                Let \(\phi(r,t)\) be the density of a specie at coordinate r and time t. 
+                Let \(D(\phi,r)\) be the a coefficient that describes how captures how diffusivity changes with respect to density and time. 
+                The diffusion equation is gven by:
+                
+                $$\frac{\partial \phi(r,t)}{\partial t}
+                <h2>Fick's First Law</h2>
+                <h2>Fick's Second Law</h2>
+                <h2>Osmosis</h2>
+                <h2>Fokker-Planck Equation</h2>
+                The probability density of the velocity of a particle under drift conditions can be described by a stochastic differential equation (SDE)
 
-                    <li><a href="./Kinetics-Equilibrium.html">Kinetics & Equilibrium</a></li>
-                    <li><a href="./Statistical-Mechanics.html">Statistical Mechanics</a></li>
-                    Part II: Applications
-                    <li><a href="./Ligand-Binding.html">Ligand Binding</a></li>
-                    <li><a href="./Michaelis-Menten.html">Michaelis-Menten Kinetics</a></li>
-                    <li><a href="./Stochastic-Processes.html">Stochastic Processes</a></li>
-                    <li><a href="./Diffusion.html">Diffusion</a></li>
-                    <li><a href="./Protein-Biochemistry.html">Protein Biochemistry</a></li>
-                    <li><a href="./Protein-Folding.html">Protein Folding</a></li>
-                    <li><a href="./Nucleic-Acids.html">Nucleic Acids</a></li>
+                Since Brownian motion has its used in biology terminology as well, we will switch to W instead of B to describe the random process phenomenon to avoid confusion. 
 
-                </ol>
+                Let us describe the the location of a particle by 
 
+                $$dX_t=\mu(X_t,t)dt+\sigma(X_t,t)dW_t$$
+
+                where \(X_t\) is the location of the particle at time t, \(\mu(X_t,t)\) is the drift felt as a function of time and space, \(\sigma(X_t,t)\) is the noise coefficient for standard Wiener process. 
+
+                We can describe the evolution of the probability distribution for the location of the particle through solving the Fokker-Planck Equation:
+
+                $$\frac{\partial}{\partial t}p(x,t)=-\frac{\partial}{\partial x}[\mu(x,t)p(x,t)]+\frac{\partial^2}{\partial x^2}[D(x,t)p(x,t)]$$
+
+                where \(D(X_t,t)=\frac{1}{2}\sigma^2\)
+
+                This becomes easier when D(x,t) is a constant, which can often be an appropriate assumption. 
+
+                <h2>Partial Differential Equations</h2>
+                <h3>Numerical Methods</h3>
+                <h4>Crank-Nicolson</h4>
 
             </div>
 

@@ -71,6 +71,9 @@
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Michaelis-Menten">
                 <h2>Michaelis-Menten Kinetics</h2>
+
+                <h4>Introduction</h4>
+
                 <h4>Binding and Unbinding</h4>
     
                 Let us picture a an enzymatic reaction. We have a substrate, S, which binds to an Enzyme, E, resulting in a bound complex, \(E\cdot S\). After some amount of time, the substrate is transformed into product, P, and the enzyme unbinds. 
@@ -127,59 +130,97 @@
                 <img src="MichaelisMentenGraph.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
-    k_M = 4e-4
-    k_cat = 10
-    E_0 = 1e-12
-    S_array = np.geomspace(1e-5,1e-2,100)
-    v_array = k_cat*E_0*S_array/(k_M+S_array)
-    noise = np.random.normal(size=(100))*5e-14
-    v_array = v_array + noise
-    plt.figure(figsize=(14,8))
-    plt.scatter(S_array, v_array,s=5)
-    plt.title("Michaelis-Menten plot")
-    plt.xlabel("Substrate Concentration (M)")
-    plt.ylabel(f"$v_0$ (M/s)")
-    plt.xticks([i*5e-4 for i in range(0,21)])
-    plt.show()</pre>
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-5,1e-2,100)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+noise = np.random.normal(size=(100))*5e-14
+v_array = v_array + noise
+plt.figure(figsize=(14,8))
+plt.scatter(S_array, v_array,s=5)
+plt.plot(S_array,
+            [0.5*1e-11 for i in range(100)],
+            color='red',alpha=0.5)
+plt.title("Michaelis-Menten plot")
+plt.xlabel("Substrate Concentration (M)")
+plt.ylabel(f"$v_0$ (M/s)")
+plt.xticks([i*5e-4 for i in range(0,21)])
+plt.yticks([i*1e-12 for i in range(0,11)])
+plt.show()</pre>
                 </code>
     
                 As shown in the generated data above, the value of [S] at which the velocity is half of the asymptotic max is roughly 40 mM. 
     
-                <h5>Lineweaver-Burk plots</h5>
+                <h4>Lineweaver-Burk plots</h4>
     
                 Since trying to estimate the half-max of a curve can be difficult, we might choose to linearize the data and use regression to find the best fit line and calculate the parameters from that. 
                 One common method is Lineweaver-Burk plots, which are also called double-recipricol plots. As the name suggests, 1/[S] is plotted against 1/v. 
-                The y-intercept is v_max. This is evident since as [S] goes to infinity, 1/[S] goes to 0. The slope is \(k_M/V_\text{max}\). The x-intercept is \(-1/k_M\). 
+                The y-intercept is 1/v_max. This is evident since as [S] goes to infinity, 1/[S] goes to 0. The slope is \(k_M/V_\text{max}\). The x-intercept is \(-1/k_M\). 
     
                 <img src="LineweaverBurkPlot.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
-    k_M = 4e-4
-    k_cat = 10
-    E_0 = 1e-12
-    S_array = np.geomspace(1e-5,1e-2,100)
-    v_array = k_cat*E_0*S_array/(k_M+S_array)
-    noise = np.random.normal(size=(100))*5e-14
-    v_array = v_array + noise
-    S_array_inverse = 1/S_array
-    v_array_inverse = 1/v_array
-    plt.figure(figsize=(14,8))
-    plt.scatter(S_array_inverse, v_array_inverse,s=5)
-    model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
-    results = model.fit()
-    plt.plot(S_array_inverse,
-     results.predict(sm.add_constant(S_array_inverse)),
-     color='orange')
-    plt.title("Lineweaver-Burk plot")
-    plt.xlabel("1/[S] ($M^{-1}$)")
-    plt.ylabel(f"$1/v_0$ (s/M)")
-    plt.legend(['Data',f'OLS: y={results.params[0]}x+{results.params[1]}'])
-    plt.show()</pre>
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-5,1e-2,100)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+noise = np.random.normal(size=(100))*5e-14
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+plt.figure(figsize=(14,8))
+plt.scatter(S_array_inverse, v_array_inverse,s=5)
+model = sm.OLS(v_array_inverse,
+                sm.add_constant(S_array_inverse))
+results = model.fit()
+plt.plot(S_array_inverse,
+            results.predict(sm.add_constant(S_array_inverse)),
+            color='orange')
+plt.title("Lineweaver-Burk plot")
+plt.xlabel("1/[S] ($M^{-1}$)")
+plt.ylabel(f"$1/v_0$ (s/M)")
+plt.legend(['Data',
+            f'OLS: y={results.params[1]}x+{results.params[0]}'])
+plt.show()</pre>
                 </code>
-    
-                One thing to note is the heteroskedasticity in the graph. Ordinary Least Squares (OLS) is the best, unbiased linear model when the Gauss-Markov conditions are satisfied - one of which is homoskedasticity (variance of errors is constant over X). 
+                <h5>Noise and Estimations</h5>
+                One thing to note is the heteroskedasticity in the graph above. Ordinary Least Squares (OLS) is the best, unbiased linear model when the Gauss-Markov conditions are satisfied - one of which is homoskedasticity (variance of errors is constant over X). 
                 In practice, this can lead to bad estimates as the noisy values on the right can drastically affect the best-fit parameters.
+
+                The following is a graph with Noiseless Michaelis-Menten data and the same data with noise \(\simN(0,\sigma=1e-13)\). Note that the values are relatively similar.
+
+                <img src="MichaelisMentenNoise.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+
+
+                Below is a graph comparing the fit with v_0 having homoskedastic errors. Note that the double recipricol plot does not have homoskedastic errors. 
+
+                <img src="LineweaverBurkNoise.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+
+                Here is a comparison of the determined parameters from each graph:
+                <ul>
+                    <li>Noiseless:
+                        <ul>
+                            <li>\(v_{max}=1e-11\)</li>
+                            <li>\(k_M=4e-4\)</li>
+                        </ul>
+                    </li>
+                    <li>With noise with std dev 1e-13:
+                        <ul>
+                            <li>\(v_{max}=6e-12\)</li>
+                            <li>\(k_M=2.1e-4\)</li>
+                        </ul>
+                    </li>
+                </ul>
+
     
+    <h3>Specificity</h3>
+    A common metric for enzyme efficiency is given by 
+
+    $$k_s=\frac{k_{cat}}{K_M}$$
+
+
     <h3>Inhibition</h3>
     
     <figure><a href="https://commons.wikimedia.org/wiki/File:Inhibition-types.jpg#/media/File:Inhibition-types.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Inhibition-types.jpg" alt="Inhibition-types.jpg" style="max-height: 300px;"></a><br>By <a href="//commons.wikimedia.org/w/index.php?title=User:Athel_cb&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Athel cb (page does not exist)">Athel cb</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=130486959">Link</a></figure>
@@ -224,50 +265,55 @@
                 <img src="LineweaverBurkInhib.png" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
-    k_M = 4e-4
-    k_cat = 10
-    E_0 = 1e-12
-    S_array = np.geomspace(5e-3,1e-2,200)
-    test_points = 1/np.array([-0.1,5e-3])
-    
-    alpha = 1
-    v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
-    noise = np.random.normal(size=(200))*.5e-16
-    v_array = v_array + noise
-    S_array_inverse = 1/S_array
-    v_array_inverse = 1/v_array
-    ax = plt.figure(figsize=(14,8))
-    plt.scatter(S_array_inverse, v_array_inverse,s=5)
-    model = sm.OLS(v_array_inverse,
-     sm.add_constant(S_array_inverse))
-    results = model.fit()
-    plt.plot(test_points,
-     results.predict(sm.add_constant(test_points)),
-     color='green')
-    
-    alpha = 1.5
-    v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
-    noise = np.random.normal(size=(200))*.5e-16
-    v_array = v_array + noise
-    S_array_inverse = 1/S_array
-    v_array_inverse = 1/v_array
-    plt.scatter(S_array_inverse, v_array_inverse,s=5,color='red')
-    model2 = sm.OLS(v_array_inverse,
-     sm.add_constant(S_array_inverse))
-    results2 = model2.fit()
-    plt.plot(test_points,
-     results2.predict(sm.add_constant(test_points)),
-     color='orange')
-    
-    
-    plt.title("Lineweaver-Burk plot")
-    plt.xlabel("1/[S] ($M^{-1}$)")
-    plt.ylabel(f"$1/v_0$ (s/M)")
-    plt.legend(['Data (No inhib)',
-    f'OLS: y={results.params[0]:.2E}x+{results.params[1]}',
-    'Data (Inhib)',
-     f'OLS: y={results2.params[0]}x+{results2.params[1]}'])
-    plt.show()</pre>
+import decimal
+np.random.seed(3)
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-4,1e-2,200)
+test_points = 1/np.array([-0.1,1e-4])
+
+alpha = 1
+v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
+noise = np.random.normal(size=(200))*.25e-17
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+ax = plt.figure(figsize=(14,8))
+plt.scatter(S_array_inverse,
+            v_array_inverse,s=5)
+model = sm.OLS(v_array_inverse,
+                sm.add_constant(S_array_inverse))
+results = model.fit()
+plt.plot(test_points,
+            results.predict(sm.add_constant(test_points)),
+            color='green')
+
+alpha = 1.5
+v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
+noise = np.random.normal(size=(200))*.25e-17
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+plt.scatter(S_array_inverse,
+            v_array_inverse,s=5,
+            color='red')
+model2 = sm.OLS(v_array_inverse,
+                sm.add_constant(S_array_inverse))
+results2 = model2.fit()
+plt.plot(test_points,
+            results2.predict(sm.add_constant(test_points)),
+            color='orange')
+
+
+plt.title("Lineweaver-Burk plot")
+plt.xlabel("1/[S] ($M^{-1}$)")
+plt.ylabel(f"$1/v_0$ (s/M)")
+plt.legend(['Data (No inhib)',
+            f'OLS: y={results.params[1]:.2E}x+{results.params[0]}',
+            'Data (Inhib)',
+            f'OLS: y={results2.params[1]}x+{results2.params[0]}'])
+plt.show()</pre>
                 </code>
     
     While it is not apparent in the figure, as the inhibitor is added, the line rotates counter-clockwise, with the y-intercept remaining the same. 
