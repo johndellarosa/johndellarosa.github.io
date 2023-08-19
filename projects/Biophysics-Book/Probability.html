@@ -111,6 +111,13 @@ Inclusion-Exclussion Principle
 
                 where f(y) is the probability density at y.
 
+                We can consequently calculate the probability of being between two values as follows:
+
+                $$P(a\leq X\leq b) = F(b)-F(a)$$
+
+                Another common definition is that of the <b>survival function</b>. We define this as 
+                $$\bar{F}(x)=1-F(x)$$
+
 
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
@@ -140,23 +147,45 @@ Inclusion-Exclussion Principle
                 <h3>Expected Value and Variance</h3>
                 Given a probability distribution, what properties can we discern? 
 
-                Let E[f(x)] denote the "Expected value," which can be thought of as the density-weighted mean, for a function f(x) on a distribution X. 
+                Let E[f(X)] denote the "Expected value," which can be thought of as the density-weighted mean, for a function f(x) on a distribution X. 
 
                 We can calculate this as 
 
-                $$E[f(x)]=\sum_{x_i}f(x)\times p(x_i)$$
+                $$E[f(X)]=\sum_{x_i}f(x)\times p(X=x_i)$$
                 or in the continuous case
-                $$E[f(x)]=\int_{-\infty}^{\infty}f(x)p(x)dx$$
+                $$E[f(X)]=\int_{-\infty}^{\infty}f(x)p(X=x)dx$$
 
-                If we wanted to calculate the mean of a distribution, we can use f(x)=x and calculate the expectation.
+                If we wanted to calculate the mean of a distribution, we can use f(X)=x and calculate the expectation.
 
-                $$E[X]=\int_{-\infty}^{\infty}xp(x)dx$$
+                $$E[X]=\int_{-\infty}^{\infty}xp(X=x_i)dx$$
 
                 Another common statistic that is used to describe a distribution is the variance.
 
                 $$\text{Var}(X)=E[X^2]-(E[X])^2$$
 
                 We can calculate this by separately calculating the expectations for \(E[X^2]\) and E[X].
+
+
+                <h5>Example</h5>
+                The Bernoulli Distribution is given by 
+                $$P(X=1)=p$$
+                $$P(X=0)=1-p$$
+
+                Calculate the mean and variance of the distribution.
+
+                $$E[X]=\sum x_i p(x_i)$$
+                $$=1\times p + 0 \times (1-p)$$
+                $$=p$$
+
+                $$E[X^2] = \sum x_i^2 p(x_i)$$
+                $$=1^2 \times p + 0^2 \times (1-p)$$
+                $$=p$$
+
+                $$\text{Var}(X)=e[X^2]-(E[X])^2$$
+                $$=p-p^2$$
+                $$p(1-p)$$
+
+
 
                 <h3>Multivariate Distributions</h3>
 
@@ -172,10 +201,43 @@ Inclusion-Exclussion Principle
 
                 We can use the notation
 
-                $$F_{X_i}(x_i)=\equiv P(X_i\leq x_i)$$
+                $$F_{X_i}(x_i)\equiv P(X_i\leq x_i)$$
 
-                
+                We can define the density of a multivariate distribution as 
+
+                $$f(x_1,\dots,x_n)\equiv\frac{\partial^n}{\partial_1\cdots\partial_n}F(x_1,\dots,x_n)$$
+
+                We can also define a function called the marginal density. Let us consider a bivariate distribution given by \(x_1\) and \(x_2\). 
+                $$F_{X_1}(x_1)=\int_{-\infty}^{\infty}f(x_1,x_2)dx_2$$
+
+                Using the marginal densities, we can arrive at an alternative definition of independence. Two random variables are independent if
+                $$f(x_1,x_2)=f_{X_1}(x_1)f_{X_2}(x_2)\forall(x_1,x_2)$$
     
+                Let us define the conditional distribution of \(X_1\) given \(X_2=x_2\)
+
+                $$F_{X_1|X_2}(x_1|X_2)\equiv P(X_1\leq x_1|X_2=x_2)$$
+                The marginal density is more useful in practice
+                $$f_{X_1|X_2}(x_1|x_2)=\frac{\partial}{\partial x_1}F_{X_1|X_2}(x_1|x_2)=\frac{f(x_1,x_2)}{f_{X_2}(x_2)}$$
+
+                Equivalently,
+
+                $$f(x_1,x_2)=f_{X_1|X_2}(x_1|x_2)f_{X_2}(x_2)$$
+
+                <h3>Covariance and Correlation</h3>
+                How do we quantify how two variables co-move?
+                <br><br>
+                Let us define the Covariance between \(X_1\) and \(X_2\) as
+
+                $$\text{Cov}(X_1,X_2)=E[X_1X_2]-E[X_1]E[X_2]$$
+                We can normalize this into the <b>Pearson correlation</b> (often just called correlation) as follows:
+
+                $$\rho(X_1,X_2)=\frac{\text{Cov}(X_1,X_2)}{\sqrt{\text{Var}[X_1]\text{Var}[X_2]}}$$
+
+                What must be emphasized is that a correlation of 0 does not mean that two variables are independent. 
+                A correlation of 0 is a <b>necessary but not sufficient</b> condition.               
+
+                Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>.
+
                 <h3>Entropy</h3>
                 <h4>Multiplicity</h4>
     
@@ -253,7 +315,7 @@ Inclusion-Exclussion Principle
 
             </div>
             <div id="Practice Problems">
-
+                
 
             </div>
 

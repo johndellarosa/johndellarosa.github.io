@@ -72,9 +72,68 @@
             <div id="Table-of-Contents">
                 <h1>Statistical Mechanics</h1>
                 <h2>Boltzmann Distribution</h2>
-                <h2>
+                <h3>Equilibrium</h3>
+                We previously went over microstates in the probability chapter. 
+                A system at equilibrium has states that are populated proportional to 
+
+                $$p(a)= \frac{e^{-\frac{E_a}{k_BT}}}{Q}$$
+                where p(a) is the population of a microstate a, \(E_a\) is the energy level of state a, \(k_B\) is Boltzmann's constant (\(1.38\times 10^{-23}\)J/K), T is temperature, and Q is a normalization factor.
+                Sometimes we will instead write the denominator for the exponent as 
+                $$\beta = \frac{1}{k_BT}$$
+
+
+                We can also describe the ratio of how populated two microstates are by
+
+                $$\frac{p(a)}{p(b)}=e^{-\frac{E_a-E_b}{k_BT}}$$
+
+                We can write this without a proportionality as the normalization factor cancels out.
+                This implies that two microstates with the energy are equally populated at equilibirium. 
+                It also states that microstates at lower energy will be more populated than high energy microstates. 
+                
+                <br><br>
+                <h3>Multiplicity</h3>
+                What the Boltzmann distribution gave us was a way to relate populations of <b>microstates</b>, but what about states? 
+
+                Let us consider a two level system.
+
+                <ol>
+                    <li>1 ground state (G) - Energy=0</li>
+                    <li>2 excited states (A and B) - Energy=E</li>
+                </ol>
+
+
+
+                From the Boltzmann distribution we know
+
+                $$\frac{p(A)}{p(G)}=\frac{e^{-\frac{E}{k_BT}}}{Q}$$
+                and also 
+                $$\frac{p(B)}{p(G)}=\frac{e^{-\frac{E}{k_BT}}}{Q}$$
+
+                The proportion of molecules in the excited state would thus be given by
+
+                $$\frac{p(E)}{p(G)}=\frac{\nu_E}{\nu_G}e^{-\frac{E}{k_BT}}{Q}$$
+                where \(nu_i\) is the degeneracy (amount of microstates within the state) for state i.
+                In this case, \(\nu_E=2\) and \(\nu_G=1\)
+
+                In order to calculate Q
+
+                $$Q=\sum e^{-\frac{E_{i}}{k_BT}}$$
+
+
+                <h3>
                     Heat Capacity
-                </h2>
+                </h3>
+                In order to calculate the average energy of the system, we can take the expected value of the energy
+
+                $$\lt E \gt=\sum_{\nu}E_{\nu}P(\nu)$$
+
+                It can be shown that 
+
+                $$\lt E \gt = -\frac{\partial \ln Q}{\partial B}$$
+
+                By taking the second derivative of Q with respect to beta, it can be further shown that
+
+                $$\text{Var}(E)=K_BT^2\frac{\partial \lt E \gt}{\partial T}$$
 
                 <h2>Concentration and Its Effect</h2>
 
