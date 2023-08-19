@@ -229,13 +229,16 @@ Inclusion-Exclussion Principle
                 Let us define the Covariance between \(X_1\) and \(X_2\) as
 
                 $$\text{Cov}(X_1,X_2)=E[X_1X_2]-E[X_1]E[X_2]$$
+
+                The special case of the covariance of a random variable with itself is equal to the variance. 
+                <br><br>
                 We can normalize this into the <b>Pearson correlation</b> (often just called correlation) as follows:
 
                 $$\rho(X_1,X_2)=\frac{\text{Cov}(X_1,X_2)}{\sqrt{\text{Var}[X_1]\text{Var}[X_2]}}$$
 
                 What must be emphasized is that a correlation of 0 does not mean that two variables are independent. 
-                A correlation of 0 is a <b>necessary but not sufficient</b> condition.               
-
+                A correlation of 0 is a <b>necessary but not sufficient</b> condition. For example, take a random variable that is distributed like \(X\sim N(0,1)\) and another variable Y=abs(X). The correlation is 0, but they are not independent.
+<br><br>
                 Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>.
 
                 <h3>Entropy</h3>
@@ -316,7 +319,18 @@ Inclusion-Exclussion Principle
             </div>
             <div id="Practice Problems">
                 
+                <h2>Practice Problems</h2>
 
+                <ol>
+                    <li>The exponential distribution is given by \(f(x)=ae^{-ax}\) for \(x\geq 0\) and 0 for \(x \lt 0\). Determine the mean and variance.
+                        The following identities may be useful:
+                        <ol>
+                            <li>\(\int xe^{-ax}dx=-\frac{e^{-ax}(ax+1)}{a^2}+c\)</li>
+                            <li>\(\int x^2e^{-ax}dx=-\frac{e^{-ax}(a^2x^2+2ax+2)}{a^3}+c\)</li>
+                        </ol>
+                    </li>
+
+                </ol>
             </div>
 
         </div>

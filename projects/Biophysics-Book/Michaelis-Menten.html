@@ -167,7 +167,9 @@
     plt.scatter(S_array_inverse, v_array_inverse,s=5)
     model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
     results = model.fit()
-    plt.plot(S_array_inverse, results.predict(sm.add_constant(S_array_inverse)),color='orange')
+    plt.plot(S_array_inverse,
+     results.predict(sm.add_constant(S_array_inverse)),
+     color='orange')
     plt.title("Lineweaver-Burk plot")
     plt.xlabel("1/[S] ($M^{-1}$)")
     plt.ylabel(f"$1/v_0$ (s/M)")
@@ -236,9 +238,12 @@
     v_array_inverse = 1/v_array
     ax = plt.figure(figsize=(14,8))
     plt.scatter(S_array_inverse, v_array_inverse,s=5)
-    model = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+    model = sm.OLS(v_array_inverse,
+     sm.add_constant(S_array_inverse))
     results = model.fit()
-    plt.plot(test_points, results.predict(sm.add_constant(test_points)),color='green')
+    plt.plot(test_points,
+     results.predict(sm.add_constant(test_points)),
+     color='green')
     
     alpha = 1.5
     v_array = k_cat*E_0/(1+k_cat*alpha/S_array)
@@ -247,15 +252,21 @@
     S_array_inverse = 1/S_array
     v_array_inverse = 1/v_array
     plt.scatter(S_array_inverse, v_array_inverse,s=5,color='red')
-    model2 = sm.OLS(v_array_inverse, sm.add_constant(S_array_inverse))
+    model2 = sm.OLS(v_array_inverse,
+     sm.add_constant(S_array_inverse))
     results2 = model2.fit()
-    plt.plot(test_points, results2.predict(sm.add_constant(test_points)),color='orange')
+    plt.plot(test_points,
+     results2.predict(sm.add_constant(test_points)),
+     color='orange')
     
     
     plt.title("Lineweaver-Burk plot")
     plt.xlabel("1/[S] ($M^{-1}$)")
     plt.ylabel(f"$1/v_0$ (s/M)")
-    plt.legend(['Data (No inhib)',f'OLS: y={results.params[0]:.2E}x+{results.params[1]}','Data (Inhib)', f'OLS: y={results2.params[0]}x+{results2.params[1]}'])
+    plt.legend(['Data (No inhib)',
+    f'OLS: y={results.params[0]:.2E}x+{results.params[1]}',
+    'Data (Inhib)',
+     f'OLS: y={results2.params[0]}x+{results2.params[1]}'])
     plt.show()</pre>
                 </code>
     

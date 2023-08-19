@@ -228,8 +228,11 @@
     j=0
     for i in range(51):
         if (i in [0,10,25,50]):
-            ax = axes[j].hist2d(particles_x,particles_y, bins = bins,density=True)
-            axes[j].set(ylabel='y',title=f't={i}')
+            ax = axes[j].hist2d(particles_x,
+            particles_y, bins = bins,
+            density=True)
+            axes[j].set(ylabel='y',
+            title=f't={i}')
             fig.colorbar(ax[3])
             j+=1
         dice_rolls = np.random.rand(5000)
@@ -294,7 +297,7 @@
                 The value of \(B_s-B_0\) is independent of \(B_t-B_s\). It is important that when we select the two intervals that they do not overlap. 
                 It is fine to have the endpoint of one be the start of the other however.
     
-                $$B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{where }0\leq s\leq t$$
+                $$B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{ where }0\leq s\leq t$$
     
                 A segment of Brownian motion is normally distributed with a variance equal to the time between the start and end points with mean 0. 
                 
