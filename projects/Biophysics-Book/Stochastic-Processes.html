@@ -151,7 +151,7 @@
                 But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
     
                 <br><br>
-                <img src="Markov_states.png" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
+                <img src="Markov_states.png" img="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
     initial_prob_vector = np.array([1,0])
@@ -197,7 +197,7 @@
                 <br><br>
     
                 The following depicts a simulation of 5000 particles at various time points using Python.
-                <img src="Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+                <img src="Diffusion.png" alt="1D Random walk over time" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
     particles = np.zeros(5000)
@@ -217,7 +217,7 @@
     
                 We can easily extend this model to a higher number of dimensions by having independent random walks along each axis. 
     
-    <img src="Diffusion2D.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+    <img src="Diffusion2D.png" alt="2D random walk over time" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
     Python code:
     <code style="margin: auto; width: 50%;"><pre>
     particles_x = np.zeros(5000)
@@ -250,7 +250,7 @@
                 Another area is the concept of a biased walk; i.e. one where the jumps in one direction are favored. We used 50% probabilities for each direction in our initial model, but there's no need for it to be this way. 
                 We could have just as easily set \(P(\Delta x=+1)=0.75\) instead. We would observe a fraction still winding up in the negative integers.
     
-                <img src="Biased_Diffusion.png" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
+                <img src="Biased_Diffusion.png" alt="Random walk with drift" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
     particles = np.zeros(5000)
