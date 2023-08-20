@@ -72,6 +72,7 @@
             <div id="Table-of-Contents">
                 <h2>Introduction</h2>
                 Since such a large part of biology takes place in some sort of solution, diffusion is an essential process and being able to properly model it can be crucial. 
+                In this section, diffusion models will be presented with increasing complexity, starting with special cases of following equations.
                 
 
 
@@ -100,6 +101,8 @@
                 Let \(D(\phi,r)\) be the a coefficient that describes how captures how diffusivity changes with respect to density and time. 
                 The diffusion equation is gven by:
                 $$\frac{\partial \phi(r,t)}{\partial t}=\nabla \cdot [D(\phi,r)\nabla \phi(r,t)]$$
+
+                Note that this simplifies to Fick's second law when D is constant.
                 
                 <h2>Osmosis</h2>
                 <h2>Fokker-Planck Equation</h2>
@@ -130,6 +133,8 @@
                 $$\frac{\partial}{\partial t}p(x,t)=D\frac{\partial^2}{\partial x^2}p(x,t)$$
                 which is Fick's second law. 
                 
+                <br><br>
+                Again, note that if there is no drift, this simplifies to the above Diffusion Equation.
 
                 <h3>Exploring the Diffusivity</h3>
 
