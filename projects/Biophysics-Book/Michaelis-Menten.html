@@ -202,14 +202,14 @@ plt.show()</pre>
                 <ul>
                     <li>Noiseless:
                         <ul>
-                            <li>\(v_{max}=1e-11\)</li>
-                            <li>\(k_M=4e-4\)</li>
+                            <li>\(v_{max}=\)1e-11 M/s</li>
+                            <li>\(k_M\)=4e-4 M</li>
                         </ul>
                     </li>
                     <li>With noise with std dev 1e-13:
                         <ul>
-                            <li>\(v_{max}=6e-12\)</li>
-                            <li>\(k_M=2.1e-4\)</li>
+                            <li>\(v_{max}=\)6e-12 M/s</li>
+                            <li>\(k_M=\)2.1e-4 M</li>
                         </ul>
                     </li>
                 </ul>
@@ -343,7 +343,15 @@ plt.show()</pre>
             While similar in name to uncompetitive, non-competitive inhibition is distinct from it. 
             Non-competitive inhibition does not involve the inhibitor binding to the active site, instead it binds to an "allosteric site." 
             The inhibitor can bind to both E and \(E\cdot S\). Similarly, the substrate is able to bind and unbind to both E and \(E\cdot I\). 
-    <br><br>
+    
+    
+            $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
+            $$E+I\rightleftharpoons_{k_2}^{k_{-2}} E\cdot I$$
+            $$E\cdot S+I\rightleftharpoons_{k_3}^{k_{-3}} E\cdot S\cdot I$$
+            $$E\cdot I + S \rightleftharpoons_{k_4}^{k_{-4}} E\cdot S\cdot I$$
+
+
+            <br><br>
     This has the effect of essentially reducing the amount of enzyme present, as if less had been added in the first place. 
     The following are the effects of non-competitive inhibition:
     <ol>
