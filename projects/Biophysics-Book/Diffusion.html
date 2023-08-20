@@ -76,7 +76,25 @@
 
 
                <h2>Fick's First Law</h2>
+
+                Fick's first law of diffusion relates the flux of molecules diffusing to the spacial gradient.
+
+                $$J=-D \nabla \phi$$
+                where \(\mathbf{J}\) is the flux vector, D is the diffusion coefficient, phi is the concentration.
+
+
                 <h2>Fick's Second Law</h2>
+
+                While Fick's first law relates the flux to the concentration gradient, 
+                Fick's second law relates the partial derivative with respect to time with the second partial with respect to space.
+
+                $$\frac{\partial \phi}{\partial t}=D\nabla^2\phi$$
+
+                Where \(\nabla^2\) is the Laplacian operator. 
+                When D is a constant, the solution is given by 
+
+                $$\phi(x,t)=\frac{1}{\sqrt{4\pi Dt}}e^{-\frac{x^2}{4Dt}}$$
+
                 <h2>Diffusion Equation</h2>
                 Let \(\phi(r,t)\) be the density of a specie at coordinate r and time t. 
                 Let \(D(\phi,r)\) be the a coefficient that describes how captures how diffusivity changes with respect to density and time. 
@@ -102,6 +120,29 @@
                 where \(D(X_t,t)=\frac{1}{2}\sigma^2\)
 
                 This becomes easier when D(x,t) is a constant, which can often be an appropriate assumption. 
+
+                If there is no drift and D is constant, then we get the dynamics
+                $$dX_t=\sqrt{2D}dW_t$$
+                
+                which is just a stochastic differential equation for particle undergoing Brownian motion (scaled by a constant). 
+                By plugging the dynamics into the Fokker-Planck equation, we get a familiar form
+
+                $$\frac{\partial}{\partial t}p(x,t)=D\frac{\partial^2}{\partial x^2}p(x,t)$$
+                which is Fick's second law. 
+                
+
+                <h3>Exploring the Diffusivity$$
+
+                So what is the diffusivity? <br>
+                The Einstein relation states that 
+                $$D=\mu k_B T$$
+                where \(\mu\) is the "mobility." The issue of mobility kicks the can of difficulty down the road and can be itself a task to model. 
+                However, in a simple case, for a small uncharged particle moving relatively "smoothly" through a medium, we can use the Stokes-Einstein equation:
+
+                $$D=\frac{k_BT}{6\pi \nu r}$$
+
+                where \(\nu\) is the viscosity of the solution and r is the radius of the particle.
+
 
                 <h2>Partial Differential Equations</h2>
                 <h3>Numerical Methods</h3>
