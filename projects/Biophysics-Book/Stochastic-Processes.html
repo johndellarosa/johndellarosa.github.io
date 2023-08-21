@@ -148,7 +148,18 @@
                             p_{A\rightarrow A} & p_{A\rightarrow E}\\ 
                             p_{E\rightarrow A} & p_{E\rightarrow E}
                             \end{bmatrix}^n$$
-                But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? We can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
+                But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? 
+                
+                For an analytical solution, we can try to find a stationary point for the transition matrix:<br>
+                <br>
+                If the state distribution will not change over time, then it would have this property:
+
+                $$P T = P = P I$$
+                where P is the state distribution vector and T is the transition matrix. This is a straightforward eigenvector calculation.
+
+                <br><br>
+
+                Numerically, we can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
     
                 <br><br>
                 <img src="Markov_states.png" img="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
