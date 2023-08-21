@@ -82,7 +82,7 @@
 
                 Fick's first law of diffusion relates the flux of molecules diffusing to the spacial gradient.
 
-                $$J=-D \nabla \phi$$
+                $$\mathbf{J}=-D \nabla \phi$$
                 where \(\mathbf{J}\) is the flux vector, D is the diffusion coefficient, phi is the concentration.
 
 
@@ -101,6 +101,9 @@
                 which is a Gaussian distribution whose variance is proportional to time elapsed.
 
                 <h2>Diffusion Equation</h2>
+                But what if the diffusivity is not homogeneous? What if the diffusivity can be affected by the local concentration? For this, we need a more complex equation.
+                <br><br>
+
                 Let \(\phi(r,t)\) be the density of a specie at coordinate r and time t. 
                 Let \(D(\phi,r)\) be the a coefficient that describes how captures how diffusivity changes with respect to density and time. 
                 The diffusion equation is gven by:
@@ -110,6 +113,11 @@
                 
 
                 <h2>Fokker-Planck Equation</h2>
+
+                What if the particle has a drift component?
+
+                <br><br>
+                
                 The probability density of a particle under drift conditions can be described by a stochastic differential equation (SDE)
 
                 Since Brownian motion has its used in biology terminology as well, we will switch to W instead of B to describe the random process phenomenon to avoid confusion. 
@@ -152,7 +160,8 @@
 
                 where \(\nu\) is the viscosity of the solution and r is the radius of the particle.
 
-
+                We observe an expected relationship that the diffusivity increases with higher temperature. We also gain the ability to relate an easily measurable macroscoping quantity, viscosity, to a more microscopic quantity, diffusivity. 
+                
 
             </div>
 
