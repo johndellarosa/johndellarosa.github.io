@@ -222,29 +222,30 @@
     <img src="Diffusion2D.png" alt="2D random walk over time" style="margin:auto; display: block;  width:clamp(300px,60vw, 900px)"/>
     Python code:
     <code style="margin: auto; width: 50%;"><pre>
-    particles_x = np.zeros(5000)
-    particles_y = np.zeros(5000)
-    bins = [-31+2*i for i in range(0,31)]
-    fig, axes = plt.subplots(2,2,figsize=(16,12))
-    axes = axes.flatten()
-    j=0
-    for i in range(51):
-        if (i in [0,10,25,50]):
-            ax = axes[j].hist2d(particles_x,
-            particles_y, bins = bins,
-            density=True)
-            axes[j].set(ylabel='y',
-            title=f't={i}')
-            fig.colorbar(ax[3])
-            j+=1
-        dice_rolls = np.random.rand(5000)
-        movement = np.where(dice_rolls < 0.5,1,-1)
-        particles_x += movement
-        dice_rolls = np.random.rand(5000)
-        movement = np.where(dice_rolls < 0.5,1,-1)
-        particles_y += movement
-    axes[-1].set(xlabel="x")
-    plt.show()</pre>
+np.random.seed(1)
+particles_x = np.zeros(5000)
+particles_y = np.zeros(5000)
+bins = [-31+2*i for i in range(0,31)]
+fig, axes = plt.subplots(2,2,figsize=(16,12))
+axes = axes.flatten()
+j=0
+for i in range(51):
+    if (i in [0,10,25,50]):
+        ax = axes[j].hist2d(particles_x,
+        particles_y, bins = bins,
+        density=True)
+        axes[j].set(ylabel='y',
+        title=f't={i}',
+        xlabel='x')
+        fig.colorbar(ax[3])
+        j+=1
+    dice_rolls = np.random.rand(5000)
+    movement = np.where(dice_rolls < 0.5,1,-1)
+    particles_x += movement
+    dice_rolls = np.random.rand(5000)
+    movement = np.where(dice_rolls < 0.5,1,-1)
+    particles_y += movement
+plt.show()</pre>
     </code>
     <br>
     
@@ -269,6 +270,9 @@
     plt.show()</pre>
                 </code>
                 <br>
+
+                Alternatively, we could think about having the probabilities remain 50% for each direction but add a drift component that gets added at each step. 
+                
     
                 Of course, this is not a realistic model, as particles don't discretely jump, but it becomes a better approximation as the limit as the scale of distance and time go to 0. 
                 This will be more precisely defined later.

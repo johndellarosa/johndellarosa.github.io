@@ -109,7 +109,7 @@
 
                 <br><br>
                 
-                The probability density of a particle under drift conditions can be described by a stochastic differential equation (SDE)
+                The probability density of a particle under drift conditions connected to a stochastic differential equation (SDE) that describes its dynamics.
 
                 Since Brownian motion has its used in biology terminology as well, we will switch to W instead of B to describe the random process phenomenon to avoid confusion. 
 
@@ -123,10 +123,15 @@
 
                 $$\frac{\partial}{\partial t}p(x,t)=-\frac{\partial}{\partial x}[\mu(x,t)p(x,t)]+\frac{\partial^2}{\partial x^2}[D(x,t)p(x,t)]$$
 
-                where \(D(X_t,t)=\frac{1}{2}\sigma^2\)
+                where \(D(X_t,t)=\frac{1}{2}\sigma^2\). 
+
+                In stochastic calculus, this is referred to as the Kolmogorov Forward Equation. There is a corresponding backward equation which deals with the likelihood of ending up at a particular state. 
+
+                Again, note that if there is no drift, this simplifies to the above Diffusion Equation.
+
 
                 This becomes easier when D(x,t) is a constant, which can often be an appropriate assumption. 
-
+                <br><br>
                 If there is no drift and D is constant, then we get the dynamics
                 $$dX_t=\sqrt{2D}dW_t$$
                 
@@ -135,9 +140,7 @@
 
                 $$\frac{\partial}{\partial t}p(x,t)=D\frac{\partial^2}{\partial x^2}p(x,t)$$
                 which is Fick's second law. 
-                
-                <br><br>
-                Again, note that if there is no drift, this simplifies to the above Diffusion Equation.
+    
 
                 <h3>Exploring the Diffusivity</h3>
 
