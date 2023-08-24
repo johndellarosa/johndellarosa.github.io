@@ -113,8 +113,37 @@
 
                 Below is a graph of a 3-level system where each state has degeneracy=1 and the energy levels are \(0K_B\), \(500K_B\), \(1000K_B\)
                 <img src="BoltzmannGraph.png" alt="Boltzmann Distribution Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
-                
+                <h4>Maxwell-Boltzmann Distribution</h4>
+                So we've seen that the Boltzmann distribution makes lower energy microstates more populated. 
+                Does this mean that lower energy states are always more populated? 
+                The answer is not necessarily; higher energy macrostates can be more populated if there are more microstates than there are in the lower energy levels and you are at a sufficient temperature. 
+                One example is how speed for molecules are distributed, called the Maxwell-Boltzmann distribution. 
 
+                The multiplicity for the number of microstates for a given speed is proportional to the square of the speed, as it is like the surface area of a sphere of radius v, where v is the speed.
+
+                The resulting distribution is shown below.
+
+                <img src="MaxwellBoltzmannGraph.png" alt="Maxwell-Boltzmann Graph for Argon" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+def Maxwell_Boltzmann(x,T, m):
+    if type(x) == np.array or type(x) == list:
+        return np.array([Maxwell_Boltzmann(i,T,m) for i in x])
+    k_B = 1.38e-23
+    return (m/(2*np.pi*k_B*T))**(3/2)*(4*np.pi*x**2)*np.exp(-m*(x**2)/(2*k_B*T))
+
+v_array = [i for i in range(0,1500)]
+m_argon = 1.6605e-27*39.89
+plt.figure(figsize=(14,8))
+plt.plot(v_array,Maxwell_Boltzmann(v_array,T=200,m=m_argon))
+plt.plot(v_array,Maxwell_Boltzmann(v_array,T=300,m=m_argon))
+plt.plot(v_array,Maxwell_Boltzmann(v_array,T=500,m=m_argon))
+plt.title("Maxwell-Boltzmann Plots for Argon")
+plt.xlabel("Speed (m/s)")
+plt.ylabel(f"Probability Density")
+plt.legend(['200K','300K','500K'])
+plt.show()</pre>
+                </code>
 
                 <h3>
                     Heat Capacity
