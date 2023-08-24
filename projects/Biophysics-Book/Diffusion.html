@@ -177,6 +177,28 @@ plt.show()</pre>
                 $$\frac{\partial}{\partial t}p(x,t)=D\frac{\partial^2}{\partial x^2}p(x,t)$$
                 which is Fick's second law. 
     
+                <h3>Numerical Methods - Finite Difference</h3>
+                A common technique to use when dealing with PDEs is the finite difference method. 
+                These attempt to discretize the space we're working on and get approximations for the steps. However, caution must be used in order to ensure the discretization is good. Otherwise, we can run into compounding errors. 
+
+                <br><br>
+                There are 3 main flavors to finite differences:
+                <ol>
+                    <li>Explicit Method</li>
+                    <li>Implicit Method</li>
+                    <li>Crank-Nicolson</li>
+                </ol>
+                These involves slightly different ways of approximating the partial derivative by sampling surrounding points. 
+                In the Implicit and Crank-Nicolson methods, we end up having to solve a system of equations, but given we are already using a computer to perform this, we can also just have the computer solve the system of equations. 
+                The explicit method is computationally the simplest and does not require solving a system of equations, but it is also the most prone to compounding errors. 
+
+
+
+                <h3>Monte Carlo Estimation</h3>
+                While an analytic solution is nice, doing large scale simulations is another option. 
+                We can generate a sample path by knowing the dynamics and having the computer draw from a normal distribution. 
+                For path-dependent processes such as when the drift and/or diffusivity is a function of position, we can take many small time steps. 
+                Our distribution would be a normalized histogram of our results. 
 
                 <h3>Exploring the Diffusivity</h3>
 
