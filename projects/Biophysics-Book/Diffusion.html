@@ -92,6 +92,41 @@
 
                 which is a Gaussian distribution whose variance is proportional to time elapsed.
 
+                <h4>Fick's Second Law Animation</h4>
+
+
+                <img src="Ficks2ndLawAnimation.gif" alt="Ficks 2nd Law Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+x_array = np.linspace(-0.1,0.1,5000)
+fig, ax = plt.subplots(figsize=(8,6))
+
+line, = ax.plot([])
+ax.set_xlim(-.01,.01)
+ax.set_ylim(0,1000)
+
+
+D = 1.0e-8
+def phi(x,t):
+    if type(x) == np.array or type(x) == list:
+        return np.array([phi(i,t) for i in x])
+    if (t==0):
+        return phi(x,t=0.01)
+    return 1/np.sqrt(4*np.pi*D*t)*np.exp(-x**2/(4*D*t))
+
+def animate(frame_num):
+    line.set_data((x_array,phi(x_array,t=frame_num)))
+    plt.title(f"Diffusion (t={frame_num}s)")
+    return line
+
+plt.ylabel("Probability Density")
+plt.xlabel("X position (m)")
+anim = FuncAnimation(fig, animate, frames=100, interval=10)
+
+anim.save('Diffusion.gif')
+plt.show()</pre>
+                </code>
+
                 <h3>Diffusion Equation</h3>
                 But what if the diffusivity is not homogeneous? What if the diffusivity can be affected by the local concentration? For this, we need a more complex equation.
                 <br><br>
