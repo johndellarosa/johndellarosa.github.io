@@ -273,7 +273,7 @@ plt.show()</pre>
 
                 Alternatively, we could think about having the probabilities remain 50% for each direction but add a drift component that gets added at each step. 
                 
-    
+                <br><br>
                 Of course, this is not a realistic model, as particles don't discretely jump, but it becomes a better approximation as the limit as the scale of distance and time go to 0. 
                 This will be more precisely defined later.
     
@@ -307,7 +307,50 @@ plt.show()</pre>
     
                 A segment of Brownian motion is normally distributed with a variance equal to the time between the start and end points with mean 0. 
                 
+                <img src="BrownianMotionSimulation.gif" alt="Brownian Motion Simulation Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+B=np.zeros(3)
+dt = 1e-3
+np.random.seed(0)
+
+brownian_df = pd.DataFrame(columns=['t',1,2,3])
+
+
+brownian_df.loc[0] = [0,*B]
+for i in range (1,1001):
     
+    dB = np.random.normal(size=3)*np.sqrt(dt)
+    B += dB
+    brownian_df.loc[i] = [i*dt,*B]
+        
+fig, ax = plt.subplots(figsize=(8,6))
+ax.set_xlim(0,1)
+ax.set_ylim(-3,3)
+
+lineA, = ax.plot([])
+lineB, = ax.plot([])
+lineC, = ax.plot([])
+
+def animate(frame_num):
+    lineA.set_data((brownian_df.loc[:frame_num*5]['t'],
+                    brownian_df.loc[:frame_num*5][1]))
+    lineB.set_data((brownian_df.loc[:frame_num*5]['t'],
+                    brownian_df.loc[:frame_num*5][2]))
+    lineC.set_data((brownian_df.loc[:frame_num*5]['t'],
+                    brownian_df.loc[:frame_num*5][3]))
+
+    plt.title(
+        f"Brownian Motion Simulation (t={frame_num*5}ms)")
+    return lineA,lineB
+                    
+plt.ylabel("$B_t$")
+plt.xlabel("Time (s)")
+plt.legend(['1','2','3'])
+anim = FuncAnimation(fig, animate, frames=200, interval=50)
+anim.save('BrownianMotionSimulation.gif')
+plt.show()          </pre>
+                </code>
     
     
                 <h4>Poisson Process</h4>
