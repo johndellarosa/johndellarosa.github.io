@@ -333,21 +333,21 @@ lineB, = ax.plot([])
 lineC, = ax.plot([])
 
 def animate(frame_num):
-    lineA.set_data((brownian_df.loc[:frame_num*5]['t'],
-                    brownian_df.loc[:frame_num*5][1]))
-    lineB.set_data((brownian_df.loc[:frame_num*5]['t'],
-                    brownian_df.loc[:frame_num*5][2]))
-    lineC.set_data((brownian_df.loc[:frame_num*5]['t'],
-                    brownian_df.loc[:frame_num*5][3]))
+    lineA.set_data((brownian_df.loc[:frame_num*10]['t'],
+                    brownian_df.loc[:frame_num*10][1]))
+    lineB.set_data((brownian_df.loc[:frame_num*10]['t'],
+                    brownian_df.loc[:frame_num*10][2]))
+    lineC.set_data((brownian_df.loc[:frame_num*10]['t'],
+                    brownian_df.loc[:frame_num*10][3]))
 
     plt.title(
-        f"Brownian Motion Simulation (t={frame_num*5}ms)")
+        f"Brownian Motion Simulation (t={frame_num*10}ms)")
     return lineA,lineB
                     
 plt.ylabel("$B_t$")
 plt.xlabel("Time (s)")
 plt.legend(['1','2','3'])
-anim = FuncAnimation(fig, animate, frames=200, interval=50)
+anim = FuncAnimation(fig, animate, frames=100, interval=100)
 anim.save('BrownianMotionSimulation.gif')
 plt.show()          </pre>
                 </code>
