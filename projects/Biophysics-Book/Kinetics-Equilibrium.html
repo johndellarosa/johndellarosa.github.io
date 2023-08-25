@@ -227,6 +227,45 @@
 
                     In a later chapter, we will look at kinetics for more complicated series of reactions. 
 
+<h4>Simulation of Dynamic Equilibrium</h4>
+                    <img src="DynamicEquilibrium.gif" alt="Dynamic Equilibirium" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                    Python code:
+                    <code style="margin: auto; width: 50%;"><pre>
+conc_A = 1
+conc_B = 0
+k_1 = 3e-2
+k_neg1 = 5e-3
+dt = 1
+
+conc_df = pd.DataFrame(columns=['t','A','B'])
+
+for i in range (0,201):
+    conc_df.loc[i] = [i*dt,conc_A,conc_B]
+    dA = (k_neg1*conc_B - k_1*conc_A)*dt
+    dB = (-k_neg1*conc_B + k_1*conc_A)*dt
+    conc_A += dA
+    conc_B += dB
+    
+    
+fig, ax = plt.subplots(figsize=(8,6))
+ax.set_xlim(0,200)
+ax.set_ylim(0,1)
+
+lineA, = ax.plot([])
+lineB, = ax.plot([])
+
+def animate(frame_num):
+    lineA.set_data((conc_df.loc[:frame_num]['t'],conc_df.loc[:frame_num]['A']))
+    lineB.set_data((conc_df.loc[:frame_num]['t'],conc_df.loc[:frame_num]['B']))
+    plt.title(f"Sample Reaction Concentrations over Time (t={frame_num}s)")
+    return lineA,lineB
+                    
+plt.ylabel("Concentration (M)")
+plt.xlabel("Time (s)")
+plt.legend(['[A]','[B]'])
+anim = FuncAnimation(fig, animate, frames=200, interval=15)
+anim.save('DynamicEquilibrium.gif')
+plt.show()</pre></code>
 
 
                 </div>
