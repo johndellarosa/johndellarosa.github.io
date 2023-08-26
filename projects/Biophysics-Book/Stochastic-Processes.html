@@ -311,14 +311,14 @@ plt.show()</pre>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
 B=np.zeros(3)
-dt = 1e-3
+dt = 1e-5
 np.random.seed(0)
 
 brownian_df = pd.DataFrame(columns=['t',1,2,3])
 
 
 brownian_df.loc[0] = [0,*B]
-for i in range (1,1001):
+for i in range (1,100001):
     
     dB = np.random.normal(size=3)*np.sqrt(dt)
     B += dB
@@ -328,17 +328,17 @@ fig, ax = plt.subplots(figsize=(8,6))
 ax.set_xlim(0,1)
 ax.set_ylim(-3,3)
 
-lineA, = ax.plot([])
-lineB, = ax.plot([])
-lineC, = ax.plot([])
+lineA, = ax.plot([],linewidth=0.75)
+lineB, = ax.plot([],linewidth=0.75)
+lineC, = ax.plot([],linewidth=0.75)
 
 def animate(frame_num):
-    lineA.set_data((brownian_df.loc[:frame_num*10]['t'],
-                    brownian_df.loc[:frame_num*10][1]))
-    lineB.set_data((brownian_df.loc[:frame_num*10]['t'],
-                    brownian_df.loc[:frame_num*10][2]))
-    lineC.set_data((brownian_df.loc[:frame_num*10]['t'],
-                    brownian_df.loc[:frame_num*10][3]))
+    lineA.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][1]))
+    lineB.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][2]))
+    lineC.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][3]))
 
     plt.title(
         f"Brownian Motion Simulation (t={frame_num*10}ms)")
@@ -352,8 +352,132 @@ anim.save('BrownianMotionSimulation.gif')
 plt.show()          </pre>
                 </code>
     
+                <h4>Stochastic Differential Equations</h4>
+                Brownian motion can be expanded on to include a drift term and scaling coefficient for the brownian motion.
+
+                A generalized form for the dynamics of a stochastic differential equation are:
+
+                $$dX_t=\mu(x,t)dt+\sigma(x,t)dW$$
+                where \(X_t\) is the stochastic variable, \(\mu\) is the drift, \(\sigma\) is the volatility, and dW is the Brownian motion increment
+
+                For basic Brownian motion, we can now write this as
+
+                $$dX_t=dW$$
+
+                Let us look at the continuous version of a random walk with drift:
+
+                $$dX_t=2dt+dW$$
+
+                <img src="BrownianMotionDriftSimulation.gif" alt="Brownian Motion with Drift Simulation Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+X=np.zeros(3)
+dt = 1e-5
+mu = 2
+np.random.seed(0)
+
+brownian_df = pd.DataFrame(columns=['t',1,2,3])
+
+
+brownian_df.loc[0] = [0,*X]
+for i in range (1,100001):
     
-                <h4>Poisson Process</h4>
+    dB = np.random.normal(size=3)*np.sqrt(dt)
+    X += (mu*dt+dB)
+    brownian_df.loc[i] = [i*dt,*X]
+        
+fig, ax = plt.subplots(figsize=(8,6))
+ax.set_xlim(0,1)
+ax.set_ylim(-2,5)
+
+lineA, = ax.plot([],linewidth=0.75)
+lineB, = ax.plot([],linewidth=0.75)
+lineC, = ax.plot([],linewidth=0.75)
+
+def animate(frame_num):
+    lineA.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][1]))
+    lineB.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][2]))
+    lineC.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][3]))
+
+    plt.title(
+        f"Brownian Motion w/ Const Drift Simulation (t={frame_num*10}ms)")
+    return lineA,lineB
+                    
+plt.ylabel("$X_t$")
+plt.xlabel("Time (s)")
+plt.legend(['1','2','3'])
+anim = FuncAnimation(fig, animate, frames=100, interval=100)
+anim.save('BrownianMotionDriftSimulation.gif')
+plt.show()</pre>
+                </code>
+
+                <h4>Ito's Lemma</h4>
+                A function of a stochastic variable is also a stochastic variable. But how do we describe its dynamics? 
+                <b>Ito's Lemma</b> does exactly that. There is also the Stratonovich formulation of stochastic calculus, but we will not get into that. 
+                <br><br>
+                Let \(X_t\) be a stochastic variable whose dynamics are 
+
+                $$dX_t=\mu(X_t,t)dt+\sigma(X_t,t)dW$$
+                and f is a function of \(X_t\) and t where the following partials exist, then Ito's lemma states
+
+                $$df(X_t,t)= \partial_t f(X_t,t)dt+ \partial_{x}f(X_t,t) dX_t+\frac{1}{2}\partial_{xx}f (X_t,t)  \lt X_t\gt$$
+
+                <h5>Brownian Motion Squared Example</h5>
+
+                Let \(f(x)=x^2\), then the dynamics of f(B_t) are
+
+                $$df(B_t)=2B_tdB_t+dt$$
+
+                While a single simulation is not proof, you can observe how in the example simulation, there is an overall upward trend over time for \(B_t^2\) as \(B_t\) is more likely to get further from 0 as t increases. The fluctuations become more drastic as \(B_t\) gets further from 0 as well.
+
+                <img src="BrownianMotionSquared.gif" alt="Brownian Motion Squared Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+B=0
+dt = 1e-4
+np.random.seed(2)
+
+brownian_df = pd.DataFrame(columns=['t',1,2])
+
+
+brownian_df.loc[0] = [0,B,B**2]
+for i in range (1,100001):
+    
+    dB = np.random.normal()*np.sqrt(dt)
+    B += dB
+    brownian_df.loc[i] = [i*dt,B,B**2]
+        
+fig, ax = plt.subplots(figsize=(8,6))
+ax.set_xlim(0,10)
+ax.set_ylim(-10,50)
+
+lineA, = ax.plot([],linewidth=0.75)
+lineB, = ax.plot([],linewidth=0.75)
+
+
+def animate(frame_num):
+    lineA.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][1]))
+    lineB.set_data((brownian_df.loc[:frame_num*1000]['t'],
+                    brownian_df.loc[:frame_num*1000][2]))
+
+    plt.title(
+        f"Brownian Motion Simulation (t={frame_num*10}ms)")
+    return lineA,lineB
+                    
+plt.ylabel("$y$")
+plt.xlabel("Time (s)")
+plt.legend(['$B_t$','$(B_t)^2$',])
+anim = FuncAnimation(fig, animate, frames=100, interval=100)
+anim.save('BrownianMotionSquared.gif')
+plt.show()          </pre>
+                </code>
+
+
+                <h3>Poisson Process</h3>
                 When we were working with discrete-time Markov chains, we had a matrix or depiction of
                 $$P(X_{i,t=n+1}|X_{j,t=n})$$
                 where \(X_i\) is the new possible state and \(X_j\) is the current state. 
