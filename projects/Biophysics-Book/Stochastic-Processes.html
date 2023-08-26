@@ -394,15 +394,74 @@ plt.show()          </pre>
 
                 When doing kinetics when the amount of reactants are not in the "Law of Large Numbers" regime, the Poisson process can capture that it really is a probabilistic process for whether a given reactant will undergo a reaction and that there isn't a constant rate of conversion. 
 
+                <h4>Sample Poisson Process Result</h4>
 
+                <img src="PoissonGraph.png" alt="Poisson Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+def Inverse_Exp(p, lam):
+    return -1* np.log(1-p)/lam
 
+def Get_Number_Jumps(exp_cum_sum,t):
+    return np.where(exp_cum_sum <= t, 1,0).sum()
+np.random.seed(0)
+dt = .001
+uniform_dist = np.random.rand(500)
+exp_sample = Inverse_Exp(uniform_dist, 1)
+exp_sample
+exp_cum_sum = exp_sample.cumsum()
+exp_cum_sum
+
+poisson_df = pd.DataFrame(columns=['t','X'])
+for i in range(0,50001):
+    poisson_df.loc[i] = [i*dt, Get_Number_Jumps(exp_cum_sum,i*dt)]
+plt.figure(figsize=(9,6))
+plt.scatter(poisson_df['t'],poisson_df['X'],s=.5,marker='s')
+plt.xlabel("Time (s)")
+plt.ylabel("X")
+plt.title("Poisson Process with $\lambda=1$")
+plt.show()</pre>
+                </code>
 
                 <br><br>
 
+
+                <h4>Compound Poisson Process</h4>
                 The Poisson process can be further generalized to allow for variable-sized jumps rather than just jumps of 1. 
                 This is known as a "Compound Poisson Process." 
     
-    
+                <h4>Compound Poisson Process Example</h4>
+                Note that the variable X is not continuous during jumps. Faint purple lines are added on the graph for visual clarity.
+                <img src="CompoundPoissonGraph.png" alt="Poisson Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(1)
+normal_jumps = np.random.normal(scale=0.25,size=500)
+def Inverse_Exp(p, lam):
+    return -1* np.log(1-p)/lam
+
+def Get_Number_Jumps(exp_cum_sum,t):
+    return np.dot(np.where(exp_cum_sum <= t, 1,0),normal_jumps)
+
+dt = .01
+uniform_dist = np.random.rand(500)
+
+exp_sample = Inverse_Exp(uniform_dist, 1)
+exp_sample
+exp_cum_sum = exp_sample.cumsum()
+exp_cum_sum
+
+poisson_df = pd.DataFrame(columns=['t','X'])
+for i in range(0,5001):
+    poisson_df.loc[i] = [i*dt, Get_Number_Jumps(exp_cum_sum,i*dt)]
+plt.figure(figsize=(9,6))
+plt.scatter(poisson_df['t'],poisson_df['X'],s=1,marker='s')
+plt.plot(poisson_df['t'],poisson_df['X'],alpha=0.5,color='purple',linewidth='0.25')
+plt.xlabel("Time (s)")
+plt.ylabel("X")
+plt.title("Compound Poisson Process with $\lambda=1$ and Jump$\sim N(0,0.5)$")
+plt.show()</pre>
+                </code>
                 <h4>Advanced Applications in Biology</h4>
                 The classical example of stochastic processes in biology is mRNA expression levels - as it is a quantity that can both degrade and be produced at irregular intervals constantly. 
     
