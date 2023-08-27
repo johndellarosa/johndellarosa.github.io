@@ -104,12 +104,51 @@ Inclusion-Exclussion Principle
                 <br>
                 We can consequently calculate the probability of being between two values as follows:
 
-                $$P(a\leq X\leq b) = F(b)-F(a)$$
+                $$P(a\lt X\leq b) = F(b)-F(a)$$
+                Which also means
+                $$P(a \lt X \leq b)=\int_{a}^bf(y)dy$$
 
                 Another common definition is that of the <b>survival function</b>. We define this as 
                 $$\bar{F}(x)=1-F(x)$$
 Thus the survival function is also equivalent to 
 $$\bar{F}(x)=P(X\gt x)$$
+
+<h5>Example</h5>
+Let X be an exponentially distributed variable with \(\lambda=2\), with the following density:
+
+$$f(x)= \begin{cases}
+                2\exp(-2x) & x\geq 0 \\
+                0 & x \lt 0
+
+\end{cases}$$
+
+The probability that \(1\lt X \leq 2\) is given by
+
+$$P(1\lt X \leq 2)=F(2)-F(1)$$
+$$=\int_1^2 2\exp(-2x)dx$$
+
+<img src="AreaUnderCurve.png" alt="Probability Continuous Variable" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+lam = 2
+
+def pdf_exp(x,lam):
+    return np.where(x>=0, lam*np.exp(-lam*x),0)
+
+x_values = np.linspace(0,6,1000)
+plt.figure(figsize=(9,6))
+plt.plot(x_values, pdf_exp(x_values,lam))
+fill_x_values = np.linspace(1,2,300)
+plt.fill_between(fill_x_values,pdf_exp(fill_x_values,lam))
+
+plt.plot([0, 0], [0, 2], color='black')
+plt.plot([0,6],[0,0],color='black')
+plt.xlabel('x')
+plt.ylabel('Density of X')
+plt.title("Area Under Curve For Probability")
+plt.legend(['Exp(2)'])
+plt.show()</pre>
+                </code>
 
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
@@ -173,7 +212,7 @@ $$\bar{F}(x)=P(X\gt x)$$
                 $$=1^2 \times p + 0^2 \times (1-p)$$
                 $$=p$$
 
-                $$\text{Var}(X)=e[X^2]-(E[X])^2$$
+                $$\text{Var}(X)=E[X^2]-(E[X])^2$$
                 $$=p-p^2$$
                 $$p(1-p)$$
 

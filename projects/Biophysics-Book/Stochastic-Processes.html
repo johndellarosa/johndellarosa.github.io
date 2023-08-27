@@ -286,7 +286,7 @@ plt.show()</pre>
                     <li>\(B_0=0\)</li>
                     <li>\(B_t\) is almost surely continuous</li>
                     <li>\(B_t\) has independent increments</li>
-                    <li>\(B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{where }0\leq s\leq t\)</li>
+                    <li>\(B_t-B_s\sim N(\mu=0,\sigma^2=t-s)\text{ where }0\leq s\leq t\)</li>
                 </ol>
     
                 Now to explain the properties in further detail.
@@ -421,13 +421,15 @@ plt.show()</pre>
                 Let \(X_t\) be a stochastic variable whose dynamics are 
 
                 $$dX_t=\mu(X_t,t)dt+\sigma(X_t,t)dW$$
-                and f is a function of \(X_t\) and t where the following partials exist, then Ito's lemma states
+                and Let f be a function of \(X_t\) and t where the following partials exist and are continuous, then Ito's lemma states
 
-                $$df(X_t,t)= \partial_t f(X_t,t)dt+ \partial_{x}f(X_t,t) dX_t+\frac{1}{2}\partial_{xx}f (X_t,t)  \lt X_t\gt$$
+                $$df(X_t,t)= \partial_t f(X_t,t)dt+ \partial_{x}f(X_t,t) dX_t+\frac{1}{2}\partial_{xx}f (X_t,t)  d\lt X\gt_t$$
+
+                Where \(d\lt X\gt_t=\sigma(X_t,t)^2dt\)
 
                 <h5>Brownian Motion Squared Example</h5>
 
-                Let \(f(x)=x^2\), then the dynamics of \f(B_t)\ are
+                Let \(f(x)=x^2\), then the dynamics of \(f(B_t)\) are
 
                 $$d(B_t^2)=2B_tdB_t+dt$$
 
@@ -465,7 +467,7 @@ def animate(frame_num):
                     brownian_df.loc[:frame_num*1000][2]))
 
     plt.title(
-        f"Brownian Motion Simulation (t={frame_num*10}ms)")
+        f"Brownian Motion Simulation (t={frame_num//10}.{frame_num%10}s)")
     return lineA,lineB
                     
 plt.ylabel("$y$")
