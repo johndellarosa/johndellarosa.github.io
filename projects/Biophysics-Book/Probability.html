@@ -80,9 +80,9 @@
                 $$\sum P(x_i)=1$$
                 and for continuous distributions, we can write
                 $$\int_{-\infty}^{\infty}p(x)dx=1$$
-Inclusion-Exclussion Principle
+                <h5>Inclusion-Exclussion Principle</h5>
                 $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
-                
+                The Inclusion-Exclussion Principle gives a relationship between two events, the probability of both happening, and the probability of either happening. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
                 <h4>Cumulative Density Function</h4>
                 The cumulative density function states the probability of getting the outcome being less than or equal to a given x. 
                 We will define a <b>Cumulative Density Function</b> (CDF) formally as 
@@ -93,15 +93,17 @@ Inclusion-Exclussion Principle
                 For discrete variables, we can formulate this as 
 
                 $$F(x)=\sum_{x_i\leq x}p(x_i)$$
-                where \(x_i\) is a possible value that X takes.
+                where \(x_i\) is a possible value that X takes. We will call the function p(x) the <b>probability mass function</b> (PMF) for discrete variables. 
 
-                <br>
+
+                <br><br>
                 For continuous variables, we have 
 
                 $$F(x)=\int_{-\infty}^xf(y)dy$$
 
-                where f(y) is the probability density at y.
-                <br>
+                where f(y) is the probability density at y. We can think of this as the probability of  We will call the density function f(y) the <b>probability density function</b> (PDF) for continuous variables as opposed to PMF. 
+
+                <br><br>
                 We can consequently calculate the probability of being between two values as follows:
 
                 $$P(a\lt X\leq b) = F(b)-F(a)$$
@@ -190,11 +192,12 @@ plt.show()</pre>
 
                 $$E[X]=\int_{-\infty}^{\infty}xp(x)dx$$
 
-                Another common statistic that is used to describe a distribution is the variance.
+                Another common statistic that is used to describe a distribution is the variance, which is a measure of deviation from the mean.
 
                 $$\text{Var}(X)=E[X^2]-(E[X])^2$$
 
-                We can calculate this by separately calculating the expectations for \(E[X^2]\) and E[X].
+                We can calculate this by separately calculating the expectations for \(E[X^2]\) and E[X]. The standard deviation is the square root of the variance. 
+
 
 
                 <h5>Example</h5>
@@ -270,7 +273,7 @@ plt.show()</pre>
                 What must be emphasized is that a correlation of 0 does not mean that two variables are independent. 
                 A correlation of 0 is a <b>necessary but not sufficient</b> condition. For example, take a random variable that is distributed like \(X\sim N(0,1)\) and another variable Y=abs(X). The correlation is 0, but they are not independent.
 <br><br>
-                Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>.
+                Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>. Kendall's tau coefficient is a third way. 
 
                 <h3>Entropy</h3>
                 <h4>Multiplicity</h4>
