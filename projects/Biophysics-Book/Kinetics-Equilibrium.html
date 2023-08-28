@@ -255,8 +255,10 @@ lineA, = ax.plot([])
 lineB, = ax.plot([])
 
 def animate(frame_num):
-    lineA.set_data((conc_df.loc[:frame_num]['t'],conc_df.loc[:frame_num]['A']))
-    lineB.set_data((conc_df.loc[:frame_num]['t'],conc_df.loc[:frame_num]['B']))
+    lineA.set_data((conc_df.loc[:frame_num]['t'],
+    conc_df.loc[:frame_num]['A']))
+    lineB.set_data((conc_df.loc[:frame_num]['t'],
+    conc_df.loc[:frame_num]['B']))
     plt.title(f"Sample Reaction Concentrations over Time (t={frame_num}s)")
     return lineA,lineB
                     
