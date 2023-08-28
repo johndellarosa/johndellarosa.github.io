@@ -21,7 +21,7 @@
         
         <meta name="keywords" content="Stochastic process, biology, random walk, brownian motion, diffusion, markov chain, poisson">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="This chapter builds off the probability and statistics chapter to introduce stochastic processes, starting with Markov chains. Continuous time stochastic processes (Brownian Motion and Poisson Processes) are also covered.">
+        <meta name="description" content="This chapter builds off the probability and statistics chapter to introduce stochastic processes, starting with Markov chains. Brownian Motion and Poisson Processes are also covered.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -153,7 +153,7 @@
                 Numerically, we can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).
     
                 <br><br>
-                <img src="Markov_states.png" img="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
+                <img src="Markov_states.png" alt="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
     initial_prob_vector = np.array([1,0])
@@ -540,9 +540,11 @@ exp_cum_sum
 
 poisson_df = pd.DataFrame(columns=['t','X'])
 for i in range(0,50001):
-    poisson_df.loc[i] = [i*dt, Get_Number_Jumps(exp_cum_sum,i*dt)]
+    poisson_df.loc[i] = [i*dt,
+     Get_Number_Jumps(exp_cum_sum,i*dt)]
 plt.figure(figsize=(9,6))
-plt.scatter(poisson_df['t'],poisson_df['X'],s=.5,marker='s')
+plt.scatter(poisson_df['t'],
+    poisson_df['X'],s=.5,marker='s')
 plt.xlabel("Time (s)")
 plt.ylabel("X")
 plt.title("Poisson Process with $\lambda=1$")
@@ -579,10 +581,14 @@ exp_cum_sum
 
 poisson_df = pd.DataFrame(columns=['t','X'])
 for i in range(0,5001):
-    poisson_df.loc[i] = [i*dt, Get_Number_Jumps(exp_cum_sum,i*dt)]
+    poisson_df.loc[i] = [i*dt,
+     Get_Number_Jumps(exp_cum_sum,i*dt)]
 plt.figure(figsize=(9,6))
 plt.scatter(poisson_df['t'],poisson_df['X'],s=1,marker='s')
-plt.plot(poisson_df['t'],poisson_df['X'],alpha=0.5,color='purple',linewidth='0.25')
+plt.plot(poisson_df['t'],
+    poisson_df['X'],alpha=0.5,c
+    olor='purple',
+    linewidth='0.25')
 plt.xlabel("Time (s)")
 plt.ylabel("X")
 plt.title("Compound Poisson Process with $\lambda=1$ and Jump$\sim N(0,0.5)$")
