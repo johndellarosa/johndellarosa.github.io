@@ -571,7 +571,8 @@ plt.show()</pre>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
 np.random.seed(1)
-normal_jumps = np.random.normal(scale=0.25,size=500)
+sigma = 0.5
+normal_jumps = np.random.normal(scale=sigma,size=500)
 def Inverse_Exp(p, lam):
     return -1* np.log(1-p)/lam
 
@@ -591,14 +592,14 @@ for i in range(0,5001):
     poisson_df.loc[i] = [i*dt,
      Get_Number_Jumps(exp_cum_sum,i*dt)]
 plt.figure(figsize=(9,6))
-plt.scatter(poisson_df['t'],poisson_df['X'],s=1,marker='s')
+plt.scatter(poisson_df['t'],
+    poisson_df['X'],s=1.5,marker='s')
 plt.plot(poisson_df['t'],
-    poisson_df['X'],alpha=0.5,c
-    olor='purple',
-    linewidth='0.25')
+    poisson_df['X'],alpha=0.5,
+    color='purple',linewidth='0.25')
 plt.xlabel("Time (s)")
 plt.ylabel("X")
-plt.title("Compound Poisson Process with $\lambda=1$ and Jump$\sim N(0,0.5)$")
+plt.title(f"Compound Poisson Process with $\lambda=1$ and Jump$\sim N(0,{sigma**2})$")
 plt.show()</pre>
                 </code>
                 <h4>Advanced Applications in Biology</h4>
