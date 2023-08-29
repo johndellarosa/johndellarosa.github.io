@@ -284,6 +284,7 @@ plt.show()</pre>
                     <li>Scale the step size as well as time interval and have our stochastic variable be continuous in both the domain (time) and image ("distance") (Brownian Motion)</li>
                 </ol>
                 The second option, Brownian Motion, is much more common in terms of sharing the behavior we wish to model.
+                However, we will revisit the concept of randomly distributed wait times with Poisson processes later in this chapter.
 
                 <h4>Brownian Motion</h4>
                 Brownian motion can be thought of as the continuous analogue of random walks. 
@@ -623,7 +624,7 @@ plt.show()</pre>
                 </code>
                 <h4>Advanced Applications in Biology</h4>
                 The classical example of stochastic processes in biology is mRNA expression levels - as it is a quantity that can both degrade and be produced at irregular intervals constantly. 
-                This can be formulated as a Birth-Death process where the birth rate is the rate of mRNA transcription (potentially described as a constant) and the death rate is proportional to the number of mRNA. 
+                This can be formulated as a Birth-Death process where the birth rate is the rate of mRNA transcription (potentially described as a constant or non-constant in case of some sort of feedback mechanism) and the death rate is proportional to the number of mRNA. 
 
     
                 
