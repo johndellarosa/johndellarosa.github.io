@@ -62,14 +62,14 @@
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Diffusion">
                 <h1>Diffusion</h1>
-                <h3>Introduction</h3>
+                <h2>Introduction</h2>
                 Since such a large part of biology takes place in some sort of solution, diffusion is an essential process and being able to properly model it can be crucial. 
                 In this section, diffusion models will be presented with increasing complexity, starting with special cases of following equations.
                 <br><br>
                 This chapter will build off of the stochastic processes chapter before it, especially the concept of Brownian motion. 
                 Some stochastic calculus will be used which is not a listed prerequesite. 
 
-
+                <h2>Fick's Laws</h2>
                <h3>Fick's First Law</h3>
 
                 Fick's first law of diffusion relates the flux of molecules diffusing to the spacial gradient.
@@ -126,7 +126,7 @@ anim = FuncAnimation(fig, animate, frames=100, interval=10)
 anim.save('Diffusion.gif')
 plt.show()</pre>
                 </code>
-
+                <h2>More Advanced Models</h2>
                 <h3>Diffusion Equation</h3>
                 But what if the diffusivity is not homogeneous? What if the diffusivity can be affected by the local concentration? For this, we need a more complex equation.
                 <br><br>
@@ -200,7 +200,7 @@ plt.show()</pre>
                 For path-dependent processes such as when the drift and/or diffusivity is a function of position, we can take many small time steps. 
                 Our distribution would be a normalized histogram of our results. 
 
-                <h3>Exploring the Diffusivity</h3>
+                <h2>Exploring the Diffusivity</h2>
 
                 So what is the diffusivity? <br>
                 The Einstein relation states that 

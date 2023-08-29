@@ -569,7 +569,12 @@ plt.ylabel("X")
 plt.title("Poisson Process with $\lambda=1$")
 plt.show()</pre>
                 </code>
-
+The exponential distribution has the very convenient property of having a simple, closed-form quantile function:
+$$Q(p,\lambda)=\frac{-\ln(1-p)}{\lambda}$$
+One can easily sample from an exponential distribution by generating random values on the interval [0,1) via a uniform distribution. 
+This draw will correspond to the percentile of the draw from another distribution, which in this case will be the exponential. 
+You can get the p'th percentile value, called a quantile, by plugging it into the inverse of the CDF function, which we will call the quantile function. 
+The output from the quantile function will be the time between jumps for a Po(\(\lambda\)) process. 
                 <br><br>
                 <h3>Building Off of Poisson</h3>
                 There are a number of ways by which we can extend the Poisson process. Here are a few examples:

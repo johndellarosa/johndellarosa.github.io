@@ -62,8 +62,8 @@
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Probability">
                 <h1>Probability, Statistics, and Entropy</h1>
-                <h3>Probability</h3>
-                <h4>Defining terms</h4>
+                <h2>Probability</h2>
+                <h3>Defining terms</h3>
                 Before we show any equations, we must define some terms. Let A and B be events.
                 We will also denote \(\Omega\) to be the set of all possible outcomes. 
                 <ul>
@@ -75,15 +75,23 @@
 
 
 
-                <h4>Basic Rules</h4>
+                <h3>Basic Rules</h3>
                 The sum of the probabilities of all possible outcomes must equal 1. For discrete distributions this can be stated as 
                 $$\sum P(x_i)=1$$
                 and for continuous distributions, we can write
                 $$\int_{-\infty}^{\infty}p(x)dx=1$$
-                <h5>Inclusion-Exclussion Principle</h5>
+                <h4>Inclusion-Exclussion Principle</h4>
                 $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
                 The Inclusion-Exclussion Principle gives a relationship between two events, the probability of both happening, and the probability of either happening. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
-                <h4>Cumulative Density Function</h4>
+                <h4>De Morgan's Laws</h4>
+                De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
+                <br>
+                "If neither A nor B happened, then that means A didn't happen and B didn't happen"
+                $$\neg(A \lor B)=(\neg A)\land (\neg B)$$
+    
+                "If A and B didn't both happen, then that means either A didn't happen, B didn't happen, or neither happened"
+                $$\neg(A \land B)=(\neg A)\lor (\neg B)$$
+                <h3>Cumulative Density Function</h3>
                 The cumulative density function states the probability of getting the outcome being less than or equal to a given x. 
                 We will define a <b>Cumulative Density Function</b> (CDF) formally as 
                 
@@ -152,17 +160,10 @@ plt.legend(['Exp(2)'])
 plt.show()</pre>
                 </code>
 
-                <h4>De Morgan's Laws</h4>
-                De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
-                <br>
-                "If neither A nor B happened, then that means A didn't happen and B didn't happen"
-                $$\neg(A \lor B)=(\neg A)\land (\neg B)$$
-    
-                "If A and B didn't both happen, then that means either A didn't happen, B didn't happen, or neither happened"
-                $$\neg(A \land B)=(\neg A)\lor (\neg B)$$
+                
     
     
-                <h4>Conditional Probability</h4>
+                <h3>Conditional Probability</h3>
                 Let A and B be two events. We denote the conditional probability of A occurring given B having occurred as \(P(A|B)\)
     
                 This is defined mathematically as:
@@ -275,8 +276,8 @@ plt.show()</pre>
 <br><br>
                 Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>. Kendall's tau coefficient is a third way. 
 
-                <h3>Entropy</h3>
-                <h4>Multiplicity</h4>
+                <h2>Entropy</h2>
+                <h3>Multiplicity</h3>
     
                 If we flip a coin twice, the most likely outcome for the number of heads we get is 1. 
                 How is this possible if the coins are fair and independent? The answer has to do with that there are two possible sequences which will give you 1 head, TH and HT, while there are only 1 sequence each for 0 heads and 2 heads. 
@@ -295,7 +296,7 @@ plt.show()</pre>
                 If there are only two possible types and M total and N of type 1, then \(N_2=M-N\) and it reduces to
                 $$W=\frac{M!}{N!(M-N)!}$$
     
-                <h4>Definitions of Entropy</h4>
+                <h3>Definitions of Entropy</h3>
                 Entropy is typically described as being a measure of "disorder," but how does that manifest? 
                 With words, we can describe entropy for now as a measure of how mixed a system is or how many microstates a given macrostate has. 
                 <br><br>
@@ -307,7 +308,7 @@ plt.show()</pre>
                 These will be called the statistical definition, the probabilistic definition, and thermodynamic definition respectively. 
     
     
-                <h4>Extensive and Intensive Properties</h4>
+                <h3>Extensive and Intensive Properties</h3>
                 A property of a system is said to be <b>extensive</b> if it is proportional to the size of the system. One example is mass; if the system is 1L of water, going to 2L of water will double the mass. These properties are often not ratios and can often be intuited via thought experiment. 
     <br><br>
                 A property of a system is said to be <b>intensive</b> if it remains constant when a system is scaled. Density is an example of an intensive property. In the previous example, the density of the system does not change when you go from 1L of water to 2L of water. Mass and volume of the system both double, which cancel out when you take the ratio to get density. 
