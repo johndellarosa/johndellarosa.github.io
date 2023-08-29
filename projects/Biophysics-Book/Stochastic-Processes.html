@@ -435,7 +435,14 @@ plt.show()</pre>
 
                 While a single simulation is not proof, you can observe how in the example simulation, there is an overall upward trend over time for \(B_t^2\) as \(B_t\) is more likely to get further from 0 as t increases. The fluctuations become more drastic as \(B_t\) gets further from 0 as well.
 
+
                 <img src="BrownianMotionSquared.gif" alt="Brownian Motion Squared Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                
+                One interesting thing of note is that you can see in the dynamics that the \(f(B_t)\) will never be negative. 
+                As \(B_t\rightarrow 0\), \(\sigma(B_t,t)\rightarrow 0\). The dynamics then become like \(dX_t=dt\), which is a deterministic upward drift. Because Brownian motion is continuous, the function can never become negative without going through 0. This makes sense as a real number squared must be non-negative, but you can justify that through the dynamics even if you didn't know you got the SDE as a result of squaring an underlying variable. 
+                This can be more useful for something like a Bessel process where the behavior would not be as obvious (and in fact the properties depend on the value of n). 
+
+                <br><br>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
 B=0
