@@ -278,7 +278,13 @@ plt.show()</pre>
                 This will be more precisely defined later.
     
                 <h3>Continuous-Time Stochastic Processes</h3>
-    
+                There are a few ways we can go from our discrete random walk to continuous-time stochastic processes:
+                <ol>
+                    <li>Keep the jump size the same, but have random times between jump that are drawn from a continuous distribution (Continuous Time Random Walk)</li>
+                    <li>Scale the step size as well as time interval and have our stochastic variable be continuous in both the domain (time) and image ("distance") (Brownian Motion)</li>
+                </ol>
+                The second option, Brownian Motion, is much more common in terms of sharing the behavior we wish to model.
+
                 <h4>Brownian Motion</h4>
                 Brownian motion can be thought of as the continuous analogue of random walks. 
                 It is defined by the following properties (<a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">https://www.math.uchicago.edu/~lawler/finbook.pdf</a>):
@@ -559,7 +565,20 @@ plt.show()</pre>
                 </code>
 
                 <br><br>
+                <h3>Building Off of Poisson</h3>
+                There are a number of ways by which we can extend the Poisson process:
+                <ol>
+                    <li>Variable size jumps (Compound Poisson Process)</li>
+                    <li>Transition rate is a function of current value (Birth Process)
+                        <ul>
+                            <li>Allow for decrease in value as well (Birth-Death Process)</li>
+                        </ul>
+                    </li>
+                    <li>Non-exponentially distributed holding times (Renewal Process)</li>
 
+                </ol>
+
+                While not all possibilities will be covered in this textbook, 
 
                 <h4>Compound Poisson Process</h4>
                 The Poisson process can be further generalized to allow for variable-sized jumps rather than just jumps of 1. 
@@ -604,6 +623,8 @@ plt.show()</pre>
                 </code>
                 <h4>Advanced Applications in Biology</h4>
                 The classical example of stochastic processes in biology is mRNA expression levels - as it is a quantity that can both degrade and be produced at irregular intervals constantly. 
+                This can be formulated as a Birth-Death process where the birth rate is the rate of mRNA transcription (potentially described as a constant) and the death rate is proportional to the number of mRNA. 
+
     
                 
             </div>
