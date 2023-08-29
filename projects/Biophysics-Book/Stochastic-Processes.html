@@ -146,7 +146,7 @@
                 If the state distribution will not change over time, then it would have this property:
 
                 $$P T = P = P I$$
-                where P is the state distribution vector and T is the transition matrix. This is a straightforward eigenvector calculation.
+                where P is the state distribution vector, T is the transition matrix, and I is the appropriate sized identity matrix. This is a straightforward eigenvector calculation.
 
                 <br><br>
 
@@ -567,7 +567,7 @@ plt.show()</pre>
 
                 <br><br>
                 <h3>Building Off of Poisson</h3>
-                There are a number of ways by which we can extend the Poisson process:
+                There are a number of ways by which we can extend the Poisson process. Here are a few examples:
                 <ol>
                     <li>Variable size jumps drawn from some sort of distribution instead of \(P(J=+1)=1\) (Compound Poisson Process)</li>
                     <li>Transition rate \(\lambda\) is now a function of current value rather than a constant parameter (Birth Process)
@@ -579,7 +579,7 @@ plt.show()</pre>
 
                 </ol>
 
-                While not all possibilities will be covered in this textbook, 
+                While not all possibilities will be covered in this textbook, all of these can be used to describe certain biological scenarios.
 
                 <h4>Compound Poisson Process</h4>
                 The Poisson process can be further generalized to allow for variable-sized jumps rather than just jumps of 1. 
