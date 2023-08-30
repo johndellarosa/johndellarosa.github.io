@@ -140,6 +140,40 @@ plt.show()</pre></code>
 
                 where f(y) is the probability density at y. We can think of this as the probability of  We will call the density function f(y) the <b>probability density function</b> (PDF) for continuous variables as opposed to PMF. 
 
+
+                <h4>Example with Arcsine Distribution</h4>
+                <img src="ArcsinePDFCDF.png" alt="Arcsine PMF and CDF" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+def arcsine_PDF(x):
+    return 1/(np.pi*np.sqrt(x*(1-x)))
+def arcsine_CDF(x):
+    return 2/np.pi*math.asin(np.sqrt(x))
+
+x_values = np.linspace(0.0,1,1000)
+
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
+ax2 = ax1.twinx()
+ax1.set_ylim([0,5])
+
+ax1.plot(x_values[1:-1],
+            [arcsine_PDF(x) for x in x_values[1:-1]],label='PDF: $p(x_i)$')
+ax1.set_ylabel('f(x)')
+
+ax2.plot(x_values,
+            [arcsine_CDF(x) for x in x_values],
+            color='orange')
+ax1.plot(np.nan,label='CDF: $P(X\leq x_i)$')
+ax2.set_ylim([0,1])
+ax1.legend()
+
+plt.title("PDF and CDF for Arcsine Distribution")
+ax1.set_xlabel('x')
+ax2.set_ylabel('F(x)')
+plt.show()</pre></code>
+
+
                 <br><br>
                 We can consequently calculate the probability of being between two values as follows:
 
