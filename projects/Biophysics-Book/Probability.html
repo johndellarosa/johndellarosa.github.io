@@ -103,6 +103,35 @@
                 $$F(x)=\sum_{x_i\leq x}p(x_i)$$
                 where \(x_i\) is a possible value that X takes. We will call the function p(x) the <b>probability mass function</b> (PMF) for discrete variables. 
 
+                <h4>Example with Binomial Distribution</h4>
+                    <img src="BinomialPMFCDF.png" alt="Binomial PMF and CDF" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                    Python code:
+                    <code style="margin: auto; width: 50%;"><pre>
+def combinations(n,k):
+    return math.factorial(n)\
+    /(math.factorial(k)*math.factorial(n-k))
+def binomial_PMF(k,n,p):
+    return combinations(n,k)*(p**k)*(1-p)**(n-k)
+def binomial_CDF(k,n,p):
+    accum = 0
+    for i in range(0,k+1):
+        accum += binomial_PMF(i,n,p)
+    return accum
+n = 8
+x_values = [i for i in range(0,n+1)]
+p = 0.6
+fig = plt.figure()
+plt.scatter(x_values,
+            [binomial_PMF(k,n,p) for k in x_values])
+plt.scatter(x_values,
+            [binomial_CDF(k,n,p) for k in x_values],
+            color='orange')
+plt.legend(['PMF: $P(X=x_i)$','CDF: $P(X\leq x_i)$'])
+plt.title("PMF and CDF for Binomial (p=0.6, n=8)")
+plt.xlabel('k (number successes)')
+plt.ylabel('Probability')
+plt.show()</pre></code>
+
 
                 <br><br>
                 For continuous variables, we have 

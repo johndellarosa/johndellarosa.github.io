@@ -167,8 +167,9 @@ model = sm.OLS(v_array_inverse,
                 sm.add_constant(S_array_inverse))
 results = model.fit()
 plt.plot(S_array_inverse,
-            results.predict(sm.add_constant(S_array_inverse)),
-            color='orange')
+            results.predict(
+                sm.add_constant(S_array_inverse)),
+                color='orange')
 plt.title("Lineweaver-Burk plot")
 plt.xlabel("1/[S] ($M^{-1}$)")
 plt.ylabel(f"$1/v_0$ (s/M)")
@@ -293,8 +294,9 @@ model2 = sm.OLS(v_array_inverse,
                 sm.add_constant(S_array_inverse))
 results2 = model2.fit()
 plt.plot(test_points,
-            results2.predict(sm.add_constant(test_points)),
-            color='orange')
+            results2.predict(
+                sm.add_constant(test_points)),
+                color='orange')
 
 
 plt.title("Lineweaver-Burk plot")
@@ -310,8 +312,8 @@ plt.show()</pre>
     While it is not apparent in the figure, as the inhibitor is added, the line rotates counter-clockwise, with the y-intercept remaining the same. 
     The following are the effects of competitive inhibition:
     <ol>
-        <li>v_max stays the same</li>
-        <li>k_M <b>increases</b> as more substrate is required to reach half max velocity</li>
+        <li>\(v_{\text{max}}\) stays the same</li>
+        <li>\(k_M\) <b>increases</b> as more substrate is required to reach half max velocity</li>
     </ol>
     
             <h4>Uncompetitive Inhibition</h4>
@@ -326,8 +328,8 @@ plt.show()</pre>
     
             The following are the effects of uncompetitive inhibition:
             <ol>
-                <li>v_max decreases</li>
-                <li>k_M <b>decreases</b></li>
+                <li>\(v_{\text{max}}\) decreases</li>
+                <li>\(k_M\) <b>decreases</b></li>
             </ol>
     
             <h4>Non-competitive Inhibition</h4>
@@ -346,8 +348,8 @@ plt.show()</pre>
     This has the effect of essentially reducing the amount of enzyme present, as if less had been added in the first place. 
     The following are the effects of non-competitive inhibition:
     <ol>
-        <li>v_max decreases</li>
-        <li>k_M is unaffected</li>
+        <li>\(v_{\text{max}}\) decreases</li>
+        <li>\(k_M\) is unaffected</li>
     </ol>
     
             
