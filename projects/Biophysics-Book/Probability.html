@@ -64,25 +64,54 @@
                 <h1>Probability, Statistics, and Entropy</h1>
                 <h2>Probability</h2>
                 <h3>Defining terms</h3>
-                Before we show any equations, we must define some terms. Let A and B be events.
+                Before we show any equations, we must define some terms and cover some basics of set theory. Let A and B be events. In this textbook, when we use the term <b>event</b>, we will mean it to be an outcome or set (group) of possible outcomes. 
                 We will also denote \(\Omega\) to be the set of all possible outcomes. 
                 <ul>
-                    <li>P(A) is the probability of event A occurring</li>
-                    <li>\(P(A\cup B)\) is the probability of A or B or both occurring. The \(\lor\) can also be seen instead of \(\cup\)</li>
-                    <li>\(P(A\cap B)\) is the probability of A <b>and</b> B both occurring. The \(\land\) can also be seen instead of \(\cap\)</li>
-                    <li>\(P(\neg A)\) is the probability of A not occurring. This can also be written as a bar above the A</li>
+                    <li>P(A) is the probability of event A occurring. This corresponds to the probability of having any outcome in the set of outcomes included in A.</li>
+                    <li>\(A \subseteq B\) means that A is a <b>subset</b> of B. This means that all the outcomes included in A are also included in B. However, B could contain additional outcomes that are not in A.<ul>
+                            <li>An example would be if A were rolling a 3 on a die and B were rolling an odd number on a die. It is possible for A and B to be the same set of outcomes.
+                            </li>
+                            <li>If we wish to state that A is a subset of B, but A is not the same as B, we will use the notation 
+                                \(A \subset B\) and call A a <b>proper subset</b> of B.
+                            </li>
+                            <li>The notation for subset and proper subset is similar to comparing two real numbers.</li>
+                        </ul>
+
+                    </li>
+                    <li>\(A\cup B\) is the <b>union</b> of A and B. This is the set of outcomes that are in A and/or B. This will be a set that is larger or equal in size than either A or B. The \(\lor\) can also be seen instead of \(\cup\), especially in logic.
+                        <ul>
+                            <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cup B = \{1,2,3,4,6\}\)</li>
+                        </ul></li>
+                    <li>\(A\cap B\) is the <b>intersection</b> of A and B. This is the set of outcomes that are in both A and B. The \(\land\) can also be seen instead of \(\cap\), especially in logic
+                        <ul>
+                            <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cap B = \{2\}\)</li>
+                        </ul>
+                    </li>
+                    <li>Let \(A\subseteq B\), then \(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
+                        <ul>
+                            <li>In the special case of \(\Omega \setminus A\) can be written as \(A^{c}\) or \(\overline{A}\). This is called the <b>complement</b> of A and is the set of outcomes not in A. In logic, this can be seen as \(\neg A\)</li>
+                        </ul>
+
+                    </li>
+                        
                 </ul>
+                We can take the probabilities of these resulting sets to see the probability of getting an outcome contained within them. 
 
 
 
                 <h3>Basic Rules</h3>
-                The sum of the probabilities of all possible outcomes must equal 1. For discrete distributions this can be stated as 
+                The sum of the probabilities of all possible outcomes must equal 1.
+                Written for our set notation:
+                $$P(\Omega)=1$$
+                
+                For discrete distributions this can be stated as 
                 $$\sum P(x_i)=1$$
                 and for continuous distributions, we can write
                 $$\int_{-\infty}^{\infty}p(x)dx=1$$
                 <h4>Inclusion-Exclussion Principle</h4>
                 $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
-                The Inclusion-Exclussion Principle gives a relationship between two events, the probability of both happening, and the probability of either happening. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
+                The Inclusion-Exclussion Principle gives a relationship between two events, the probability of the union, and the probability of the intersection. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
+                If A and B are mutually exclusive, then \(P(A\cap B)=0\).
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
                 <br>
@@ -139,6 +168,8 @@ plt.show()</pre></code>
                 $$F(x)=\int_{-\infty}^xf(y)dy$$
 
                 where f(y) is the probability density at y. We can think of this as the probability of  We will call the density function f(y) the <b>probability density function</b> (PDF) for continuous variables as opposed to PMF. 
+                While we will sometimes use the notation of using p instead of f for the density function, it is important to emphasize that the probability density at a given value is <b>not</b> the probability of the random variable being that value. 
+                Without invoking measure theory and the notion of what it means for something to have probability 0, a non-rigorous explanation is that since there are an infinite amount of real numbers in an interval, the probability of getting any specific one is infinitesimally small. Thus, it only makes sense to talk about an outcome being in a range of numbers rather than a specific value.
 
 
                 <h4>Example with Arcsine Distribution</h4>
@@ -158,7 +189,8 @@ ax2 = ax1.twinx()
 ax1.set_ylim([0,5])
 
 ax1.plot(x_values[1:-1],
-            [arcsine_PDF(x) for x in x_values[1:-1]],label='PDF: $p(x_i)$')
+            [arcsine_PDF(x) for x in x_values[1:-1]],
+            label='PDF: $p(x_i)$')
 ax1.set_ylabel('f(x)')
 
 ax2.plot(x_values,
@@ -181,7 +213,7 @@ plt.show()</pre></code>
                 Which also means
                 $$P(a \lt X \leq b)=\int_{a}^bf(y)dy$$
 
-                Another common definition is that of the <b>survival function</b>. We define this as 
+                Another common definition is that of the <b>survival function</b> which looks at the complement. We define this as 
                 $$\bar{F}(x)=1-F(x)$$
 Thus the survival function is also equivalent to 
 $$\bar{F}(x)=P(X\gt x)$$
@@ -290,27 +322,32 @@ plt.show()</pre>
                 
 
                 A distribution can output a set of random variables.
+
+                Let \(X_1,\dots, X_n\) be random variables, then we can define a multivariable distribution F:
+
                 $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
+                <h4>Independence</h4>
                 We say that \(X_1,\dots,X_n\) are independent if
 
                 
                 
                 $$F(x_1,\dots,x_n)=\prod_{x_i}P(X_i\leq x_i)$$
-
+                <h4>Marginal Distribution</h4>
+                Sometimes we may only want to consider a subset of variables and focus on the distribution of those. We will call this the <b>marginal distribution</b>. 
                 We can use the notation
 
                 $$F_{X_i}(x_i)\equiv P(X_i\leq x_i)$$
-
+                <h4>Multivariate density</h4>
                 We can define the density of a multivariate distribution as 
 
                 $$f(x_1,\dots,x_n)\equiv\frac{\partial^n}{\partial_1\cdots\partial_n}F(x_1,\dots,x_n)$$
-
+                <h4>Marginal Density</h4>
                 We can also define a function called the marginal density. Let us consider a bivariate distribution given by \(x_1\) and \(x_2\). 
                 $$F_{X_1}(x_1)=\int_{-\infty}^{\infty}f(x_1,x_2)dx_2$$
 
                 Using the marginal densities, we can arrive at an alternative definition of independence. Two random variables are independent if
                 $$f(x_1,x_2)=f_{X_1}(x_1)f_{X_2}(x_2)\forall(x_1,x_2)$$
-    
+                <h4>Returning to Bayes - Conditional Distribution and Density</h4>
                 Let us define the conditional distribution of \(X_1\) given \(X_2=x_2\)
 
                 $$F_{X_1|X_2}(x_1|X_2)\equiv P(X_1\leq x_1|X_2=x_2)$$
