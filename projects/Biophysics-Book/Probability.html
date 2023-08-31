@@ -67,14 +67,21 @@
                 Before we show any equations, we must define some terms and cover some basics of set theory. Let A and B be events. In this textbook, when we use the term <b>event</b>, we will mean it to be an outcome or set (group) of possible outcomes. 
                 We will also denote \(\Omega\) to be the set of all possible outcomes. 
                 <ul>
-                    <li>P(A) is the probability of event A occurring. This corresponds to the probability of having any outcome in the set of outcomes included in A.</li>
+                    <li>An <b>element</b> is the term for the basic member of a set. This will represent a specfic outcome for most of our purposes.</li>
+                    <li>P(A) is the probability of event A occurring. This corresponds to the probability of having any outcome in the set of outcomes included in A.
+                        <ul>
+                            <li>You can think of the probability of A as being a measure of the "size" of the set A (size does not refer to the number of elements in this analogy). The probability of each element need not be the same.</li>
+                        </ul>
+
+                    </li>
                     <li>\(A \subseteq B\) means that A is a <b>subset</b> of B. This means that all the outcomes included in A are also included in B. However, B could contain additional outcomes that are not in A.<ul>
-                            <li>An example would be if A were rolling a 3 on a die and B were rolling an odd number on a die. It is possible for A and B to be the same set of outcomes.
-                            </li>
+                            <li>An example would be if A were rolling a 3 on a die and B were rolling an odd number on a die. </li>
+                                <li>It is possible for A and B to be the same set of outcomes, which is captured by the underline in the notation. The notation for subset and proper subset is similar to comparing two real numbers. The open end poitns to the "larger" thing and an underline allows for equality to be included in the comparison.</li>
+                            
                             <li>If we wish to state that A is a subset of B, but A is not the same as B, we will use the notation 
                                 \(A \subset B\) and call A a <b>proper subset</b> of B.
                             </li>
-                            <li>The notation for subset and proper subset is similar to comparing two real numbers.</li>
+                            <li>If \(A \subset B\), then \(P(A)\leq P(B)\)</li>
                         </ul>
 
                     </li>
@@ -111,7 +118,7 @@
                 <h4>Inclusion-Exclussion Principle</h4>
                 $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
                 The Inclusion-Exclussion Principle gives a relationship between two events, the probability of the union, and the probability of the intersection. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
-                If A and B are mutually exclusive, then \(P(A\cap B)=0\).
+                If A and B are mutually exclusive, then \(P(A\cap B)=0\). This can be thought of as the analogue of addition in probability.
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
                 <br>
