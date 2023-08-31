@@ -196,14 +196,13 @@ ax2 = ax1.twinx()
 ax1.set_ylim([0,5])
 
 ax1.plot(x_values[1:-1],
-            [arcsine_PDF(x) for x in x_values[1:-1]],
-            label='PDF: $p(x_i)$')
+            [arcsine_PDF(x) for x in x_values[1:-1]],label='PDF: $p(x)$')
 ax1.set_ylabel('f(x)')
 
 ax2.plot(x_values,
             [arcsine_CDF(x) for x in x_values],
             color='orange')
-ax1.plot(np.nan,label='CDF: $P(X\leq x_i)$')
+ax1.plot(np.nan,label='CDF: $P(X\leq x)$')
 ax2.set_ylim([0,1])
 ax1.legend()
 
