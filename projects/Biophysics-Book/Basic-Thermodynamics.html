@@ -161,6 +161,34 @@
                 $$=\frac{1}{2}kz^2$$
                 The work required is \(\frac{1}{2}kz^2\) which will be converted into potential energy.
     
+                <img src="HookesLaw.png" alt="Hooke's Law" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+def Hooke_F(delta_x,k):
+    return -k*delta_x
+def Hooke_U(delta_x,k):
+    return 0.5*k*delta_x**2
+
+x_values = np.linspace(-1,1,100)
+k=1
+
+fig, axes = plt.subplots(2,sharex=True)
+
+axes[0].plot(x_values,
+            [Hooke_F(x,k) for x in x_values])
+axes[0].set_ylabel('F($\Delta x$) (N)')
+
+axes[1].plot(x_values,
+            [Hooke_U(x,k) for x in x_values],
+            color='orange')
+axes[0].set_title("Hooke's Law Force and Potential")
+
+axes[1].set_xlabel('Displacement ($\Delta X$)')
+axes[1].set_ylabel('U($\Delta x$) (J)')
+plt.show()</pre>
+                </code>
+
+
                 <h4>Electrostatics</h4>
                 Another common force is electrostatic. The electrostatic force between two point charges is described by Coulomb's Law. 
                 $$F=\frac{1}{4\pi D\varepsilon_0}\frac{q_1q_2}{r^2}$$
