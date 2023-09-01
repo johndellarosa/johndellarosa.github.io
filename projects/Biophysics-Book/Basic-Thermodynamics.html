@@ -167,6 +167,37 @@
                 where F is the force, D is the dielectric constant for the medium, \(\varepsilon_0\) is the vacuum permittivity (a constant), \(q_i\) is the charge of particle i, and r is the distance between the two charged particles. 
                 In this form of Coulomb's Law, a negative value for F means an attractive force and a positive F means a repulsive force. 
     
+                <img src="Coulomb.png" alt="Coulomb's Law" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+k = 8.98e9
+
+def Coulomb_F(q_1,q_2,r):
+    return -k*q_1*q_2/((r*1e-10)**2)
+def Coulomb_U(q,Q,r):
+    return k*q*Q/(r*1e-10)
+
+x_values = np.linspace(1e-1,1)
+q_1 = 1.602e-19
+q_2 = -1.602e-19
+
+fig, axes = plt.subplots(2,sharex=True)
+
+axes[0].plot(x_values,
+            [Coulomb_F(q_1,q_2,x) for x in x_values],label='F(r)')
+axes[0].set_ylabel('F(r) (N)')
+
+axes[1].plot(x_values,
+            [Coulomb_U(q_1,q_2,x) for x in x_values],
+            color='orange',label='U(r)')
+axes[0].set_title("Electrostatic Force and Potential")
+axes[0].legend()
+axes[1].legend()
+axes[1].set_xlabel('Distance between point charges ($\AA$)')
+axes[1].set_ylabel('U(r) (J)')
+plt.show()</pre>
+                </code>
+
                 <h4>Morse Potential</h4>
                 The harmonic oscillator/Hooke's law model is treating a molecule as if it were two nuclei connected by a spring in a classical sense. The potential energy is 
                 $$U=\frac{1}{2}k(r-r_e)^2$$
@@ -175,9 +206,33 @@
     
                 This model is pretty decent at describing behavior close to the equilibrium bond distance, but as r gets further away from \(r_e\), we need a better model. This is where the Morse potential comes in. This is an improved version which takes into account things like nuclear-nuclear repulsion from Pauli's exclusion principle and bond dissociation. When r is too small, the Morse potential jumps in potential energy quicker than with a simple Hooke's law approximation. Bonds can't stretch infinitely; bonds break if separation grows too large. The Morse potential takes this into account by having U asymptotically approach a value in the limit as r goes to infinity instead of continuing to increase quadratically. The limit as r approaches infinity is your bond dissociation energy.
     The equation for the morse potential is given by 
-    $$U(r)=D_e (1-e^{-a(r-r_e)})^2$$
+    $$U(r)=D_e (1-e^{-a(r-r_e)})^2-D_e$$
     where \(D_e\) is related to the dissociation energy. 
     
+    <img src="MorsePotential.png" alt="Morse Potential" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+    Python code:
+    <code style="margin: auto; width: 50%;"><pre>
+def Morse_U(r,De,a,r_e):
+    r = r*1e-10 # convert to angstrom
+    r_e = r_e*1e-10
+    return De*((1-np.exp(-a*(r-r_e)))**2)-De
+
+x_values = np.linspace(0.3,6,100)
+r_e = 1.99
+D_e = 240
+a = 0.75e10
+
+fig = plt.figure()
+
+plt.plot(x_values,
+            [Morse_U(x,D_e,a,r_e) for x in x_values],
+            label='F(r)')
+plt.ylabel('Potential (kJ/mol)')
+plt.xlabel('Bond distance ($\AA$)')
+plt.title("Morse Potential")
+
+plt.show()</pre>
+    </code>
     
     <h4>Lennard-Jones Potential</h4>
     The Lennard-Jones potential describes Van der Waals interactions between two molecules. 
