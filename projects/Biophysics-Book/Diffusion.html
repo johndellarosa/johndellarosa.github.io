@@ -138,10 +138,14 @@ plt.show()</pre>
 
                 Note that this simplifies to Fick's second law when D is constant.
                 
+                <h3>Convection-Diffusion Equation</h3>
+                We can further build upon the Diffusion Equation by adding a drift term as well as sources or sinks for the specie. This new equation will have the form
+                $$\frac{\partial \phi(r,t)}{\partial t}=\nabla\dot [D(\phi,r)\nabla \phi(r,t)-v\phi(r,t)]+R$$
+                where v is the velocity field and R is the source or sink rate if the total amount of the specie is not constant over time.
 
-                <h3>Fokker-Planck Equation</h3>
+                <h4>Fokker-Planck Equation</h4>
 
-                What if the particle has a drift component?
+                An equivalent description to the Convection-Diffusion equation posed as an SDE is the Fokker-Planck Equation. 
 
                 <br><br>
                 
@@ -162,6 +166,7 @@ plt.show()</pre>
                 where \(D(X_t,t)=\frac{1}{2}\sigma^2\). 
 
                 In stochastic calculus, this is referred to as the Kolmogorov Forward Equation. There is a corresponding backward equation which deals with the likelihood of ending up at a particular state. 
+                This equation does not allow for interactions between particles.
 
 
 
@@ -174,9 +179,21 @@ plt.show()</pre>
                 which is just a stochastic differential equation for particle undergoing Brownian motion (scaled by a constant). 
                 By plugging the dynamics into the Fokker-Planck equation, we get a familiar form
 
-                $$\frac{\partial}{\partial t}p(x,t)=D\frac{\partial^2}{\partial x^2}p(x,t)$$
+                $$\frac{\partial}{\partial t}\phi(x,t)=D\frac{\partial^2}{\partial x^2}\phi(x,t)$$
                 which is Fick's second law. 
-    
+                
+                <h3>Nernst-Planck Equation</h3>
+                In the Convection-Diffusion equation, we introduced a force field that acted as drift. We can do a similar thing and incorporate electric fields:
+
+                $$\frac{\partial \phi(r,t)}{\partial t}=\nabla\dot [D(\phi,r)\nabla \phi(r,t)-v\phi(r,t)-\frac{Dze}{k_BT}\phi(r,t)E]$$
+                This can be alternatively written in terms of electric and magnetic potentials as 
+                $$\frac{\partial \phi(r,t)}{\partial t}=\nabla\dot [D(\phi,r)\nabla \phi(r,t)-v\phi(r,t)+\frac{Dze}{k_BT}\phi(r,t)(\nabla V(\phi,r)+\frac{\partial A}{\partial t})]$$
+                where V is the electric potential and A is the magnetic vector potential.
+                
+                The magnetic field (B) and the electric field (E) are related to the potential as follows:
+                $$B=\nabla \times A$$
+                $$E=-\nabla V - \frac{\partial A}{\partial t}$$
+
                 <h3>Numerical Methods - Finite Difference</h3>
                 A common technique to use when dealing with PDEs is the finite difference method. 
                 These attempt to discretize the space we're working on and get approximations for the steps. However, caution must be used in order to ensure the discretization is good. Otherwise, we can run into compounding errors. 
