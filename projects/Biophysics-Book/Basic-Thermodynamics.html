@@ -272,12 +272,12 @@ plt.show()</pre>
                 <h3>Defining Ideal Gas</h3>
                 As a basic model, we will consider an <b>ideal gas</b>. We will define an ideal gas by the following properties:
                 <ol>
-                    <li>Point particle</li>
+                    <li>Monoatomic, point particle</li>
                     <li>No potential energy</li>
                     <li>Elastic Collisions</li>
                 </ol>
 
-                <h4>Point particle</h4>
+                <h4>Monoatomic, point particle</h4>
                 This means that the volume of the particle is 0. The term volume will often be used in our equations, but that will refer to the volume of the container (non-zero volume) holding the gas particles, not the volume of the particle(s). 
                 This can also be stated as the size of the container is much greater than the size of the particle for a more realistic scenario. 
                 The particle will also have no rotational or vibrational energy associated with it.
@@ -288,6 +288,13 @@ plt.show()</pre>
                 The only "interaction" that a particle will experience will be collision with the container walls.
                 <h4>Elastic collisions</h4>
                 When a particle hits the wall of the container, the particle will reverse that component of its velocity, maintaining its speed. 
+
+                <h3>Kinetic Energy</h3>
+                For our above defined model, the kinetic energy of our gas is given by
+
+                $$K=\frac{3}{2}Nk_BT$$
+                where K is the kinetic enregy, N is the number of gas particles, k_B is Boltzmann's constant, and T is absolute temperature. 
+                The kinetic energy is directly proportional to the temperature.
 
                 <h3>Ideal Gas Law</h3>
 
@@ -315,7 +322,11 @@ plt.show()</pre>
 
                 <h4>Isothermal Process</h4>
                 An isothermal process has constant temperature over the duration of the process. 
-                Since pressure and volume are inversely proportional with everything else being held constant, the curve behaves like y=1/x.
+                Since pressure and volume are inversely proportional with everything else being held constant, the curve behaves like y=1/x. 
+                In our monoatomic ideal gas, the energy of the system stays constant as N and T are unchanging. 
+                By the first law, this means that the heat transfer must be equal to the negative of the work. 
+                If the system expands and does x Joules of work, then x Joules of heat must flow into the system from the surroundings. 
+                
 
 
                 Isotherm curves give the possible states for a given temperature and mole.
@@ -361,6 +372,10 @@ plt.show()</pre>
 
                 <h4>Isobaric Process</h4>
                 In an isobaric process, the pressure remains constant throughout. Temperature and volume will both change proportional to one another. 
+                In an isobaric process, the work is easy to calculate as P is constant, so the work is just \(P\Delta V\). 
+                The temperature and energy will increase if the volume increases and the opposite happens if the volume decreases. 
+                
+                
                 <img src="IsobaricProcess.png" alt="Isobaric Process" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
@@ -397,6 +412,9 @@ plt.show()</pre>
 
                 <h4>Isochoric (Isovolumetric) Process</h4>
                 In an isochoric process, the volume remains constant throughout. Temperature and pressure will both change proportional to one another. 
+                Since there is no change in volume, there is no work being done. The change in temperature and energy shares the same sign as the change in pressure. 
+                Since there is no work being done, the change in energy is solely due to heat exchange with the surrounding.
+
                 <img src="IsochoricProcess.png" alt="Isochoric Process" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
