@@ -94,7 +94,7 @@
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cap B = \{2\}\)</li>
                         </ul>
                     </li>
-                    <li>Let \(A\subseteq B\), then \(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
+                    <li>\(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
                         <ul>
                             <li>In the special case of \(\Omega \setminus A\) can be written as \(A^{c}\) or \(\overline{A}\). This is called the <b>complement</b> of A and is the set of outcomes not in A. In logic, this can be seen as \(\neg A\)</li>
                         </ul>
@@ -124,9 +124,12 @@
                 <br>
                 "If neither A nor B happened, then that means A didn't happen and B didn't happen"
                 $$\neg(A \lor B)=(\neg A)\land (\neg B)$$
+                $$(A \cup B)^c = A^c \cap B^c$$
+
     
                 "If A and B didn't both happen, then that means either A didn't happen, B didn't happen, or neither happened"
                 $$\neg(A \land B)=(\neg A)\lor (\neg B)$$
+                $$(A \cap B)^c = A^c \cup B^c$$
                 <h3>Cumulative Density Function</h3>
                 The cumulative density function states the probability of getting the outcome being less than or equal to a given x. 
                 We will define a <b>Cumulative Density Function</b> (CDF) formally as 
