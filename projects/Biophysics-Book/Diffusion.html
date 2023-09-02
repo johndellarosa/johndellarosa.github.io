@@ -77,8 +77,21 @@
                 $$\mathbf{J}=-D \nabla \phi$$
                 where \(\mathbf{J}\) is the flux vector, D is the diffusion coefficient, phi is the concentration.
 
+                Fick's first law is a special case of a more general principle called the <b>Continuity Equation</b>
+
+                <h3>Continuity Equation</h3>
+                While not one of Fick's laws, the continuity equation is related. It states
+
+                $$\frac{\partial \phi}{dt}+\nabla J=R$$
+                where phi is the concentration, J is the flux, and R is the "source."
+                When dealing with systems where the total amount of the specie is constant, we can set R to be 0. 
+                <br><br>
+                Combining the continuity equation with Fick's first law's definition for the flux, we get Fick's second law. 
+                In later equations, we will add additional forces to the flux beyond the simple concentration gradient. 
+
 
                 <h3>Fick's Second Law</h3>
+                
 
                 While Fick's first law relates the flux to the concentration gradient, 
                 Fick's second law relates the partial derivative with respect to time with the second partial with respect to space.
@@ -142,7 +155,7 @@ plt.show()</pre>
                 We can further build upon the Diffusion Equation by adding a drift term as well as sources or sinks for the specie. This new equation will have the form
                 $$\frac{\partial \phi(r,t)}{\partial t}=\nabla\dot [D(\phi,r)\nabla \phi(r,t)-v\phi(r,t)]+R$$
                 where v is the velocity field and R is the source or sink rate if the total amount of the specie is not constant over time.
-
+                This is an extension of the continuity equation, where we've added the flow term to the flux.
                 <h4>Fokker-Planck Equation</h4>
 
                 An equivalent description to the Convection-Diffusion equation posed as an SDE is the Fokker-Planck Equation. 
@@ -183,7 +196,7 @@ plt.show()</pre>
                 which is Fick's second law. 
                 
                 <h3>Nernst-Planck Equation</h3>
-                In the Convection-Diffusion equation, we introduced a force field that acted as drift. We can do a similar thing and incorporate electric fields:
+                In the Convection-Diffusion equation, we introduced a force field that acted as drift then used the continuity equation. We can do a similar thing and incorporate electric fields:
 
                 $$\frac{\partial \phi(r,t)}{\partial t}=\nabla\dot [D(\phi,r)\nabla \phi(r,t)-v\phi(r,t)-\frac{Dze}{k_BT}\phi(r,t)E]$$
                 This can be alternatively written in terms of electric and magnetic potentials as 
