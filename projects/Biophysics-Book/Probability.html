@@ -389,6 +389,98 @@ plt.show()</pre>
 <br><br>
                 Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>. Kendall's tau coefficient is a third way. 
 
+                <h3>Linear Combinations of Distributions</h3>
+                Let X and Y be two randomly distributed variables. What are the properties of X+Y? 
+                For some properties, this is easy. The mean and variance
+                <ol>
+                    <li>\(\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]\)
+                        <ul>
+                            <li>Note that this does not depend on the correlation between the two variables</li>
+                        </ul>
+                    </li>
+                    <li>\(\text{Var}[X+Y]=\text{Var}[X]+\text{Var}[Y]+2\text{Cov}[X,Y]\)</li>
+                </ol>
+                But what about the distribution? 
+                <br>
+                This is a bit more involved to try to calculate. Let's try to get an understanding for how we might approach this. 
+                <br>
+                Let us incrementally solve for harder systems.
+
+                <h4>Two Bernoulli Distributions</h4>
+                Let us consider two independent Bernoulli distributed variables, X and Y.
+                <ul>
+                    <li>\(P(X=1)=p\); \(P(X=0)=1-p\)</li>
+                    <li>\(P(Y=1)=q\); \(P(Y=0)=1-q\)</li>
+                </ul>
+
+                Using our set theory notation, let's write out the possibilities for X+Y:
+                <ul>
+                    <li>X+Y=0: \(X=0\cap Y=0\)</li>
+                    <li>X+Y=1: \((X=1\cap Y=0)\cup(X=0\cap Y=1)\)</li>
+                    <li>X+Y=2: \(X=1\cap Y=1\)</li>
+                </ul>
+                While this may be a bit overkill, it helps us start with a basic system and extrapolate to more advanced cases. 
+                In fact, the above list of outcomes holds even if the variables aren't independent!
+                <br><br>
+                Now to get the distribution, we can just take the probability of each outcome. Because X and Y can only take one value at a time each, the events X=0 and X=1 are mutually exclusive and same with Y=0 and Y=1. 
+                This makes the calculation for X+Y=1 simpler as we don't have to invoke the Inclusion-Exclusion Principle.
+
+                $$P(X+Y=0) = P(X=0\cap Y=0)$$
+                $$P(X+Y=1)=P(X=1\cap Y=0)+P(X=0\cap Y=1)$$
+                $$P(X+Y=2) = P(X=1\cap Y=1)$$
+                Again, this calculation holds regardless of whether X and Y are independent. 
+
+                <br><br>
+                <h5>Independent</h5>
+                In the case of independence, we can write the probabilities as follows:
+                $$P(X+Y=0) = P(X=0)P(Y=0)$$
+                $$P(X+Y=1)=P(X=1)P(Y=0)+P(X=0)P(Y=1)$$
+                $$P(X+Y=2) = P(X=1)P(Y=1)$$
+
+                Substituting in our values for the probabilities:
+
+                $$P(X+Y=0)=(1-p)(1-q)$$
+                $$P(X+Y=1)=p(1-q)+(1-p)q$$
+                $$P(X+y=2)=pq$$
+                <h5>Non Independent</h5>
+                If X and Y are not independent, we cannot simply factor out the probabilities. However, we can use the definition of conditional probability to rewrite.
+                $$P(X+Y=0)=P(Y=0|X=0)P(X=0)$$
+                $$P(X+Y=1)=P(Y=0|X=1)P(X=1)+P(Y=1|X=0)P(X=0)$$
+                $$P(X+Y=2)=P(Y=1|X=1)P(X=1)$$
+
+
+                In this example, I used the probability of X and the probability of Y given X, but this could have just as easily been reversed according to Bayes' Law. 
+
+                <h4>General Case</h4>
+                By now, hopefully the way to generalize this is clearer. 
+                Let us define another term that helps describe a distribution called the <b>support</b>. The support will be defined formally by:
+                $$\text{supp}(f)=\{x\in X\text{ s.t } f(x)\neq 0\}$$
+                <ul>
+                    <li>For discrete distributions, this is can be thought of as the set of possible outcomes (with non-zero probability). 
+                    </li>
+                    <li>For continuous distributions, this will be the part of the domain that has non-zero probability density. 
+                    </li>
+                </ul>
+                <br><br>
+
+                Let X and Y now be any two discrete distributions. The probability of X+Y=z:
+                $$P(X+Y=z)=\sum_{w\in\text{supp}(p_X)}P(Y=z-w|X=w)P(X=w)$$
+                For a continuous distribution, we can write this as:
+
+                $$f_{X+Y}(z)=\int_{-\infty}^{\infty}f_{Y|X}(z-w|w)f_{X}(w)dw$$
+
+                
+                Taking the sum of the probabilities of all the possible ways that X and Y can add up to a target value.
+                This is called <b>convolution</b>.
+                <br><br>
+                If the two random variables are independent, then we can simplify the conditional probabilities and conditional densities to just be the regular probability and marginal density.
+
+                <h4>Stable Distributions</h4>
+
+                Some distributions have the nice property that linear combinations of random variables who are of its kind yield another random variable that is distributed with that distribution, albeit with different parameters. 
+                The two main examples that we will see are Normal (Gaussian) distributions and Poisson distributions.
+                This is convenient because we can get a closed form version without having to go through all the effort of convolution.
+
                 <h2>Entropy</h2>
                 <h3>Multiplicity</h3>
     
@@ -477,6 +569,8 @@ plt.show()</pre>
                 <h2>Practice Problems</h2>
 
                 <ol>
+                    <li>The Laplace distribution centered at 0 has a density given by \(f(x)=\frac{1}{2b}\exp(-\frac{|x|}{b})\) for \(x\in \mathbb{R}\). Find the mean and variance of the distribution.</li>
+
                     <li>The exponential distribution is given by \(f(x)=ae^{-ax}\) for \(x\geq 0\) and 0 for \(x \lt 0\). Determine the mean and variance.
                         The following identities may be useful:
                         <ol>
