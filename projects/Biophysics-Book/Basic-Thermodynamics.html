@@ -283,6 +283,35 @@ plt.show()</pre>
     The potential is given by
     
     $$U(r)=4\varepsilon \left[(\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right]$$
+
+
+    <img src="LennardJonesPotential.png" alt="Hooke's Law" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+# Constants
+epsilon = 20  # Depth of potential well
+sigma = 3.5    # Distance at which potential is zero
+
+# Define a range of distances (r)
+r = np.linspace(3, 6, 500)  # Adjust the range as needed
+
+# Calculate the Lennard-Jones potential for each distance
+V = 4 * epsilon * ((sigma / r)**12 - (sigma / r)**6)
+
+# Create the plot
+plt.figure(figsize=(8, 6))
+plt.plot(r, V,
+            label='Lennard-Jones Potential',
+            color='blue')
+plt.xlabel('Distance ($\AA$)')
+plt.ylabel('Potential Energy (cm$^{-1}$)')
+plt.title('Lennard-Jones Potential')
+plt.legend()
+plt.grid(True)
+#plt.ylim(-2, 2)  
+plt.xlim(2.5, 6) 
+plt.show()</pre>
+                </code>
     
                 <h2>Ideal Gas Model</h2>
                 <h3>Defining Ideal Gas</h3>

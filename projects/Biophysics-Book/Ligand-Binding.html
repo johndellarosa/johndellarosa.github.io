@@ -106,6 +106,37 @@
 
                 $$\frac{[L]_{\text{bound}}}{[L]}=-\frac{1}{K_D}[L]_{\text{bound}}+\frac{[P]_{\text{total}}}{K_D}$$
 
+                <img src="ScatchardPlot.png" alt="Probability Continuous Variable" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(0)
+# Simulated data (specific binding and free ligand concentrations)
+P_total = 100e-9
+K_D = 3e-9
+L_free = np.geomspace(1e-10,1e-7,25)
+f = L_free/(L_free+K_D)+np.random.normal(size=25,scale=1e-3)
+P_L = f*P_total
+
+model = sm.OLS(P_L/L_free,
+                sm.add_constant(P_L*1e9))
+results = model.fit()
+
+# Create the Scatchard plot
+plt.figure(figsize=(8, 6))
+plt.scatter(P_L*1e9,P_L/L_free, marker='o')
+plt.plot(P_L*1e9,
+            results.predict(sm.add_constant(P_L*1e9)),
+            color='orange')
+plt.xlabel('Bound Ligand Concentration (nM)')
+plt.ylabel('Bound Ligand / Free Ligand')
+plt.title('Scatchard Plot')
+plt.grid(True)
+plt.legend(['Data',
+            f'OLS: y={results.params[1]}x+{results.params[0]}'])
+plt.show()</pre>
+                </code>
+
+
                 As you add more ligand into the system, \([L]_{\text{bound}}\) increases, not all of the ligand added will be bound. 
                 In fact, what you notice is that the marginal percentage of the added ligand that binds goes down. 
  So what the negative slope kind of means is that as \([L]_{\text{bound}}\) increases, you will need to add even more ligand than before to get the same increase in \([L]_{\text{bound}}\).
