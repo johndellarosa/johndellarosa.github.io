@@ -284,10 +284,11 @@ plt.show()</pre>
                 <h2>Continuous-Time Stochastic Processes</h2>
                 There are a few ways we can go from our discrete random walk to continuous-time stochastic processes:
                 <ol>
+                    <li>Have deterministic dynamics between regular Markov transitions (Piecewise-deterministic Markov Process)</li>
                     <li>Keep the jump size the same, but have random times between jump that are drawn from a continuous distribution (Continuous Time Random Walk)</li>
-                    <li>Scale the step size as well as time interval and have our stochastic variable be continuous in both the domain (time) and image ("distance") (Brownian Motion)</li>
+                    <li>Scale the step size as well as time interval and have our stochastic variable be not just continuous in time, but a continuous function as well (Brownian Motion)</li>
                 </ol>
-                The second option, Brownian Motion, is much more common in terms of sharing the behavior we wish to model.
+                The last option, Brownian Motion, is much more common in terms of sharing the behavior we wish to model.
                 However, we will revisit the concept of randomly distributed wait times with Poisson processes later in this chapter.
 
                 <h3>Brownian Motion</h3>
@@ -580,6 +581,7 @@ The output from the quantile function will be the time between jumps for a Po(\(
                 <ol>
                     <li>Variable size jumps drawn from some sort of distribution instead of \(P(J=+1)=1\) (Compound Poisson Process)
                         <ul>
+                            <li>Deterministic behavior between jump events (Jump Process)</li>
                             <li>Combine with Brownian Motion (Jump Diffusion)</li>
                         </ul>
                     </li>
@@ -590,7 +592,7 @@ The output from the quantile function will be the time between jumps for a Po(\(
                         </ul>
                     </li>
                     <li>Non-exponentially distributed holding times (Renewal Process, Counting Process)</li>
-                    
+                    <li>Allow for transitions between states instead of counting (Continuous-time Markov chain)</li>
                 </ol>
 
                 While not all possibilities will be covered in this textbook, all of these can be used to describe certain biological scenarios.
@@ -637,8 +639,56 @@ plt.title(f"Compound Poisson Process with $\lambda=1$ and Jump$\sim N(0,{sigma**
 plt.show()</pre>
                 </code>
 
+                <h5>Jump Process</h5>
+                We can add deterministic movement between jumps to our compound Poisson process. 
+
+
+                Below is an example of exponential decay between jump events.
+
+                <img src="JumpProcess.png" alt="Compound Poisson Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(0)
+# Parameters
+T = 100.0            # Total time
+N = 10000           # Number of time steps
+dt = T / N         # Time step size
+mu = -0.75         # Drift coefficient
+
+lambda_ = 0.01      # Jump frequency
+jump_mean = 0.15    # Mean jump size
+jump_std = 0.05     # Standard deviation of jump size
+
+# Initialize arrays
+t = np.linspace(0, T, N+1)
+
+X = np.zeros(N+1)
+
+# Simulate the jump diffusion process
+for i in range(1, N+1):
+    dN = np.random.poisson(lambda_ * dt)   # Poisson process increment
+
+    # Calculate the jump component
+    jump = np.random.normal(jump_mean, jump_std, dN).sum()
+
+    # Update the process
+    X[i] = X[i-1] + mu * X[i-1] * dt + jump
+
+
+# Plot the jump process
+plt.figure(figsize=(9, 6))
+plt.plot(t, X)
+plt.title('Jump Process')
+plt.xlabel('Time')
+plt.ylabel('$X_t$')
+
+plt.grid(True)
+plt.show()</pre>
+                </code>
+
                 <h5>Jump Diffusion</h5>
-                Poisson Processes can also be combined with Brownian motion. 
+                Jump Processes can further be combined with Brownian motion to yield something called a <b>Jump Diffusion</b> model. 
+                This sort of model is more common in the world of finance.
                 <img src="GeometricBMJumpDiffusion.png" alt="Jump Diffusion Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
@@ -680,6 +730,9 @@ plt.ylabel('$X_t$')
 plt.grid(True)
 plt.show()</pre>
                 </code>
+
+
+
 
 
                 <h4>Advanced Applications in Biology</h4>
