@@ -293,7 +293,7 @@ epsilon = 20  # Depth of potential well
 sigma = 3.5    # Distance at which potential is zero
 
 # Define a range of distances (r)
-r = np.linspace(3, 6, 500)  # Adjust the range as needed
+r = np.linspace(3, 6, 500)
 
 # Calculate the Lennard-Jones potential for each distance
 V = 4 * epsilon * ((sigma / r)**12 - (sigma / r)**6)
