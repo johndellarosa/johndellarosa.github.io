@@ -114,7 +114,14 @@
                 A common mistake that students make is interpreting it as saying that entropy cannot decrease locally. 
                 This is <b>not</b> true. Entropy can very well decrease in a system, but it will be offset by a greater increase in the surroundings. 
                 In fact, much of biology involves this very trade-off.
-    
+                
+                <h4>Entropy</h4>
+                What sort of chemical processes have positive \(\Delta S\)?
+
+                In general, going from solid to liquid or liquid to gas has an increase in entropy. 
+                Creating more molecules from a complex one has positive entropy. 
+
+
                 <h3>Energy</h3>
                 <h4>Forms of Energy</h4>
                 Energy can take different forms. The two main categories are Kinetic and Potential energy. 
@@ -194,7 +201,7 @@ plt.show()</pre>
                 $$F=\frac{1}{4\pi D\varepsilon_0}\frac{q_1q_2}{r^2}$$
                 where F is the force, D is the dielectric constant for the medium, \(\varepsilon_0\) is the vacuum permittivity (a constant), \(q_i\) is the charge of particle i, and r is the distance between the two charged particles. 
                 In this form of Coulomb's Law, a negative value for F means an attractive force and a positive F means a repulsive force. 
-    
+                
                 <img src="Coulomb.png" alt="Coulomb's Law" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
@@ -226,13 +233,22 @@ axes[1].set_ylabel('U(r) (J)')
 plt.show()</pre>
                 </code>
 
+                <h5>Dielectric constant</h5>
+
+                
+                The values it can take are 
+                $$D \geq 1$$
+                In a vacuum, D=1. In other mediums, D>1 which makes the electrostatic force weaker. 
+                In water, \(D_w\approx 80\) which significantly weakens the force. Since much of biology occurs in aqueous environments, this is important to consider. 
+                In the interior of proteins, the dieletric constant is much closer to 1, meaning electrostatic interactions on the inside of proteins are stronger than on the outside surface, everything else being equal. 
+
+
                 <h4>Morse Potential</h4>
-                The harmonic oscillator/Hooke's law model is treating a molecule as if it were two nuclei connected by a spring in a classical sense. The potential energy is 
-                $$U=\frac{1}{2}k(r-r_e)^2$$
-                where U is your potential energy of the spring, k is your spring constant, r is the distance between the atoms and \(r_e\) is the equilibrium bond distance. So this energy function looks like a parabola with a minimum at \(r=r_e\).
-    <br><br>
-    
-                This model is pretty decent at describing behavior close to the equilibrium bond distance, but as r gets further away from \(r_e\), we need a better model. This is where the Morse potential comes in. This is an improved version which takes into account things like nuclear-nuclear repulsion from Pauli's exclusion principle and bond dissociation. When r is too small, the Morse potential jumps in potential energy quicker than with a simple Hooke's law approximation. Bonds can't stretch infinitely; bonds break if separation grows too large. The Morse potential takes this into account by having U asymptotically approach a value in the limit as r goes to infinity instead of continuing to increase quadratically. The limit as r approaches infinity is your bond dissociation energy.
+                The harmonic oscillator/Hooke's law model is treating a molecule as if it were two nuclei connected by a spring in a classical sense. <br><br>
+                
+                This model is pretty decent at describing behavior close to the equilibrium bond distance, but as r gets further away from \(r_e\), we need a better model. 
+                
+                This is where the Morse potential comes in. This is an improved version which takes into account things like nuclear-nuclear repulsion from Pauli's exclusion principle and bond dissociation. When r is too small, the Morse potential jumps in potential energy quicker than with a simple Hooke's law approximation. Bonds can't stretch infinitely; bonds break if separation grows too large. The Morse potential takes this into account by having U asymptotically approach a value in the limit as r goes to infinity instead of continuing to increase quadratically. The limit as r approaches infinity is your bond dissociation energy.
     The equation for the morse potential is given by 
     $$U(r)=D_e (1-e^{-a(r-r_e)})^2-D_e$$
     where \(D_e\) is related to the dissociation energy. 
@@ -451,11 +467,72 @@ plt.colorbar()
 plt.show()</pre>
                 </code>
 
+
+                <h4>Adiabatic Process</h4>
+
+                In an adiabatic process, the PV curve looks similar to an isotherm, except it is steeper. An adiabatic expansion will decrease the temperature, doing work to expand the container. An adiabatic compression will increase the temperature. 
+                No heat is exchanged during this process; thus, the change in energy is equivalent to the work.
+
+                <img src="AdiabaticProcess.png" alt="Isochoric Process" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+def ideal_gas_temp(V,p,n):
+    # PV=nRT
+    R = 8.314
+    return round(V*p/n/R*1000) # for kPa
+
+def ideal_gas(V,T,n):
+    # PV=nRT
+    R = 8.314
+    return n*R*T/V/1000 # for kPa
+
+def adiabatic_line(V):
+    return 1/(V**(5/3))
+
+x_values = np.linspace(1,2.5,100)
+y_values = [adiabatic_line(i) for i in x_values]
+n = 0.25
+T1 = ideal_gas_temp(x_values[0],y_values[0],n)
+T2 = ideal_gas_temp(x_values[-1],y_values[-1],n)
+print(T1)
+fig = plt.figure()
+
+plt.ylim([0,2])
+plt.xlim([0,4])
+
+plt.scatter(x_values,
+            y_values,
+            linewidth=.5,
+            cmap='coolwarm',
+            c=[ideal_gas_temp(x_values[i],
+                                y_values[i],n) for i in range(len(x_values))])
+plt.plot(x_values,
+            [ideal_gas(x,T1,n) for x in x_values],linewidth=2,color='tab:blue')
+plt.plot(x_values,
+            [ideal_gas(x,T2,n) for x in x_values],linewidth=2,color='gold')
+
+plt.ylabel('P (kPa)')
+
+plt.title(f"Adiabatic Curve (n={n})")
+plt.xlabel('V (L)')
+plt.annotate(f'$T_i$={ideal_gas_temp(x_values[0],y_values[0],n)}K',
+                (x_values[0]+0.1,y_values[0]+0.1))
+plt.annotate(f'$T_f$={ideal_gas_temp(x_values[-1],y_values[-1],n)}K',
+                (x_values[-1]+0.1,y_values[-1]-0.1))
+plt.legend(['Adiabatic Process','Isotherm T=481K','Isotherm T=261K'])
+plt.colorbar()
+plt.show()</pre>
+                </code>
+
+                <h5>Adiabatic Free Expansion</h5>
+                In adiabatic free expansion, the gas is expanding against a vacuum. Since there is no exterior pressure that it must fight while the container expands, the work is 0 as well. This also means no change in internal energy. 
+                The process is irreversible, however, and has a positive entropy change despite the lack of heat. This is an example of the Clausius Inequality which we will see next chapter.
+
 <h4>Work: Area under the Curve</h4>
 
 Because work and heat are inexact differentials, two paths that have the same start and end states will not necessarily have the same heat or work. 
 This is a benefit of using PV curves, as the work can easily be calculated from finding the area under the curve. The figure below is an example of two paths that have different amount of work extracted. 
-
+When going from left to right, the area under the curve is the work <b>done by</b> the system. When going from right to left, the area udner the curve is the work <b>done to</b> the system.
 
 <img src="PVPathDependence.png" alt="Isothermal Isochoric Isobaric Processes" style="margin:auto; display: block;  width:clamp(400px,60vw, 1000px)"/>
 Python code:
@@ -522,7 +599,32 @@ plt.tight_layout()
 plt.show()</pre>
 </code>
 
+                However, it is important that not all paths are possible. The isothermal process is the most efficient going both ways.
+                <ul>
+                    <li>The work done by the system in an isothermal process is the <b>maximum</b> work that can <b>extracted</b> going from the initial state to the final state. Paths going from left to right must go below this curve.</li>
+                    <li>The work done to the system in an isothermal process is the <b>minimum</b> work that can <b>inputted</b> to go from the initial state to the final state. Paths going from right to left must go above this curve.</li>
+                </ul>
+
                 <h3>Heat Capacity</h3>
+
+                <h2>Common Chemistry Equations</h2>
+
+                <h3>Gibbs Free Energy</h3>
+
+                Gibbs free energy is a common quantity to work with in Chemistry instead of energy, as it takes into account entropy. 
+                The common way that Gibbs Free enrgy is introduced in general chemistry is through the equations:
+
+                $$\Delta G^0 = \Delta H - T\Delta S$$
+
+                We can relate the Gibbs Free Energy to the equilibrium constant:
+
+                $$\Delta G^0 = -RT\ln(K_eq)$$
+
+                What is the standard state? We define it as having all the chemical species being 1M in concentration (except water). 
+                Even though this may not be a realistic scenario, we need some reference point to capture the inherent nature of the reaction. 
+                We can then adjust that value to take into account the actual concentrations in order to give us the real change in Gibbs free energy, \(\Delta G\).
+
+                $$\Delta G = \Delta G^0 + RT\ln(Q)$$
 
                 </div>
                 

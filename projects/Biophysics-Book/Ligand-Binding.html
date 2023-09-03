@@ -104,8 +104,21 @@
 
                 Since the receptor affinity is an important biochemical quantity, we can measure it via Schartchard plots
 
-                $$\frac{[L]_{\text{bound}}}{[L]}j=-\frac{1}{K_D}[L]_{\text{bound}}+\frac{[P]_{\text{total}}}{K_D}$$
+                $$\frac{[L]_{\text{bound}}}{[L]}=-\frac{1}{K_D}[L]_{\text{bound}}+\frac{[P]_{\text{total}}}{K_D}$$
 
+                As you add more ligand into the system, \([L]_{\text{bound}}\) increases, not all of the ligand added will be bound. 
+                In fact, what you notice is that the marginal percentage of the added ligand that binds goes down. 
+ So what the negative slope kind of means is that as \([L]_{\text{bound}}\) increases, you will need to add even more ligand than before to get the same increase in \([L]_{\text{bound}}\).
+<br><br>
+ Perhaps an easier way to visualize it is to look at the regular binding isotherm graph. Take any point and note its y-value. For example, \([L]=K_D\), you'll see the the fraction bound is 1/2. If you had twice the amount of ligand in the solution, so that now \([L]=2\times K_D\), your fraction (of protein) bound is not 1, rather it is less. So you can see from the hyperbolic shape of the graph that for the same marginal amount of ligand being added, your change in the fraction of proteins bound is less positive as [L] gets larger, asymptotically approaching f=1. 
+ 
+ \([P\cdot L]=[L]_{\text{bound}}\)for the specific case, so you can also think of it in terms of  not doubling when you go from 
+ \([L]=K_D\) to \([L]=2K_D\). So, as [L] goes to infinity, \([L]_{\text{bound}}\) approaches a finite value, which is \([P_{\text{total}}]\), so mathematically when 
+\([L]_{\text{bound}}\)  is at its highest value (most right on x axis for Scatchard), \(\frac{[L]_{\text{bound}}}{[L]_{\text{free}}}\) would be a finite number over infinity, or zero, where \([L]_{\text{free}}\approx [L]\)
+  when \([L]_{\text{free}}\gg [L]_{\text{bound}} \)
+<br><br>
+  To somewhat draw a parallel to a similar concept from general chemistry is percent ionization in weak acids. As you increase the concentration of your weak acid in a solution, the percent that is in the dissociated state will go down and the ratio
+  \([A^{-}]/[HA]\)will go down. So at a 100mM concentration of weak acid, you will have a higher [A-] than you would at 1mM, BUT the ratio of \(\frac{[A-]}{[HA]+[A-]}\) or \([A^{-}]/[HA_{total}]\) is smaller in the 100mM solution. You get diminishing returns.
 
 
             </div>
