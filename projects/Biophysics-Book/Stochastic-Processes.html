@@ -332,6 +332,31 @@ plt.show()</pre>
     
                 A segment of Brownian motion is normally distributed with a variance equal to the time between the start and end points with mean 0. 
                 
+                <h4>Simulating Brownian Motion</h4>
+                How do we numerically simulate Brownian motion? 
+                <br>
+                Recall in our definition of Brownian motion that we have independent increments and know how increments are distributed. We can use these two facts to easily simulate Browniam motion. 
+                We will later introduce the Euler-Maruyama method, which will be more general and complete. 
+                A brief scheme for just basic Brownian motion is 
+
+                <ol>
+                    <li>Pick the time length, T</li>
+                    <li>Choose N, the number of intervals you want to divide up T into. 
+                        Larger values of N will be better approximations, but more computationally expensive. 
+                        The resulting intervals will be of length \(dT=T/N\)
+                    </li>
+                    <li>Have a variable, B, which will be the running sum of the increments</li>
+                    <li>Since \((B_t-B_s)\sim N(0,t-s)\), the change in between intervals will be normally distributed with variance T/N. 
+                        Many computer programs have ways of sampling normal distributions. 
+                        A useful relationship for sampling from a standard normal distribution is \(N(0,a)\sim \sqrt{a}N(0,1)\)
+                    </li>
+                    <li>For each N, we will have the mathematical relationship,
+                        \(B_{n}=B_{n-1}+(B_{n}-B_{n-1})\), which while trivial, is actually useful algorithmically. Thus, we end up with the algorithm,
+                        \(B_{n}=B_{n-1}+\sqrt{dT}N(0,1)\)
+                    </li>
+                </ol>
+
+                <h5>Example Basic Brownian Motion Simulation</h5>
                 <img src="BrownianMotionSimulation.gif" alt="Brownian Motion Simulation Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
@@ -388,10 +413,12 @@ plt.show()          </pre>
                 For basic Brownian motion, we can now write this as
 
                 $$dX_t=dW$$
-
+                <h5>Simulating Brownian Motion with Drift</h5>
                 Let us look at the continuous version of a random walk with drift:
 
                 $$dX_t=2dt+dW$$
+                In order to add a drift, we can calculate the drift amount at each time point in our simulation and then add it scaled by dT. 
+                
 
                 <img src="BrownianMotionDriftSimulation.gif" alt="Brownian Motion with Drift Simulation Gif" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
@@ -438,6 +465,79 @@ anim = FuncAnimation(fig, animate, frames=100, interval=100)
 anim.save('BrownianMotionDriftSimulation.gif')
 plt.show()</pre>
                 </code>
+
+                <h4>Euler-Maruyama Method</h4>
+                Now that we've learned how to formulate a stochastic differential equation (SDE), we can simulate a realization of it using the Euler-Maruyama method.
+                Let X be a stochastic process with the dynamics
+                $$dX_t=\mu(x,t)dt+\sigma(x,t)dW$$
+                
+                We can then approximate X through the following steps
+                <ol>
+                    <li>Pick the time length, T</li>
+                    <li>Choose N, the number of intervals you want to divide up T into. 
+                        Larger values of N will be better approximations, but more computationally expensive. 
+                        The resulting intervals will be of length \(\Delta T=T/N\)
+                    </li>
+                    
+                    <li>Let \(X_i\) be our approximation of a realization of X at time \(t=i\Delta T\). We will have a variable, X, which will be the running sum of the increments</li>
+                    <li>Since \((W_t-W_s)\sim N(0,t-s)\), the change in between intervals for W will be normally distributed with variance T/N. 
+                        Many computer programs have ways of sampling normal distributions. 
+                        A useful relationship for sampling from a standard normal distribution is \(N(0,a)\sim \sqrt{a}N(0,1)\)
+                    </li>
+                    <li>Calculate the drift and volatility coefficients at the current point
+                        <ul>
+                            <li>\(\mu_n=\mu(X_n,t=n\Delta T)\)</li>
+                            <li>\(\sigma_n=\sigma(X_n,t=n\Delta T)\)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Our approximation will be
+                        \(X_{n+1}=X_n+\mu_n \Delta T + \sigma_n \sqrt{\Delta T} N(0,1)\)
+                    </li>
+                </ol>
+
+                <h5>Simulating a Bessel Process</h5>
+
+                Let us consider a Bessel process, Y, given by 
+                $$dY_t=\frac{1}{Y_t}dt+dW_t$$
+
+                <img src="BesselProcess.png" alt="Bessel Process Simulation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(0)
+# Parameters
+T = 10.0            # Total time
+N = 10000           # Number of time steps
+dt = T / N         # Time step size
+plt.figure(figsize=(9, 6))
+for j in range(3):
+    # Initialize arrays
+    t = np.linspace(0, T, N+1)
+    W = np.zeros(N+1)
+    Y = np.zeros(N+1)
+    Y[0]=1
+
+    # Simulate the Bessel Process
+    for i in range(1, N+1):
+        dW = np.random.normal(0, np.sqrt(dt))  # Wiener process increment
+        mu = 1/Y[i-1] # Evaluate mu 
+        sigma = 1 # Evaluate sigma (constant in this example)
+        # Update the process
+        Y[i] = Y[i-1] + mu * dt + sigma * dW
+        W[i] = W[i-1] + dW
+
+    # Plot Result
+
+    plt.plot(t, Y,linewidth=1)
+    plt.title('Besell Process $dY_t=1/(Y_t)dt+dW_t$')
+    plt.xlabel('Time (s)')
+    plt.ylabel('$Y_t$')
+    plt.ylim(-1,9)
+    plt.grid(True)
+plt.legend([1,2,3])
+plt.show()</pre>
+                </code>
+
 
                 <h4>Ito's Lemma</h4>
                 A function of a stochastic variable is also a stochastic variable. But how do we describe its dynamics? 
@@ -510,6 +610,8 @@ anim.save('BrownianMotionSquared.gif')
 plt.show()          </pre>
                 </code>
 
+                
+
 
                 <h3>Poisson Process</h3>
                 When we were working with discrete-time Markov chains, we had a matrix or depiction of
@@ -552,8 +654,16 @@ plt.show()          </pre>
 
                 When doing kinetics when the amount of reactants are not in the "Law of Large Numbers" regime, the Poisson process can capture that it really is a probabilistic process for whether a given reactant will undergo a reaction and that there isn't a constant rate of conversion. 
 
-                <h4>Sample Poisson Process Result</h4>
-
+                <h4>Simulating a Poisson Process</h4>
+                The exponential distribution has the very convenient property of having a simple, closed-form quantile function:
+                $$Q(p,\lambda)=\frac{-\ln(1-p)}{\lambda}$$
+                One can easily sample from an exponential distribution by generating random values on the interval [0,1) via a uniform distribution. 
+                This draw will correspond to the percentile of the draw from another distribution, which in this case will be the exponential. 
+                You can get the p'th percentile value, called a quantile, by plugging it into the inverse of the CDF function, which we will call the quantile function. 
+                The output from the quantile function will be the time between jumps for a Po(\(\lambda\)) process. 
+                <br>
+                Some libraries will have functions that let you sample from a Poisson distribution directly and handle everything under the hood. 
+                However, it is useful to understand how to do things like Inverse Transform Sampling.
                 <img src="PoissonGraph.png" alt="Poisson Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
@@ -582,13 +692,7 @@ plt.ylabel("X")
 plt.title("Poisson Process with $\lambda=1$")
 plt.show()</pre>
                 </code>
-The exponential distribution has the very convenient property of having a simple, closed-form quantile function:
-$$Q(p,\lambda)=\frac{-\ln(1-p)}{\lambda}$$
-One can easily sample from an exponential distribution by generating random values on the interval [0,1) via a uniform distribution. 
-This draw will correspond to the percentile of the draw from another distribution, which in this case will be the exponential. 
-You can get the p'th percentile value, called a quantile, by plugging it into the inverse of the CDF function, which we will call the quantile function. 
-The output from the quantile function will be the time between jumps for a Po(\(\lambda\)) process. 
-                <br><br>
+              <br><br>
                 <h3>Building Off of Poisson</h3>
                 There are a number of ways by which we can extend the Poisson process. Here are a few examples:
                 <ol>
@@ -677,7 +781,7 @@ t = np.linspace(0, T, N+1)
 
 X = np.zeros(N+1)
 
-# Simulate the jump diffusion process
+# Simulate the jump process
 for i in range(1, N+1):
     dN = np.random.poisson(lambda_ * dt)   # Poisson process increment
 
@@ -702,6 +806,12 @@ plt.show()</pre>
                 <h5>Jump Diffusion</h5>
                 Jump Processes can further be combined with Brownian motion to yield something called a <b>Jump Diffusion</b> model. 
                 This sort of model is more common in the world of finance.
+                <br><br>
+                We can further add to our Euler-Maruyama method by calculating the number of jumps in the small interval and determining the size of each jump. 
+
+                <h5>Euler-Maruyama Method for Jump Diffusion</h5>
+                
+
                 <img src="GeometricBMJumpDiffusion.png" alt="Jump Diffusion Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
