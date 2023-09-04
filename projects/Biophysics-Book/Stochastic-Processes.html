@@ -717,8 +717,19 @@ plt.show()</pre>
                 <h4>Compound Poisson Process</h4>
                 The Poisson process can be further generalized to allow for variable-sized jumps rather than just jumps of 1. 
                 This is known as a "Compound Poisson Process." 
+                <br>
+                We can write the dynamics in differential form with dJ and explain how the jumps are distributed and at what rate. 
+
     
                 <h5>Compound Poisson Process Example</h5>
+
+                Let X be a compound Poisson process with dynamics
+
+                $$dX_t=dJ_t$$
+                where the jumps, J, have parameters
+
+                \(\lambda=1\), \(J\sim N(0,1)\).
+                <br>
                 Note that the variable X is not continuous during jumps. Faint purple lines are added on the graph for visual clarity.
                 <img src="CompoundPoissonGraph.png" alt="Compound Poisson Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
@@ -759,9 +770,14 @@ plt.show()</pre>
                 <h5>Jump Process</h5>
                 We can add deterministic movement between jumps to our compound Poisson process. 
 
-
+                
                 Below is an example of exponential decay between jump events.
 
+                Let X be a jump process with dynamics
+                $$dX_t=-0.75X_tdt+dJ$$
+                where J has rate \(\lambda=0.01\) and \(J\sim N(0.15,0.2)\)
+
+ 
                 <img src="JumpProcess.png" alt="Compound Poisson Process Graph" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 Python code:
                 <code style="margin: auto; width: 50%;"><pre>
@@ -774,7 +790,7 @@ mu = -0.75         # Drift coefficient
 
 lambda_ = 0.01      # Jump frequency
 jump_mean = 0.15    # Mean jump size
-jump_std = 0.05     # Standard deviation of jump size
+jump_std = 0.04     # Standard deviation of jump size
 
 # Initialize arrays
 t = np.linspace(0, T, N+1)
@@ -876,6 +892,23 @@ plt.show()</pre>
                 <li><a href="https://www.math.uchicago.edu/~lawler/finbook.pdf">https://www.math.uchicago.edu/~lawler/finbook.pdf</a></li>
             </ol>
 
+        </div>
+
+        <div>
+            <h2>Exercises</h2>
+            <ol>
+                <li>The Ornstein-Uhlenbeck process is given by
+                    $$dX_t=-\theta X_t dt+\sigma dW_t$$
+                    Simulate it with the following parameters:
+                    <ul>
+                        <li>\(\theta=0.25\)</li>
+                        <li>T=10</li>
+                        <li>\(X_0=0\)</li>
+                        <li>\(\sigma=1\)</li>
+                    </ul>
+                </li>
+                <li></li>
+            </ol>
         </div>
 </body>
 </html>
