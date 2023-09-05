@@ -62,17 +62,49 @@
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Table-of-Contents">
                 <h1>Quantum Mechanics</h1>
-                <h3>Electron Microscopy</h3>
-                <h4>Introduction</h4>
+                <h2>Electron Microscopy</h2>
+                <h3>Introduction</h3>
                 Why do we need to use electrons to view cellular substructure? 
                 How does the energy of a photon relate?
+                <h4>Optics and Wavelength</h4>
+
+                <h5>Abbe Diffraction Limit</h5>
+                The Abbe diffraction limit states that light has a minimum resolvable distance given by
+
+                $$d=\frac{\lambda}{2n\sin(\theta)}$$
+                where d is the minimum resolvable distance, \(\lambda\) is the wavelength of light, and \(n\sin(\theta)\) is the "numerical aperture."
+                <br><br>
+                As humans are limited to the visible portion of the electromagnetic spectrum, this also limits the ability of traditional light microscopes. 
+                For a numerical aperture of 1.5 and a wavelength of 300nm, we would be limited to a minimum resolvable distance of 100nm. 
+                However, this is not sufficient for biologists interested in cellular substructure. 
+                
+                <h4>Wave-Particle Duality and De Broglie Wavelength</h4>
+                One of the important fundamental concepts in quantum mechanics is wave-particle duality. 
+                The <b>De Broglie wavelength</b> associated with matter has a wavelength given by
+                $$\lambda=\frac{h}{p}$$
+                where \(\lambda\) is the wavelength, p is the momentum, and h is Planck's constant. 
+                <h4>Moving to Electrons</h4>
+                Mathematically, when we use the values for an electron, we discover that we get a smaller wavelength than we have for light. 
+                Electrons in an electron microscope are accelerated to high velocities, giving them significant momentum and very short de Broglie wavelengths. 
+                This means that electron microscopes can achieve much higher resolution than optical microscopes because they can resolve smaller features due to their shorter wavelengths.
+
+
+
+                <h3>Electron Scattering</h3>
+
+                <h3>Types of Electron Microscopy</h3>
+                <h4>Transmission Electron Microscopy</h4>
+                <h5>Contrast Transfer Function</h5>
+                <h4>Scanning Electron Microscopy</h4>
+                <h4>Cryo-Electron Microscopy</h4>
+                
 
                 <h4>Background Math</h4>
 
                 In Quantum Mechanics, we state that a system has a defined property if the wavefunction is in an eigenstate of that property's associated operator. 
                 One example would be for a particle having a defined position. 
                 The position operator is 
-                $$\hat{x}\psi(\cdot)=x\psi*$$
+                $$\hat{x}\psi(x)=x\cdot \psi(x)$$
                 So the wavefunction that would correspond to a particle having a defined position would satisfy
                 $$x\psi(x) = k\psi(x)$$
                 where k is a scalar representing the x position of the particle. 
@@ -85,11 +117,7 @@
                 $$\hat{p}=-i\hbar\nabla$$
 
                 Taking the derivative of the Dirac delta function does not yield a scalar multiple of it (if we attempt to define it), so we can conclude that a particle with a defined position does not have a defined momentum. 
-                $$\delta'(x)=-\frac{\delta(x)}{x}\not\propto\delta(x)$$
-
-                <h4>De Broglie Wavelength</h4>
-
-
+                $$\frac{d}{dx}\delta(x)=-\frac{\delta(x)}{x}\not\propto\delta(x)$$
 
         </div>
 </body>
