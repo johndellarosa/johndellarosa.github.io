@@ -159,9 +159,91 @@ plt.show()</pre>
 <br><br>
   To somewhat draw a parallel to a similar concept from general chemistry is percent ionization in weak acids. As you increase the concentration of your weak acid in a solution, the percent that is in the dissociated state will go down and the ratio
   \([A^{-}]/[HA]\)will go down. So at a 100mM concentration of weak acid, you will have a higher [A-] than you would at 1mM, BUT the ratio of \(\frac{[A-]}{[HA]+[A-]}\) or \([A^{-}]/[HA_{total}]\) is smaller in the 100mM solution. You get diminishing returns.
+                <h3>Hill Equation</h3>
 
+                
+
+
+                <img src="HillEquation.png" alt="Hill Equation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(0)
+# Simulated data
+substrate_concentration = np.geomspace(1e-5,1e-2,20)
+
+# Hill equation function
+def hill_equation(L, Kd, n):
+    try:
+        
+        return (L**n) / (Kd + (L**n))
+    except:
+        print(f'error for {L},{Kd},{n}')
+        return -1
+
+real_Kd = 3e-8
+real_n = 3
+
+binding_saturation = np.array([hill_equation(L+np.random.normal(scale=1e-6), real_Kd, real_n) for L in substrate_concentration])
+
+# Fit the Hill equation to the data (you may use a curve-fitting library for a more accurate fit)
+from scipy.optimize import curve_fit
+params, covariance = curve_fit(hill_equation, substrate_concentration, binding_saturation, maxfev=10000)
+
+Km_fit, n_fit = params
+
+# Generate a range of substrate concentrations for the Hill curve
+x_fit = np.linspace(substrate_concentration[0], substrate_concentration[-1], 500)
+
+# Calculate the reaction rates using the fitted parameters
+y_fit = hill_equation(x_fit, Km_fit, n_fit)
+
+# Create the Hill plot
+plt.figure(figsize=(8, 6))
+plt.plot(substrate_concentration, binding_saturation, 'ro', label='Experimental Data')
+plt.plot(x_fit, y_fit, 'b-', label='Hill Equation Fit')
+plt.xlabel('Substrate Concentration (M)')
+plt.ylabel('Fraction Bound')
+plt.title('Hill Equation')
+plt.ylim(-.05,1)
+plt.legend()
+plt.grid()
+plt.show()
+                    
+</pre>
+                </code>
                 <h3>Hill Plot</h3>
 
+                While curve fitting is becoming increasingly popular, parameter determination by linear regression is still an option as it has a low technological barrier. 
+                The Hill plot linearizes the above Hill equation to the following form:
+                $$\log(\frac{\theta}{1-\theta})=n\log[L]-\log[K_d]$$
+                This allows for determination of n by the slope and \(K_d\) by the constant.
+                
+
+                <img src="HillPlot.png" alt="Hill Equation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+theta_ratio = binding_saturation/(1-binding_saturation)
+plt.figure(figsize=(8, 6))
+plt.plot(np.log10(substrate_concentration), np.log10(theta_ratio), 'ro', label='Experimental Data')
+#plt.plot(x_fit, y_fit, 'b-', label='Hill Equation Fit')
+plt.xlabel(r'$\log([L])$')
+plt.ylabel(r'$\log(\theta/(1-\theta))$')
+plt.title('Hill Plot')
+plt.axhline(0, color='black', linewidth=0.7)
+model = sm.OLS(np.log10(theta_ratio),
+                sm.add_constant(np.log10(substrate_concentration)))
+results = model.fit()
+
+plt.plot(np.log10(substrate_concentration),
+            results.predict(sm.add_constant(np.log10(substrate_concentration))),
+            color='orange')
+plt.legend(['Data',
+            f'OLS: y={results.params[1]}x+{results.params[0]}'])
+#plt.legend()
+plt.grid()
+plt.show()       
+</pre>
+                </code>
                 <h3>Cooperativity and Hill Coefficient</h3>
             </div>
 
