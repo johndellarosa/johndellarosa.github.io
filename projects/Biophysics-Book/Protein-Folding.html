@@ -65,7 +65,7 @@
                 <h2>Introduction</h2>
                 <h3>Prerequisites</h3>
                 <ul>
-                    <li>This chapter will not contain much math</li>
+                    <li>This chapter will not contain much math. However, an understanding of optimization will be useful.</li>
                     <li>Some basic thermodynamics knowledge will be assumed. You should understand the basics of:
                         <ul>
                             <li>What entropy and enthalpy are, at least at a conceptual level</li>
@@ -178,11 +178,26 @@
                 <h3>Quartenary Structure</h3>
                 Multiple tertiary structures can come together to form a quarternary structure
 
-                <h2>Theoretical Models</h2>
-                <h3>Anfinsen's Experiment</h3>
-                <h3>Levinthal's Paradox</h3>
-                <h3>Folding Tunnel</h3>
+                <h2>Folding Models</h2>
+                <h3>Anfinsen's Thermodynamic Hypothesis</h3>
+                The thermodynamic hypothesis states that the native structure of a protein is determined just by its sequence. 
+                It may be surprising that all the thermodynamic directions for complicated folding are encoded in the sequence. 
+                This requires stability, uniqueness, and kinetic accessibility. 
+                
+                In general, this holds well, although notable counterexamples exist for each requirement.
 
+                <h3>Levinthal's Paradox</h3>
+                We saw that each residue had phi, psi, and omega angles that have energetically preferred values. And in a protein, there can easily be over a hundred residues, who can interact with each other. 
+                Given how many parameters there are to optimize, how are proteins able to fold as quickly as they do? Anfinsen's thermodynamic hypothesis states that for a lot of proteins, the primary structure is sufficient to yield a unique 3D structure without outside assistance. 
+
+
+                This is essentially Levinthal's paradox, that proteins are observed to be able to fold at a much faster speed than they would through random sampling of possible confirmations.
+                <h3>Hierarchical Folding</h3>
+                Hierarchical folding model attempts ot address part of Levinthal's paradox by stating that the search space is narrowed down significantly by proteins first folding into secondary structures and then tertiary structures. 
+                A related concept is the <b>hydrophobic collapse process</b>.
+                <h3>Folding Tunnel</h3>
+                The folding tunnel hypothesis frames protein folding as an optimization problem for free energy with a search space that has a steep descent with the global minimum corresponding to the native state, similar to to a funnel shape. 
+                The folding funnel permits some local minima in the landscape which correspond to misfolded states.
 
                 <h2>Assistance in Folding</h2>
                 <h3>Heat Shock Protein</h3>
