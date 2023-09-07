@@ -15,7 +15,7 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Biophysics E-book</title>
+            <title>Electrochemistry</title>
     
         <!-- Meta tags -->
         
@@ -63,12 +63,48 @@
             <div id="Table-of-Contents">
                 <h1>Electrochemistry</h1>
                 <h2>Introduction</h2>
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>The basic thermodynamics chapter will be useful.</li>
+                </ul>
+                
+                <h3>Motivation</h3>
+                Since electromagnetism is the basis for chemistry, it is relevant for biochemistry. 
+                Electrochemistry is particularly relevant for the following areas of biology:
+                <ul>
+                    <li>Cell membranes, ion channels</li>
+                    <li>Photosynthesis</li>
+                    <li>Electron transport chain</li>
+                    <li>Redox signalling</li>
+                    <li>Energy storage</li>
+                </ul>
+
+
+                <h3>Contents</h3>
+                This chapter will introduce the basic units and concepts of electrostatics. 
+                The basics of electrochemistry, such as half-reactions and the Nernst equation will be covered. 
+                Finally, more advanced models will be introduced.
+                
+
                 <h2>Basic Electrochemistry</h2>
                 <h3>Voltage, Current, and Electric Field</h3>
-                <h4>Voltage</h4>
-                <h4>Current</h4>
                 <h4>Electric Field</h4>
-                
+                Charged objects exert an electric field, which in turn applies a force to other charged objects. 
+                The force felt by the charged object is proportional to its charge, similar to how an object in a gravitational field feels a force proportional to its mass. 
+                <h4>Electric Potential</h4>
+                In the analogy to gravity, electric potential would be the gravitational potential energy. One difference from gravity is that we observe positive and negative charges, while we only observe positive values for mass. 
+                Positive charges seek lower/more negative electric potential while negative charges seek more positive potential.
+
+                <h4>Voltage</h4>
+                Voltage is the difference in electric potential between two points. It shares the same units as electric potential. 
+
+                <h4>Current</h4>
+                Current is the movement of charged particles. In electricity, this is electrons. In biological systems, this is often ions, both positive and negative. 
+                Current is measured in terms of charge per unit time. 
+                <br><br>
+                Current direction is defined in terms of where positive charges are moving, or the opposite direction of negative charge movement. 
+                This is mainly for historical reasons, but is important to know for the mathematics. 
+
                 <h3>Oxidation and Reduction</h3>
                 <ul>
                     <li>Oxidation is the process in which a species loses electrons. It is associated with an increase in oxidation state or a loss of negative charge.
@@ -82,14 +118,69 @@
                 These half-reactions will have electrons as either a reactant (reduction) or product (oxidation) with an associated voltage for the half-reaction. 
                 <br>
                 An example oxidation half-reaction is:
-                $$Ni_{(s)}\rightarrow Ni_{(aq)}^{2+}+2e^-$$
-                with an associated potential \(E^0:+0.23\)
+                $$\text{Ni}_{(s)}\rightarrow \text{Ni}_{(aq)}^{2+}+2e^-$$
+                with an associated potential \(E^0:+0.23V\)
                 <br><br>
                 An example of a reduction half-reaction is:
-                $$Co^{3+}+e^{-}\rightarrow Co^{2+}$$
-                with an associated potential \(E^0:+1.82\)
+                $$\text{Co}^{3+}+e^{-}\rightarrow \text{Co}^{2+}$$
+                with an associated potential \(E^0:+1.82V\)
                 <br><br>
+                When pairing an oxidation half-reaction with a reduction half-reaction, you must multiply the equations such that the number of electrons cancel out. 
+                If we used the above 2 reactions as an example:
+                $$\text{Ni}_{(s)}\rightarrow \text{Ni}_{(aq)}^{2+}+2e^-$$
+                $$\text{Co}^{3+}+e^{-}\rightarrow \text{Co}^{2+}$$
+                The second reaction would have to be multiplied by 2:
+                $$2\text{Co}^{3+}+2e^{-}\rightarrow 2\text{Co}^{2+}$$
+                <h4>An Aside on the Scaling of Electric potential</h4>
+                When we multiply the coefficients by a (non-zero) C for a reaction, we have the following properties:
+                <ol>
+                    <li>\(K_{eq}\rightarrow (K_{eq})^c\)</li>
+                    <li>\(\Delta G^0 \rightarrow c\times \Delta G^0\)</li>
+                </ol> 
+
+                But what about for standard electric potential? 
+                It only changes based on the sign of C. If C is negative, then the standard electric potential switches signs. 
+                This allows us to turn an oxidation half-reaction into a reduction half-reaction and visa versa. 
+                The magnitude of C does not affect the standard potential. 
+                This may be surprising, but voltage is a measure of energy per charge. 
+                If you multiply the coefficients by 2, the amount of energy produced doubles, but so does the number of electrons transferred. 
+                <br><br>
+                HOWEVER, when you are combing two oxidation half reactions to make a third oxidation half-reaction (and similarly for reduction), the rule is not so simple. 
+                The electric potential now becomes the average of the standard potentials, weighted by the number of electrons. 
+
+                <a href="https://pubs.acs.org/doi/pdf/10.1021/ed053p453">A good explanation of Hess' Law with respect to potentials</a>
+
+                <h4>Returning to the Example</h4>
+                Thus, the half-reaction 
+                $$2\text{Co}^{3+}+2e^{-}\rightarrow 2\text{Co}^{2+}$$
+                has a standard potential of \(E^0:+1.82V\).
+
+                <br><br>
+                When combining the two half-reactions, the standard potential is simply the sum of the two potentials. 
+                $$2\text{Co}^{3+}+\text{Ni}_{(s)}\rightarrow 2\text{Co}^{2+}+\text{Ni}^{2+}_{(aq)}$$
+                Has a standard potential of 1.82V+0.23V=2.05V
+
+                <br>
+
+                <h3>Biological Standard Reduction Potentials</h3>
+                Given that standard reduction potentials assume 1M concentrations, biologists instead use a modification that takes into account a more realistic pH for biological systems. 
+                This adjustment is made by reducing the standard reduction potential by 0.413V. 
+                The effect of concentration deviations can be given by the Nernst Equation.
+
                 <h3>Nernst Equation</h3>
+                Similar to how Gibbs free energy can be related to the equilibrium constant, 
+                electric potential can be related to both.
+
+                $$\Delta G^0 = -nFE^0$$
+                where G is Gibbs free energy, n is the moles of electrons transferred, F is Faraday's constant, and E is the potential. 
+                Faraday's constant is the amount of charge per mole of electron. Since electric potential is like energy per charge, multiplying the two yields the amount of energy change. 
+
+                $$E^0=\frac{RT}{nF}\ln K$$
+
+                The Nernst Equation is the relationship between standard reduction potential and the actual reduction potential due to the effects of concentration. 
+
+                $$E=E^0-\frac{RT}{nF}\ln(Q)$$
+
                 <h4>Goldman Equation</h4>
 
                 The Goldman Equation further improves upon the Nernst equaiton by allowing for multiple ion species and their permeabilities. 
@@ -104,7 +195,7 @@
                 <h4>Galves-Locherbach model</h4>
                 <h5>Stochastic Chains with Memory</h5>
                 In the Markov chains, the only information in the filtration that you needed to condition on was the present state. 
-                However, 
+
             </div>
 
         </div>
