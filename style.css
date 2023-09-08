@@ -129,7 +129,7 @@
             background-color: rgb(20, 20, 20);
             padding: 10px;
             object-position: center;
-            justify-content: space-evenly;
+            /* justify-content: space-evenly; */
             
             /* width: 100%; */
             /* display: inline-block; */
