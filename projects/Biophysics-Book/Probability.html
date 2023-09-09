@@ -120,6 +120,42 @@
                 $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
                 The Inclusion-Exclussion Principle gives a relationship between two events, the probability of the union, and the probability of the intersection. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
                 If A and B are mutually exclusive, then \(P(A\cap B)=0\). This can be thought of as the analogue of addition in probability.
+                
+                <img src="InclusionExclusionPrinciple.png" alt="Inclusion-Exclusion Principle" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
+# Set up the figure
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Create a Venn diagram
+# |A| = 30, |B| = 25, |A ∩ B| = 10
+venn = venn2(subsets=(20, 15, 10), set_labels=('A', 'B'))
+
+# Label the Venn diagram with sizes
+venn.get_label_by_id('10').set_text('20')  # A - A∩B
+venn.get_label_by_id('01').set_text('15')  # B - A∩B
+venn.get_label_by_id('11').set_text('10')  # A∩B
+
+# Highlight the distinct parts of each set
+venn.get_patch_by_id('10').set_color('blue')
+venn.get_patch_by_id('01').set_color('red')
+venn.get_patch_by_id('11').set_color('purple')  # Overlapping part
+
+# Add a title and a textual representation of the Inclusion-Exclusion formula
+ax.set_title("Inclusion-Exclusion Principle for Two Sets")
+formula_text = "|A ∪ B| = |A| + |B| - |A ∩ B| \n45 = 30 + 25 - 10"
+ax.text(0.5, -0.2, formula_text, ha='center',
+ va='center', transform=ax.transAxes, fontsize=12)
+
+plt.tight_layout()
+plt.show()
+                    
+</pre>
+                </code>
+                
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
                 <br>
@@ -377,7 +413,8 @@ fig = plt.figure()
 ax1 = fig.add_subplot(111, projection='3d')
 fig.set_size_inches(4,4)
 
-fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
+fig.subplots_adjust(left=0, bottom=0,
+ right=1, top=1, wspace=None, hspace=None)
 # Generate a 2D Gaussian distribution
 x, y = np.linspace(-5, 5, 100), np.linspace(-5, 5, 100)
 X, Y = np.meshgrid(x, y)
@@ -421,6 +458,7 @@ anim.save('basic_animation.gif', fps=30,
                 $$F(x_1,\dots,x_n)=\prod_{1 \leq i \leq n}F_{X_i}(x_i)$$
 
                 
+                
                 <h4>Multivariate density</h4>
                 We can define the density of a multivariate distribution as 
 
@@ -431,6 +469,72 @@ anim.save('basic_animation.gif', fps=30,
 
                 Using the marginal densities, we can arrive at an alternative definition of independence. Two random variables are independent if
                 $$f(x_1,x_2)=f_{X_1}(x_1)f_{X_2}(x_2)\forall(x_1,x_2)$$
+
+                <img src="MarginalDistributions.png" alt="Joint Distribution and Marginal Distributions" style="margin:auto; display: block;  width:clamp(300px,60vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+sns.set_theme()
+# Set a random seed for reproducibility
+np.random.seed(1)
+
+# Generate a random joint distribution for P(X, Y)
+joint_dist = np.random.rand(4, 4)
+joint_dist /= joint_dist.sum()
+
+# Compute the marginal distributions
+marginal_X = joint_dist.sum(axis=1)
+marginal_Y = joint_dist.sum(axis=0)
+
+# Plotting
+fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+
+# Joint distribution heatmap
+#cax = axs[0, 0].matshow(joint_dist, cmap='Blues')
+yticklabels = [f'{i:.1f}' for i in np.arange(0.5, 3.5, 1)]
+heatmap = sns.heatmap(joint_dist,ax=axs[0,0],
+    annot=True,square=True,cmap='Blues',
+                        linewidths=1,linecolor='black')
+
+#fig.colorbar(cax, ax=axs[0, 0])
+
+
+axs[0, 0].set_title("Joint Distribution P(X, Y)")
+axs[0, 0].set_xticks([0.5,1.5,2.5,3.5])
+axs[0, 0].set_yticks([0.5,1.5,2.5,3.5])
+axs[0, 0].set_xticklabels([1, 2, 3, 4])
+axs[0, 0].set_yticklabels([1, 2, 3, 4])
+axs[0, 0].set_xlabel("Y")
+axs[0, 0].set_ylabel("X")
+
+
+
+# Marginal distribution for X
+#axs[1, 0].bar([1, 2, 3, 4], marginal_X,
+ color='tab:red',linewidth=1)
+sns.barplot(x=[1,2,3,4],y=marginal_X,ax=axs[0,1])
+axs[0, 1].set_title("Marginal Distribution $P_X(x)$")
+axs[0, 1].set_xlabel("X")
+axs[0, 1].set_ylabel("Probability")
+
+# Marginal distribution for Y
+#axs[0, 1].bar([1, 2, 3, 4], marginal_Y, color='tab:green')
+sns.barplot(x=[1,2,3,4],y=marginal_Y,ax=axs[1,0])
+axs[1, 0].set_title("Marginal Distribution $P_Y(y)$")
+axs[1,0].set_xlabel("Y")
+axs[1,0].set_ylabel("Probability")
+
+# Hide the top-right subplot
+axs[1, 1].axis('off')
+
+plt.tight_layout()
+plt.show()
+                          
+</pre>
+                </code>
+
+
                 <h4>Returning to Bayes - Conditional Distribution and Density</h4>
                 Let us define the conditional distribution of \(X_1\) given \(X_2=x_2\)
 
@@ -461,19 +565,28 @@ plt.scatter(hours_studied, grades, alpha=0.5, label="All students")
 mask = (4.9 <= hours_studied) & (hours_studied <= 5.1)
 highlighted_hours = hours_studied[mask]
 highlighted_grades = grades[mask]
-plt.scatter(highlighted_hours, highlighted_grades, color='green', label="Students who studied ~5 hours")
+plt.scatter(highlighted_hours,
+ highlighted_grades, color='green',
+  label="Students who studied ~5 hours")
 
 # 4. Plot the conditional distribution of grades for these students
-plt.hist(highlighted_grades, bins=20, orientation="horizontal", color='green', alpha=0.3, label="Grade distribution for ~5 hours of study")
+plt.hist(highlighted_grades, bins=20,
+ orientation="horizontal", color='green', alpha=0.3,
+  label="Grade distribution for ~5 hours of study")
 
 # 3. Highlight data points of students who studied close to 3 hours
 mask = (2.9 <= hours_studied) & (hours_studied <= 3.1)
 highlighted_hours = hours_studied[mask]
 highlighted_grades = grades[mask]
-plt.scatter(highlighted_hours, highlighted_grades, color='red', label="Students who studied ~3 hours")
+plt.scatter(highlighted_hours,
+ highlighted_grades, color='red', 
+ label="Students who studied ~3 hours")
 
 # 4. Plot the conditional distribution of grades for these students
-plt.hist(highlighted_grades, bins=20, orientation="horizontal", color='red', alpha=0.3, label="Grade distribution for ~3 hours of study")
+plt.hist(highlighted_grades,
+ bins=20, orientation="horizontal",
+  color='red', alpha=0.3,
+   label="Grade distribution for ~3 hours of study")
 
 
 

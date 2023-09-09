@@ -99,6 +99,93 @@
             </li><li>
                 Hypotonic Solution: A lower concentration of solute outside the cell causes water to move in, potentially causing the cell to burst or 'lyse'. In plant cells, this can lead to 'turgor pressure' which keeps them rigid.
             </li></ul>
+
+            <img src="OsmosisSimulation.gif" alt="Joint Distribution and Marginal Distributions" style="margin:auto; display: block;  width:clamp(300px,60vw, 800px)"/>
+            Python code:
+            <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.animation as animation
+
+def draw_container(ax, x, y, left_x,right_x,offset, label_blue, label_red):
+    ax.plot([left_x, left_x, right_x, right_x, left_x], [y, y+5, y+5, y, y], 'k-')
+    ax.text(left_x+offset, y-0.5,
+     f'Water: {label_blue} | Solute: {label_red}', ha='center')
+
+def draw_solute(ax, x, y,left_x,right_x, n_points, color,size=3):
+    x_points = np.random.uniform(left_x, right_x, n_points)
+    y_points = np.random.uniform(y+0.5, y+4.5, n_points)
+    ax.scatter(x_points, y_points, c=color, s=size)
+
+def update(frame, membrane,
+ left_particles_blue, right_particles_blue,
+  left_particles_red, right_particles_red):
+    global ax
+    ax.clear()
+    ax.axis('equal')
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 6)
+    ax.axis('off')
+    ax.set_title("Osmosis Simulation")
+    # Move membrane
+    membrane_position = 3 + 0.05 * frame
+    ax.plot([membrane_position, membrane_position], [0.5, 5.5], 'k-', linewidth=2)
+
+    # Recalculate number of particles for blue solute
+    total_particles_blue = left_particles_blue + right_particles_blue
+    left_area_blue = membrane_position - 1
+    right_area_blue = 10 - membrane_position
+    total_area_blue = left_area_blue + right_area_blue
+
+    new_left_particles_blue = int(total_particles_blue * (left_area_blue / total_area_blue))
+    new_right_particles_blue = total_particles_blue - new_left_particles_blue
+
+    # Draw everything
+    draw_container(ax, 1, 0.5,0.5,membrane_position,2,
+     new_left_particles_blue, left_particles_red)
+    draw_container(ax, 5, 0.5, membrane_position,10,3,
+     new_right_particles_blue, right_particles_red)
+    draw_solute(ax, 1, 0.5,0.5,membrane_position,
+     new_left_particles_blue, 'blue')
+    draw_solute(ax, 1, 0.5,0.5,membrane_position,
+     left_particles_red, 'red',size=9)
+    draw_solute(ax, 5, 0.5,membrane_position,10,
+     new_right_particles_blue, 'blue')
+    draw_solute(ax, 5, 0.5,membrane_position,10,
+     right_particles_red, 'red',size=9)
+
+    left_particles_blue, right_particles_blue = new_left_particles_blue, new_right_particles_blue
+
+    ax.text(membrane_position+0.5,
+     3, 'Semi-permeable\nMembrane',
+      ha='center', va='center', rotation=90)
+    return ax,
+
+# Initial setup
+fig, ax = plt.subplots()
+ax.set_title("Osmosis Simulation")
+# Initial concentration of blue particles on the left
+left_particles_blue = 50  
+# Initial concentration of blue particles on the right
+right_particles_blue = 100  
+# Initial concentration of red particles on the left (remains constant)
+left_particles_red = 25
+# Initial concentration of red particles on the right (remains constant)
+
+right_particles_red = 5 
+membrane = 4  # Initial membrane position
+
+ani = animation.FuncAnimation(fig,
+ update, frames=range(60),interval=10,
+  fargs=(membrane, left_particles_blue,
+   right_particles_blue, left_particles_red, right_particles_red),
+    blit=True)
+
+ani.save('OsmosisSimulation.gif', fps=30, 
+            #extra_args=['-vcodec', 'libx264']
+            )            
+</pre>
+            </code>
                 <h2>Fick's Laws</h2>
                <h3>Fick's First Law</h3>
 
@@ -164,7 +251,8 @@ def animate(frame_num):
 
 plt.ylabel("Probability Density")
 plt.xlabel("X position (m)")
-anim = FuncAnimation(fig, animate, frames=100, interval=10)
+anim = FuncAnimation(fig, animate,
+ frames=100, interval=10)
 
 anim.save('Diffusion.gif')
 plt.show()</pre>

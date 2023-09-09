@@ -202,7 +202,8 @@ y_fit = hill_equation(x_fit, Km_fit, n_fit)
 
 # Create the Hill plot
 plt.figure(figsize=(8, 6))
-plt.plot(substrate_concentration, binding_saturation, 'ro', label='Experimental Data')
+plt.plot(substrate_concentration,
+ binding_saturation, 'ro', label='Experimental Data')
 plt.plot(x_fit, y_fit, 'b-', label='Hill Equation Fit')
 plt.xlabel('Substrate Concentration (M)')
 plt.ylabel('Fraction Bound')
@@ -227,7 +228,8 @@ plt.show()
                 <code style="margin: auto; width: 50%;"><pre>
 theta_ratio = binding_saturation/(1-binding_saturation)
 plt.figure(figsize=(8, 6))
-plt.plot(np.log10(substrate_concentration), np.log10(theta_ratio), 'ro', label='Experimental Data')
+plt.plot(np.log10(substrate_concentration),
+ np.log10(theta_ratio), 'ro', label='Experimental Data')
 #plt.plot(x_fit, y_fit, 'b-', label='Hill Equation Fit')
 plt.xlabel(r'$\log([L])$')
 plt.ylabel(r'$\log(\theta/(1-\theta))$')
