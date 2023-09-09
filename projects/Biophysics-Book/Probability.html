@@ -369,6 +369,43 @@ plot_conditional_probability()
                 Let \(X_1,\dots, X_n\) be random variables, then we can define a multivariable distribution F:
 
                 $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
+
+                <img src="Multivariate.gif" alt="Multivariate Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+fig = plt.figure()
+ax1 = fig.add_subplot(111, projection='3d')
+fig.set_size_inches(4,4)
+
+fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
+# Generate a 2D Gaussian distribution
+x, y = np.linspace(-5, 5, 100), np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+pos = np.dstack((X, Y))
+mean = np.array([0, 0])
+covariance = np.array([[3, -2.5], [-2.5, 4]])
+rv = multivariate_normal(mean, covariance)
+
+
+ax1.plot_surface(X,Y,rv.pdf(pos),cmap="magma")
+ax1.set(xlabel='X',ylabel='Y',zlabel='Probability Density')
+
+def init():
+    ax1.plot_surface(X,Y,rv.pdf(pos),cmap="magma")
+    return fig,
+
+def animate(i):
+    ax1.view_init(elev=10., azim=i)
+    return fig,
+# Animate
+anim = animation.FuncAnimation(fig, animate, init_func=init,
+                                frames=360, interval=20, blit=True)
+anim.save('basic_animation.gif', fps=30, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+</pre>
+                </code>
+
                 <h4>Independence</h4>
                 We say that \(X_1,\dots,X_n\) are independent if
 
