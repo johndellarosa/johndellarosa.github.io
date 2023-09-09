@@ -276,7 +276,40 @@ plt.show()</pre>
                 $$P(A|B)\equiv \frac{P(A \cap B)}{P(B)}$$
                 where \(P(A\cap B)\) is the probability of both A and B occurring.
                 
+                <img src="ConditionalVennDiagram.png" alt="Conditional Probability Venn Diagram" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
+def plot_conditional_probability():
+    plt.figure(figsize=(10, 7))
     
+    # Create a Venn diagram
+    venn = venn2(subsets = (10, 5, 2), set_labels = ('A', 'B'))
+    
+    # Annotations to describe each section
+    venn.get_label_by_id('10').set_text('P(A) - P(A ∩ B)')
+    venn.get_label_by_id('01').set_text('P(B) - P(A ∩ B)')
+    venn.get_label_by_id('11').set_text('P(A ∩ B)')
+    
+    # Highlighting the conditional probability part
+    venn.get_patch_by_id('10').set_alpha(0.5)
+    venn.get_patch_by_id('01').set_alpha(0.5)
+    venn.get_patch_by_id('11').set_color('yellow')  # highlight intersection in yellow
+    plt.annotate('P(A|B) is the proportion of this yellow\nsection to the entire B circle', 
+                    xy=(0.5, 0.3), xytext=(0.7, 0.7),
+                    arrowprops=dict(facecolor='black', arrowstyle='->'),
+                    fontsize=10,
+                    ha="center")
+
+    plt.title("Venn Diagram of Conditional Probability P(A|B)")
+    plt.show()
+
+# Execute the function
+plot_conditional_probability()
+</pre>
+                </code>
     
                 <h4>Bayes' Theorem</h4>
                 Bayes' Theorem relates two events and the conditional probabilities of one upon another. 
@@ -371,6 +404,51 @@ plt.show()</pre>
                 Equivalently,
 
                 $$f(x_1,x_2)=f_{X_1|X_2}(x_1|x_2)f_{X_2}(x_2)$$
+
+                <img src="ConditionalDistribution.png" alt="Conditional Probability Venn Diagram" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. Simulate the data
+np.random.seed(0)  # for reproducibility
+hours_studied = np.random.normal(5, 1.5, 1000)
+grades = 60 + 4 * hours_studied + np.random.normal(0, 3, 1000)
+
+# 2. Scatter plot the data
+plt.figure(figsize=(10, 7))
+plt.scatter(hours_studied, grades, alpha=0.5, label="All students")
+
+# 3. Highlight data points of students who studied close to 5 hours
+mask = (4.9 <= hours_studied) & (hours_studied <= 5.1)
+highlighted_hours = hours_studied[mask]
+highlighted_grades = grades[mask]
+plt.scatter(highlighted_hours, highlighted_grades, color='green', label="Students who studied ~5 hours")
+
+# 4. Plot the conditional distribution of grades for these students
+plt.hist(highlighted_grades, bins=20, orientation="horizontal", color='green', alpha=0.3, label="Grade distribution for ~5 hours of study")
+
+# 3. Highlight data points of students who studied close to 3 hours
+mask = (2.9 <= hours_studied) & (hours_studied <= 3.1)
+highlighted_hours = hours_studied[mask]
+highlighted_grades = grades[mask]
+plt.scatter(highlighted_hours, highlighted_grades, color='red', label="Students who studied ~3 hours")
+
+# 4. Plot the conditional distribution of grades for these students
+plt.hist(highlighted_grades, bins=20, orientation="horizontal", color='red', alpha=0.3, label="Grade distribution for ~3 hours of study")
+
+
+
+plt.title('Study Hours vs. Grades with Conditional Distribution')
+plt.xlabel('Hours Studied')
+plt.ylabel('Grade')
+plt.legend(loc="upper left")
+plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+plt.tight_layout()
+plt.show()
+</pre>
+                </code>
 
                 <h3>Covariance and Correlation</h3>
                 How do we quantify how two variables co-move?
@@ -476,6 +554,9 @@ plt.show()</pre>
                 <br><br>
                 If the two random variables are independent, then we can simplify the conditional probabilities and conditional densities to just be the regular probability and marginal density.
 
+                <h5>Example: Convolution of Two Independent Binomials</h5>
+                <img src="Convolution.png" alt="Convolution of Two Independent Binomials" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+ 
                 <h4>Stable Distributions</h4>
 
                 Some distributions have the nice property that linear combinations of random variables who are of its kind yield another random variable that is distributed with that distribution, albeit with different parameters. 
