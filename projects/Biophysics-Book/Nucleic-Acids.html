@@ -140,9 +140,53 @@
 
                 </ul>
 
+                
+
                 <h5>Chargaff's Rules</h5>
                 Because A is always paired with T, the amount of A must be equal to the amount of T. A similar relationship holds between amount of G and C. 
                 This is known as Chargaff's rules, and it holds very well in DNA, where there is very little mismatching.
+                
+                <img src="ChargaffsRules.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_chargaffs_rules():
+    bases = ['A', 'T', 'C', 'G']
+    sns.set_theme(style="whitegrid")
+    # Fictional relative amounts
+    amounts = [20, 20, 30, 30]  # A:T and C:G have the same amounts
+    
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    bars = sns.barplot(x=bases, y=amounts,
+                       palette=['tab:red','tab:blue','tab:green','tab:orange'],
+                       ax=ax,edgecolor='k')
+    
+    # Highlighting the equal amounts
+
+
+    for p in ax.patches:
+        h, w, x = p.get_height(), p.get_width(), p.get_x()
+        xy = (x + w / 2., h / 2)
+        text = f'{h:0.0f}%'
+        ax.annotate(text=text, xy=xy, ha='center', va='center',color='white',size=18)
+
+    ax.set_ylim(0, max(amounts) + 5)
+    ax.set_xlabel('Nucleotide Bases')
+    ax.set_ylabel('Relative Amount (%)')
+    ax.set_title("Illustration of Chargaff's Rules")
+    #ax.grid(axis='y', linestyle='--', linewidth=0.7, alpha=0.7)
+
+    plt.tight_layout()
+    plt.show()
+
+plot_chargaffs_rules()
+
+                    </pre>
+                </code>
+                
                 <h5>Hoogstein Base-Pairing</h5>
                 <h5>Wobble Base-Pairing</h5>
                 <h5>Base Tautomerism</h5>

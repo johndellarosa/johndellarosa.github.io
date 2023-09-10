@@ -67,15 +67,16 @@
                 <h3>Defining terms</h3>
                 Before we show any equations, we must define some terms and cover some basics of set theory. Let A and B be events. In this textbook, when we use the term <b>event</b>, we will mean it to be an outcome or set (group) of possible outcomes. 
                 We will also denote \(\Omega\) to be the set of all possible outcomes. 
-                <ul>
-                    <li>An <b>element</b> is the term for the basic member of a set. This will represent a specfic outcome for most of our purposes.</li>
-                    <li>P(A) is the probability of event A occurring. This corresponds to the probability of having any outcome in the set of outcomes included in A.
-                        <ul>
-                            <li>You can think of the probability of A as being a measure of the "size" of the set A (size does not refer to the number of elements in this analogy). The probability of each element need not be the same.</li>
-                        </ul>
+<h4>Element</h4>
+An <b>element</b> is the term for the basic member of a set. This will represent a specfic outcome for most of our purposes.
+<h4>Probability and Measure</h4>                   
+P(A) is the probability of event A occurring. This corresponds to the probability of having any outcome in the set of outcomes included in A.
 
-                    </li>
-                    <li>\(A \subseteq B\) means that A is a <b>subset</b> of B. This means that all the outcomes included in A are also included in B. However, B could contain additional outcomes that are not in A.<ul>
+You can think of the probability of A as being a measure of the "size" of the set A (size does not refer to the number of elements in this analogy). The probability of each element need not be the same.
+
+<h4>Subset</h4>
+\(A \subseteq B\) means that A is a <b>subset</b> of B. This means that all the outcomes included in A are also included in B. However, B could contain additional outcomes that are not in A.
+<ul>
                             <li>An example would be if A were rolling a 3 on a die and B were rolling an odd number on a die. </li>
                                 <li>It is possible for A and B to be the same set of outcomes, which is captured by the underline in the notation. The notation for subset and proper subset is similar to comparing two real numbers. The open end points to the "larger" thing and an underline allows for equality to be included in the comparison.</li>
                             
@@ -84,54 +85,104 @@
                             </li>
                             <li>If \(A \subset B\), then \(P(A)\leq P(B)\)</li>
                         </ul>
+                        <img src="Subset.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                        Python code:
+                        <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
 
-                    </li>
-                    <li>\(A\cup B\) is the <b>union</b> of A and B. This is the set of outcomes that are in A and/or B. This will be a set that is larger or equal in size than either A or B. The \(\lor\) can also be seen instead of \(\cup\), especially in logic.
+# Create a new figure
+plt.figure(figsize=(10, 7))
+
+# Create a sample set A and its subset B
+A = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+B = {2, 3, 5, 7}
+
+# Create a Venn diagram
+venn = venn2([A, B], set_labels=('Set A, $\{x\in\mathbb{N}^+: xlt 0\}$', 'Subset B, $\{x\in P: x\lt10\}$'))
+
+# Highlight the subset
+venn.get_label_by_id('10').set_text(', '.join(map(str, A - B)))
+venn.get_label_by_id('11').set_text(', '.join(map(str, A & B)))
+venn.get_patch_by_id('11').set_color('purple')
+venn.get_label_by_id('01').set_text('')  # Since B is a subset, this region is empty
+
+# Add a title and show the figure
+plt.title("Prime Numbers are a Proper Subset of the Natural Numbers")
+plt.show()
+                            </pre>
+                        </code>
+                    <h4>Union</h4>
+                    \(A\cup B\) is the <b>union</b> of A and B. This is the set of outcomes that are in A and/or B. This will be a set that is larger or equal in size than either A or B. The \(\lor\) can also be seen instead of \(\cup\), especially in logic.
                         <ul>
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cup B = \{1,2,3,4,6\}\)</li>
-                        </ul></li>
-                    <li>\(A\cap B\) is the <b>intersection</b> of A and B. This is the set of outcomes that are in both A and B. The \(\land\) can also be seen instead of \(\cap\), especially in logic
+                        </ul>
+
+                        <img src="SetUnion.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                        Python code:
+                        <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
+def plot_venn_difference():
+    plt.figure(figsize=(8, 8))
+
+    # Use the Venn2 class to manually control patch and label properties
+    v = venn2(subsets=(1, 1, 1), set_labels=('A', 'B'))
+
+    # Shade the set difference A \cap B
+    v.get_patch_by_id('10').set_color('tab:blue')
+
+    v.get_patch_by_id('10').set_edgecolor('black')
+    v.get_patch_by_id('10').set_linewidth(1)
+    v.get_patch_by_id('10').set_label('A - B')
+    v.get_label_by_id('10').set_fontsize(14)
+    v.get_label_by_id('01').set_fontsize(14)
+    v.get_label_by_id('11').set_fontsize(14)
+
+    # Set properties for other parts of the Venn diagram
+    v.get_patch_by_id('01').set_color('tab:blue')
+    v.get_patch_by_id('01').set_edgecolor('black')
+    v.get_patch_by_id('01').set_linewidth(1)
+    
+    v.get_patch_by_id('11').set_color('tab:blue')
+    v.get_patch_by_id('11').set_edgecolor('black')
+    v.get_patch_by_id('11').set_linewidth(1)
+    v.get_label_by_id('11').set_fontsize(14)
+    v.get_label_by_id('10').set_text('')
+    v.get_label_by_id('01').set_text('')
+    v.get_label_by_id('11').set_text('')
+    # Set title
+    plt.title("Set Union: $A \cup B$")
+    
+    plt.show()
+
+plot_venn_difference()
+                            
+                            </pre>
+                        </code>
+
+                        <h4>Intersection</h4>
+                    \(A\cap B\) is the <b>intersection</b> of A and B. This is the set of outcomes that are in both A and B. The \(\land\) can also be seen instead of \(\cap\), especially in logic
                         <ul>
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cap B = \{2\}\)</li>
                         </ul>
-                    </li>
-                    <li>\(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
+                        <img src="SetIntersection.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                
+                    <h4>Set Difference</h4>
+                    \(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
                         <ul>
                             <li>In the special case of \(\Omega \setminus A\) can be written as \(A^{c}\) or \(\overline{A}\). This is called the <b>complement</b> of A and is the set of outcomes not in A. In logic, this can be seen as \(\neg A\)</li>
                         </ul>
 
-                    </li>
+                        <img src="SetDifference.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+
                         
-                </ul>
+
                 We can take the probabilities of these resulting sets to see the probability of getting an outcome contained within them. 
 
-                <img src="Subset.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                Python code:
-                <code style="margin: auto; width: 50%;"><pre>
-                    import matplotlib.pyplot as plt
-                    from matplotlib_venn import venn2
-                    
-                    # Create a new figure
-                    plt.figure(figsize=(10, 7))
-                    
-                    # Create a sample set A and its subset B
-                    A = {1, 2, 3, 4, 5, 6, 7, 8, 9}
-                    B = {2, 3, 5, 7}
-                    
-                    # Create a Venn diagram
-                    venn = venn2([A, B], set_labels=('Set A, $\{x\in\mathbb{N}^+: xlt 0\}$', 'Subset B, $\{x\in P: x\lt10\}$'))
-                    
-                    # Highlight the subset
-                    venn.get_label_by_id('10').set_text(', '.join(map(str, A - B)))
-                    venn.get_label_by_id('11').set_text(', '.join(map(str, A & B)))
-                    venn.get_patch_by_id('11').set_color('purple')
-                    venn.get_label_by_id('01').set_text('')  # Since B is a subset, this region is empty
-                    
-                    # Add a title and show the figure
-                    plt.title("Prime Numbers are a Proper Subset of the Natural Numbers")
-                    plt.show()
-                    </pre>
-                </code>
+
+                
 
                 <h3>Basic Rules</h3>
                 The sum of the probabilities of all possible outcomes must equal 1.
