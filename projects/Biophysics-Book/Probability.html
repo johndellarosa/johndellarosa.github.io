@@ -105,7 +105,33 @@
                 </ul>
                 We can take the probabilities of these resulting sets to see the probability of getting an outcome contained within them. 
 
-
+                <img src="Subset.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                Python code:
+                <code style="margin: auto; width: 50%;"><pre>
+                    import matplotlib.pyplot as plt
+                    from matplotlib_venn import venn2
+                    
+                    # Create a new figure
+                    plt.figure(figsize=(10, 7))
+                    
+                    # Create a sample set A and its subset B
+                    A = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+                    B = {2, 3, 5, 7}
+                    
+                    # Create a Venn diagram
+                    venn = venn2([A, B], set_labels=('Set A, $\{x\in\mathbb{N}^+: xlt 0\}$', 'Subset B, $\{x\in P: x\lt10\}$'))
+                    
+                    # Highlight the subset
+                    venn.get_label_by_id('10').set_text(', '.join(map(str, A - B)))
+                    venn.get_label_by_id('11').set_text(', '.join(map(str, A & B)))
+                    venn.get_patch_by_id('11').set_color('purple')
+                    venn.get_label_by_id('01').set_text('')  # Since B is a subset, this region is empty
+                    
+                    # Add a title and show the figure
+                    plt.title("Prime Numbers are a Proper Subset of the Natural Numbers")
+                    plt.show()
+                    </pre>
+                </code>
 
                 <h3>Basic Rules</h3>
                 The sum of the probabilities of all possible outcomes must equal 1.
@@ -732,6 +758,35 @@ plt.show()
                 $$W=\frac{M!}{\prod N_{i}!}=\frac{M!}{N_{1}!*N_{2}!*...*N_{Z}!}$$
                 If there are only two possible types and M total and N of type 1, then \(N_2=M-N\) and it reduces to
                 $$W=\frac{M!}{N!(M-N)!}$$
+
+<img src="EntropyPermutations.png" alt="Entropy and Permutations" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+Python code:
+<code style="margin: auto; width: 50%;"><pre>
+import math
+import matplotlib.pyplot as plt
+
+# Strings of interest and their labels
+strings = ["AAAA", "AAAB", "AABB", "AABC", "ABCD"]
+labels = [f"String: {s}\nPermutations: {math.factorial(len(s)) // (math.factorial(s.count('A')) * math.factorial(s.count('B')) * math.factorial(s.count('C')) * math.factorial(s.count('D')))}" for s in strings]
+
+# Calculate the number of permutations for each string
+# n! / (n1! * n2! * ... * nk!) where n1, n2, ... are the counts of repeated characters
+permutations = [math.factorial(len(s)) // (math.factorial(s.count('A')) * math.factorial(s.count('B')) * math.factorial(s.count('C')) * math.factorial(s.count('D'))) for s in strings]
+
+# Create the bar chart
+plt.figure(figsize=(10, 6))
+plt.bar(labels, permutations, color='skyblue')
+plt.title("Entropy and Permutations")
+plt.ylabel("Number of Unique Permutations")
+plt.xlabel("Strings")
+plt.xticks(rotation=45, ha="right")
+
+# Display the chart
+plt.tight_layout()
+plt.show()
+    
+</pre>
+</code>
     
                 <h3>Definitions of Entropy</h3>
                 Entropy is typically described as being a measure of "disorder," but how does that manifest? 
