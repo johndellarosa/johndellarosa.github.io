@@ -229,7 +229,8 @@
 
 <h4>Simulation of Dynamic Equilibrium</h4>
                     <img src="DynamicEquilibrium.gif" alt="Dynamic Equilibirium" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                    Python code:
+                    <button type="button" class="collapsible">Python Code</button>
+                    <div class="content">
                     <code style="margin: auto; width: 50%;"><pre>
 conc_A = 1
 conc_B = 0
@@ -268,7 +269,7 @@ plt.legend(['[A]','[B]'])
 anim = FuncAnimation(fig, animate,
  frames=200, interval=15)
 anim.save('DynamicEquilibrium.gif')
-plt.show()</pre></code>
+plt.show()</pre></code></div>
             <h2>Factors Behind Kinetics</h2>
             <h3>Arrhenius Equation</h3>
             $$k=A\exp(-\frac{E_a}{RT})$$
@@ -286,6 +287,21 @@ plt.show()</pre></code>
 
                 </div>
 
-        </div>
+        </div>        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
 </body>
 </html>

@@ -147,7 +147,8 @@
                 This is known as Chargaff's rules, and it holds very well in DNA, where there is very little mismatching.
                 
                 <img src="ChargaffsRules.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                Python code:
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 import matplotlib.pyplot as plt
 import numpy as np
@@ -185,7 +186,7 @@ def plot_chargaffs_rules():
 plot_chargaffs_rules()
 
                     </pre>
-                </code>
+                </code></div>
                 
                 <h5>Hoogstein Base-Pairing</h5>
                 <h5>Wobble Base-Pairing</h5>
@@ -229,5 +230,21 @@ plot_chargaffs_rules()
             </div>
 
         </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
 </body>
 </html>

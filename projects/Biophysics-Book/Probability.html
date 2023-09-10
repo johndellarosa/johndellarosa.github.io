@@ -85,8 +85,9 @@ You can think of the probability of A as being a measure of the "size" of the se
                             </li>
                             <li>If \(A \subset B\), then \(P(A)\leq P(B)\)</li>
                         </ul>
-                        <img src="Subset.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                        Python code:
+                        <img src="Subset.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 700px)"/>
+                        <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
 import matplotlib.pyplot as plt
 from matplotlib_venn import venn2
@@ -111,15 +112,16 @@ venn.get_label_by_id('01').set_text('')  # Since B is a subset, this region is e
 plt.title("Prime Numbers are a Proper Subset of the Natural Numbers")
 plt.show()
                             </pre>
-                        </code>
+                        </code></div>
                     <h4>Union</h4>
                     \(A\cup B\) is the <b>union</b> of A and B. This is the set of outcomes that are in A and/or B. This will be a set that is larger or equal in size than either A or B. The \(\lor\) can also be seen instead of \(\cup\), especially in logic.
                         <ul>
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cup B = \{1,2,3,4,6\}\)</li>
                         </ul>
 
-                        <img src="SetUnion.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                        Python code:
+                        <img src="SetUnion.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 700px)"/>
+                        <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
 import matplotlib.pyplot as plt
 from matplotlib_venn import venn2
@@ -160,14 +162,14 @@ def plot_venn_difference():
 plot_venn_difference()
                             
                             </pre>
-                        </code>
+                        </code></div>
 
                         <h4>Intersection</h4>
                     \(A\cap B\) is the <b>intersection</b> of A and B. This is the set of outcomes that are in both A and B. The \(\land\) can also be seen instead of \(\cap\), especially in logic
                         <ul>
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cap B = \{2\}\)</li>
                         </ul>
-                        <img src="SetIntersection.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                        <img src="SetIntersection.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(300px,35vw, 700px)"/>
                 
                     <h4>Set Difference</h4>
                     \(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
@@ -175,7 +177,7 @@ plot_venn_difference()
                             <li>In the special case of \(\Omega \setminus A\) can be written as \(A^{c}\) or \(\overline{A}\). This is called the <b>complement</b> of A and is the set of outcomes not in A. In logic, this can be seen as \(\neg A\)</li>
                         </ul>
 
-                        <img src="SetDifference.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                        <img src="SetDifference.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 700px)"/>
 
                         
 
@@ -199,7 +201,8 @@ plot_venn_difference()
                 If A and B are mutually exclusive, then \(P(A\cap B)=0\). This can be thought of as the analogue of addition in probability.
                 
                 <img src="InclusionExclusionPrinciple.png" alt="Inclusion-Exclusion Principle" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
-                Python code:
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 import matplotlib.pyplot as plt
 from matplotlib_venn import venn2
@@ -231,7 +234,7 @@ plt.tight_layout()
 plt.show()
                     
 </pre>
-                </code>
+                </code></div>   
                 
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
@@ -258,7 +261,8 @@ plt.show()
 
                 <h4>Example with Binomial Distribution</h4>
                     <img src="BinomialPMFCDF.png" alt="Binomial PMF and CDF" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                    Python code:
+                    <button type="button" class="collapsible">Python Code</button>
+                    <div class="content">
                     <code style="margin: auto; width: 50%;"><pre>
 def combinations(n,k):
     return math.factorial(n)\
@@ -283,7 +287,7 @@ plt.legend(['PMF: $P(X=x_i)$','CDF: $P(X\leq x_i)$'])
 plt.title("PMF and CDF for Binomial (p=0.6, n=8)")
 plt.xlabel('k (number successes)')
 plt.ylabel('Probability')
-plt.show()</pre></code>
+plt.show()</pre></code></div>   
 
 
                 <br><br>
@@ -356,7 +360,8 @@ $$P(1\lt X \leq 2)=F(2)-F(1)$$
 $$=\int_1^2 2\exp(-2x)dx$$
 
 <img src="AreaUnderCurve.png" alt="Probability Continuous Variable" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                Python code:
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 lam = 2
 
@@ -376,7 +381,7 @@ plt.ylabel('Density of X')
 plt.title("Area Under Curve For Probability")
 plt.legend(['Exp(2)'])
 plt.show()</pre>
-                </code>
+                </code></div>
 
                 
     
@@ -389,8 +394,9 @@ plt.show()</pre>
                 $$P(A|B)\equiv \frac{P(A \cap B)}{P(B)}$$
                 where \(P(A\cap B)\) is the probability of both A and B occurring.
                 
-                <img src="ConditionalVennDiagram.png" alt="Conditional Probability Venn Diagram" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                Python code:
+                <img src="ConditionalVennDiagram.png" alt="Conditional Probability Venn Diagram" style="margin:auto; display: block;  width:clamp(400px,45vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 import matplotlib.pyplot as plt
 from matplotlib_venn import venn2
@@ -422,7 +428,7 @@ def plot_conditional_probability():
 # Execute the function
 plot_conditional_probability()
 </pre>
-                </code>
+                </code></div>
     
                 <h4>Bayes' Theorem</h4>
                 Bayes' Theorem relates two events and the conditional probabilities of one upon another. 
@@ -484,7 +490,8 @@ plot_conditional_probability()
                 $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
 
                 <img src="Multivariate.gif" alt="Multivariate Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
-                Python code:
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 fig = plt.figure()
 ax1 = fig.add_subplot(111, projection='3d')
@@ -518,7 +525,7 @@ anim.save('basic_animation.gif', fps=30,
             #extra_args=['-vcodec', 'libx264']
             )
 </pre>
-                </code>
+                </code></div>
 
                 <h4>Independence</h4>
                 We say that \(X_1,\dots,X_n\) are independent if
@@ -548,7 +555,8 @@ anim.save('basic_animation.gif', fps=30,
                 $$f(x_1,x_2)=f_{X_1}(x_1)f_{X_2}(x_2)\forall(x_1,x_2)$$
 
                 <img src="MarginalDistributions.png" alt="Joint Distribution and Marginal Distributions" style="margin:auto; display: block;  width:clamp(300px,60vw, 800px)"/>
-                Python code:
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 import numpy as np
 import matplotlib.pyplot as plt
@@ -609,7 +617,7 @@ plt.tight_layout()
 plt.show()
                           
 </pre>
-                </code>
+                </code></div>
 
 
                 <h4>Returning to Bayes - Conditional Distribution and Density</h4>
@@ -624,7 +632,8 @@ plt.show()
                 $$f(x_1,x_2)=f_{X_1|X_2}(x_1|x_2)f_{X_2}(x_2)$$
 
                 <img src="ConditionalDistribution.png" alt="Conditional Probability Venn Diagram" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                Python code:
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 import numpy as np
 import matplotlib.pyplot as plt
@@ -675,7 +684,7 @@ plt.grid(True, which='both', linestyle='--', linewidth=0.5)
 plt.tight_layout()
 plt.show()
 </pre>
-                </code>
+                </code></div>
 
                 <h3>Covariance and Correlation</h3>
                 How do we quantify how two variables co-move?
@@ -811,7 +820,8 @@ plt.show()
                 $$W=\frac{M!}{N!(M-N)!}$$
 
 <img src="EntropyPermutations.png" alt="Entropy and Permutations" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-Python code:
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 import math
 import matplotlib.pyplot as plt
@@ -837,7 +847,7 @@ plt.tight_layout()
 plt.show()
     
 </pre>
-</code>
+</code></div>
     
                 <h3>Definitions of Entropy</h3>
                 Entropy is typically described as being a measure of "disorder," but how does that manifest? 
@@ -936,5 +946,21 @@ plt.show()
         </div>
         <br>
         <br>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
 </body>
 </html>

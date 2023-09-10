@@ -119,6 +119,21 @@
                 Taking the derivative of the Dirac delta function does not yield a scalar multiple of it (if we attempt to define it), so we can conclude that a particle with a defined position does not have a defined momentum. 
                 $$\frac{d}{dx}\delta(x)=-\frac{\delta(x)}{x}\not\propto\delta(x)$$
 
-        </div>
+        </div>        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
 </body>
 </html>
