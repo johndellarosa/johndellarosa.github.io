@@ -497,7 +497,8 @@ plt.show()</pre></code></div>
 
                 <h4>Example with Arcsine Distribution</h4>
                 <img src="Arcsine-PDF-CDF.png" alt="Arcsine PMF and CDF" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
-                Python code:
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
 def arcsine_PDF(x):
     return 1/(np.pi*np.sqrt(x*(1-x)))
@@ -525,7 +526,7 @@ ax1.legend()
 plt.title("PDF and CDF for Arcsine Distribution")
 ax1.set_xlabel('x')
 ax2.set_ylabel('F(x)')
-plt.show()</pre></code>
+plt.show()</pre></code></div>   
 
 
                 <br><br>
@@ -864,7 +865,7 @@ plt.show()
                 <h4>Returning to Bayes - Conditional Distribution and Density</h4>
                 Let us define the conditional distribution of \(X_1\) given \(X_2=x_2\)
 
-                $$F_{X_1|X_2}(x_1|X_2)\equiv P(X_1\leq x_1|X_2=x_2)$$
+                $$F_{X_1|X_2}(x_1|x_2)\equiv P(X_1\leq x_1|X_2=x_2)$$
                 The marginal density is more useful in practice
                 $$f_{X_1|X_2}(x_1|x_2)=\frac{\partial}{\partial x_1}F_{X_1|X_2}(x_1|x_2)=\frac{f(x_1,x_2)}{f_{X_2}(x_2)}$$
 
