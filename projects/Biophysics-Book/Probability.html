@@ -811,6 +811,41 @@ plt.show()
                 <br><br>
                 Given M coin flips, the number of ways to get N heads would be given as:
                 $$W=\frac{M!}{N!(M-N)!}$$
+                <img src="Binomial-Example.png" alt="Binomial Permutations" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from math import comb  # for combinations
+
+from itertools import permutations
+
+def multiplicity(n, k):
+    """Returns the number of ways to get k heads when flipping n coins."""
+    return comb(n, k)
+
+# Number of coins
+n = 4
+outcomes = list(range(n + 1))  # 0 to n heads
+multiplicities = [multiplicity(n, k) for k in outcomes]
+
+# Plotting
+plt.bar(outcomes, multiplicities, color='skyblue')
+plt.xlabel('Number of Heads')
+plt.ylabel('Multiplicity')
+plt.title(f'Multiplicity of Outcomes for {n} Coin Flips')
+plt.xticks(outcomes)
+plt.grid(axis='y')
+
+# Annotate bars with the exact count
+for i, v in enumerate(multiplicities):
+
+    perms = [''.join(p) for p in set(permutations(i*'H'+(4-i)*'T'))]
+    plt.text(i, 0.20, str('\n\n\n\n'.join(perms)), ha='center', va='bottom', fontweight='bold')
+    
+plt.show()
+</pre>
+</code></div>
                 
                 However, this restricts us to only 2 outcomes. What if we require more? <br><br>
     
@@ -897,6 +932,44 @@ plt.show()
                 If the normal distribution has parameters \(\mu=0\) and \(\sigma^2=1\) then we refer to it as a <b>standard normal distribution</b>.
                 <br><br>
 
+                <img src="Normal-Distribution.png" alt="Normal Distribution" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+def normal_distribution(x, mu, sigma):
+    """Returns the value of the pdf of the normal distribution with mean mu and standard deviation sigma."""
+    coefficient = 1.0 / (sigma * np.sqrt(2 * np.pi))
+    exponential = np.exp(- (x - mu)**2 / (2 * sigma**2))
+    return coefficient * exponential
+
+# Parameters of the normal distribution
+mu = 0  # mean
+sigma = 1  # standard deviation
+
+# Generate x values
+x = np.linspace(mu - 4*sigma, mu + 4*sigma, 1000)  # 4 standard deviations from the mean
+
+# Calculate y values
+y = normal_distribution(x, mu, sigma)
+
+# Plotting
+plt.figure(figsize=(8, 5))
+plt.plot(x, y, color='blue', label=f'μ = {mu}, σ = {sigma}')
+plt.title('Normal Distribution')
+plt.xlabel('x')
+plt.ylabel('Probability Density')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+    
+    
+</pre>
+</code></div>
+
                 <h4>Properties</h4>
                 
                 <ul>
@@ -907,8 +980,89 @@ plt.show()
 
                 <h3>Law of Large Numbers</h3>
 
+The Law of Large Numbers states that the sample average approaches the distribution mean as n, the number of samples, gets large.
+
+
+                <img src="Law-of-Large-Numbers.png" alt="Normal Distribution" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+fig, axes = plt.subplots(3,2,figsize=(9,9))
+
+def illustrate_clt(n, k, x,y, axes):
+    """Illustrate the Central Limit Theorem using uniform distribution.
+    
+    Parameters:
+    - n: number of samples taken in each experiment
+    - k: number of experiments
+    """
+    # Collect the averages from k experiments
+    averages = [np.mean(np.random.uniform(0, 1, n)) for _ in range(k)]
+
+    # Plotting the histogram of the averages
+    axes[x,y].hist(averages, bins=50, density=True, color='skyblue', edgecolor='black')
+    
+    axes[x,y].set_title(f'Distribution of Averages from {k} Experiments\nEach with {n} Random Uniform Samples',size=8)
+    axes[x,y].set_xlabel('Sample Average')
+    axes[x,y].set_ylabel('Density')
+    axes[x,y].set_xlim(0,1)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+
+n_vals = [3,10,30]
+k_vals = [250,10000]
+for x in range(len(n_vals)):
+    for y in range(len(k_vals)):
+        
+        illustrate_clt(n=n_vals[x], k=k_vals[y],x=x,y=y,axes=axes)
+plt.tight_layout()
+plt.show()
+    
+</pre>
+</code></div>
                 <h3>Central Limit Theorem</h3>
 
+The Central Limit Theorem goes further and describes how sample averages of independent observations are distributed if you plotted a histogram of sample averages. 
+Regardless of the original distribution, the sample average will be distributed as a normal distribution, centered at the true mean with variance \(\frac{\sigma^2}{n}\). 
+
+
+                <img src="Central-Limit-Theorem.png" alt="Normal Distribution" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+fig, axes = plt.subplots(3,2,figsize=(9,9))
+
+def illustrate_clt(n, k, x,y, axes):
+    """Illustrate the Central Limit Theorem using uniform distribution.
+    
+    Parameters:
+    - n: number of samples taken in each experiment
+    - k: number of experiments
+    """
+    # Collect the averages from k experiments
+    averages = [np.mean(np.random.uniform(0, 1, n)) for _ in range(k)]
+
+    # Plotting the histogram of the averages
+    axes[x,y].hist(averages, bins=50, density=True, color='skyblue', edgecolor='black')
+    
+    axes[x,y].set_title(f'Distribution of Averages from {k} Experiments\nEach with {n} Random Uniform Samples',size=8)
+    axes[x,y].set_xlabel('Sample Average')
+    axes[x,y].set_ylabel('Density')
+    axes[x,y].set_xlim(0,1)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+
+n_vals = [3,10,30]
+k_vals = [250,10000]
+for x in range(len(n_vals)):
+    for y in range(len(k_vals)):
+        
+        illustrate_clt(n=n_vals[x], k=k_vals[y],x=x,y=y,axes=axes)
+plt.tight_layout()
+plt.show()
+    
+</pre>
+</code></div>
 
 
             </div>
