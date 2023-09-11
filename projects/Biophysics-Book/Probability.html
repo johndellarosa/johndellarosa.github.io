@@ -490,10 +490,34 @@ plot_conditional_probability()
                 A distribution can output a set of random variables.
 
                 Let \(X_1,\dots, X_n\) be random variables, then we can define a multivariable distribution F:
+                
 
                 $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
 
-                <img src="Multivariate-Distribution.gif" alt="Multivariate Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
+                <img src="Multivariate-Distribution.png" alt="Multivariate Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
+                
+
+                <h4>Independence</h4>
+                We say that \(X_1,\dots,X_n\) are independent if
+
+                
+                
+                $$F(x_1,\dots,x_n)=\prod_{x_i}P(X_i\leq x_i)$$
+                <h4>Marginal Distribution</h4>
+                Sometimes we may only want to consider a subset of variables and focus on the distribution of those. We will call this the <b>marginal distribution</b>. 
+                We can use the notation
+
+                $$F_{X_i}(x_i)\equiv P(X_i\leq x_i)$$
+                Equivalently, we can define independence as we did above in terms of marginal distributions:
+                $$F(x_1,\dots,x_n)=\prod_{1 \leq i \leq n}F_{X_i}(x_i)$$
+
+                
+                
+                <h4>Multivariate density</h4>
+                We can define the density of a multivariate distribution as 
+
+                $$f(x_1,\dots,x_n)\equiv\frac{\partial^n}{\partial_1\cdots\partial_n}F(x_1,\dots,x_n)$$
+                <img src="Multivariate-Density.gif" alt="Multivariate Density" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -530,27 +554,7 @@ anim.save('basic_animation.gif', fps=30,
             )
 </pre>
                 </code></div>
-
-                <h4>Independence</h4>
-                We say that \(X_1,\dots,X_n\) are independent if
-
-                
-                
-                $$F(x_1,\dots,x_n)=\prod_{x_i}P(X_i\leq x_i)$$
-                <h4>Marginal Distribution</h4>
-                Sometimes we may only want to consider a subset of variables and focus on the distribution of those. We will call this the <b>marginal distribution</b>. 
-                We can use the notation
-
-                $$F_{X_i}(x_i)\equiv P(X_i\leq x_i)$$
-                Equivalently, we can define independence as we did above in terms of marginal distributions:
-                $$F(x_1,\dots,x_n)=\prod_{1 \leq i \leq n}F_{X_i}(x_i)$$
-
-                
-                
-                <h4>Multivariate density</h4>
-                We can define the density of a multivariate distribution as 
-
-                $$f(x_1,\dots,x_n)\equiv\frac{\partial^n}{\partial_1\cdots\partial_n}F(x_1,\dots,x_n)$$
+               
                 <h4>Marginal Density</h4>
                 We can also define a function called the marginal density. Let us consider a bivariate distribution given by \(x_1\) and \(x_2\). 
                 $$F_{X_1}(x_1)=\int_{-\infty}^{\infty}f(x_1,x_2)dx_2$$
@@ -815,7 +819,7 @@ plt.show()
                 <br><br>
                 Given M coin flips, the number of ways to get N heads would be given as:
                 $$W=\frac{M!}{N!(M-N)!}$$
-                <img src="Binomial-Example.png" alt="Binomial Permutations" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                <img src="Binomial-Example.png" alt="Binomial Permutations" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
 <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
