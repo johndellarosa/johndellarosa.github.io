@@ -126,13 +126,13 @@ plt.show()
 import matplotlib.pyplot as plt
 from matplotlib_venn import venn2
 
-def plot_venn_difference():
+def plot_venn_union():
     plt.figure(figsize=(8, 8))
 
     # Use the Venn2 class to manually control patch and label properties
     v = venn2(subsets=(1, 1, 1), set_labels=('A', 'B'))
 
-    # Shade the set difference A \cap B
+    # Shade the set union A \cup B
     v.get_patch_by_id('10').set_color('tab:blue')
 
     v.get_patch_by_id('10').set_edgecolor('black')
@@ -159,7 +159,7 @@ def plot_venn_difference():
     
     plt.show()
 
-plot_venn_difference()
+plot_venn_union()
                             
                             </pre>
                         </code></div>
@@ -170,20 +170,211 @@ plot_venn_difference()
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cap B = \{2\}\)</li>
                         </ul>
                         <img src="Set-Intersection.png" alt="Intersection in Set Theory" style="margin:auto; display: block;  width:clamp(300px,35vw, 700px)"/>
-                
+                        <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
+                        <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
+def plot_venn_intersection():
+    plt.figure(figsize=(8, 8))
+
+    A = {1,2,3}
+    B = {2,4,6}
+    # Use the Venn2 class to manually control patch and label properties
+    v = venn2([A,B], set_labels=('A', 'B'))
+
+    # Shade the set intersection A \cap B
+    v.get_patch_by_id('10').set_color('white')
+
+    v.get_patch_by_id('10').set_edgecolor('black')
+    v.get_patch_by_id('10').set_linewidth(1)
+    v.get_patch_by_id('10').set_label('A - B')
+    v.get_label_by_id('10').set_fontsize(14)
+    v.get_label_by_id('01').set_fontsize(14)
+    v.get_label_by_id('11').set_fontsize(14)
+
+    # Set properties for other parts of the Venn diagram
+    v.get_patch_by_id('01').set_color('white')
+    v.get_patch_by_id('01').set_edgecolor('black')
+    v.get_patch_by_id('01').set_linewidth(1)
+    
+    v.get_patch_by_id('11').set_color('tab:blue')
+    v.get_patch_by_id('11').set_edgecolor('black')
+    v.get_patch_by_id('11').set_linewidth(1)
+    v.get_label_by_id('11').set_fontsize(14)
+    v.get_label_by_id('10').set_text('')
+    v.get_label_by_id('01').set_text('')
+    v.get_label_by_id('10').set_text(f'{A-B}')
+    v.get_label_by_id('01').set_text(f'{B-A}')
+    v.get_label_by_id('11').set_text(f'$A\cap B$\n{A&B}')
+    # Set title
+    plt.title("Set Intersection: $A \cap B$")
+    
+    plt.show()
+
+plot_venn_intersection()
+                            
+                            
+                            </pre>
+                        </code></div>
                     <h4>Set Difference</h4>
                     \(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
 
 
                         <img src="Set-Difference.png" alt="Difference in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 700px)"/>
-                    <h4>Complement</h4>
+                        <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
+                        <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
+def plot_venn_difference():
+    plt.figure(figsize=(8, 8))
+    set_A = {1,2,3}
+    set_B = {2,4,6}
+    # Use the Venn2 class to manually control patch and label properties
+    v = venn2([set_A,set_B], set_labels=('A', 'B'))
+
+    # Shade the set difference A - B
+    v.get_patch_by_id('10').set_color('tab:blue')
+    v.get_patch_by_id('10').set_edgecolor('black')
+    v.get_patch_by_id('10').set_linewidth(1)
+    v.get_patch_by_id('10').set_label('A - B')
+    v.get_label_by_id('10').set_fontsize(14)
+    v.get_label_by_id('01').set_fontsize(14)
+    v.get_label_by_id('11').set_fontsize(14)
+
+    # Set properties for other parts of the Venn diagram
+    v.get_patch_by_id('01').set_color('white')
+    v.get_patch_by_id('01').set_edgecolor('black')
+    v.get_patch_by_id('01').set_linewidth(1)
+    
+    v.get_patch_by_id('11').set_color('white')
+    v.get_patch_by_id('11').set_edgecolor('black')
+    v.get_patch_by_id('11').set_linewidth(1)
+    v.get_label_by_id('11').set_fontsize(14)
+    v.get_label_by_id('10').set_text(f'A\\B\n{set_A-set_B}')
+    v.get_label_by_id('01').set_text(f'B\\A\n{set_B-set_A}')
+    v.get_label_by_id('11').set_text(f'$A\cap B$\n{set_A&set_B}')
+    # Set title
+    plt.title("Set Difference: A - B")
+    
+    plt.show()
+
+plot_venn_difference()
+
+                            
+                            </pre>
+                        </code></div>
+                    
+                        <h4>Complement</h4>
                         In the special case of \(\Omega \setminus A\) can be written as \(A^{c}\) or \(\overline{A}\). This is called the <b>complement</b> of A and is the set of outcomes not in A. In logic, this can be seen as \(\neg A\)
                         <img src="Set-Complement.png" alt="Set Complement in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
+                        <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
+                        <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
+def plot_venn_complement():
+    plt.figure(figsize=(8, 8))
+
+    A = {1,2,3}
+    omega = {1,2,3,4,5,6}
+    # Use the Venn2 class to manually control patch and label properties
+    v = venn2([A,omega], set_labels=('', '$\Omega$'))
+
+    # Shade the set difference Omega \ B
+    v.get_patch_by_id('10').set_color('white')
+
+    v.get_patch_by_id('10').set_edgecolor('black')
+    v.get_patch_by_id('10').set_linewidth(1)
+    v.get_patch_by_id('10').set_label('A - B')
+    v.get_label_by_id('10').set_fontsize(14)
+    v.get_label_by_id('01').set_fontsize(14)
+    v.get_label_by_id('11').set_fontsize(14)
+
+    # Set properties for other parts of the Venn diagram
+    v.get_patch_by_id('01').set_color('tab:blue')
+    v.get_patch_by_id('01').set_edgecolor('black')
+    v.get_patch_by_id('01').set_linewidth(1)
+    
+    v.get_patch_by_id('11').set_color('white')
+    v.get_patch_by_id('11').set_edgecolor('black')
+    v.get_patch_by_id('11').set_linewidth(1)
+    v.get_label_by_id('11').set_fontsize(14)
+    v.get_label_by_id('10').set_text('')
+    v.get_label_by_id('01').set_text('')
+    v.get_label_by_id('01').set_text(f'$A^c$\n{omega-A}')
+    v.get_label_by_id('11').set_text(f'A\n{A&omega}')
+    # Set title
+    plt.title("Set Complement: $A^c$")
+    
+    plt.show()
+
+plot_venn_complement()
+                            
+                            
+                            </pre>
+                        </code></div>
+                        
                         <h4>Cartesian Product</h4>
                         The Cartesian product is the main analogue to multiplication. The cartesian product of sets A and B is the set of all ordered pairs where the first element is from set A and the second element is from set B. 
 
                         <img src="Set-Cartesian-Product.png" alt="Cartesian Product in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
-                                            
+                        <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
+                        <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define two sets
+A = {1, 2, 3}
+B = {2,4, 6}
+
+# Calculate the Cartesian product
+cartesian_product = [(a, b) for a in A for b in B]
+
+# Extract coordinates for plotting
+x_coords, y_coords = zip(*cartesian_product)
+
+# Plotting
+plt.figure(figsize=(8, 5))
+background_color = '#f5f5f5'
+plt.gca().set_facecolor(background_color)
+plt.grid(True, which='both', color='#666666', linestyle='--', linewidth=0.5)
+
+# Create a color gradient based on y-coordinates
+colors = plt.colormaps['tab10'].colors[:9]
+
+# Scatter plot with gradient color and edge color
+plt.scatter(x_coords, y_coords, c=colors, edgecolors='black', s=150, zorder=5)
+
+# Annotate each point with the corresponding pair, add shadow for better visibility
+for (x, y), color in zip(cartesian_product, colors):
+    plt.text(x, y+0.2, f'({x},{y})', fontsize=12, ha='center', color=color, 
+                weight='bold', zorder=5)
+    plt.text(x, y+0.18, f'({x},{y})', fontsize=12, ha='center', color='white',
+                zorder=4)  # Shadow effect
+
+plt.axhline(0, color='black', linewidth=0.7)
+plt.axvline(0, color='black', linewidth=0.7)
+
+# Display set elements next to the axes
+plt.xticks(list(A), [f'{a}' for a in A], fontsize=12, color='black', weight='bold')
+plt.yticks(list(B), [f'{b}' for b in B], fontsize=12, color='black', weight='bold')
+plt.ylim([0,8])
+plt.xlim([0,5])
+plt.xlabel("Set A", fontsize=14, weight='bold')
+plt.ylabel("Set B", fontsize=14, weight='bold')
+plt.title("Cartesian Product of A and B", fontsize=16, weight='bold')
+
+plt.tight_layout()
+plt.show()
+                            
+        </pre>
+                        </code></div>                 
 
                 We can take the probabilities of these resulting sets to see the probability of getting an outcome contained within them. 
 
@@ -495,7 +686,49 @@ plot_conditional_probability()
                 $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
 
                 <img src="Multivariate-Distribution.png" alt="Multivariate Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
-                
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+# Create figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Define the rectangle for bivariate uniform distribution
+x_range = [0, 5]
+y_range = [0, 3]
+
+# Define a shaded region: for simplicity, let's choose another rectangle
+shaded_x_range = [0, 3]
+shaded_y_range = [0, 2]
+
+# Calculate areas
+total_area = (x_range[1] - x_range[0]) * (y_range[1] - y_range[0])
+shaded_area = (shaded_x_range[1] - shaded_x_range[0]) * (shaded_y_range[1] - shaded_y_range[0])
+probability = shaded_area / total_area
+
+# Plot the uniform distribution and shaded region
+ax.set_xlim(-1, 6)
+ax.set_ylim(-1, 4)
+ax.add_patch(patches.Rectangle((x_range[0], y_range[0]), x_range[1] - x_range[0], y_range[1] - y_range[0], edgecolor='blue', facecolor='none',linewidth=2))
+ax.add_patch(patches.Rectangle((shaded_x_range[0], shaded_y_range[0]), shaded_x_range[1] - shaded_x_range[0], shaded_y_range[1] - shaded_y_range[0], edgecolor='blue', facecolor='blue', alpha=0.3))
+
+# Add annotations
+ax.text(2.5, -0.5, f"F(3,2) is probability of $X\leq 3$ and $Y\leq 2$ = {probability*100:.2f}%", horizontalalignment='center', fontsize=12, bbox=dict(facecolor='white', edgecolor='none', boxstyle='round,pad=0.2'))
+
+# Labels and title
+ax.set_title("Bivariate Uniform Distribution U(0,5) $\\times$ U(0,3)", fontsize=16)
+ax.set_xlabel("$X\sim U(0,5)$", fontsize=14)
+ax.set_ylabel("$Y\sim U(0,3)$", fontsize=14)
+
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+                    
+</pre>
+                </code></div>
 
                 <h4>Independence</h4>
                 We say that \(X_1,\dots,X_n\) are independent if
