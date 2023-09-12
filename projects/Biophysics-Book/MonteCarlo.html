@@ -64,6 +64,102 @@
                 <h1>Monte Carlo Simulations</h1>
                 <h2>Introduction</h2>
                 <h2>Basics of Monte Carlo</h2>
+
+                <img src="Monte-Carlo-Pi-Animation.gif" alt="Monte Carlo Pi Calculation Animation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+def inside_circle(x, y):
+    return x**2 + y**2 <= 1
+
+num_samples = 1000
+np.random.seed(0)
+fig, ax = plt.subplots(figsize=(8, 8))
+x_inside, y_inside, x_outside, y_outside = [], [], [], []
+
+scatter_inside = ax.scatter(x_inside, y_inside, color='blue', s=1.5)
+scatter_outside = ax.scatter(x_outside, y_outside, color='red', s=1.5)
+title = ax.set_title('')
+
+def update(frame):
+    x, y = np.random.uniform(0, 1, 2)
+    if inside_circle(x, y):
+        x_inside.append(x)
+        y_inside.append(y)
+    else:
+        x_outside.append(x)
+        y_outside.append(y)
+
+    scatter_inside.set_offsets(np.c_[x_inside, y_inside])
+    scatter_outside.set_offsets(np.c_[x_outside, y_outside])
+
+    pi_estimate = 4.0 * len(x_inside) / (len(x_inside) + len(x_outside))
+    title.set_text(f"Estimation of Pi using {len(x_inside) + len(x_outside)} samples: {pi_estimate:.4f}")
+
+    return scatter_inside, scatter_outside, title
+
+ani = FuncAnimation(fig, update, frames=num_samples,interval=50, blit=True)
+
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+ax.grid(True)
+ax.set_aspect('equal', adjustable='box')
+
+ani.save('Monte-Carlo-Pi-Animation.gif', fps=30, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+                    
+</pre>
+                </code></div>
+
+
+                <img src="Monte-Carlo-Pi-Static.png" alt="Monte Carlo Pi Calculation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+def estimate_pi(num_samples):
+    inside_circle = 0
+    x_inside = []
+    y_inside = []
+    x_outside = []
+    y_outside = []
+
+    for _ in range(num_samples):
+        x, y = np.random.uniform(0, 1, 2)  # Randomly sample point in square
+        if x**2 + y**2 <= 1:  # Check if point is inside circle
+            inside_circle += 1
+            x_inside.append(x)
+            y_inside.append(y)
+        else:
+            x_outside.append(x)
+            y_outside.append(y)
+
+    return (4.0 * inside_circle) / num_samples, x_inside, y_inside, x_outside, y_outside
+
+num_samples = 10000
+pi_estimate, x_inside, y_inside, x_outside, y_outside = estimate_pi(num_samples)
+
+# Plotting
+plt.figure(figsize=(8,8))
+plt.scatter(x_inside, y_inside, color='blue', s=1)
+plt.scatter(x_outside, y_outside, color='red', s=1)
+plt.title(f"Estimation of Pi using {num_samples} samples: {pi_estimate}")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+                    
+</pre>
+                </code></div>
+
                 <h2>Selected Applications</h2>
                 
 
