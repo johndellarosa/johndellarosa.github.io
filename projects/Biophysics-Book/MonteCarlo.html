@@ -63,7 +63,29 @@
             <div id="Membranes">
                 <h1>Monte Carlo Simulations</h1>
                 <h2>Introduction</h2>
+                The Monte Carlo method is a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results.
+                The basic concept is to use simulations with randomness to obtain results that may be unfeasible to obtain analytically or observationally. 
+
+
                 <h2>Basics of Monte Carlo</h2>
+                <h3>Outline</h3>
+                <ol>
+                    <li>Defining a domain of possible inputs.</li>
+                    <li>Generating inputs randomly from a probability distribution over the domain.</li>
+                    <li>Performing a deterministic computation on the inputs.</li>
+                    <li>Aggregating the results</li>
+
+                </ol>
+
+                <h3>Basic Example</h3>
+                Monte Carlo is commonly introduced with estimating Pi, and we shall be no exception. 
+                If we wished to calculate pi or determine the area of a circle, we can randomly generate points on the set \([-r,r]\times [-r,r]\). 
+                The area of the circle would then be the percentage of points in the set \(\{x,y : x^2+y^2\leq r^2\}\) multiplied by the total area of the sample set, \((2r)^2=4r^2\).
+                By symmetry, we can restrict the sampling to just one quadrant and the ratio of points within the circle to the total area will be the same.
+                Since \(A_{c}=\pi r^2\), we can determine pi by the relationship 
+
+                $$\frac{A_c}{A_s}=\frac{\pi r^2}{4 r^2}=\frac{\pi}{4}$$
+                Thus pi is 4 times the fraction of points inside the circle (or quartercircle or semicircle),.
 
                 <img src="Monte-Carlo-Pi-Animation.gif" alt="Monte Carlo Pi Calculation Animation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 <button type="button" class="collapsible">Python Code</button>
