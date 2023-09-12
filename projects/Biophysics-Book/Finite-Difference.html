@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Biophysics E-book</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Finite Difference Method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Finite Difference is a numerical way of solving Partial Differential Equations (PDEs).">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io/biography.html">About</a>|
+            <a href="https://johndellarosa.github.io/projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io/Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "Table-of-Contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Finite Difference">
+                <h1>Finite Difference Method</h1>
+                <h2>Introduction</h2>
+
+
+                <h2>Basics of Finite Difference</h2>
+                <h3>Outline</h3>
+                <ol>
+
+
+                </ol>
+
+                <h3>Basic Example</h3>
+                
+                <img src="Secant-Lines.png" alt="Monte Carlo Pi Calculation Animation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    return np.exp(x)
+
+def slope_of_secant(x1, x2):
+    return (f(x2) - f(x1)) / (x2 - x1)
+
+def extended_secant_line(x1, x2, X):
+    slope = slope_of_secant(x1, x2)
+    print(slope)
+    y_intercept = f(x1) - slope * x1
+    return slope * X + y_intercept
+
+x = 1
+h_values = [2,1, 0.1]
+
+X = np.linspace(-3, 4, 400)
+Y = f(X)
+
+plt.figure(figsize=(8,6))
+plt.plot(X, Y, label="y = $e^x$", color="black", linewidth=2)
+colors = plt.colormaps['tab10'].colors
+for i,h in enumerate(h_values):
+    x2 = x + h
+    x1 = x - h
+    plt.plot(X, extended_secant_line(x1, x2, X), label=f"h = {h}; secant slope={slope_of_secant(x1, x2)}", linestyle="--",color=colors[i])
+    plt.scatter([x1, x2], [f(x1), f(x2)], color=colors[i])
+
+plt.title("Secant Line Estimations of the Derivative")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+plt.xlim(-2, 4)
+plt.ylim(-1, 25)
+plt.show()
+                     
+</pre>
+                </code></div>
+
+
+
+                <h2>Selected Applications</h2>
+                
+                </div>
+
+                <div id="Exercises">
+                    <h2>Exercises</h2>
+                    <ol>
+    
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
