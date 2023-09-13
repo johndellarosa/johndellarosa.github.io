@@ -85,10 +85,12 @@
                 <h4>Central Difference</h4>
                 $$\frac{f(x+h)-f(x-h)}{2h}$$
 
+                Taking the deriative with respect to other variables works the same. 
+                When taking partial derivatives with respect to a variable, simply do not change the other variables like with normal partial differentiation. 
 
                 <h4>Taking A Secant Line Closer (Central Difference)</h4>
                 Smaller values of \(\Delta x\) make for better approximations, but stability conditions must be paid attention to.
-                <img src="Secant-Lines.png" alt="Monte Carlo Pi Calculation Animation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                <img src="Secant-Lines.png" alt="Secant Line Estimations for Derivative" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -165,7 +167,80 @@ plt.show()
                 <h4>Computational Considerations</h4>
                 Mathematically, the formulas aren't that difficult. The issue is that it can be computationally expensive to compute all these function values. 
 
+                <h5>Example - Heat Equation</h5>
 
+                The heat equation is the basic example in the world of Partial Differential Equations. 
+                It is simple and has an analytic solution. 
+                It has dynamics given by 
+
+                $$\frac{\partial u}{\partial t}=\alpha\frac{\partial^2 u}{\partial x^2}$$
+
+
+                
+                <img src="Heat-Equation-Finite-Difference.gif" alt="Heat Equation Finite Difference" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+# modified from https://levelup.gitconnected.com/solving-2d-heat-equation-numerically-using-python-3334004aa01a
+
+bar_length = 10
+max_iter_time = 10000
+alpha = 5.0
+n = 1000
+delta_x = bar_length/n
+
+# Calculated params
+delta_t = (delta_x ** 2)/(4 * alpha)
+gamma = (alpha * delta_t) / (delta_x ** 2)
+
+# Initialize solution: the grid of u(k, i)
+u = np.empty((max_iter_time, n))
+
+
+
+
+# Boundary conditions (fixed temperature)
+u_left = 0.0
+u_right = 0.0
+
+# Set the initial condition
+u.fill(u_initial)
+
+# initial heat pattern
+initial_temp_peak = 250
+u[:, n//2-100:n//2+100] = initial_temp_peak
+
+def Explicit_Finite_Difference(u):
+    for k in range(0, max_iter_time-1, 1):
+        for i in range(1, n-1, 1):
+                u[k + 1, i] = gamma * (u[k][i+1] + u[k][i-1] - 2*u[k][i]) + u[k][i]
+  
+    return u
+
+def plotheatmap(u_k, k):
+    # Clear the current plot figure
+    plt.clf()
+    plt.title(f"Temperature at t = {k*delta_t:.3f} unit time")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.ylim([0,initial_temp_peak+50])
+    # This is to plot u_k (u at time-step k)
+    plt.plot([delta_x*i for i in range(n)],u_k)
+
+
+    return plt
+
+u = Explicit_Finite_Difference(u)
+
+def animate(k):
+    k *= 100
+    plotheatmap(u[k], k)
+
+anim = animation.FuncAnimation(plt.figure(), animate, interval=1, frames=max_iter_time//100, repeat=False)
+anim
+anim.save("Heat-Equation-Finite-Difference.gif")        
+</pre>
+                </code></div>
 
                 <h2>Selected Applications</h2>
                 
