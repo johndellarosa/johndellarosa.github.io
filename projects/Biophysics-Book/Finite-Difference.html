@@ -63,6 +63,9 @@
             <div id="Finite Difference">
                 <h1>Finite Difference Method</h1>
                 <h2>Introduction</h2>
+                In practice, many PDEs do not have closed-form solutions. Finite difference methods (FDM) are numerical techniques used to approximate the solutions of partial differential equations (PDEs). By discretizing the domain into a finite number of grid points, FDM translates continuous PDEs into a system of algebraic equations. 
+                
+
 
 
                 <h2>Basics of Finite Difference</h2>
@@ -72,8 +75,19 @@
 
                 </ol>
 
-                <h3>Basic Example</h3>
-                
+                <h3>Difference Quotients</h3>
+                <h4>Forward Difference</h4>
+                $$\frac{f(x+h)-f(x)}{h}$$
+
+                <h4>Backward Difference</h4>
+                $$\frac{f(x)-f(x-h)}{h}$$
+
+                <h4>Central Difference</h4>
+                $$\frac{f(x+h)-f(x-h)}{2h}$$
+
+
+                <h4>Taking A Secant Line Closer (Central Difference)</h4>
+                Smaller values of \(\Delta x\) make for better approximations, but stability conditions must be paid attention to.
                 <img src="Secant-Lines.png" alt="Monte Carlo Pi Calculation Animation" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
@@ -94,7 +108,7 @@ def extended_secant_line(x1, x2, X):
     return slope * X + y_intercept
 
 x = 1
-h_values = [2,1, 0.1]
+h_values = [2,1, 0.5]
 
 X = np.linspace(-3, 4, 400)
 Y = f(X)
@@ -105,10 +119,13 @@ colors = plt.colormaps['tab10'].colors
 for i,h in enumerate(h_values):
     x2 = x + h
     x1 = x - h
-    plt.plot(X, extended_secant_line(x1, x2, X), label=f"h = {h}; secant slope={slope_of_secant(x1, x2)}", linestyle="--",color=colors[i])
+    plt.plot(X, extended_secant_line(x1, x2, X), label=f"h = {h}; secant slope={slope_of_secant(x1, x2):.3f}", linestyle="--",color=colors[i])
     plt.scatter([x1, x2], [f(x1), f(x2)], color=colors[i])
 
-plt.title("Secant Line Estimations of the Derivative")
+plt.plot(X, np.exp(1)*X+f(1) - np.exp(1) * 1, label=f"Derivative; slope={np.exp(1):.3f}", linestyle="--",color=colors[3])  
+plt.scatter([1], [f(1)], color=colors[3])
+    
+plt.title("Secant Line Estimations of the Derivative at x=1")
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
@@ -116,9 +133,37 @@ plt.grid(True)
 plt.xlim(-2, 4)
 plt.ylim(-1, 25)
 plt.show()
-                     
+                             
 </pre>
                 </code></div>
+                
+                <h4>Second Deriatives</h4>
+                In order to get a second deriative of a function, one takes the derivative of the derivative. 
+                The same logic applies for finite differences - take the finite difference of finite differences. 
+                <br>
+                Let us consider taking spacial derivative via forward differences for simplicity.
+                
+                $$f'(x)\approx \frac{f(x+\Delta x)-f(x)}{\Delta x}$$
+
+                $$f''(x)\approx\frac{f'(x+h)-f'(x)}{h}$$
+
+                Combining the two formulae, we get:
+
+                $$f''(x)\approx\frac{\frac{f(x+2\Delta x)-f(x+\Delta x)}{\Delta x}-\frac{f(x+\Delta x)-f(x)}{\Delta x}}{\Delta x}$$
+                $$f''(x)\approx\frac{f(x+2\Delta x)-2f(x+\Delta x)+f(x)}{(\Delta x)^2}$$
+
+                One can also use the backward or central differences.
+
+                <br><br>
+                If one requires higher order derivatives, the same logic can be applied, iteratively taking finite differences. 
+                
+                <br><br>
+                It is also possible to use finite differences for mixed partials. The central difference formula for mixed partials is relatively simple:
+
+                $$\frac{\partial^2 f}{\partial x\partial y}=\frac{f(x+\Delta x,y+\Delta y)-f(x+\Delta x, y-\Delta y)-f(x-\Delta x, y+\Delta y)+f(x-\Delta x, y -\Delta y)}{4(\Delta x)(\Delta y)}$$
+
+                <h4>Computational Considerations</h4>
+                Mathematically, the formulas aren't that difficult. The issue is that it can be computationally expensive to compute all these function values. 
 
 
 
