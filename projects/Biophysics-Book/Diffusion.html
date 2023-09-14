@@ -217,7 +217,11 @@ ani.save('OsmosisSimulation.gif', fps=30,
                 $$\frac{\partial \phi}{\partial t}=D\nabla^2\phi$$
 
                 Where \(\nabla^2\) is the Laplacian operator. 
-                The solution is given by 
+
+                <br>
+                This equation may seem familiar, as it is actually the same as the heat equation we encountered in the Finite Difference chapter, except we call the constant D instead of alpha. 
+                <br><br>
+                The solution with initial condition of everything concentrated at x=0 is given by 
 
                 $$\phi(x,t)=\frac{1}{\sqrt{4\pi Dt}}e^{-\frac{x^2}{4Dt}}$$
 
@@ -327,25 +331,15 @@ plt.show()</pre>
                 $$B=\nabla \times A$$
                 $$E=-\nabla V - \frac{\partial A}{\partial t}$$
 
-                <h3>Numerical Methods - Finite Difference</h3>
+                <h3>Numerical Methods</h3>
+                While having an analytic solution is nice, in practice, this is rare with PDEs, especially as you make things increasingly complicated. 
+                Thus, we must turn to numerical methods to approximate.
+                <h4>Finite Difference</h4>
                 A common technique to use when dealing with PDEs is the finite difference method. 
-                These attempt to discretize the space we're working on and get approximations for the steps. However, caution must be used in order to ensure the discretization is good. Otherwise, we can run into compounding errors. 
-
-                <br><br>
-                There are 3 main flavors to finite differences:
-                <ol>
-                    <li>Explicit Method</li>
-                    <li>Implicit Method</li>
-                    <li>Crank-Nicolson</li>
-                </ol>
-                These involves slightly different ways of approximating the partial derivative by sampling surrounding points. 
-                In the Implicit and Crank-Nicolson methods, we end up having to solve a system of equations, but given we are already using a computer to perform this, we can also just have the computer solve the system of equations. 
-                The explicit method is computationally the simplest and does not require solving a system of equations, but it is also the most prone to compounding errors. 
-
-
-
-                <h3>Monte Carlo Estimation</h3>
-                While an analytic solution is nice, doing large scale simulations is another option. 
+                These attempt to discretize the space we're working on and get approximations for the steps. 
+                
+                <h4>Monte Carlo Estimation</h4>
+                Doing large scale simulations is another option. 
                 We can generate a sample path by knowing the dynamics and having the computer draw from a normal distribution. 
                 For path-dependent processes such as when the drift and/or diffusivity is a function of position, we can take many small time steps. 
                 Our distribution would be a normalized histogram of our results. 
