@@ -176,7 +176,70 @@ plt.show()
                 </code></div>
 
                 <h2>Selected Applications</h2>
-                
+                A classic example is modeling bacteria population.
+
+                <br><br>
+
+                We can start with 1 bacterium. At each time point, it has a 25% chance to split into 2, a 25% chance to die, and 50% chance to do nothing.
+
+                Using probability, you could get a closed form answer, but we can also model this easily. 
+                We can run many simulations and take an average to see what the expected number of bacteria are at a given time.
+                One advantage is that we can easily change parameters and get results without having to do much work.
+
+                <img src="Monte-Carlo-Bacteria.png" alt="Monte Carlo Bacteria Population" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+sns.set_theme(style='whitegrid')
+np.random.seed(1)
+def simulate_bacteria_growth(steps=100, p_split=0.25, p_die=0.25):
+    population = 1  # Start with a single bacteria
+    populations_over_time = [population]  # Storing the initial population
+    
+    
+    
+    fates = [0,1,-1]
+    for _ in range(steps):
+        
+        fate = np.random.choice(fates,size=population,p=[.5,.25,.25])
+
+        # Update the population
+        population += fate.sum()
+
+        # Ensure population doesn't go negative
+        population = max(0, population)
+        
+        populations_over_time.append(population)
+
+    return populations_over_time
+
+def monte_carlo_simulation(runs=1000, steps=100):
+    matrix = np.zeros((runs, steps+1))  # +1 to include the initial population
+
+    for run in range(runs):
+        matrix[run] = simulate_bacteria_growth(steps)
+
+    return matrix
+steps = 100
+runs = 1000
+matrix = monte_carlo_simulation(runs,steps)
+colors = plt.colormaps['tab10'].colors
+# For visualization, let's print the first 5 simulations:
+# for i in range(5):
+#     print(f"Simulation {i+1} populations over time: {matrix[i]}")
+for i in range(5):
+    
+    plt.plot(range(steps+1), matrix[i], label=f"Run {i}", linestyle='-', color=colors[i],alpha=0.7)
+plt.title('Bacteria Simulation')
+plt.xlabel("Time Point")
+plt.ylabel("Population")
+plt.legend()
+plt.show()              
+</pre>
+                </code></div>
+
+
                 </div>
 
                 <div id="Exercises">

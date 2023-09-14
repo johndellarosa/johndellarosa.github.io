@@ -158,14 +158,38 @@
                             p_{E\rightarrow A} & p_{E\rightarrow E}
                             \end{bmatrix}^n$$
                 But what are the long-run probabilities? What if we just came across this natively (assuming the same dynamics) - what would we expect our chances of finding it in a given state are? 
-                
+                <h4>Analytic Answer</h4>
                 For an analytical solution, we can try to find a stationary point for the transition matrix:<br>
                 <br>
                 If the state distribution will not change over time, then it would have this property:
 
                 $$P T = P = P I$$
                 where P is the state distribution vector, T is the transition matrix, and I is the appropriate sized identity matrix. This is a straightforward eigenvector calculation.
+                In Python, numpy's linalg module can compute the eigenvalues and eigenvectors for a matrix. The long-run probabilities are the eigenvector associated with eigenvalue 1. 
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
 
+def steady_state(matrix):
+    # Find eigenvalues and eigenvectors
+    eigenvalues, eigenvectors = np.linalg.eig(matrix.T)  # Take the transpose of the matrix because we want left eigenvectors
+    
+    # Find the eigenvector corresponding to eigenvalue 1
+    # (the real part is used to handle potential rounding errors)
+    steady_vector = eigenvectors[:, np.isclose(eigenvalues, 1, atol=1e-10)]
+    
+    # Normalize the vector to get probabilities
+    steady_vector = steady_vector / np.sum(steady_vector)
+    
+    return np.real(steady_vector)  # Convert potential complex numbers to real numbers (imaginary parts will be close to 0)
+
+# Example transition matrix
+transition_matrix = np.array([[0.6,0.4],[0.7,0.3]])
+print(steady_state(transition_matrix))
+</pre>
+                </code></div>
+                <h4>Numerical Method</h4>
                 <br><br>
 
                 Numerically, we can figure out what the distribution would be by taking the limit as \(n\rightarrow\infty\).

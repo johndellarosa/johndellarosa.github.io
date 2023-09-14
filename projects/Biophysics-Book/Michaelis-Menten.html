@@ -145,8 +145,77 @@ plt.show()</pre>
                 As shown in the generated data above, the value of [S] at which the velocity is half of the asymptotic max is roughly 40 mM. 
     
                 <h4>Eadie-Hofstee Plot</h4>
-                <h4>Hanes-Woolf Plot</h4>
 
+                <img src="Eadie-Hofstee-Diagram.png" alt="Eadie-Hofstee Diagram plot" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(0)
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-5,1e-2,100)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+x_values = v_array/S_array
+
+noise = np.random.normal(size=(100))*5e-14
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+plt.figure(
+    #figsize=(14,8)
+)
+plt.scatter(x_values, v_array,s=5)
+model = sm.OLS(v_array,
+                sm.add_constant(x_values))
+results = model.fit()
+plt.plot(x_values,
+            results.predict(sm.add_constant(x_values)),
+            color='orange')
+plt.title("Eadie-Hofstee Diagram plot")
+plt.xlabel("v_0/[S] ($s$)")
+plt.ylabel(f"$v_0$ (M/s)")
+plt.legend(['Data',
+            f'OLS: y={results.params[1]:.6f}x+{results.params[0]}'])
+plt.show()</pre>
+                </code></div>   
+
+
+                <h4>Hanes-Woolf Plot</h4>
+                <img src="Hanes-Woolf-Plot.png" alt="Hanes-Woolf plot" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+np.random.seed(0)
+k_M = 4e-4
+k_cat = 10
+E_0 = 1e-12
+S_array = np.geomspace(1e-5,1e-2,100)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+#x_values = v_array/S_array
+y_values = S_array/v_array
+
+noise = np.random.normal(size=(100))*5e-14
+v_array = v_array + noise
+S_array_inverse = 1/S_array
+v_array_inverse = 1/v_array
+plt.figure(
+    #figsize=(14,8)
+)
+plt.scatter(S_array, y_values,s=5)
+model = sm.OLS(y_values,
+                sm.add_constant(S_array))
+results = model.fit()
+plt.plot(S_array,
+            results.predict(sm.add_constant(S_array)),
+            color='orange')
+plt.title("Hanes-Woolf Plot")
+plt.xlabel("[S] ($M$)")
+plt.ylabel(f"$[S]/v_0$ (s)")
+plt.legend(['Data',
+            f'OLS: y={results.params[1]}x+{results.params[0]}'])
+plt.show()</pre>
+                </code></div>   
                 <h4>Lineweaver-Burk plots</h4>
     
                 Since trying to estimate the half-max of a curve can be difficult, we might choose to linearize the data and use regression to find the best fit line and calculate the parameters from that. 
