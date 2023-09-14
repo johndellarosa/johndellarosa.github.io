@@ -255,7 +255,10 @@
 			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Secant-Lines.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Heat-Equation-Finite-Difference.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Heat-Equation-Explicit-Finite-Difference.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Heat-Equation-Implicit-Finite-Difference.gif</image:loc>
 	</image:image>
 </url>
 <url>

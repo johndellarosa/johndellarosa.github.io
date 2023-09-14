@@ -240,6 +240,14 @@ plt.show()
                 <h4>Computational Considerations</h4>
                 Mathematically, the formulas aren't that difficult. The issue is that it can be computationally expensive to compute all these function values. 
 
+                <h3>Schemes</h3>
+
+                <h4>Explicit</h4>
+
+                The explicit scheme is perhaps the most intuitive. 
+                You take all the partial deriatives at the current time point and use them to estimate the values at the next time point. 
+                We can take the forward difference for time and central difference for space.
+
                 <h5>Example - Heat Equation</h5>
 
                 The heat equation is the basic example in the world of Partial Differential Equations. 
@@ -263,7 +271,7 @@ plt.show()
                 In the simulation below, the temperature is higher at the center and then follows the heat equation dynamics. 
 
                 
-                <img src="Heat-Equation-Finite-Difference.gif" alt="Heat Equation Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <img src="Heat-Equation-Explicit-Finite-Difference.gif" alt="Heat Equation Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -331,6 +339,91 @@ anim
 anim.save("Heat-Equation-Finite-Difference.gif",fps=20) 
 </pre>
                 </code></div>
+
+                <h4>Implicit</h4>
+                In the implicit scheme, the spatial derivatives are taken at the <b>next</b> time point rather than the current one. 
+                Since we need to use function values at the time we're trying to solve for, this requires a system of equations. 
+                While this may seem like more trouble for no gain, we do not have to worry about stability, and thus have more freedom with choosing our \(\Delta x\) and \(\Delta t\). 
+
+<h5>Heat Equation</h5>
+
+$$\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}=\alpha \frac{u_{i+1}^{n+1}-2u_{i}^{n+1}+u_{i-1}^{n+1}}{(\Delta x)^2}$$
+where i is the spatial index and n is the time index. 
+
+<img src="Heat-Equation-Implicit-Finite-Difference.gif" alt="Heat Equation Implicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+sns.set_theme(style="whitegrid")
+# Define the domain
+L = 10.0   # length of the domain
+Nx = 1000  # number of spatial points
+dx = L / Nx
+x = np.linspace(0, L, Nx)
+
+# Diffusion coefficient
+alpha = 1
+
+# Time stepping parameters
+dt = 0.001
+Nt = 20000   # number of time steps
+r = alpha * dt/dx**2
+
+# Initial condition
+u = np.zeros((Nt+1, Nx))
+#u[0, :] = np.sin(np.pi * x)
+initial_temp_peak = 250
+u[0, Nx//2-Nx//10:Nx//2+Nx//10] = initial_temp_peak
+# Set up the tridiagonal matrix
+A = np.diag((1 + 2*alpha*r) * np.ones(Nx))
+A += np.diag(-alpha*r * np.ones(Nx-1), k=1)
+A += np.diag(-alpha*r * np.ones(Nx-1), k=-1)
+
+fig, ax = plt.subplots()
+#line, = ax.plot(x, u[0, :], '-r', label='Temperature')
+line, = ax.plot([], '-r', label='Temperature')
+ax.set_xlim(0, L)
+
+ax.set_xlabel('x')
+ax.set_ylabel('u')
+ax.set_title('Animated Implicit Solution of the Heat Equation')
+
+for t in range(Nt-1):
+    u[t+1, :] = np.linalg.solve(A, u[t, :])
+    u[t+1, 0] = 0
+    u[t+1, -1] = 0
+
+def update(num, u, line):
+    plt.clf()
+    num *= 10
+    plt.ylim([0,initial_temp_peak+50])
+    plt.title(f"Implicit Finite Difference Heat Equation: Temperature at t = {num*dt:.3f} unit time")
+    plt.xlabel("x")
+    plt.ylabel("Temperature")
+    # Apply boundary conditions (here, Dirichlet with u=0 at both ends)
+
+    plt.plot([dx*i for i in range(Nx)],u[num,:])
+    f = plt.fill_between([dx*i for i in range(Nx)],u[num,:],
+            alpha=0.3,
+            color='tab:blue',
+            )
+    return line,
+
+ani = FuncAnimation(fig, update, frames=Nt//10,interval=10, fargs=[u, line], blit=True)
+plt.show()
+ani.save("Heat-Equation-Finite-Difference.gif",fps=20)
+</pre>
+</code></div>
+
+<h4>Crank-Nicolson Scheme</h4>
+Crank-Nicolson is a more complicated type of Implicit, which is a combination of the traditional implicit method and the explicit method. One takes the spatial finite differences at both the starting and ending timepoints. 
+
+$$\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}=\alpha \frac{(u_{i+1}^{n+1}-2u_{i}^{n+1}+u_{i-1}^{n+1})+(u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n})}{2(\Delta x)^2}$$
+where i is the spatial index and n is the time index. 
+
 
                 <h2>Selected Applications</h2>
                     In the stochastic process chapter, we will cover a similar technique for another class of differential equations. 
