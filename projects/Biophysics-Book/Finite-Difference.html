@@ -539,6 +539,104 @@ Crank-Nicolson is a more complicated type of Implicit, which is a combination of
 $$\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}=\alpha \frac{(u_{i+1}^{n+1}-2u_{i}^{n+1}+u_{i-1}^{n+1})+(u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n})}{2(\Delta x)^2}$$
 where i is the spatial index and n is the time index. 
 
+                <h4>Other Methods</h4>
+                The previously mentioned methods (explicit, implicit, Crank-Nicolson) work for parabolic partial differential equations.
+                <br><br>
+
+
+                Let us pose the equation as:
+
+                $$Au_{xx}+2Bu_{xy}+Cu_{yy}+Du_x+Eu_y+F=0$$
+                <br><br>
+                We say a PDE is parabolic if
+                $$B^2-AC=0$$
+                We say a PDE is hyperbolic if
+                $$B^2-AC\gt 0$$
+                We say a PDE is elliptic if
+                $$B^2-AC\lt 0$$
+
+
+
+                For hyperbolic PDEs (wave-like), there is the Lax-Wendroff method.
+
+                For a simple PDE of the form
+
+                $$\frac{\partial u(x,t)}{\partial t}+\frac{\partial Au(x,t)}{\partial x}=0$$
+
+                The Lax-Wendroff method gives the progression wrt time for u as 
+
+                $$u_{i}^{n+1}=u_i^{n}-\frac{\Delta t}{2\Delta x}A[u_{i+1}^n-u_{i-1}^n]+\frac{(\Delta t)^2}{2(\Delta x)^2}A^2[u_{i+1}^n-2u_i^n+u_{i-1}^n]$$
+
+                where n is the time index, i is in the spatial index.
+
+                <img src="One-Way-Wave-Equation-Finite-Difference.gif" alt="Heat Equation Implicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# Define the domain
+L = 10.0   # length of the domain
+Nx = 1000  # number of spatial points
+dx = L / Nx
+x = np.linspace(0, L, Nx)
+
+# Wave speed
+c = 1.0
+
+# Time stepping parameters
+dt = 0.01
+Nt = 20000   # number of time steps
+
+# Initial condition
+u = np.sin(np.pi * x)
+u = np.zeros_like(x)
+u_matrix = np.zeros((Nt, Nx))  # 2D matrix to store the solution
+u_matrix[0, :] = u
+
+fig, ax = plt.subplots()
+line, = ax.plot(x, u, '-r')
+ax.set_ylim([-1.5, 1.5])
+ax.set_xlabel('x')
+ax.set_ylabel('u')
+ax.set_title('Lax-Wendroff Method for the One-Way Wave Equation')
+
+for n in range(Nt):
+    # Predictor step
+    u_star = 0.5 * (u[1:] + u[:-1]) - 0.5 * c * dt / dx * (u[1:] - u[:-1])
+
+    # Corrector step
+    u_new = np.zeros_like(u)
+    #print(u_new.size)
+    #u_new[0] = 0  # boundary condition
+    u_new[0] = np.sin(n*dt*3e0)
+    u_new[1:-1] = u[1:-1] - c * dt / dx * (u_star[1:] - u_star[:-1])
+    u_new[-1] = 0  # boundary condition
+    
+    # Store the solution in the matrix
+    u_matrix[n, :] = u_new
+
+    # Update the u array for the next step
+    u = u_new.copy()
+
+
+def update(n):
+    global u
+    n *= 10
+
+
+    line.set_ydata(u_matrix[n, :])
+    return line,
+
+ani = FuncAnimation(fig, update, frames=Nt//10, interval=50, blit=True)
+
+plt.tight_layout()
+plt.show()
+ani.save("One-Way-Wave-Equation-Finite-Difference.gif",fps=20)
+</pre>
+</code></div>
 
                 <h2>Selected Applications</h2>
                     In the stochastic process chapter, we will cover a similar technique for another class of differential equations. 
@@ -548,8 +646,11 @@ where i is the spatial index and n is the time index.
                 <div id="Exercises">
                     <h2>Exercises</h2>
                     <ol>
-                        <li>The wave equation is given by </li>
-                    
+                        <li>Use the forward difference method to approximate the first derivative of \(f(x)=x^3\) at x=3 and h=0.2</li>
+                        <li>Use the backward difference method to approximate the first derivative of \(f(x)=\sin(x)\) at \(x=\frac{\pi}{4}\) and \(h=\frac{\pi}{12}\)</li>
+                        <li>Use the central difference method to approximate the first derivative of \(f(x)=\sin(x)\) at \(x=\frac{\pi}{4}\) with \(h=\frac{\pi}{4}\)</li>
+                        <li>Using the central difference method, find the second derivative of \(f(x)=x^3\) at x=2 with h=1</li>
+                        <li></li>
                     </ol>
     
     
