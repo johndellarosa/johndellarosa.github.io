@@ -232,9 +232,9 @@ y = f(x)
 
 x_point = 1
 y_point = f(x_point)
-slope_forward = forward_difference(f, x_point)
-slope_backward = backward_difference(f, x_point)
-slope_central = central_difference(f, x_point)
+slope_forward = forward_difference(f, x_point,.25)
+slope_backward = backward_difference(f, x_point,.25)
+slope_central = central_difference(f, x_point,.25)
 
 # Calculate tangent lines
 y_forward = slope_forward * (x - x_point) + y_point
@@ -246,29 +246,37 @@ fig.tight_layout(pad=5.0)
 
 # Forward difference plot
 axs[0].plot(x, y, label="f(x) = $x^2$", color='black')
-axs[0].plot(x, y_forward, '--', label=f"Forward Difference: m={slope_forward:.2f}", color='blue')
-axs[0].scatter([x_point, x_point + 0.25], [y_point, f(x_point + 0.25)], color='black')
+axs[0].plot(x, y_forward, '--', label=f"Forward Difference:\n m={slope_forward:.2f}", color='blue')
+axs[0].scatter([x_point, x_point + 0.25], [y_point, f(x_point + 0.25)], color='blue')
 axs[0].legend()
 axs[0].grid(True)
+axs[0].set_xlabel('x')
+axs[0].set_ylabel('y')
 axs[0].set_title("Forward Difference")
 
 # Backward difference plot
 axs[1].plot(x, y, label="f(x) = $x^2$", color='black')
-axs[1].plot(x, y_backward, '--', label=f"Backward Difference: m={slope_backward:.2f}", color='red')
-axs[1].scatter([x_point, x_point - 0.25], [y_point, f(x_point - 0.25)], color='black')
+axs[1].plot(x, y_backward, '--', label=f"Backward Difference:\n m={slope_backward:.2f}", color='red')
+axs[1].scatter([x_point, x_point - 0.25], [y_point, f(x_point - 0.25)], color='red')
 axs[1].legend()
 axs[1].grid(True)
+axs[1].set_xlabel('x')
+axs[1].set_ylabel('y')
 axs[1].set_title("Backward Difference")
 
 # Central difference plot
 axs[2].plot(x, y, label="f(x) = $x^2$", color='black')
-axs[2].plot(x, y_central, '--', label=f"Central Difference: m={slope_central:.2f}", color='green')
-axs[2].scatter([x_point, x_point + 0.25, x_point - 0.25], [y_point, f(x_point + 0.25), f(x_point - 0.25)], color='black')
+axs[2].plot(x, y_central, '--', label=f"Central Difference:\n m={slope_central:.2f}", color='green')
+axs[2].scatter([ x_point + 0.25, x_point - 0.25], [f(x_point + 0.25), f(x_point - 0.25)], color='green')
 axs[2].legend()
 axs[2].grid(True)
+axs[2].set_xlabel('x')
+axs[2].set_ylabel('y')
 axs[2].set_title("Central Difference")
 
 plt.show()
+                    
+                    
                     
                     
                              
@@ -555,7 +563,7 @@ where i is the spatial index and n is the time index.
                 We say a PDE is elliptic if
                 $$B^2-AC\lt 0$$
 
-
+                <h5>Hyperbolic PDEs</h5>
 
                 For hyperbolic PDEs (wave-like), there is the Lax-Wendroff method.
 
@@ -637,6 +645,18 @@ plt.show()
 ani.save("One-Way-Wave-Equation-Finite-Difference.gif",fps=20)
 </pre>
 </code></div>
+
+<h5>Elliptic PDEs</h5>
+Elliptic PDEs tend to occur in PDEs that describe steady state systems rather than changing ones. 
+<br>
+An example of an elliptic PDE is the Laplace equation
+$$\nabla^2 u = 0$$
+
+and the generalized version, known as the Poisson equation
+$$\nabla^2 u = f(x,y)$$
+
+Since these PDEs typically do not involve a time derivative, it does not make sense to describe a method where we move forward through time iteratively. 
+These are often solved by systems of equations or iteratively. 
 
                 <h2>Selected Applications</h2>
                     In the stochastic process chapter, we will cover a similar technique for another class of differential equations. 
