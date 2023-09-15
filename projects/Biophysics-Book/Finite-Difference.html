@@ -191,6 +191,11 @@ plt.show()
 
                 <h2>Basics of Finite Difference</h2>
                 <h3>Outline</h3>
+
+                Finite differences replaces the derivative operator with the non-limit version, rather than taking the limit as h goes to 0. 
+                Since there are multiple ways of taking a derivative, we have several different forms of the difference quotient operator, which are denoted by \(\Delta_h,\nabla_h,\delta_h\).
+
+
                 <ol>
 
 
@@ -198,13 +203,13 @@ plt.show()
 
                 <h3>Difference Quotients</h3>
                 <h4>Forward Difference</h4>
-                $$\frac{f(x+h)-f(x)}{h}$$
+                $$\Delta_{h}[f](x)=\frac{f(x+h)-f(x)}{h}$$
 
                 <h4>Backward Difference</h4>
-                $$\frac{f(x)-f(x-h)}{h}$$
+                $$\nabla_{h}[f](x)=\frac{f(x)-f(x-h)}{h}$$
 
                 <h4>Central Difference</h4>
-                $$\frac{f(x+h)-f(x-h)}{2h}$$
+                $$\delta_{h}[f](x)=\frac{f(x+h)-f(x-h)}{2h}$$
 
                 Taking the deriative with respect to other variables works the same. 
                 When taking partial derivatives with respect to a variable, simply do not change the other variables like with normal partial differentiation. 
@@ -229,26 +234,28 @@ def central_difference(f, x, h=0.1):
 
 x = np.linspace(0, 2, 400)
 y = f(x)
-
+h=0.25
 x_point = 1
 y_point = f(x_point)
-slope_forward = forward_difference(f, x_point,.25)
-slope_backward = backward_difference(f, x_point,.25)
-slope_central = central_difference(f, x_point,.25)
+slope_forward = forward_difference(f, x_point,h)
+slope_backward = backward_difference(f, x_point,h)
+slope_central = central_difference(f, x_point,h)
 
 # Calculate tangent lines
 y_forward = slope_forward * (x - x_point) + y_point
 y_backward = slope_backward * (x - x_point) + y_point
-y_central = slope_central * (x - x_point) + y_point
+x_point_central = 1+h
+y_point_central = f(x_point_central)
+y_central = slope_central * (x - x_point_central) + y_point_central
 
 fig, axs = plt.subplots(1, 3, figsize=(12, 6))
 fig.tight_layout(pad=5.0)
 
 # Forward difference plot
 axs[0].plot(x, y, label="f(x) = $x^2$", color='black')
-axs[0].plot(x, y_forward, '--', label=f"Forward Difference:\n m={slope_forward:.2f}", color='blue')
-axs[0].scatter([x_point, x_point + 0.25], [y_point, f(x_point + 0.25)], color='blue')
-axs[0].legend()
+axs[0].plot(x, y_forward, '--', label=r"f $'(1)\approx$"+f"{slope_forward:.2f}", color='blue')
+axs[0].scatter([x_point, x_point + h], [y_point, f(x_point + h)], color='blue')
+axs[0].legend(fontsize=12)
 axs[0].grid(True)
 axs[0].set_xlabel('x')
 axs[0].set_ylabel('y')
@@ -256,9 +263,9 @@ axs[0].set_title("Forward Difference")
 
 # Backward difference plot
 axs[1].plot(x, y, label="f(x) = $x^2$", color='black')
-axs[1].plot(x, y_backward, '--', label=f"Backward Difference:\n m={slope_backward:.2f}", color='red')
-axs[1].scatter([x_point, x_point - 0.25], [y_point, f(x_point - 0.25)], color='red')
-axs[1].legend()
+axs[1].plot(x, y_backward, '--', label=r"f $'(1)\approx$"+f"{slope_backward:.2f}", color='red')
+axs[1].scatter([x_point, x_point - h], [y_point, f(x_point - h)], color='red')
+axs[1].legend(fontsize=12)
 axs[1].grid(True)
 axs[1].set_xlabel('x')
 axs[1].set_ylabel('y')
@@ -266,15 +273,16 @@ axs[1].set_title("Backward Difference")
 
 # Central difference plot
 axs[2].plot(x, y, label="f(x) = $x^2$", color='black')
-axs[2].plot(x, y_central, '--', label=f"Central Difference:\n m={slope_central:.2f}", color='green')
-axs[2].scatter([ x_point + 0.25, x_point - 0.25], [f(x_point + 0.25), f(x_point - 0.25)], color='green')
-axs[2].legend()
+axs[2].plot(x, y_central, '--', label=r"f $'(1)\approx$"+f"{slope_central:.2f}", color='green')
+axs[2].scatter([ x_point + h, x_point - h], [f(x_point + h), f(x_point - h)], color='green')
+axs[2].legend(fontsize=12)
 axs[2].grid(True)
 axs[2].set_xlabel('x')
 axs[2].set_ylabel('y')
 axs[2].set_title("Central Difference")
 
 plt.show()
+                    
                     
                     
                     
