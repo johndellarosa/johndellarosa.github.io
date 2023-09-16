@@ -573,6 +573,25 @@ where i is the spatial index and n is the time index.
 
                 <h5>Hyperbolic PDEs</h5>
 
+                If we attempt to use some of the previously mentioned methods on a hyperbolic PDE, such as the wave equation, we might get strange results. 
+                You can easily observe dampening of the wave or an explosion of amplitude. 
+                The Courant-Friedrichs-Lewy condition states for a 1D case that
+
+                $$\frac{A\Delta t}{\Delta x}\leq C_{max}$$
+                where A is the magnitude of the velocity and C is the Courant number. 
+                The general value of the max Courant number depends on the scheme. 
+
+                For the n-dimensional case:
+
+                $$\Delta t\left(\sum_{i}^n\frac{A_i}{\Delta x_i}\right)\leq C_{max}$$
+                However, there are other issues, beyond the stability concerns of the CFL condition. 
+                High frequency modes can easily get distorted if the delta x value is too large. 
+                Another option is to use a different method to solve the PDE, such as the Lax-Wendroff method. 
+
+
+
+
+                <br><br>
                 For hyperbolic PDEs (wave-like), there is the Lax-Wendroff method.
 
                 For a simple PDE of the form
@@ -681,7 +700,8 @@ These are often solved by systems of equations or iteratively.
                         <li>Use the backward difference method to approximate the first derivative of \(f(x)=\sin(x)\) at \(x=\frac{\pi}{4}\) and \(h=\frac{\pi}{12}\)</li>
                         <li>Use the central difference method to approximate the first derivative of \(f(x)=\sin(x)\) at \(x=\frac{\pi}{4}\) with \(h=\frac{\pi}{4}\)</li>
                         <li>Using the central difference method, find the second derivative of \(f(x)=x^3\) at x=2 with h=1</li>
-                        <li></li>
+                    
+                    
                     </ol>
     
     

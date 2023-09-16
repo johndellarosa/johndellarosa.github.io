@@ -197,10 +197,265 @@
 
                 <h3>Neuron Models</h3>
                 <h4>Hodgkin-Huxley Model</h4>
-                
+
+The Hodgkin-Huxley model has a system of 4 differential equations in order to model voltage-gated ion channels.
+
+$$I=C_m\frac{dV_m}{dt}+\bar{g}_Kn^4(V_m-V_K)+\bar{g}_{Na}m^3h(V_M-V_{Na})+\bar{g}_l(V_m-V_l)$$
+$$\frac{dn}{dt}=\alpha_n(V_m)(1-n)-\beta_n(V_m)n$$
+$$\frac{dm}{dt}=\alpha_m(V_m)(1-m)-\beta_m(V_m)m$$
+$$\frac{dh}{dt}=\alpha_h(V_m)(1-h)-\beta_h(V_m)h$$
+
+where alpha and beta are functions.
+
+                <img src="Hodgkin-Huxley.gif" alt="Hodgkin-Huxley Model" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+%matplotlib notebook
+
+# Constants
+Cm = 1.0     # membrane capacitance (uF/cm^2)
+gNa = 120.0  # maximum sodium conductance (mS/cm^2)
+gK = 36.0    # maximum potassium conductance (mS/cm^2)
+gL = 0.3     # maximum leak conductance (mS/cm^2)
+ENa = 50.0   # sodium reversal potential (mV)
+EK = -77.0    # potassium reversal potential (mV)
+EL = -54.387  # leak reversal potential (mV)
+
+# Equations for gating variables
+def alpha_m(V):
+    return 0.1 * (V + 40.0) / (1.0 - np.exp(-(V + 40.0) / 10.0))
+
+def beta_m(V):
+    return 4.0 * np.exp(-(V + 65.0) / 18.0)
+
+def alpha_h(V):
+    return 0.07 * np.exp(-(V + 65.0) / 20.0)
+
+def beta_h(V):
+    return 1.0 / (1.0 + np.exp(-(V + 35.0) / 10.0))
+
+def alpha_n(V):
+    return 0.01 * (V + 55.0) / (1.0 - np.exp(-(V + 55.0) / 10.0))
+
+def beta_n(V):
+    return 0.125 * np.exp(-(V + 65) / 80.0)
+
+# Hodgkin-Huxley ODEs
+def hodgkin_huxley(y, t, I):
+    V, m, h, n = y
+    dVdt = (I - gNa * m**3 * h * (V - ENa) - gK * n**4 * (V - EK) - gL * (V - EL)) / Cm
+    dmdt = alpha_m(V) * (1.0 - m) - beta_m(V) * m
+    dhdt = alpha_h(V) * (1.0 - h) - beta_h(V) * h
+    dndt = alpha_n(V) * (1.0 - n) - beta_n(V) * n
+    return [dVdt, dmdt, dhdt, dndt]
+
+# Time span
+t = np.linspace(0, 50, 1000)
+y0 = [-65, 0.05, 0.6, 0.32]
+
+# Set up the figure and axis for the animation
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.set_title('Hodgkin-Huxley Neuron')
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Voltage (mV)')
+ax.grid(True)
+line, = ax.plot(t, np.zeros_like(t), 'k', label='V (mV)')
+ax.set_ylim([-80,40])
+ax.legend()
+
+# Initialization function
+def init():
+    line.set_ydata(np.zeros_like(t))
+    return line,
+
+# Update function for the animation
+def update(frame):
+    I = frame  # Current is directly set by the frame number
+    sol = odeint(hodgkin_huxley, y0, t, args=(I,))
+    line.set_ydata(sol[:, 0])
+    #ax.set_ylim(min(sol[:, 0]) - 10, max(sol[:, 0]) + 10)
+    ax.set_ylim([-80,40])
+    ax.set_title(f'Hodgkin-Huxley Neuron (I = {I:.2f} uA/cm^2)')
+    return line,
+
+# Create the animation object
+ani = FuncAnimation(fig, update, frames=np.linspace(-5, 15, 75),interval=50, init_func=init, blit=True)
+
+plt.tight_layout()
+plt.show()
+ani.save('Hodgkin-Huxley.gif', fps=10, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+</pre>
+</code></div><br>
+
+<img src="Hodgkin-Huxley-Variables-Over-Time.png" alt="Hodgkin-Huxley Model Variables over Time" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+
+# Constants
+Cm = 1.0     # membrane capacitance (uF/cm^2)
+gNa = 120.0  # maximum sodium conductance (mS/cm^2)
+gK = 36.0    # maximum potassium conductance (mS/cm^2)
+gL = 0.3     # maximum leak conductance (mS/cm^2)
+ENa = 50.0   # sodium reversal potential (mV)
+EK = -77.0    # potassium reversal potential (mV)
+EL = -54.387  # leak reversal potential (mV)
+
+# Equations for gating variables
+def alpha_m(V):
+    return 0.1 * (V + 40.0) / (1.0 - np.exp(-(V + 40.0) / 10.0))
+
+def beta_m(V):
+    return 4.0 * np.exp(-(V + 65.0) / 18.0)
+
+def alpha_h(V):
+    return 0.07 * np.exp(-(V + 65.0) / 20.0)
+
+def beta_h(V):
+    return 1.0 / (1.0 + np.exp(-(V + 35.0) / 10.0))
+
+def alpha_n(V):
+    return 0.01 * (V + 55.0) / (1.0 - np.exp(-(V + 55.0) / 10.0))
+
+def beta_n(V):
+    return 0.125 * np.exp(-(V + 65) / 80.0)
+
+def external_current(t):
+    """ A time-varying external current """
+    '''
+    The neuron receives two short current pulses,
+    one between 10ms and 12ms, and another between 20ms and 22ms.
+    
+    '''
+    if 10 <= t <= 12:
+        return 10.0  # current pulse
+    elif 20 <= t <= 22:
+        return 10.0  # another current pulse
+    return 0.0
+
+# Hodgkin-Huxley ODEs
+def hodgkin_huxley(y, t):
+    '''
+    n = potassium subunit activation
+    m = sodium subunit activation
+    h = sodium channel subunit inactivation
+    '''
+    V, m, h, n = y
+    dVdt = (external_current(t) - gNa * m**3 * h * (V - ENa) - gK * n**4 * (V - EK) - gL * (V - EL)) / Cm
+    dmdt = alpha_m(V) * (1.0 - m) - beta_m(V) * m
+    dhdt = alpha_h(V) * (1.0 - h) - beta_h(V) * h
+    dndt = alpha_n(V) * (1.0 - n) - beta_n(V) * n
+    return [dVdt, dmdt, dhdt, dndt]
+
+# Time span
+t = np.linspace(0, 50, 10000)  # time span and steps (ms)
+y0 = [-65, 0.05, 0.6, 0.32]  # initial condition [V, m, h, n]
+
+# Solve ODE
+sol = odeint(hodgkin_huxley, y0, t)
+
+# Plot
+fig, axs = plt.subplots(4, 1, figsize=(10, 14))
+
+# Voltage
+axs[0].plot(t, sol[:, 0], 'k')
+axs[0].set_title('Voltage vs. Time')
+axs[0].set_ylabel('V (mV)')
+axs[0].grid(True)
+
+# m-gating variable
+axs[1].plot(t, sol[:, 1], 'r')
+axs[1].set_title('m-gating Variable vs. Time')
+axs[1].set_ylabel('m')
+axs[1].grid(True)
+
+# h-gating variable
+axs[2].plot(t, sol[:, 2], 'g')
+axs[2].set_title('h-gating Variable vs. Time')
+axs[2].set_ylabel('h')
+axs[2].grid(True)
+
+# n-gating variable
+axs[3].plot(t, sol[:, 3], 'b')
+axs[3].set_title('n-gating Variable vs. Time')
+axs[3].set_xlabel('Time (ms)')
+axs[3].set_ylabel('n')
+axs[3].grid(True)
+
+plt.tight_layout()
+plt.show()
+    
+</pre>
+</code></div><br>
+
+
                 <h4>Galves-Locherbach model</h4>
                 <h5>Stochastic Chains with Memory</h5>
-                In the Markov chains, the only information in the filtration that you needed to condition on was the present state. 
+                In the Markov chains, the only information in the filtration that you needed to condition on was the present state. In a stochastic chain with memory, you can condition on other things, such as time since a given event.
+
+                <h5>Basics</h5>
+                In a basic Galves-Locherbach model, a neuron is either firing or not. Each neuron only remembers the past as far back as the last time it fired. 
+                The probability that a neuron fires at a given time point is a function taking values on [0,1] that monotonically increases with respect to the time since last fired. 
+<br><br>
+                The figure below uses a sigmoidal probability model centered at L=5. By modifying the probability function, you can change the dynamics, such as adding a refractory period.
+
+                <img src="Galves-Locherbach-Basic.png" alt="Galves-Locherbach Model" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import random
+
+import math
+
+def phi(x):
+    return 1 / (1 + math.exp(-x/2+5))
+
+
+
+def gl_model(length):
+    """
+    Simulate the Galves-Locherbach model for a given length.
+    
+    """
+
+    sequence = []
+    context = 0
+    for _ in range(length):
+        
+        if (random.random() < phi(context)):
+            sequence.append(1)
+            context = 0
+        else:
+            sequence.append(0)
+            context += 1
+
+    return sequence
+
+np.random.seed(1)
+print(gl_model(100))
+
+plt.figure(figsize=(10, 7))
+plt.title('Basic Galves-Locherbach Model')
+plt.plot(range(len(sequence)),sequence, 'tab:blue', label='Neuron 1')
+plt.legend()
+plt.xlabel('Time point (Arbitrary Units)')
+plt.ylabel('Neuron State')
+plt.grid(True)
+plt.show()
+    
+</pre>
+</code></div><br>
+
 
             </div>
 
