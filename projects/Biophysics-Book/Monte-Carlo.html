@@ -77,6 +77,50 @@
 
                 </ol>
 
+                <h3>Defining A Domain of Possible Inputs</h3>
+                Some questions to ask:
+                <ol>
+                    <li>What variables will be randomly generated?</li>
+                    <li>How often will they be generated per trial?</li>
+                </ol>
+                <h3>Generating Inputs</h3>
+                <h4>Appropriate distribution</h4>
+                What distribution will each variable be sampled from? 
+                Some common distributions for a given task:
+                <ul>
+                    <li>Normal distribution: symmetric deviation from a value, with high probability of being around mean</li>
+                    <li>Log-Normal distribution: Relative changes are normally distributed</li>
+                    <li>Uniform distribution: Comparing versus probability threshold</li>
+                    <li>Beta: Randomly generating percentages</li>
+                    <li>Exponential distribution: Memory-less waiting for an event</li>
+                    <li>Poisson: Number of occurences when events are independent</li>
+                    <li>Half-normal distribution: Non-negative values with low kurtosis</li>
+                </ul>
+
+                <h4>How to Sample</h4>
+                For the common distributions, the sampling can be done by many libraries. 
+                For more complicated distributions, there are techniques such as inverse transform sampling.
+
+                <h4>Sampling Techniques</h4>
+                There are a number of sampling techniques that can be used to reduce variance of the estimator. 
+
+                <ol>
+                    <li>Antithetic variates</li>
+                    <li>Control variates</li>
+                    <li>Importance sampling</li>
+                    <li></li>
+                </ol>
+                
+                <h3>Deterministic Computation</h3>
+                <ol>
+                    <li></li>
+                </ol>
+                <h3>Aggregating Results</h3>
+                The Monte Carlo estimator has a standard deviation that scales with the inverse sequare root of n. 
+
+
+
+
                 <h3>Basic Example</h3>
                 Monte Carlo is commonly introduced with estimating Pi, and we shall be no exception. 
                 If we wished to calculate pi or determine the area of a circle, we can randomly generate points on the set \([-r,r]\times [-r,r]\). 

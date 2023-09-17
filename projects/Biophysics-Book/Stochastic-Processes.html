@@ -79,8 +79,28 @@
                 This chapter will focus on both discrete-time and continuous-time stochastic processes. 
                 We will begin with Markov chains and Random Walks. Later, Brownian Motion and Poisson processes will be covered. 
  
+
+
                 <h2>Discrete Time Stochastic Processes</h23>
     
+                <h3>Starting Concepts</h3>
+
+                <h4>Filtration</h4>
+                An important concept in stochastic processes is what a filtration is.
+
+                Informally, we can consider a filtration at time t, denoted \(\mathcal{F}_t\) to be all the information that is available by time t, or the history of events up to time t. 
+                As time progresses, this collection does not decrease.
+
+                Using our set theory notation from the probability chapter, we can write
+
+                $$\mathcal{F}_s\subseteq \mathcal{F}_t$$
+                for all \(s\leq t\).
+                    <br><br>
+                A stochastic process \(X_t\) is adapted to \(\mathcal{F}_t\) if the value of \(X_t\) can be determined at time t for all t.
+
+                In a Markov chain, the transition probabilities from time t to time t+1 only depends on the state at time t, rather than the whole filtration. This is called the Markov property.
+
+
                 <h3>Discrete-Time Markov Chains</h3>
     
                 Imagine a system where a protein is in one of two states: A or E. Each minute you observe its state, and it has the ability to go from state A to E or E to A, but it does not necessarily switch. We will denote these observational periods at \(t=0, 1, \ldots\)
