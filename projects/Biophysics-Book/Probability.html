@@ -394,7 +394,8 @@ plt.show()
                 $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
                 The Inclusion-Exclussion Principle gives a relationship between two events, the probability of the union, and the probability of the intersection. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
                 If A and B are mutually exclusive, then \(P(A\cap B)=0\). This can be thought of as the analogue of addition in probability.
-                
+
+
                 <img src="Inclusion-Exclusion-Principle.png" alt="Inclusion-Exclusion Principle" style="margin:auto; display: block;  width:clamp(300px,60vw, 600px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
@@ -430,7 +431,11 @@ plt.show()
                     
 </pre>
                 </code></div>   
-                
+                <br><br>
+                <h5>Boole's Inequality</h5>
+                A related theorem is Boole's Inequality, which states that the probability of the union of events is less than or equal to the sum of the individual probabilities.
+
+                $$P(\bigcup_{i}^{n}A_i)\leq \sum_{i}^nP(A_i)$$
                 <h4>De Morgan's Laws</h4>
                 De Morgan's laws describe how negation interactions with grouping of events. The statements can be rather formal, but verbally seem obvious. 
                 <br>
