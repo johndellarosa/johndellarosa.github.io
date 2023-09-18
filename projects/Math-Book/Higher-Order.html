@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Higher Order Differential Equations</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Differential Equation">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        <!-- </script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io/biography.html">About</a>|
+            <a href="https://johndellarosa.github.io/projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io/Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "Table-of-Contents.html">Math Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Higher-Order">
+            <h1>Higher Order Linear</h1>
+            <h2>Introduction</h2>
+            <h3>Linear Differential Equaiton</h3>
+            We say that a differential equation is <b>linear</b> if it is a linear polynomial in the function and its derivatives. 
+
+            $$a_n(x)y^{(n)}+a_{n-1}(x)y^{(n-1)}+\dots+a_1(x)y'+a_0(x)y=g(x)$$
+
+            
+
+            <h2>Homogeneous Case</h2>
+
+            We can call a differential equation homogeoneous if g(x)=0
+
+            <h4>Superposition Principle</h4>
+            If \(y_{1}(x)\) and \(y_{2}(x)\) are two solutions of a homogeneous linear differential equation, 
+            then any linear combination \(c_1y_1(x)+c_2y_2(x)\) is also a solution.
+            
+            <h4>Characteristic Equation</h4>
+
+            Let us consider a second order homogeneous linear differential equation
+
+            $$ay''+by'+cy=0$$
+
+            Since the function and its derivatives must cancel each other out, we might guess that the answer is an exponential. 
+            $$y=e^{mx}$$
+
+            We have the following derivatives for y:
+            $$y'=me^{mx}$$
+            $$y''=m^2e^{mx}$$
+
+            Plugging in to our differential equation:
+
+            $$am^2e^{mx}+bme^{mx}+ce^{mx}=0$$
+            $$(am^2+bm+c)e^{mx}=0$$
+            
+            If the product of two factors is 0, then at least one of the factors must be 0. 
+            Because \(e^{mx}\) will never be negative, we need not consider it for finding roots. 
+
+            We can then focus on the equation
+
+            $$am^2+bm+c=0$$
+            Which is a simple polynomial of m. We can then find the values of m for which the equation is 0, by factoring, quadratic equation, or completing the square. 
+            <br><br>
+            Let \(m_1\) and \(m_2\) be the roots of the polynomial.
+            <br>
+            If \(m_1\neq m_2\), we have the following solution
+
+            $$y=c_1e^{m_1x}+c_2e^{m_2x}$$
+
+            If \(m_1=m_2\), or we have repeated roots in the higher order case, the repeats will have an additional factor of x for the number repeat it is.
+
+            $$y=c_1e^{m_1x}+c_2xe^{m_1x}$$
+
+            <h3>Complex Roots</h3>
+            But what if we have complex roots?
+            <br>
+            \(e^{mx}\) is still valid for complex m.
+            Euler's formula gives the relationship for a complex exponent. 
+
+            $$e^{ix}=\cos x+i \sin(x)$$
+
+            Another relevant formula is that of de Moivre's which states
+
+            $$(\cos x+i\sin x)^n=\cos nx+i\sin nx$$
+            
+            The real part of an exponent can be factored out, letting us get
+
+            $$e^{(a+bi)x}=e^{ax}\left[cos(bx)+i\sin(bx)\right]$$
+
+            Since actually do not care whether the constants in front of solutions are real or complex, we get the solutions
+
+            $$y=e^{ax}\left[c_1\cos(bx)+c_2\sin(bx)\right]$$
+            as the solution if the root is m=a+bi
+<br><br>
+
+
+        </div>
+
+        <div id="Exercises">
+            <h2>Exercises</h2>
+            <ol>
+
+            </ol>
+
+
+        </div>
+
+        </div>        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
