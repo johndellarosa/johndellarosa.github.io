@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Advanced Thermodynamics</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Enthalpy, Thermodynamics, Entropy, Gibbs Free Energy, Helmholtz">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Advanced thermodynamics in biophysics, covering the 1st and 2nd laws of thermodynamics and free energy.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+            
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        <!-- </script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/index.html">Home</a>|
+            <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+            <!-- <a href="./index.html#education">Education</a>
+            <a href="./index.html#experience">Experience</a>
+            <a href="./index.html#skills">Skills</a> -->
+            |
+            <a href="https://johndellarosa.github.io/biography.html">About</a>|
+            <a href="https://johndellarosa.github.io/projects.html">Projects</a>|
+            <a href="https://johndellarosa.github.io/Miscellaneous.html">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "Table-of-Contents.html">Math Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="First-Order">
+            <h1>First Order</h1>
+            <h2>Introduction</h2>
+            This section will delve deeper into thermodynamics. Multivariable calculus will be used to expand upon topics covered earlier as well as introduce new topics. 
+            The <b>Fundamental Thermodynamic Relation</b> will be covered as an extension of the first law.
+            <h3>Separable</h3>
+            A first order differential equation involves a function's first derivative and no higher order derivatives.
+            <br>
+            We can write a first-order differential equation as
+            $$\frac{dy}{dx}=f(y,x)$$
+            <br>
+            The simplest example would be
+            $$y'(t)=k$$
+            We can write in the form 
+            $$\frac{dy}{dx}=k$$
+            $$dy=kdx$$
+            $$y=kx+c$$
+            This generates a family of functions. With initial conditions, we can specify further.
+            
+            <br>
+            $$\frac{dy}{dx}=ay$$
+            We can separate the variables
+            $$\frac{dy}{y}=adx$$
+            $$\int\frac{dy}{y}=\int adx$$
+            $$ln(y)+c_1=ax+c_2$$
+            We can combine \(c_1\) and \(c_2\) into another constant, which we will just call c.
+            $$ln(y)=ax+c$$
+            Exponentiating
+            $$y=e^{ax+c}$$
+            By exponenial rules, we can separate addition in the exponent as multiplication
+            $$y=e^{ax}e^{c}$$
+            Since e raised to a constant is another constant, we can just write \(e^{c}\equiv k\)
+            $$y=ke^{ax}$$
+
+            <h3>Linear Equation</h3>
+            A linear equation is of the form
+
+            $$\frac{dy}{dx}+p(x)y=q(x)$$
+            where p and q are functions.
+            <br>
+            For these types of problems, the use of an integrating factor is advised. 
+
+            We use an integreating factor of the form
+            $$\mu(x)=e^{\int p(x)dx}$$
+
+            Why is this our choice?
+
+            When multiplied, we get
+            $$\mu(x)\frac{dy}{dx}+\mu(x)p(x)y=\mu(x)q(x)$$
+
+            Note that
+            $$\frac{d}{dx}e^{\int P(x)dx}=P(x)e^{\int P(x)dx}$$
+            $$=\mu(x)P(x)$$
+
+            We have an equation that is the result of the product rule
+
+            $$\frac{d(\mu(x)y)}{dx}=\mu(x)y'+\mu'(x)y$$
+            $$=\mu(x)\frac{dy}{dx}+\mu(x)p(x)y$$
+            
+            <br>
+            So now we get
+
+            $$d(\mu(x)y)=q(x)\mu(x)$$
+
+            Integrating gives
+
+            $$\mu(x)y+c=\int q(x)\mu(x)dx$$
+            $$y=\int q(x)\mu(x)dx+\frac{c}{\mu(x)}$$
+
+            <h3>Exact Equations</h3>
+            An exact differential equation is of the form
+
+            $$M(x,y)dx+N(x,y)dy=0$$
+
+            We seek to find a function F(x,y). We can write the total differential of F as
+            $$dF=\frac{\partial F}{\partial x}dx+\frac{\partial F}{\partial y}dy$$
+            Matching the partials, we hope to find functions that correspond to 
+            $$g(x,y)=\frac{\partial F}{\partial x}$$
+            and
+            $$h(x,y)=\frac{\partial F}{\partial y}$$
+
+            If the differential equation is indeed exact, then we would have
+            $$M(x,y)=\frac{\partial F}{\partial x}$$
+            $$N(x,y)=\frac{\partial F}{\partial y}$$
+
+            To test if this is the case, we can apply symmetry of second derivatives (sometimes called Schwarz's Theorem or Clairaut's Theorem).
+
+            Under certain conditions the following identity holds:
+
+            $$\frac{\partial^2 f}{\partial x \partial y}=\frac{\partial^2 f}{\partial y\partial x}$$
+
+            Therefore, if
+            $$\frac{\partial}{\partial y}M(x,y)=\frac{\partial}{\partial x}N(x,y)$$
+
+            Since dF=0
+
+            $$F(x,y)=C$$
+
+            In order to find F(x,y), you can integrate M with respect to x and N with respect to y. 
+            Because this is a multivariate equation, your "constant" of integration is a function of the variables that you didn't integrate with respect to, because when taking the derivative, those would go to 0. 
+            To find the actual F(x,y), you must take that into account. 
+
+
+
+
+
+
+        </div>
+
+        <div id="Exercises">
+            <h2>Exercises</h2>
+            <ol>
+
+            </ol>
+
+
+        </div>
+
+        </div>        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

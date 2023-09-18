@@ -277,7 +277,52 @@ plt.show()</pre></code></div>
             <h3>Temperature</h3>
             <h3>Activation Energy</h3>
             This is the minimum energy barrier that reactants must overcome to transform into products. A reaction with a high activation energy will be slower than one with a lower activation energy, all else being equal.
+            <h3>Arrhenius Plot</h3>
 
+            A way to determine parameters from experimental data is through an Arrhenius plot, which linearizes the equation and plots ln(k) against inverse termperature.
+
+            <img src="Arrhenius-Plot.png" alt="Arrhenius Plot" style="margin:auto; display: block;  width:clamp(400px,50vw, 800px)"/>
+                    <button type="button" class="collapsible">Python Code</button>
+                    <div class="content">
+                    <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+np.random.seed(0)
+# Constants
+R = 8.314  # Universal gas constant, J mol^-1 K^-1
+Ea = 75 * 10**3  # Activation energy, J mol^-1. This is just a hypothetical value.
+A = 10**7  # Pre-exponential factor, s^-1. Another hypothetical value.
+
+# simulation params
+n = 30
+
+
+# Temperature range: 300K to 800K
+temperatures = np.linspace(300, 800, n)
+inverse_temperatures = 1 / temperatures
+
+# Calculate rate constants based on the Arrhenius equation
+k_values = A * np.exp(-Ea / (R * temperatures))
+noise = np.random.normal(size=(n))*5e-6
+noisy_k_values = k_values + noise
+# Plot
+fig, ax = plt.subplots()
+ax.scatter(inverse_temperatures, np.log(noisy_k_values), label='Data')
+model = sm.OLS(np.log(noisy_k_values),
+                sm.add_constant(inverse_temperatures))
+results = model.fit()
+plt.plot(inverse_temperatures,
+            results.predict(sm.add_constant(inverse_temperatures)),
+            color='orange',label=f'OLS: y={results.params[1]:.3f}x+{results.params[0]:.3f}')
+ax.set_title('Arrhenius Plot')
+ax.set_xlabel(r'1/T $(K^{-1})$')
+ax.set_ylabel('ln(k)')
+ax.grid(True)
+ax.legend()
+
+# Show the plot
+plt.show()
+</pre></code></div>
 
             <h2>Kinetics Models</h2>
             <h3>Collision Theory</h3>
