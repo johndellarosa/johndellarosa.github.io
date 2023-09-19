@@ -15,11 +15,11 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Higher Order Differential Equations</title>
+            <title>Laplace Transform</title>
     
         <!-- Meta tags -->
         
-        <meta name="keywords" content="Differential Equation">
+        <meta name="keywords" content="Differential Equation, Laplace transform">
         <meta name="author" content="John Della Rosa" >
         <meta name="description" content="">
         
@@ -60,10 +60,41 @@
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
-            <div id="Higher-Order">
-            <h1>Higher Order Linear</h1>
+            <div id="Laplace-Transform">
+            <h1>Laplace Transform</h1>
             <h2>Introduction</h2>
-            
+            The Laplace Transform is a powerful mathematical tool used primarily to simplify the process of analyzing and solving linear ordinary differential equations and systems. By converting functions of time into functions of a complex variable, it transforms differential equations into algebraic equations, which are often easier to solve.
+            <h2>Integral Transform</h2>
+            <h3>Definition</h3>
+            For a given function f(t), defined for \(t\geq 0\), The Laplace Transform of f(t) is given by:
+
+            $$\mathcal{L}\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)dt$$
+            where s is a complex number and F(s) is the image of f(t) under the transform.
+
+            <h3>Properties</h3>
+            <h4>Linearity</h4>
+            $$\mathcal{L}\{af(t)+bg(t)\}=aF(s)=bG(s)$$
+            for constants a,b.
+            <br><br>
+            This can be easily shown by the distributive property of multiplication and linearity of integration. 
+
+            <h4>Integration and Differentiation</h4>
+            <h5>Frequency Differentiation</h5>
+            $$\mathcal{L}\{tf(t)\}=-F'(s)$$
+            <h5>Frequency Integration</h5>
+            $$\mathcal{L}\{\frac{1}{t}f(t)\}=\int_s^\infty F(s)$$
+            <h5>Time Differentiation</h5>
+            $$\mathcal{L}\{f'(t)\}=sF(s)-f(0)$$
+            <h5>Time Integration</h5>
+            $$\mathcal{L}\{\int_0^tf(t)dt\}=\frac{F(s)}{s}$$
+            <h4>Shifting</h4>
+            <h5>Frequency Shifting</h5>
+            $$\mathcal{L}\{e^{at}f(t)\}=-F(s-a)$$
+            <!-- <h5>Time Shifting</h5>
+            $$\mathcal{L}\{e^{at}f(t)\}=-F'(s-a)$$ -->
+            <h4>Arguments</h4>
+            <h5>Time Scaling</h5>
+            $$\mathcal{L}\{f(at)\}=\frac{1}{a}F(\frac{s}{a})$$
 
         </div>
 

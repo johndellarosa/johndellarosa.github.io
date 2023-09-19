@@ -92,6 +92,57 @@
             Since e raised to a constant is another constant, we can just write \(e^{c}\equiv k\)
             $$y=ke^{ax}$$
 
+            <img src="Exponential.png" alt="Exponential DE" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the function and its derivative
+def f(t):
+    return np.exp(-t)
+
+def dfdt(t):
+    return -f(t)
+
+def tangent_line(x, x0, y0):
+    return dfdt(x0) * (x - x0) + y0
+
+# Generate x values
+x = np.linspace(0, 4, 400)
+
+# Choose the point where the tangent touches
+x0 = 2
+y0 = f(x0)
+
+# Calculate y values for the function, its derivative, and the tangent line
+y = f(x)
+y_tangent = tangent_line(x, x0, y0)
+
+# Plotting
+plt.figure(figsize=(8, 6))
+
+plt.plot(x, y, label=r'y(t) = $e^{-t}$', color='blue')
+plt.plot(x, -y, label=r"y'(t) = $-e^{-t}$", color='tab:orange')
+plt.plot(x, y_tangent, label='Tangent at t=' + str(x0), linestyle='--', color='red')
+plt.scatter([x0], [y0], color='green', zorder=5)  # plot the point where tangent touches
+
+plt.title("Function and its Tangent Line")
+plt.xlabel("t")
+plt.ylabel("y")
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
+plt.legend()
+
+# Display the plot
+plt.show()
+</pre>
+                </code>
+</div>
+
+
             <h3>Linear Equation</h3>
             A linear equation is of the form
 
