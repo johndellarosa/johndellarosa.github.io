@@ -146,6 +146,12 @@ plt.show()</pre>
     
                 <h4>Eadie-Hofstee Plot</h4>
 
+            The Eadie-Hofstee diagram plots velocity against velocity divided by substrate concentration. The equation is given by 
+
+            $$v=V_{max}-K_M\frac{v}{[S]}$$
+
+            \(V_{max}\) is given by the y-intercept, and the Michaelis-Menten constant is given by the negative of the slope.
+
                 <img src="Eadie-Hofstee-Diagram.png" alt="Eadie-Hofstee Diagram plot" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
@@ -182,6 +188,14 @@ plt.show()</pre>
 
 
                 <h4>Hanes-Woolf Plot</h4>
+
+                The Hanes-Woolf plot is another linearization that plots [S]/v against [S]. 
+                The equation is given by 
+
+                $$\frac{[S]}{v}=\frac{1}{V_{max}}[S]+\frac{K_M}{V_{max}}$$
+
+                The slope is \(\frac{1}{V_{max}}\). The Michaelis-Menten constant is calculated from the y-intercept multiplied by \(V_{max}\).
+
                 <img src="Hanes-Woolf-Plot.png" alt="Hanes-Woolf plot" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
@@ -222,6 +236,11 @@ plt.show()</pre>
                 One common method is Lineweaver-Burk plots, which are also called double-recipricol plots. As the name suggests, 1/[S] is plotted against 1/v. 
                 The y-intercept is 1/v_max. This is evident since as [S] goes to infinity, 1/[S] goes to 0. The slope is \(k_M/V_\text{max}\). The x-intercept is \(-1/k_M\). 
     
+                <br>
+                The Lineweaver-Burk equation is given by 
+
+                $$\frac{1}{v}=\frac{1}{V_{max}}+\frac{K_M}{V_{max}}\times\frac{1}{[S]}$$
+
                 <img src="Lineweaver-Burk-Plot.png" alt="Lineweaver-Burk plot" style="margin:auto; display: block;  width:clamp(400px,50vw, 1000px)"/>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
