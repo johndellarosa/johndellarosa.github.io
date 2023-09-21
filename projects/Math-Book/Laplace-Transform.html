@@ -207,7 +207,13 @@ plt.show()
 </div>
 
             <h3>Solving ODEs with Laplace Transform</h3>
-
+            <h4>Take Laplace Transform of both sides of the equation</h4>
+            Use a transform table if the functions are common; otherwise, you can explicitly do the integral transform by the definition.
+            <h4>Use algebraic techniques and properties of the Laplace transform to solve for Y(s)</h4>
+            This often involves the use of partial fraction decomposition.
+            <h4>Use the inverse Laplace transform or table to obtain y(t)</h4>
+            Since s is a complex variable, taking an integral with respect to it is non-trivial. 
+            Since having complex analysis isn't expected, a transform table should be referred to.
 
 
 
@@ -216,7 +222,10 @@ plt.show()
         <div id="Exercises">
             <h2>Exercises</h2>
             <ol>
-
+                <li>Compute the Laplace transform of \(f(t)=t^2\)</li>
+                <li>Compute the Laplace transform of \(f(t)=e^{-2t}\)</li>
+                <li>Find the inverse Laplace transform of \(F(s)=\frac{2s+3}{s^2+2s+5}\)</li>
+                <li>Use the laplace transform to solve \(y''+y=\sin(t)\) with initial conditions y(0)=0 and y'(0)=1</li>
             </ol>
 
 
