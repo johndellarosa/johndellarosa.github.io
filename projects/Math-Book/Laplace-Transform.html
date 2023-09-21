@@ -36,7 +36,23 @@
       
 
         <script src="../../math.js" type="text/javascript"></script> -->
+        <style>
+                    table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-left: auto;
+  margin-right: auto;
+        }
 
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        </style>
     </head>
     <body>
         <div class="navbar">
@@ -95,6 +111,105 @@
             <h4>Arguments</h4>
             <h5>Time Scaling</h5>
             $$\mathcal{L}\{f(at)\}=\frac{1}{a}F(\frac{s}{a})$$
+            
+            <h4>Convolution</h4>
+            The convolution of two functions in the time domain is the pointwise multiplication in the frequency domain.
+            
+            Let h be the convolution of f(t) and g(t):
+            $$h(t)=\int_0^tf(\tau)g(t-\tau)d\tau$$
+            Then the Laplace transform of h(t) is given by
+
+            $$\mathcal{L\{h(t)\}}=F(s)G(s)$$
+            <h3>Common transforms</h3>
+            <table>
+                <tr>
+                    <th>Function \( f(t) \)</th>
+                    <th>Laplace Transform \( F(s) \)</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>\(\frac{1}{s}\) (for \( Re(s) > 0 \))</td>
+                </tr>
+                <tr>
+                    <td>\( e^{at} \)</td>
+                    <td>\(\frac{1}{s-a}\) (for \( Re(s) > -a \))</td>
+                </tr>
+                <tr>
+                    <td>\( t^n \) (n>-1)</td>
+                    <td>\(\frac{\Gamma(n+1)}{s^{n+1}}\) (for \( Re(s) > 0 \))</td>
+                </tr>
+                <tr>
+                    <td>\( e^{at} t^n \)</td>
+                    <td>\(\frac{n!}{(s-a)^{n+1}}\) (for \( Re(s) > -a \))</td>
+                </tr>
+                <tr>
+                    <td>\( \sin(at) \)</td>
+                    <td>\(\frac{a}{s^2 + a^2}\) (for \( Re(s) > 0 \))</td>
+                </tr>
+                <tr>
+                    <td>\( \cos(at) \)</td>
+                    <td>\(\frac{s}{s^2 + a^2}\) (for \( Re(s) > 0 \))</td>
+                </tr>
+                <!-- Additional rows can be added for more functions and their Laplace Transforms -->
+            </table>
+
+            <h4>Sine in Time Domain and Frequency Domain</h4>
+            The below figure shows a graph of \(f(t)=\sin(2t)\) and its Laplace transform. Note how the max of the Laplace transform is at \(\text{Im}(s)=\pm \omega\)
+            <img src="Sine-Laplace-Transform.png" alt="Laplace Transform of Sine" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define omega (angular frequency)
+omega = 2
+
+# Time vector
+t = np.linspace(0, 2*np.pi, 400)  # Two periods for clarity
+sin_omega_t = np.sin(omega * t)
+
+# s-domain (frequency domain) vector
+s_real = np.linspace(0.01, .05, 400)
+s_imag = np.linspace(-3, 3, 400)
+S_real, S_imag = np.meshgrid(s_real, s_imag)
+S = S_real + 1j*S_imag
+
+F_s = omega / (S**2 + omega**2)
+
+# Plotting
+fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+
+# Time domain plot
+ax[0].plot(t, sin_omega_t, label=f"sin({omega}t)")
+ax[0].set_title("Time Domain")
+ax[0].set_xlabel("t")
+ax[0].set_ylabel("Amplitude")
+ax[0].axhline(0, color='black',linewidth=0.5)
+ax[0].axvline(0, color='black',linewidth=0.5)
+ax[0].legend()
+ax[0].grid(True)
+
+# Frequency domain plot (Magnitude)
+magnitude = np.abs(F_s)
+c = ax[1].pcolormesh(S_real, S_imag, magnitude, shading='auto', cmap='viridis')
+ax[1].set_title("Magnitude of Laplace Transform in s-Domain")
+ax[1].set_xlabel("Real(s)")
+ax[1].set_ylabel("Imag(s)")
+fig.colorbar(c, ax=ax[1])
+
+plt.tight_layout()
+plt.show()
+                
+
+</pre>
+            </code>
+</div>
+
+            <h3>Solving ODEs with Laplace Transform</h3>
+
+
+
 
         </div>
 

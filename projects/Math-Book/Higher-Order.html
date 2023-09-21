@@ -136,6 +136,64 @@
             as the solution if the root is m=a+bi
 <br><br>
 
+
+<img src="Spring-Dampening.png" alt="Second Order DE Dampening Comparison" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<button type="button" class="collapsible">Python Code</button>
+<div class="content">
+<code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the system parameters
+m = 1  # mass
+k = 1  # spring constant
+
+# Damping values: c1 for underdamped, c2 for overdamped, and c3 for critically damped
+c1 = 0.5  # underdamped
+c2 = 3    # overdamped
+c3 = 2 * np.sqrt(m*k)  # critically damped
+
+# Time vector
+t = np.linspace(0, 10, 1000)
+
+# Responses
+# Underdamped response
+omega_0 = np.sqrt(k/m)
+zeta1 = c1 / (2 * np.sqrt(m*k))
+omega_d1 = omega_0 * np.sqrt(1 - zeta1**2)
+phi = np.arctan(np.sqrt(1 - zeta1**2) / zeta1)
+x1 = (1/np.sqrt(1 - zeta1**2)) * np.exp(-zeta1 * omega_0 * t) * np.sin(omega_d1 * t + phi)
+
+# Overdamped response
+zeta2 = c2 / (2 * np.sqrt(m*k))
+alpha1 = -zeta2 * omega_0 + omega_0 * np.sqrt(zeta2**2 - 1)
+alpha2 = -zeta2 * omega_0 - omega_0 * np.sqrt(zeta2**2 - 1)
+C1 = alpha2 / (alpha2 - alpha1)
+C2 = -alpha1 / (alpha2 - alpha1)
+x2 = C1 * np.exp(alpha1 * t) + C2 * np.exp(alpha2 * t)
+
+# Critically damped response
+x3 = (1 + omega_0 * t) * np.exp(-omega_0 * t)
+
+# Plotting
+plt.figure(figsize=(10, 6))
+plt.plot(t, x1, label='Underdamped (Oscillatory)')
+plt.plot(t, x2, label='Overdamped (Non-Oscillatory)')
+plt.plot(t, x3, label='Critically Damped (Fastest Return)')
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.xlabel('Time (s)')
+plt.ylabel('Displacement from Equilibrium (cm)')
+plt.title('Underdamped vs. Overdamped vs. Critically Damped Response')
+plt.grid(True)
+plt.legend()
+plt.show()
+    
+</pre>
+</code>
+</div>
+
+
                 <h2>Nonhomogeneous</h2>
                 But what if \(g(x)\neq 0\)?
 
