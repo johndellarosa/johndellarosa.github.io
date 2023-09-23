@@ -60,6 +60,10 @@
                 <h1>Michaelis-Menten Kinetics</h1>
 
                 <h2>Introduction</h2>
+                Michaelis-Menten kinetics is a fundamental concept in enzymology, describing the mathematical representation of enzyme-catalyzed reactions. It provides a framework for understanding how enzymes interact with substrates to form products and is crucial for interpreting experimental data related to enzyme reactions.
+
+
+
 
                 <h3>Binding and Unbinding</h3>
     
@@ -139,7 +143,10 @@ plt.show()</pre>
                 </code></div>
     
                 As shown in the generated data above, the value of [S] at which the velocity is half of the asymptotic max is roughly 40 mM. 
-    
+                <h3>Linearization Methods for Michaelis-Menten Kinetics</h3>
+
+                Since trying to estimate the half-max of a curve can be difficult, we might choose to linearize the data and use regression to find the best fit line and calculate the parameters from that. 
+                The three main linearization methods are Eadie-Hofstee, Hanes-Woolf, and Lineweaver-Burk. 
                 <h4>Eadie-Hofstee Plot</h4>
 
             The Eadie-Hofstee diagram plots velocity against velocity divided by substrate concentration. The equation is given by 
@@ -228,7 +235,7 @@ plt.show()</pre>
                 </code></div>   
                 <h4>Lineweaver-Burk plots</h4>
     
-                Since trying to estimate the half-max of a curve can be difficult, we might choose to linearize the data and use regression to find the best fit line and calculate the parameters from that. 
+                
                 One common method is Lineweaver-Burk plots, which are also called double-recipricol plots. As the name suggests, 1/[S] is plotted against 1/v. 
                 The y-intercept is 1/v_max. This is evident since as [S] goes to infinity, 1/[S] goes to 0. The slope is \(k_M/V_\text{max}\). The x-intercept is \(-1/k_M\). 
     
@@ -303,6 +310,7 @@ plt.show()</pre>
 
 
     <h3>Inhibition</h3>
+    Enzyme inhibition is a crucial aspect of enzyme kinetics and pharmacology, affecting the rate of enzyme-catalyzed reactions. Understanding enzyme inhibition is vital in drug development, as many drugs act as enzyme inhibitors, modifying enzyme activity to achieve therapeutic effects. In this section, we explore the different types of enzyme inhibition: competitive, non-competitive, uncompetitive, and mixed inhibition.
     
     <figure><a href="https://commons.wikimedia.org/wiki/File:Inhibition-types.jpg#/media/File:Inhibition-types.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Inhibition-types.jpg" alt="Inhibition-types.jpg" style="max-height: 300px;"></a><br><br>By <a href="//commons.wikimedia.org/w/index.php?title=User:Athel_cb&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Athel cb (page does not exist)">Athel cb</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>,&nbsp;&nbsp;&nbsp; <a href="https://commons.wikimedia.org/w/index.php?curid=130486959">Link</a></figure>
     
@@ -442,9 +450,9 @@ plt.show()</pre>
         <li>\(k_M\) is unaffected</li>
     </ol>
     
-            
-    
-    
+            <h3>Summary</h3>
+            This chapter aims to explore the principles and methodologies of Michaelis-Menten kinetics, along with the applications of Lineweaver-Burk, Hanes-Woolf, and Eadie-Hofstee plots. These techniques provide a foundational understanding of enzyme kinetics, allowing researchers to deduce critical parameters and investigate enzyme mechanisms and interactions. 
+            Understanding the different types of enzyme inhibition and their representation on various enzyme kinetics plots, including Lineweaver-Burk, Hanes-Woolf, and Eadie-Hofstee plots, is essential for deciphering the interaction between enzymes, substrates, and inhibitors. This knowledge is pivotal in biological research, allowing scientists to explore the regulatory mechanisms of enzymatic activities and develop therapeutic agents that modulate enzyme activity in specific pathological conditions.
             </div>
 
             <div id="Exercises">
