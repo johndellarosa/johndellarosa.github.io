@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Monte Carlo Practice Problems</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/Miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "Table-of-Contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            
+                <div id="Exercises">
+                    <h1>Monte Carlo Practice Problems</h1>
+                    <ol>
+                        <li>Given a function \(f(x)=3x+2\) for \(0\leq x\leq 3\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        
+                        <li>Given a function \(f(x)=x^2\) for \(-2\leq x\leq 2\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Given a function \(f(x)=ln(x+1)\) for \(0\leq x\leq 2\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Given a function \(f(x)=\exp(-x)\) for \(0\leq x\leq 2\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Given a function \(f(x)=\exp(-x^2)\) for \(-3\leq x\leq 3\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Given a function \(f(x)=\sqrt{x}\) for \(0\leq x\leq 3\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Given a function \(f(x)=\frac{1}{1+x^2}\) for \(-1\leq x\leq 1\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Given a function \(f(x)=\frac{1}{1+e^{-x}}\) for \(-1\leq x\leq 1\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        
+                        
+                        <li>Estimate the area of an ellipse given by the equation 
+                            $$\frac{x^2}{9}+\frac{y^2}{16}=1$$
+                        </li>
+
+                        <li>Use Monte Carlo to estimate the mean of the X where \(X\sim |N(0,1)|\)</li>
+                        <li>Use Monte Carlo to calculate \(\mathbf{E}[e^X]\) where \(X\sim N(0,1)\)</li>
+                        <li>Use Monte Carlo to calculate \(\mathbf{E}[X^3]\) where \(X\sim N(0,1)\)</li>
+                        <li>Use Monte Carlo to calculate \(\mathbf{E}[e^X]\) where \(X\sim Bin(n=3,p=0.5)\)</li>
+                        <li>Use Monte Carlo to calculate \(\mathbf{E}[X^2]\) where \(X\sim Bin(n=3,p=0.5)\)</li>
+                        <li>Use Monte Carlo to calculate \(\mathbf{E}[\frac{1}{1+x}]\) where \(X\sim Bin(n=3,p=0.5)\)</li>
+                        
+                        <li>Let \(X\sim U(0,1)\) and \(x_1,x_2\) to be two realizations from that distribution. Use Monte Carlo to determine the probability that \(|x_1|+|x_2|\geq 1.25\)</li>
+                        
+
+                        <!-- <li>Use a Monte Carlo simulation to estimate the volume of a sphere with radius r=3</li>
+                        <li>Given a sphere with radius r=4, estimate the side-length of the largest cube that can fit inside the sphere using Monte Carlo simulation</li>
+                        <li>Given two dice rolls, use Monte Carlo to estimate the probability that the second roll is strictly greater than the first</li>
+                        <li>Use a Monte Carlo simulation to estimate how many coin flips it takes to get three heads in a row</li>
+                        <li>Given three dice rolls, use Monte Carlo to estimate the probability that the \(r_1\lt r_2 \lt r_3\) where \(r_i\) is the value on the ith roll</li>
+                        <li>Estimate the volume of an ellipsoid given by the equation 
+                            $$\frac{x^2}{4}+\frac{y^2}{9}+\frac{z^2}{25}=1$$
+                        </li>
+                        <li>Given a function \(f(x)=2\sin(\pi x)\) for \(0\leq x\leq 1\), estimate the area under the curve using Monte Carlo simulation.</li>
+                        <li>Use Monte Carlo to simulate the probability of drawing a card with replacement that is neither an Ace nor a heart. You can use the probabilities P(Ace)=1/13 and P(Heart)=1/4 rather than simulating the actual deck.</li>
+                        <li>Given a weighted coin with probability 60% of getting heads, use Monte Carlo to calculate the average number of coin flips it takes to get a tails for the first time.</li>
+                        <li>A bag of marbles contains 5 blue and 1 red. Use Monte Carlo to calculate the average number of draws it takes without replacement until you pull out the red marble.</li>
+                        <li>A bag of marbles contains 5 blue and 10 red. Use Monte Carlo to calculate the average number of red marbles if you take 5 draws without replacement.</li>
+                        
+                        
+                        <li>Let \(X\sim U(0,1)\) and \(x_1,x_2\) to be two realizations from that distribution. Use Monte Carlo to determine the probability that \(x_1+x_2\geq 1.25\)</li>
+                        <li>Let \(X\sim U(0,1)\) and \(x_1,x_2,x_3\) to be three realizations from that distribution. Use Monte Carlo to determine the probability that \(x_1+x_2+x_3\geq 2\)</li>
+                        <li>Let \(X\sim U(0,1)\) and \(x_1,x_2,x_3\) to be three realizations from that distribution. Use Monte Carlo to determine the probability that \(x_1+x_2\geq x_3\)</li>
+
+                        <li>Let \(X\sim N(0,1)\) and \(x_1,x_2\) to be two realizations from that distribution. Use Monte Carlo to determine the probability that \(x_1\times x_2\geq 0.5\)</li>
+                        <li>Let \(X\sim N(0,1)\) and \(x_1,x_2,x_3\) to be three realizations from that distribution. Use Monte Carlo to determine the probability that \(|x_1|+|x_2|+|x_3|\geq 2\)</li>
+                        <li>Let \(X\sim N(0,1)\) and \(x_1,x_2,x_3\) to be three realizations from that distribution. Use Monte Carlo to determine the probability that \(x_1+x_2\geq |x_3|\)</li> -->
+
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
