@@ -193,6 +193,62 @@ ani.save('OsmosisSimulation.gif', fps=30,
 
                 Fick's first law is a special case of a more general principle called the <b>Continuity Equation</b>
 
+                <img src="Ficks-First-Law.png" alt="Fick's 1st Law" style="margin:auto; display: block;  width:clamp(300px,60vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+sns.set_theme(style='whitegrid')
+# Define the diffusion coefficient D
+D = 1e-4  # Arbitrary units
+
+# Define a 1D concentration profile C(x)
+x = np.linspace(-1, 1, 100)
+midpoint = x.mean()
+C = 1e-3*np.exp(-0.5 * (x - midpoint) ** 2*100)  # Gaussian distribution as an example
+
+# Compute the concentration gradient dC/dx
+grad_C = np.gradient(C, x)
+
+# Compute the flux J
+J = -D * grad_C
+
+# Create the figure and axis
+fig, ax1 = plt.subplots(figsize=(9, 6))
+
+# Plotting concentration profile
+color = 'tab:blue'
+ax1.set_xlabel('Position (x)')
+ax1.set_ylabel('Concentration (M)', color=color)
+ax1.plot(x, C, color=color)
+
+ax1.tick_params(axis='y', labelcolor=color)
+
+# Create a twin axis for the flux
+ax2 = ax1.twinx()
+
+color = 'tab:red'
+ax2.set_ylabel('Flux (J)', color=color)
+ax2.plot(x, J, color=color)
+ax2.tick_params(axis='y', labelcolor=color)
+
+# Draw an arrow representing flux between two points
+x0, x1 = 3, 7  # Points where the flux arrow is drawn
+y = min(J) - 0.1  # Position in y where the arrow is drawn
+ax2.arrow(.1, .75e-6, .2, 0,width=max(J)/100 ,head_width=.5e-7,head_length=.05, fc='k', ec='k')
+ax2.arrow(-.1, .75e-6, -.2, 0,width=max(J)/100 ,head_width=.5e-7,head_length=.05, fc='k', ec='k')
+# Show the plot
+plt.title(r"Fick's First Law: $J=-D\nabla \phi$",fontsize=14)
+plt.xlim(-1,1)
+ax1.set_ylim(0,1e-3)
+ax2.set_ylim(-1e-6,1e-6)
+ax2.set_yticks(np.linspace(-1e-6,1e-6,11))
+plt.show()
+</pre>
+                </code></div>
+
                 <h3>Continuity Equation</h3>
                 While not one of Fick's laws, the continuity equation is related. It states
 

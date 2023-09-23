@@ -942,10 +942,133 @@ plt.show()
 
                 $$\rho(X_1,X_2)=\frac{\text{Cov}(X_1,X_2)}{\sqrt{\text{Var}[X_1]\text{Var}[X_2]}}$$
 
+                <img src="Pearson-Correlation.png" alt="Pearson Correlation" style="margin:auto; display: block;  width:clamp(300px,70vw, 1000px)" loading="lazy" />
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+sns.set_theme(style='whitegrid')
+# Set seed for reproducibility
+np.random.seed(0)
+
+# Generate Data
+x = np.linspace(-1, 1, 100)
+
+# Positive Correlation
+y_positive = 2.0 * x + np.random.normal(0, 0.1, 100)
+r_positive = np.corrcoef(x, y_positive)[0, 1]
+
+# Negative Correlation
+y_negative = -2.0 * x + np.random.normal(0, 0.1, 100)
+r_negative = np.corrcoef(x, y_negative)[0, 1]
+
+# No Correlation
+y_no_correlation = np.random.normal(0, 0.1, 100)
+r_no_correlation = np.corrcoef(x, y_no_correlation)[0, 1]
+
+# Create Subplots
+fig, axs = plt.subplots(1, 3, figsize=(16, 6))
+
+# Plot Positive Correlation
+axs[0].scatter(x, y_positive, alpha=0.6)
+axs[0].set_title(f'Positive Correlation: r = {r_positive:.3f}',fontsize=14)
+axs[0].axhline(0, color='black',linewidth=0.5)
+axs[0].axvline(0, color='black',linewidth=0.5)
+
+# Plot Negative Correlation
+axs[1].scatter(x, y_negative, alpha=0.6)
+axs[1].set_title(f'Negative Correlation: r = {r_negative:.3f}',fontsize=14)
+axs[1].axhline(0, color='black',linewidth=0.5)
+axs[1].axvline(0, color='black',linewidth=0.5)
+
+# Plot No Correlation
+axs[2].scatter(x, y_no_correlation, alpha=0.6)
+axs[2].set_title(f'No Correlation: r = {r_no_correlation:.3f}',fontsize=14)
+axs[2].axhline(0, color='black',linewidth=0.5)
+axs[2].axvline(0, color='black',linewidth=0.5)
+
+# Labeling
+for ax in axs:
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+
+plt.tight_layout()
+plt.savefig('Pearson-Correlation.png')
+plt.show()
+                    
+                </pre>
+                </code></div>
+
                 What must be emphasized is that a correlation of 0 does not mean that two variables are independent. 
                 A correlation of 0 is a <b>necessary but not sufficient</b> condition. For example, take a random variable that is distributed like \(X\sim N(0,1)\) and another variable Y=abs(X). The correlation is 0, but they are not independent.
 <br><br>
                 Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>. Kendall's tau coefficient is a third way. 
+
+                <img src="Spearman-Correlation.png" alt="Spearman Correlation" style="margin:auto; display: block;  width:clamp(300px,70vw, 1000px)" loading="lazy" />
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.stats as stats
+import seaborn as sns
+
+sns.set_theme(style='whitegrid')
+# Set seed for reproducibility
+np.random.seed(0)
+
+# Generate Data
+x = np.linspace(-1, 1, 30)
+
+# Positive Correlation (Monotonic)
+y_positive = 2*x**3 + x  # Cubic function
+y_positive += np.random.normal(size=x.shape,scale=0.1)
+rho_positive, _ = stats.spearmanr(x, y_positive)
+
+# Negative Correlation (Monotonic)
+y_negative = -1*np.log(1.1+x)  # Negative cubic function
+y_negative += np.random.normal(size=x.shape,scale=0.1)
+rho_negative, _ = stats.spearmanr(x, y_negative)
+
+# No Correlation
+y_no_correlation = x**2  # Random data points
+y_no_correlation += np.random.normal(size=x.shape,scale=0.1)
+rho_no_correlation, _ = stats.spearmanr(x, y_no_correlation)
+
+# Create Subplots
+fig, axs = plt.subplots(1, 3, figsize=(16, 6))
+
+# Plot Positive Correlation
+axs[0].scatter(x, y_positive, alpha=0.6)
+axs[0].set_title(f'Positive Spearman Correlation: ρ = {rho_positive:.3f}',fontsize=16)
+axs[0].axhline(0, color='black', linewidth=0.5)
+axs[0].axvline(0, color='black', linewidth=0.5)
+
+# Plot Negative Correlation
+axs[1].scatter(x, y_negative, alpha=0.6)
+axs[1].set_title(f'Negative Spearman Correlation: ρ = {rho_negative:.3f}',fontsize=16)
+axs[1].axhline(0, color='black', linewidth=0.5)
+axs[1].axvline(0, color='black', linewidth=0.5)
+
+# Plot No Correlation
+axs[2].scatter(x, y_no_correlation, alpha=0.6)
+axs[2].set_title(f'No Spearman Correlation: ρ = {rho_no_correlation:.3f}',fontsize=16)
+axs[2].axhline(0, color='black', linewidth=0.5)
+axs[2].axvline(0, color='black', linewidth=0.5)
+
+# Labeling
+for ax in axs:
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+
+plt.tight_layout()
+plt.savefig('Spearman-Correlation.png')
+plt.show()
+                    
+                </pre>
+                </code></div>
 
                 <h3>Linear Combinations of Distributions</h3>
                 Let X and Y be two randomly distributed variables. What are the properties of X+Y? 
