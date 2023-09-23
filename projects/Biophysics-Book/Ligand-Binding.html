@@ -59,8 +59,10 @@
             <div id="Ligand-Binding">
                 <h1>Protien-Ligand Binding</h1>
                 <h2>Introduction</h2>
-
+                Ligand binding is a foundational concept in biochemistry and pharmacology, encompassing the interaction between a ligand (a molecule that binds to another distinct larger molecule) and a protein, often a receptor. Understanding ligand binding is essential for elucidating biological functions, drug actions, and various cellular processes. In this chapter, we will explore ligand binding and its analytical representation through Scatchard and Hill plots, essential tools for interpreting ligand-receptor interaction data and inferring binding affinities and cooperativities.
                 <h2>Ligand Binding and Receptor Theory</h2>
+                Ligand binding involves the reversible interaction between a ligand (L) and its binding site on a protein (P), usually forming a ligand-protein complex (PL)
+
                 <h3>Types of Ligands</h3>
                 <h3>Types of Receptors</h3>
                 <h2>Cooperative Binding and Allosteric Regulation</h2>
@@ -68,6 +70,7 @@
                 <h3>Negative Allosteric Regulation</h3>
 
                 <h2>Binding Isotherm</h2>
+                
                 Let us consider a ligand, L, that binds to a protein, P.
 
                 $$P+L\rightleftharpoons P\cdot L$$
@@ -83,6 +86,8 @@
                 We can talk about the binding energy for the reaction through
 
                 $$\Delta G^0 = -RT \ln(K_A)$$
+
+                A lower value of Kd indicates a stronger affinity for the receptor.
 
                 <h3>Fraction bound</h3>
 
@@ -107,7 +112,7 @@
             
                 <h3>Scatchard Plot</h3>
 
-                Since the receptor affinity is an important biochemical quantity, we can measure it via Schartchard plots
+                Since the receptor affinity is an important biochemical quantity, we can measure it via Schartchard plots.
 
                 $$\frac{[L]_{\text{bound}}}{[L]}=-\frac{1}{K_D}[L]_{\text{bound}}+\frac{[P]_{\text{total}}}{K_D}$$
 
@@ -157,6 +162,9 @@ plt.show()</pre>
   To somewhat draw a parallel to a similar concept from general chemistry is percent ionization in weak acids. As you increase the concentration of your weak acid in a solution, the percent that is in the dissociated state will go down and the ratio
   \([A^{-}]/[HA]\)will go down. So at a 100mM concentration of weak acid, you will have a higher [A-] than you would at 1mM, BUT the ratio of \(\frac{[A-]}{[HA]+[A-]}\) or \([A^{-}]/[HA_{total}]\) is smaller in the 100mM solution. You get diminishing returns.
                 <h3>Hill Equation</h3>
+                Hill plots are pivotal for studying cooperative ligand binding, often observed in proteins with multiple binding sites, such as hemoglobin. Cooperative binding is characterized by the protein's affinity for the ligand, depending on whether other binding sites are occupied. 
+
+
 
                 The Hill equation provides a sigmoidal (S-shaped) curve that characterizes the cooperative binding or enzymatic activity of a molecule with multiple binding sites or functional domains. 
                 <br><br>
@@ -253,6 +261,14 @@ plt.show()
                     <li>If n>1, the binding is cooperative</li>
                     <li>If \(n\lt 1\), the biding is negatively cooperative</li>
                 </ul>
+
+                <h3>Summary</h3>
+
+                Understanding ligand binding and being proficient in interpreting Scatchard and Hill plots are fundamental for researchers in biochemistry, molecular biology, and pharmacology. These plots allow scientists to elucidate the underlying mechanisms of ligand-protein interactions, revealing insights into protein functionality, drug affinity, and the cooperative nature of ligand binding.
+<br><br>
+Analyzing ligand binding through these plots is integral for developing therapeutic agents with desired affinities and specificities, ultimately facilitating the design of more effective and targeted drugs. They also play a crucial role in exploring novel drug-receptor interaction mechanisms, paving the way for innovations in therapeutic interventions.
+
+
             </div>
             <div id="Exercises">
                 <h2>Exercises</h2>
