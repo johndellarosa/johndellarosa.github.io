@@ -159,6 +159,80 @@
                     <img src="Rate-Law-Comparison.png" alt="Kinetic rate law comparison graph" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
                     <figcaption>Rate Law Comparison</figcaption>
                 </figure>
+
+                <h2>Factors Behind Kinetics</h2>
+                <h3>Arrhenius Equation</h3>
+                $$k=A\exp(-\frac{E_a}{RT})$$
+                where k is the rate constant of the equation, A is the pre-exponential factor, \(E_a\) is the activation energy, R is the universal gas constant, and T is the absolute temperature.
+                
+                <h3>Activation Energy</h3>
+                This is the minimum energy barrier that reactants must overcome to transform into products. A reaction with a high activation energy will be slower than one with a lower activation energy, all else being equal.
+                
+                <h3>Temperature</h3>
+                A higher temperature generally increases the reaction rate by allowing more molecules to possess energy equal to or greater than the activation energy.
+                <br>
+    
+                The activation energy, \(E_A\), is the energy barrier that reactants must overcome for a chemical reaction to occur. As the temperature increases, more molecules will possess the energy equal to or greater than 
+                \(E_A\), leading to an increase in the reaction rate. Conversely, a decrease in temperature will result in fewer molecules with sufficient energy to overcome the energy barrier, thus slowing the reaction rate.
+                
+                
+    
+               <h3>Arrhenius Plot</h3>
+    
+                A way to determine parameters from experimental data is through an Arrhenius plot, which linearizes the equation and plots ln(k) against inverse termperature.
+                <figure>
+                <img src="Arrhenius-Plot.png" alt="Arrhenius Plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <figcaption>Arrhenius Plot Example</figcaption>
+            </figure>        
+                <button type="button" class="collapsible">Python Code</button>
+                        <div class="content">
+                        <code style="margin: auto; width: 50%;"><pre>
+    import numpy as np
+    import matplotlib.pyplot as plt
+    np.random.seed(0)
+    # Constants
+    R = 8.314  # Universal gas constant, J mol^-1 K^-1
+    Ea = 75 * 10**3  # Activation energy, J mol^-1. This is just a hypothetical value.
+    A = 10**7  # Pre-exponential factor, s^-1. Another hypothetical value.
+    
+    # simulation params
+    n = 30
+    
+    
+    # Temperature range: 300K to 800K
+    temperatures = np.linspace(300, 800, n)
+    inverse_temperatures = 1 / temperatures
+    
+    # Calculate rate constants based on the Arrhenius equation
+    k_values = A * np.exp(-Ea / (R * temperatures))
+    noise = np.random.normal(size=(n))*5e-6
+    noisy_k_values = k_values + noise
+    # Plot
+    fig, ax = plt.subplots()
+    ax.scatter(inverse_temperatures, np.log(noisy_k_values), label='Data')
+    model = sm.OLS(np.log(noisy_k_values),
+                    sm.add_constant(inverse_temperatures))
+    results = model.fit()
+    plt.plot(inverse_temperatures,
+                results.predict(sm.add_constant(inverse_temperatures)),
+                color='orange',label=f'OLS: y={results.params[1]:.3f}x+{results.params[0]:.3f}')
+    ax.set_title('Arrhenius Plot')
+    ax.set_xlabel(r'1/T $(K^{-1})$')
+    ax.set_ylabel('ln(k)')
+    ax.grid(True)
+    ax.legend()
+    
+    # Show the plot
+    plt.show()
+    </pre></code></div>
+    
+                <h2>Kinetics Models</h2>
+                <h3>Collision Theory</h3>
+                This model proposes that for a reaction to occur, reacting molecules must collide with each other. The rate of a reaction is directly proportional to the product of the concentration of reactants and the frequency of effective collisions.
+                <!-- <h2>Catalysis</h2> -->
+                
+
+
                     So far, the integrated rate laws have been univariate. Differential equations with multiple variables are possible and are called "Partial Differential Equations" or PDEs. 
             
                     <h2>Dynamic Equilibrium</h2>
@@ -270,76 +344,69 @@ anim = FuncAnimation(fig, animate,
  frames=200, interval=15)
 anim.save('DynamicEquilibrium.gif')
 plt.show()</pre></code></div>
-            <h2>Factors Behind Kinetics</h2>
-            <h3>Arrhenius Equation</h3>
-            $$k=A\exp(-\frac{E_a}{RT})$$
-            where k is the rate constant of the equation, A is the pre-exponential factor, \(E_a\) is the activation energy, R is the universal gas constant, and T is the absolute temperature.
-            
-            <h3>Activation Energy</h3>
-            This is the minimum energy barrier that reactants must overcome to transform into products. A reaction with a high activation energy will be slower than one with a lower activation energy, all else being equal.
-            
-            <h3>Temperature</h3>
-            A higher temperature generally increases the reaction rate by allowing more molecules to possess energy equal to or greater than the activation energy.
-            <br>
 
-            The activation energy, \(E_A\), is the energy barrier that reactants must overcome for a chemical reaction to occur. As the temperature increases, more molecules will possess the energy equal to or greater than 
-            \(E_A\), leading to an increase in the reaction rate. Conversely, a decrease in temperature will result in fewer molecules with sufficient energy to overcome the energy barrier, thus slowing the reaction rate.
-            
-            
-
-           <h3>Arrhenius Plot</h3>
-
-            A way to determine parameters from experimental data is through an Arrhenius plot, which linearizes the equation and plots ln(k) against inverse termperature.
-            <figure>
-            <img src="Arrhenius-Plot.png" alt="Arrhenius Plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
-            <figcaption>Arrhenius Plot Example</figcaption>
-        </figure>        
-            <button type="button" class="collapsible">Python Code</button>
-                    <div class="content">
-                    <code style="margin: auto; width: 50%;"><pre>
-import numpy as np
-import matplotlib.pyplot as plt
-np.random.seed(0)
-# Constants
-R = 8.314  # Universal gas constant, J mol^-1 K^-1
-Ea = 75 * 10**3  # Activation energy, J mol^-1. This is just a hypothetical value.
-A = 10**7  # Pre-exponential factor, s^-1. Another hypothetical value.
-
-# simulation params
-n = 30
+<h3>Le Chatelier's Principle</h3>
+Le Chatelier's Principle states that if a chemical system at equilibrium experiences a change in concentration, temperature, volume, or pressure, the equilibrium will shift to counteract the imposed change.
+<h4>Concentration</h4>
+<ul>
+    <li>Adding a Reactant: Shifts the equilibrium to the right, favoring the formation of products.</li>
+    <li>Adding a Product: Shifts the equilibrium to the left, favoring the formation of reactants.</li>
+    <li>Removing a Reactant: Shifts the equilibrium to the left, reducing the concentration of products.</li>
+    <li>Removing a Product: Shifts the equilibrium to the right, increasing the concentration of products.</li>
+</ul>
+<h4>Pressure</h4>
+<ul>
+    <li>An increase in pressure shifts the equilibrium towards the side with fewer moles of gas, reducing the volume occupied by the system.</li>
+    <li>A decrease in pressure shifts the equilibrium towards the side with more moles of gas, increasing the volume occupied by the system.</li>
+</ul>
+<h4>Temperature</h4>
+<ul>
+    <li>For endothermic reactions, heat is a reactant. Increasing temperature shifts the equilibrium to the right, forming more products, and decreasing temperature shifts it to the left.</li>
+    <li>For exothermic reactions, heat is a product. Increasing temperature shifts the equilibrium to the left, forming more reactants, and decreasing temperature shifts it to the right.</li>
+</ul>
 
 
-# Temperature range: 300K to 800K
-temperatures = np.linspace(300, 800, n)
-inverse_temperatures = 1 / temperatures
+<h3>Equilibirium Constants</h3>
 
-# Calculate rate constants based on the Arrhenius equation
-k_values = A * np.exp(-Ea / (R * temperatures))
-noise = np.random.normal(size=(n))*5e-6
-noisy_k_values = k_values + noise
-# Plot
-fig, ax = plt.subplots()
-ax.scatter(inverse_temperatures, np.log(noisy_k_values), label='Data')
-model = sm.OLS(np.log(noisy_k_values),
-                sm.add_constant(inverse_temperatures))
-results = model.fit()
-plt.plot(inverse_temperatures,
-            results.predict(sm.add_constant(inverse_temperatures)),
-            color='orange',label=f'OLS: y={results.params[1]:.3f}x+{results.params[0]:.3f}')
-ax.set_title('Arrhenius Plot')
-ax.set_xlabel(r'1/T $(K^{-1})$')
-ax.set_ylabel('ln(k)')
-ax.grid(True)
-ax.legend()
+While we have previously been talking about constants in terms of concentrations, we can also parameterize it in terms of partial pressures for gaseous reactions. 
 
-# Show the plot
-plt.show()
-</pre></code></div>
+For a gaseous reaction 
 
-            <h2>Kinetics Models</h2>
-            <h3>Collision Theory</h3>
-            This model proposes that for a reaction to occur, reacting molecules must collide with each other. The rate of a reaction is directly proportional to the product of the concentration of reactants and the frequency of effective collisions.
-            <!-- <h2>Catalysis</h2> -->
+$$aA+bB\rightleftharpoons cC+dD$$
+
+We can write a different equilbirium constant \(K_p\) which is given by the equation
+
+$$K_p=\frac{(P_C)^c(P_D)^d}{(P_A)^a(P_B)^b}$$
+where \(K_p\) is the partial pressure equilibrium constant and \(P_i\) is the partial pressure of specie i.
+<br><br>
+Using the ideal gas law, we can derive a relationship between \(K_c\) and \(K_p\), where \(K_c\) is the normal equilibirium constant in terms of concentrations.
+
+$$K_p=K_c(RT)^{\Delta n}$$
+where R is the ideal gas constant, T is the absolute temperature, and \(\Delta n\) is the change in moles of gas from reactants to products. 
+
+
+
+<h3>Ionic Equilibrium</h3>
+
+<h4>Strong and Weak Electrolytes</h4>
+A strong electrolyte is a chemical specie that completely or near-completely dissociates into ions when dissolved in solution. 
+It is very rare to have a complete dissociation, but for some species, it is one-sided enough that it is a good approximation, such as with strong acids or bases. 
+<br><br>
+We can then informally define a weak electrolyte as something that has a significant amount of unionized version when dissolved. 
+These will be species that aren't considered strong acids or bases, essentially. 
+<h4>pH</h4>
+Because protons are ubiquitous in chemical reactions, we can define a useful term to help quantify the concentration outside of just stating the concentration. 
+<br>
+The common definition of pH is 
+$$\text{pH}=-\log_10([H^+])$$
+while more formally, it is defined in terms of <b>activity</b>
+$$\text{pH}=-\log_10(a_{H^+})$$
+For the purposes of the textbook, we will use the common definition, as activities are outside the scope of what will be covered.
+<br><br>
+We can also define pOH in a similar way by replacing the proton concentration with the hydroxide concentration, although this is less often used as it tends to be redundant since for our purposes there is the relationship pH+pOH=14. 
+Again, this does not strictly hold at different temperatures and when you take activity into consideration, but it is good enough for us.
+
+
             
 
                 </div>
@@ -350,7 +417,11 @@ plt.show()
                         <li>Define dynamic equilibrium.</li>
                         <li>What is the equilibrium constant, K? What information does it provide about a system at equilibrium?</li>
                         <li>Write the expression for the equilibirium constant</li>
-                    
+                        <li>Explain Le Chatelier's Principle</li>
+                        <li>Use Le Chatelier's Principle to explain what will happen if you reduce the volume of the system</li>
+
+
+
                     </ol>
                 
                 </div>
