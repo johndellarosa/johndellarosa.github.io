@@ -117,8 +117,10 @@
                 $$V_{max}\equiv k_{cat}E_0$$
     
                 $$v=\frac{V_{max}[S]}{k_M+[S]}$$
-    
+                <figure>
                 <img src="Michaelis-Menten-Graph.png" alt="Michaelis-Menten graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+                <figcaption>Michaelis-Menten Graph Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -154,8 +156,10 @@ plt.show()</pre>
             $$v=V_{max}-K_M\frac{v}{[S]}$$
 
             \(V_{max}\) is given by the y-intercept, and the Michaelis-Menten constant is given by the negative of the slope.
-
+                <figure>
                 <img src="Eadie-Hofstee-Diagram.png" alt="Eadie-Hofstee Diagram plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+                <figcaption>Eadie-Hofstee Diagram Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -198,8 +202,10 @@ plt.show()</pre>
                 $$\frac{[S]}{v}=\frac{1}{V_{max}}[S]+\frac{K_M}{V_{max}}$$
 
                 The slope is \(\frac{1}{V_{max}}\). The Michaelis-Menten constant is calculated from the y-intercept multiplied by \(V_{max}\).
-
+                <figure>
                 <img src="Hanes-Woolf-Plot.png" alt="Hanes-Woolf plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+                <figcaption>Hanes-Woolf Plot Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -243,8 +249,10 @@ plt.show()</pre>
                 The Lineweaver-Burk equation is given by 
 
                 $$\frac{1}{v}=\frac{1}{V_{max}}+\frac{K_M}{V_{max}}\times\frac{1}{[S]}$$
-
+                <figure>
                 <img src="Lineweaver-Burk-Plot.png" alt="Lineweaver-Burk plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+                <figcaption>Lineweaver-Burk Plot Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -278,14 +286,16 @@ plt.show()</pre>
                 In practice, this can lead to bad estimates as the noisy values on the right can drastically affect the best-fit parameters.
 
                 The following is a graph with Noiseless Michaelis-Menten data and the same data with noise \(\sim N(0,\sigma=1e-13)\). Note that the values are relatively similar.
-
+                <figure>
                 <img src="Michaelis-Menten-Noise.png" alt="Effect of Noise on Michaelis-Menten plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
-
+                <figcaption>Michaelis-Menten Graph with and without Noise</figcaption>
+            </figure>
 
                 Below is a graph comparing the fit with v_0 having homoskedastic errors. Note that the double recipricol plot does not have homoskedastic errors. 
-
+                <figure>
                 <img src="Lineweaver-Burk-Noise.png" alt="Effect of noise on Lineweaver-Burk plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
-
+                <figcaption>Effect of Noise on Lineweaver-Burk Plot</figcaption>
+            </figure>
                 Here is a comparison of the determined parameters from each graph:
                 <ul>
                     <li>Noiseless:
@@ -350,8 +360,10 @@ plt.show()</pre>
                 Now finally plugging in the concentration into the product formation kinetic equation:
     
                 $$v_0=k_{cat}[E\cdot S]_{ss}=\frac{k_{cat}E_0}{1+\frac{\alpha k_M}{S_0}}$$
-    
+                <figure>
                 <img src="Lineweaver-Burk-Inhibitor.png" alt="Lineweaver-Burk plot with Compeitive Inhibitor" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+                <figcaption>Lineweaver-Burk Plot with Competitive Inhibitor</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>

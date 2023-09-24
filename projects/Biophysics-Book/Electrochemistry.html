@@ -202,9 +202,11 @@ $$\frac{dm}{dt}=\alpha_m(V_m)(1-m)-\beta_m(V_m)m$$
 $$\frac{dh}{dt}=\alpha_h(V_m)(1-h)-\beta_h(V_m)h$$
 
 where alpha and beta are functions.
-
+                <figure>
                 <img src="Hodgkin-Huxley.gif" alt="Hodgkin-Huxley Model" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Hodgkin-Huxley Model with Varying Current</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 import numpy as np
@@ -289,8 +291,10 @@ ani.save('Hodgkin-Huxley.gif', fps=10,
             )
 </pre>
 </code></div><br>
-
+<figure>
 <img src="Hodgkin-Huxley-Variables-Over-Time.png" alt="Hodgkin-Huxley Model Variables over Time" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+<figcaption>Hodgkin-Huxley Model Variables over Time</figcaption>
+</figure>
 <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
@@ -405,9 +409,11 @@ plt.show()
                 The probability that a neuron fires at a given time point is a function taking values on [0,1] that monotonically increases with respect to the time since last fired. 
 <br><br>
                 The figure below uses a sigmoidal probability model centered at L=5. By modifying the probability function, you can change the dynamics, such as adding a refractory period.
-
+                <figure>
                 <img src="Galves-Locherbach-Basic.png" alt="Galves-Locherbach Model" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Galves-Locherbach Example</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 import random

@@ -88,8 +88,10 @@
                 with initial condition
 
                 $$y(0)=0$$
-
+                <figure>
                 <img src="Euler-Method-ODE.png" alt="Euler Method for ODE" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Euler Method for Quadratic Polynomial</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -141,7 +143,10 @@ plt.show()
                 with initial condition
 
                 $$y(0)=1$$
+                <figure>
                 <img src="Euler-Gaussian.png" alt="Euler method for Exponential" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Euler Method for Gaussian Differential Equation</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -209,7 +214,10 @@ plt.show()
 
                 Taking the deriative with respect to other variables works the same. 
                 When taking partial derivatives with respect to a variable, simply do not change the other variables like with normal partial differentiation. 
+                <figure>
                 <img src="Finite-Difference-Operators.png" alt="Finite Difference Forward, Backward, Central Differences" style="margin:auto; display: block;  width:clamp(300px,70vw, 900px)"/>
+                <figcaption>Comparison of Finite Difference Operators</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -289,7 +297,10 @@ plt.show()
 
                 <h4>Effect of the value of \(\Delta x\)</h4>
                 Smaller values of \(\Delta x\) make for better approximations, but stability conditions must be paid attention to.
+                <figure>
                 <img src="Secant-Lines.png" alt="Secant Line Estimations for Derivative" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <figcaption>Effect of Delta x Size for Secant Line</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -397,8 +408,10 @@ plt.show()
                 
                 In the simulation below, the temperature is higher at the center and then follows the heat equation dynamics. 
 
-                
+                <figure>
                 <img src="Heat-Equation-Explicit-Finite-Difference.gif" alt="Heat Equation Explicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Heat Equation Solved by Explicit Finite Difference Method</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -600,9 +613,11 @@ where i is the spatial index and n is the time index.
 
                 where n is the time index, i is in the spatial index. Given the above definition of hyperbolic PDE, it may not be obvious why the one-way wave equation satisfies this criterium. 
                 This is because the one-way wave equation is formed as a decomposition of the regular wave equation \(\frac{\partial^2 u}{\partial t^2}=c^2\nabla^2 u\)
-
+                <figure>
                 <img src="One-Way-Wave-Equation-Finite-Difference.gif" alt="Heat Equation Implicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Wave Equation Finite Difference Method</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 import numpy as np

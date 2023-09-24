@@ -81,7 +81,10 @@ You can think of the probability of A as being a measure of the "size" of the se
                             </li>
                             <li>If \(A \subset B\), then \(P(A)\leq P(B)\)</li>
                         </ul>
+                        <figure>
                         <img src="Set-Subset.png" alt="Subset in Set Theory" style="margin:auto; display: block;  width:clamp(300px,75vw, 700px)"/>
+                        <figcaption>Subset Venn Diagram</figcaption>
+                    </figure>
                         <button type="button" class="collapsible">Python Code</button>
                         <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
@@ -114,8 +117,10 @@ plt.show()
                         <ul>
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cup B = \{1,2,3,4,6\}\)</li>
                         </ul>
-
+                        <figure>
                         <img src="Set-Union.png" alt="Union in Set Theory" style="margin:auto; display: block;  width:clamp(250px,30vw, 700px)"/>
+                        <figcaption>Set Union Venn Diagram</figcaption>
+                    </figure>
                         <button type="button" class="collapsible">Python Code</button>
                         <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
@@ -165,7 +170,10 @@ plot_venn_union()
                         <ul>
                             <li>If A is the set \(\{1,2,3\}\) and B is the set \(\{2,4,6\}\), then \(A\cap B = \{2\}\)</li>
                         </ul>
+                        <figure>
                         <img src="Set-Intersection.png" alt="Intersection in Set Theory" style="margin:auto; display: block;  width:clamp(250px,30vw, 700px)"/>
+                        <figcaption>Set Intersection Venn Diagram</figcaption>
+                    </figure>
                         <button type="button" class="collapsible">Python Code</button>
                         <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
@@ -217,8 +225,10 @@ plot_venn_intersection()
                     <h4>Set Difference</h4>
                     \(B\setminus A\) is the set of outcomes that are in B, but not A. This is the set equivalent of subtraction.
 
-
+                        <figure>
                         <img src="Set-Difference.png" alt="Difference in Set Theory" style="margin:auto; display: block;  width:clamp(250px,30vw, 700px)"/>
+                        <figcaption>Set Difference Venn Diagram</figcaption>
+                    </figure>
                         <button type="button" class="collapsible">Python Code</button>
                         <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
@@ -267,6 +277,8 @@ plot_venn_difference()
                         <h4>Complement</h4>
                         In the special case of \(\Omega \setminus A\) can be written as \(A^{c}\) or \(\overline{A}\). This is called the <b>complement</b> of A and is the set of outcomes not in A. In logic, this can be seen as \(\neg A\)
                         <img src="Set-Complement.png" alt="Set Complement in Set Theory" style="margin:auto; display: block;  width:clamp(200px,25vw, 600px)"/>
+                        <figcaption>Set Complement Venn Diagram</figcaption>
+                    </figure>
                         <button type="button" class="collapsible">Python Code</button>
                         <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
@@ -317,8 +329,10 @@ plot_venn_complement()
                         
                         <h4>Cartesian Product</h4>
                         The Cartesian product is the main analogue to multiplication. The cartesian product of sets A and B is the set of all ordered pairs where the first element is from set A and the second element is from set B. 
-
+                        <figure>
                         <img src="Set-Cartesian-Product.png" alt="Cartesian Product in Set Theory" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)"/>
+                        <figcaption>Cartesian Product Example</figcaption>
+                    </figure>
                         <button type="button" class="collapsible">Python Code</button>
                         <div class="content">
                         <code style="margin: auto; width: 50%;"><pre>
@@ -391,8 +405,10 @@ plt.show()
                 The Inclusion-Exclussion Principle gives a relationship between two events, the probability of the union, and the probability of the intersection. This essentially makes sure we don't double count as \(A\cap B\) is included as an outcome in P(A) and P(B). 
                 If A and B are mutually exclusive, then \(P(A\cap B)=0\). This can be thought of as the analogue of addition in probability.
 
-
+                <figure>
                 <img src="Inclusion-Exclusion-Principle.png" alt="Inclusion-Exclusion Principle" style="margin:auto; display: block;  width:clamp(300px,60vw, 600px)"/>
+                <figcaption>Inclusion-Exclusion Venn Diagram Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -456,7 +472,10 @@ plt.show()
                 where \(x_i\) is a possible value that X takes. We will call the function p(x) the <b>probability mass function</b> (PMF) for discrete variables. 
 
                 <h4>Example with Binomial Distribution</h4>
+                <figure>
                     <img src="Binomial-PMF-CDF.png" alt="Binomial PMF and CDF" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                    <figcaption>Binomial Distribution Graph Example</figcaption>
+                </figure>
                     <button type="button" class="collapsible">Python Code</button>
                     <div class="content">
                     <code style="margin: auto; width: 50%;"><pre>
@@ -497,7 +516,10 @@ plt.show()</pre></code></div>
 
 
                 <h4>Example with Arcsine Distribution</h4>
+                <figure>
                 <img src="Arcsine-PDF-CDF.png" alt="Arcsine PMF and CDF" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Arcsine Distribution Graph Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -555,8 +577,10 @@ The probability that \(1\lt X \leq 2\) is given by
 
 $$P(1\lt X \leq 2)=F(2)-F(1)$$
 $$=\int_1^2 2\exp(-2x)dx$$
-
+<figure>
 <img src="Area-Under-Curve.png" alt="Probability Continuous Variable" style="margin:auto; display: block;  width:clamp(300px,45vw, 800px)"/>
+<figcaption>Exponential Distribution Example</figcaption>
+</figure>
 <button type="button" class="collapsible">Python Code</button>
 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -590,8 +614,10 @@ plt.show()</pre>
     
                 $$P(A|B)\equiv \frac{P(A \cap B)}{P(B)}$$
                 where \(P(A\cap B)\) is the probability of both A and B occurring.
-                
+                <figure>
                 <img src="Conditional-Probability-Venn-Diagram.png" alt="Conditional Probability Venn Diagram" style="margin:auto; display: block;  width:clamp(300px,35vw, 800px)" loading="lazy" />
+                <figcaption>Conditional Probability Venn Diagram</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -686,8 +712,10 @@ plot_conditional_probability()
                 
 
                 $$F(x_1,\dots,x_n)=P(X_1\leq x_i,\dots,X_n\leq x_n)$$
-
+                <figure>
                 <img src="Multivariate-Distribution.png" alt="Multivariate Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)" loading="lazy" />
+                <figcaption>Multivariate Uniform Distribution Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -752,7 +780,10 @@ plt.show()
                 We can define the density of a multivariate distribution as 
 
                 $$f(x_1,\dots,x_n)\equiv\frac{\partial^n}{\partial_1\cdots\partial_n}F(x_1,\dots,x_n)$$
+                <figure>
                 <img src="Multivariate-Density.gif" alt="Multivariate Density" style="margin:auto; display: block;  width:clamp(300px,40vw, 600px)" loading="lazy" />
+                <figcaption>Multivariate Density Plot Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -796,8 +827,10 @@ anim.save('basic_animation.gif', fps=30,
 
                 Using the marginal densities, we can arrive at an alternative definition of independence. Two random variables are independent if
                 $$f(x_1,x_2)=f_{X_1}(x_1)f_{X_2}(x_2)\forall(x_1,x_2)$$
-
+                <figure>
                 <img src="Marginal-Distributions.png" alt="Joint Distribution and Marginal Distributions" style="margin:auto; display: block;  width:clamp(300px,60vw, 800px)" loading="lazy" />
+                <figcaption>Marginal Distribution Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -873,8 +906,10 @@ plt.show()
                 Equivalently,
 
                 $$f(x_1,x_2)=f_{X_1|X_2}(x_1|x_2)f_{X_2}(x_2)$$
-
+                <figure>
                 <img src="Conditional-Distribution.png" alt="Conditional Distribution" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)" loading="lazy" />
+                <figcaption>Conditional Distribution Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -941,8 +976,10 @@ plt.show()
                 We can normalize this into the <b>Pearson correlation</b> (often just called correlation) as follows:
 
                 $$\rho(X_1,X_2)=\frac{\text{Cov}(X_1,X_2)}{\sqrt{\text{Var}[X_1]\text{Var}[X_2]}}$$
-
+                <figure>
                 <img src="Pearson-Correlation.png" alt="Pearson Correlation" style="margin:auto; display: block;  width:clamp(300px,70vw, 1000px)" loading="lazy" />
+                <figcaption>Positive, Negative, and Zero Pearson Correlation Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -1005,8 +1042,10 @@ plt.show()
                 A correlation of 0 is a <b>necessary but not sufficient</b> condition. For example, take a random variable that is distributed like \(X\sim N(0,1)\) and another variable Y=abs(X). The correlation is 0, but they are not independent.
 <br><br>
                 Also, Pearson correlation only captures linear behavior between two variables. Another metric for monotonic behaviour between two random variables is <b>Spearman correlation</b>. Kendall's tau coefficient is a third way. 
-
+                <figure>
                 <img src="Spearman-Correlation.png" alt="Spearman Correlation" style="margin:auto; display: block;  width:clamp(300px,70vw, 1000px)" loading="lazy" />
+                <figcaption>Positive, Negative, and Zero Spearman Correlation Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -1157,8 +1196,10 @@ plt.show()
                 If the two random variables are independent, then we can simplify the conditional probabilities and conditional densities to just be the regular probability and marginal density.
 
                 <h5>Example: Convolution of Two Independent Binomials</h5>
+                <figure>
                 <img src="Convolution.png" alt="Convolution of Two Independent Binomials" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)" loading="lazy" />
- 
+                <figcaption>Discrete Convolution PMF Example</figcaption>
+            </figure>
                 <h4>Stable Distributions</h4>
 
                 Some distributions have the nice property that linear combinations of random variables who are of its kind yield another random variable that is distributed with that distribution, albeit with different parameters. 
@@ -1177,8 +1218,12 @@ plt.show()
                 <br><br>
                 Given M coin flips, the number of ways to get N heads would be given as:
                 $$W=\frac{M!}{N!(M-N)!}$$
+                <figure>
+                    
                 <img src="Binomial-Example.png" alt="Binomial Permutations" style="margin:auto; display: block;  width:clamp(250px,35vw, 700px)" loading="lazy" />
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Binomial Distribution Example</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 import matplotlib.pyplot as plt
@@ -1219,8 +1264,10 @@ plt.show()
                 $$W=\frac{M!}{\prod N_{i}!}=\frac{M!}{N_{1}!*N_{2}!*...*N_{Z}!}$$
                 If there are only two possible types and M total and N of type 1, then \(N_2=M-N\) and it reduces to
                 $$W=\frac{M!}{N!(M-N)!}$$
-
+<figure>
 <img src="Entropy-Permutations.png" alt="Entropy and Permutations" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)" loading="lazy" />
+<figcaption>String Entropy Example</figcaption>
+</figure>
 <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
@@ -1297,9 +1344,11 @@ plt.show()
 
                 If the normal distribution has parameters \(\mu=0\) and \(\sigma^2=1\) then we refer to it as a <b>standard normal distribution</b>.
                 <br><br>
-
+<figure>
                 <img src="Normal-Distribution.png" alt="Normal Distribution" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)" loading="lazy" />
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Graph of Normal Distributions with Different Parameters</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 import numpy as np
@@ -1348,9 +1397,11 @@ plt.show()
 
 The Law of Large Numbers states that the sample average approaches the distribution mean as n, the number of samples, gets large.
 
-
+                <figure>
                 <img src="Law-of-Large-Numbers.png" alt="Law of Large Numbers" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)" loading="lazy" />
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Law of Large Numbers for Coin Flip</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 fig, axes = plt.subplots(3,2,figsize=(9,9))
@@ -1391,9 +1442,11 @@ plt.show()
 The Central Limit Theorem goes further and describes how sample averages of independent observations are distributed if you plotted a histogram of sample averages. 
 Regardless of the original distribution, the sample average will be distributed as a normal distribution, centered at the true mean with variance \(\frac{\sigma^2}{n}\). 
 
-
+    <figure>
                 <img src="Central-Limit-Theorem.png" alt="Central Limit Theorem" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)" loading="lazy" />
-<button type="button" class="collapsible">Python Code</button>
+                <figcaption>Central Limit Theorem with Varying Sample Size and Number of Trials</figcaption>
+            </figure>
+                <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
 fig, axes = plt.subplots(3,2,figsize=(9,9))

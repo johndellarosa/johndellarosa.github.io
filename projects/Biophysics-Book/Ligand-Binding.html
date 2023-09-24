@@ -125,9 +125,10 @@
                 $$f=\frac{[L]}{[L]+K_D}$$
 
                 We can see that when \([L]=K_D\), 50% of the proteins are bound to ligands.
-
+                <figure>
                 <img src="Ligand-Binding-Saturation-Plot.png" alt="Ligand binding saturation plot" style="margin:auto; display: block;  width:clamp(300px,40vw, 1000px)"/>
-
+                <figcaption>Ligand Binding Isotherm</figcaption>
+            </figure>
 
 
 
@@ -140,8 +141,10 @@
                 Since the receptor affinity is an important biochemical quantity, we can measure it via Schartchard plots.
 
                 $$\frac{[L]_{\text{bound}}}{[L]}=-\frac{1}{K_D}[L]_{\text{bound}}+\frac{[P]_{\text{total}}}{K_D}$$
-
+                <figure>
                 <img src="Scatchard-Plot.png" alt="Scatchard Plot" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Scatchard Plot Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -196,8 +199,10 @@ plt.show()</pre>
                 Hill Coefficient (n): The Hill coefficient indicates the degree of cooperativity in the binding or enzymatic reaction. 
                     When \(n\gt 1\), it signifies positive cooperativity, suggesting that binding of one ligand molecule enhances the binding of subsequent ligand molecules. 
                     When \(n\lt 1\), it suggests negative cooperativity, where the binding of one ligand molecule inhibits the binding of others.
-
+                <figure>
                 <img src="Hill-Equation.png" alt="Hill Equation" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Hill Equation Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -253,8 +258,10 @@ plt.show()
                 $$\log(\frac{\theta}{1-\theta})=n\log[L]-\log[K_d]$$
                 This allows for determination of n by the slope and \(K_d\) by the constant.
                 
-
+                <figure>
                 <img src="Hill-Plot.png" alt="Hill Plot" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <figcaption>Hill Plot Example</figcaption>
+            </figure>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
