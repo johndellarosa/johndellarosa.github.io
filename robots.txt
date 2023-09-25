@@ -4,3 +4,6 @@ Disallow: /math.js
 Disallow: /app-ads.txt
 Disallow: /favicon.ico
 Disallow: /style.css
+Disallow: /favicon-16x16.png
+Disallow: /favicon-32x32.png
+Disallow: /apple-touch-icon.png
