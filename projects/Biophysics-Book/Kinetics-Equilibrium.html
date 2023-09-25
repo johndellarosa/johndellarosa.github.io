@@ -440,6 +440,60 @@ With two datapoints this is
 
 $$\ln \frac{K_2}{K_1}=-\frac{\Delta H^0}{R}(\frac{1}{T_2}-\frac{1}{T_1})$$
 This assumes no temperature dependence in the standard enhalpy and entropy.
+
+<figure>
+    <img src="Vant-Hoff-Plot.png" alt="Van't Hoff Plot" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+    <figcaption>Van't Hoff Plot Example</figcaption>
+</figure><br>
+    <button type="button" class="collapsible">Python Code</button>
+    <div class="content">
+    <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import linregress
+import statsmodels.api as sm
+# Define constants
+R = 8.314  # J/(mol*K), ideal gas constant
+
+# Define hypothetical values for ΔH° and ΔS° for illustration
+delta_H = -5000  # J/mol, standard enthalpy change
+delta_S = 10  # J/(mol*K), standard entropy change
+
+# Define temperature range in Kelvin
+T = np.linspace(300, 1000, 10)  # Reduced number of points for scatter plot
+K = np.exp(-delta_H / (R * T) + delta_S / R)
+
+# Add noise to the simulated data
+np.random.seed(0)  # For reproducibility
+noise_level = 0.1
+noisy_ln_K = np.log(K) + noise_level * np.random.randn(len(T))
+
+
+# Create the Van't Hoff plot
+plt.figure(figsize=(10, 6))
+plt.scatter(1/T, noisy_ln_K, label='Simulated Data')
+# Perform linear regression to find the best-fit line
+model = sm.OLS(noisy_ln_K,
+                sm.add_constant(1/T))
+results = model.fit()
+plt.plot(1/T,
+            results.predict(sm.add_constant(1/T)),
+            color='orange',label=f'OLS: y={results.params[1]:.3f}x+{results.params[0]:.3f}')
+
+plt.title("Van't Hoff Plot with Simulated Data")
+plt.xlabel("$1/T$ (K$^{-1}$)")
+plt.ylabel("$\\ln K$")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+
+# Save the figure (optional)
+plt.savefig("vant_hoff_plot_with_data.png")
+
+# Display the plot
+plt.show()
+</pre></code></div>
+
 <br><br>
 The Van't Hoff Equation provides a quantitative backing for the Le Chatelier's Prinicple for temperature shifting equilibrium. 
 <ul>
