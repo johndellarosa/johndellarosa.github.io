@@ -214,7 +214,7 @@ print(steady_state(transition_matrix))
                 <figure>
                 <img src="Markov-states.png" alt="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
                 <figcaption>Average composition of Markov states over time</figcaption>
-            </figure>
+            </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -263,7 +263,7 @@ print(steady_state(transition_matrix))
                 <figure>
                 <img src="Diffusion.png" alt="1D Random walk over time" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
                 <figcaption>1D Random Walk Simulation</figcaption>
-            </figure>
+            </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -286,7 +286,7 @@ print(steady_state(transition_matrix))
     <figure>
     <img src="Diffusion2D.png" alt="2D random walk over time" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
     <figcaption>2D Random Walk Simulation</figcaption>
-</figure>
+</figure><br>
     <button type="button" class="collapsible">Python Code</button>
     <div class="content">
     <code style="margin: auto; width: 50%;"><pre>
@@ -323,7 +323,7 @@ plt.show()</pre>
                 <figure>
                 <img src="Biased-Diffusion.png" alt="Random walk with drift" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
                 <figcaption>Random Walk with Drift Simulation</figcaption>
-            </figure>
+            </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -414,7 +414,7 @@ plt.show()</pre>
                 <figure>
                 <img src="Brownian-Motion-Simulation.gif" alt="Brownian Motion Simulation Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Brownian Motion Simulation</figcaption>
-            </figure>
+            </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -480,7 +480,7 @@ plt.show()          </pre>
                 <figure>
                 <img src="Brownian-Motion-Drift-Simulation.gif" alt="Brownian Motion with Drift Simulation Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Brownian Motion with Drift Simulation</figcaption>
-            </figure>
+            </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -564,7 +564,7 @@ plt.show()</pre>
                 <figure>
                 <img src="Bessel-Process.png" alt="Bessel Process Simulation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Bessel Process Simulation</figcaption>
-            </figure>
+            </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -627,7 +627,7 @@ plt.show()</pre>
                 <figure>
                 <img src="Brownian-Motion-Squared.gif" alt="Brownian Motion Squared Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Brownian Motion Squared Simulation</figcaption>
-            </figure>
+            </figure><br>
                 One interesting thing of note is that you can see in the dynamics that the \(f(B_t)\) will never be negative. 
                 As \(B_t\rightarrow 0\), \(\sigma(B_t,t)\rightarrow 0\). The dynamics then become like \(dX_t=dt\), which is a deterministic upward drift. Because Brownian motion is continuous, the function can never become negative without going through 0. This makes sense as a real number squared must be non-negative, but you can justify that through the dynamics even if you didn't know you got the SDE as a result of squaring an underlying variable. 
                 This can be more useful for something like a Bessel process where the behavior would not be as obvious (and in fact the properties depend on the value of n). 
@@ -735,7 +735,7 @@ plt.show()          </pre>
                 <img src="Poisson-Graph.png" alt="Poisson Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Poisson Process Simulation</figcaption>
             </figure>
-                
+            <br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -807,7 +807,7 @@ plt.show()</pre>
                 <img src="Compound-Poisson-Process-Graph.png" alt="Compound Poisson Process Graph" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                 <figcaption>Compound Poisson Process Example</figcaption>
             </figure>
-                
+            <br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -858,7 +858,7 @@ plt.show()</pre>
                 <img src="Jump-Process.png" alt="Jump Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Jump Process Example</figcaption>
             </figure>
-                
+            <br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -912,7 +912,7 @@ plt.show()</pre>
                 <img src="Geometric-BM-Jump-Diffusion.png" alt="Jump Diffusion Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Junmp Diffusion Example</figcaption>
             </figure>
-                
+            <br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
