@@ -226,15 +226,12 @@
     plt.show()
     </pre></code></div>
     
-                <h2>Kinetics Models</h2>
-                <h3>Collision Theory</h3>
-                This model proposes that for a reaction to occur, reacting molecules must collide with each other. The rate of a reaction is directly proportional to the product of the concentration of reactants and the frequency of effective collisions.
-                <!-- <h2>Catalysis</h2> -->
-                
 
 
                     So far, the integrated rate laws have been univariate. Differential equations with multiple variables are possible and are called "Partial Differential Equations" or PDEs. 
             
+
+                    
                     <h2>Dynamic Equilibrium</h2>
                     Until now, we have been considering reactions that only go in one direction. In many reactions, however, products are also undergoing the reverse reaction. Eventually the concentrations of the products and reactants will no longer change. However, this does not mean that chemical reactions are not still going on. 
                     What is actually happening is the forward reaction is happening at the same rate as the reverse reaction. This is known as <b>dynamic equilibrium</b>.
@@ -301,7 +298,7 @@
 <h4>Simulation of Dynamic Equilibrium</h4>
                     <figure>
                     <img src="Dynamic-Equilibrium.gif" alt="Dynamic Equilibirium" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
-                    <figcaption>Dynamic Equilibrium Example</figcaption>
+                    <figcaption>Dynamic Equilibrium Concentration over Time</figcaption>
                 </figure>
                     <button type="button" class="collapsible">Python Code</button>
                     <div class="content">
@@ -345,6 +342,21 @@ anim = FuncAnimation(fig, animate,
 anim.save('DynamicEquilibrium.gif')
 plt.show()</pre></code></div>
 
+
+<h2>Kinetics Models</h2>
+<h3>Collision Theory</h3>
+This model proposes that for a reaction to occur, reacting molecules must collide with each other. The rate of a reaction is directly proportional to the product of the concentration of reactants and the frequency of effective collisions.
+
+<br><br>
+But what happens on a molecular level? The following is a simulation of a reaction involving blue, red, and green molecules. 
+$$R+B\rightleftharpoons 2G$$
+In the simulation, there is an activation energy barrier that must be overcome. The red and blue state is lower in energy than 2 G, so the forward reaction requires higher speed collisions.
+<figure>
+    <img src="Collision-Theory-Molecular-Simulation.gif" alt="Collision Theory Molecular Simulation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+    <figcaption>Collision Theory Molecular Simulation</figcaption>
+</figure>
+    <br><br>
+
 <h3>Le Chatelier's Principle</h3>
 Le Chatelier's Principle states that if a chemical system at equilibrium experiences a change in concentration, temperature, volume, or pressure, the equilibrium will shift to counteract the imposed change.
 <h4>Concentration</h4>
@@ -365,6 +377,7 @@ Le Chatelier's Principle states that if a chemical system at equilibrium experie
     <li>For exothermic reactions, heat is a product. Increasing temperature shifts the equilibrium to the left, forming more reactants, and decreasing temperature shifts it to the right.</li>
 </ul>
 
+<br><br>
 
 <h3>Equilibirium Constants</h3>
 
