@@ -210,12 +210,14 @@
 
         function toggle_Blue_Burst() {
             isBB = !isBB;
-            $("#myList").prop('disabled',!isBB);
+            // $("#myList").prop('disabled',!isBB);
             if (isBB){
               $(".bb-button")[0].style.backgroundColor = '#4CAF50';
+              $(".bb-button")[0].innerText = 'Blue Burst ✓';
             }
             else{
               $(".bb-button")[0].style.backgroundColor = '#f44336';
+              $(".bb-button")[0].innerText = 'Blue Burst X';
             }
             check_name();
         }
