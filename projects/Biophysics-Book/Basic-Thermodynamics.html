@@ -133,6 +133,8 @@
                 The heat and work variables have \(\delta\) instead because they are <b>inexact differentials</b>. That is to say, they have path-dependent integration. 
                 While the change in energy will be the same, the contribution from work vs heat depends on how the process is done. 
     
+                
+
                 <h3>Second Law of Thermodynamics</h3>
                 The second law of thermodynamics states that total entropy is non-decreasing over time. 
                 $$\Delta S_{universe}\geq 0$$
@@ -170,7 +172,79 @@
                 As one formulation of the First Law states, there is conservation of energy with no input or removal from the system. 
                 However, energy can be converted from one form to another. Imagine a ball rolling off of a table; its gravitational potential energy gets converted into kinetic energy, sending it downward. 
                 U sometimes refers to potential energy, but also internal energy in general. In this section, U will refer to <b>Potential energy</b> and E will refer to <b>Total energy</b>.
-                
+                <figure>
+                <img src="Pendulum-Conservation-of-Energy.gif" alt="Pendulum Conservation of Energy Simulation" style="margin:auto; display: block;  width:clamp(300px,40vw, 900px)"/>
+                <figcaption>Pendulum Conservation of Energy Simulation</figcaption>
+            </figure>
+            <br>
+            <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import seaborn as sns
+%matplotlib notebook
+sns.set_theme(style='whitegrid')
+
+def pendulum(y, t, g, l):
+    theta, omega = y
+    dydt = [omega, -g/l * np.sin(theta)]
+    return dydt
+
+# Initial conditions
+theta0 = np.pi/4  # initial angle of displacement
+omega0 = 0.0  # initial angular velocity
+
+# Parameters
+g = 9.81  # acceleration due to gravity, m/s^2
+l = 1.0  # length of the pendulum, m
+print(2*np.pi*np.sqrt(l/g))
+# Time grid for integration
+t = np.linspace(0, 2.1, 150)
+
+# Solve the ODE
+sol = odeint(pendulum, [theta0, omega0], t, args=(g, l))
+
+# Set up the figure and axis
+fig, ax = plt.subplots(figsize=(6,6))
+ax.set_xlim(-1, 1)
+ax.set_ylim(-.2, 0.2+l)
+ax.set_aspect('equal', 'box')
+line, = ax.plot([], [], 'o-', lw=2)
+# energy_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
+
+def init():
+    line.set_data([], [])
+    energy_text.set_text('')
+    return (line, energy_text)
+
+speed_multiplier = 1
+def animate(i):
+    i*=speed_multiplier
+    x = [0, l*np.sin(sol[i, 0])]
+    y = [l, -l*np.cos(sol[i, 0])+l]
+    
+    # Calculate the energies
+    h = l - l*np.cos(sol[i, 0])  # height
+    v = l * sol[i, 1]  # speed, the derivative of l*theta with respect to time is l*omega
+    gpe = g * h  # gravitational potential energy per unit mass
+    ke = 0.5 * v**2  # kinetic energy per unit mass
+    
+    # Update the line and the text
+    line.set_data(x, y)
+    plt.title('Pendulum Simulation\nKE: {:.2f}J U: {:.2f}J  E={:.2f}J'.format(ke, gpe, gpe+ke))
+    
+    return (line, energy_text)
+
+ani = animation.FuncAnimation(fig, animate, init_func=init, frames=len(t)//speed_multiplier, interval=10, blit=True)
+ani.save('Pendulum-Conservation-of-Energy.gif', fps=60, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+plt.show()
+</pre>
+                            </code></div>
                 <br><br>
                 In this section, positive work will refer to work <b>done</b> by the system which is opposite what we had before, but it is common convention. 
     
