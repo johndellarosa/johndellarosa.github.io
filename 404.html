@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<!-- 
+    References:
+    https://www.w3schools.com/howto/howto_js_collapsible.asp
+
+
+ -->
+<html lang="en-US"> 
+<head>
+    <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+    <title>John Della Rosa - 404</title>
+    <!-- Meta tags-->
+    <meta name="keywords" content="John Della Rosa">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="John Della Rosa's personal website">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="google-site-verification" content="xmRhgeMA6cKjpHPsW1L1vNWAbPD-xnHWVeCCs8IjImg" />
+    
+    
+    
+    <!-- https://favicon.io/favicon-generator/ -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+    <link rel="canonical" href="https://johndellarosa.github.io/"/>    
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="./index.html"><u>Home</u></a> |
+        <a href="./resume.html">Resume</a>
+        <!-- <a href="./index.html#education">Education</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#skills">Skills</a> -->
+        |
+        <a href="./biography.html">About</a>|
+        <a href="./projects.html">Projects</a>|
+        <a href="./Miscellaneous.html">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div><br><br>
+    <h1>John Della Rosa</h1>
+    <img src="Portrait.jpg" style="width:clamp(100px,30vw,300px); margin-left: auto;margin-right: auto;display: block; border-radius:50%;" alt="John Della Rosa Headshot">
+    <br>
+    <p style="text-align: center; font-size: large; font-weight: bold;"><a href="./projects/Biophysics-Book/Table-of-Contents.html"> New: Biophysical chemistry eTextbook</a></p>
+
+404
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
+</body>
+</html>
