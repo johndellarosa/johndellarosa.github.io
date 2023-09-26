@@ -676,8 +676,85 @@ anim.save('BrownianMotionSquared.gif')
 plt.show()          </pre>
                 </code></div>
 
-                
+                <h4>Brownian Motion in Higher Dimensions</h4>
 
+Similar to Random Walks, Brownian Motion can be extended to higher dimensions by generating independent Brownian motions for each axis. Sometimes these will be scaled down so that the L2 norm is 1.
+
+
+                <figure>
+                    <img src="Brownian-Motion-3D.gif" alt="Brownian Motion 3D Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                    <figcaption>Brownian Motion 3D Simulation</figcaption>
+                </figure><br>
+
+                    <br><br>
+                    <button type="button" class="collapsible">Python Code</button>
+                    <div class="content">
+                    <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from mpl_toolkits.mplot3d import Axes3D
+%matplotlib notebook
+# Set up the figure and axis
+fig = plt.figure(figsize=(6,6))
+ax = fig.add_subplot(111, projection='3d')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.axes.set_xlim3d(left=-5, right=5) 
+ax.axes.set_ylim3d(bottom=-5, top=5) 
+ax.axes.set_zlim3d(bottom=-5, top=5) 
+# Number of steps
+T = 10
+n = 360
+dt = T/n
+print(dt)
+num_particles = 5
+# Initialize arrays to hold the x, y, z coordinates of the particle
+x = np.zeros((n,num_particles))
+y = np.zeros((n,num_particles))
+z = np.zeros((n,num_particles))
+# print(x)
+# Step size
+step_size = np.sqrt(dt)/np.sqrt(3)
+frame_multiplier = 3
+frame_lag = 50
+for i in range(1,n):
+    # Brownian motion
+    x[i] = x[i - 1] + np.random.normal(0, step_size,size=num_particles)
+    y[i] = y[i - 1] + np.random.normal(0, step_size,size=num_particles)
+    z[i] = z[i - 1] + np.random.normal(0, step_size,size=num_particles)
+
+def update(num, x, y, z, plot,ax):
+    num *= frame_multiplier
+    
+    # Update the plot
+#     for i in range(num_particles):
+
+    plt.cla()  
+    ax.view_init(elev=10., azim=num)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.axes.set_xlim3d(left=-5, right=5) 
+    ax.axes.set_ylim3d(bottom=-5, top=5) 
+    ax.axes.set_zlim3d(bottom=-5, top=5) 
+    plot = [ax.plot(x[max(0,num-frame_lag):num+1,i], y[max(0,num-frame_lag):num+1,i], z[max(0,num-frame_lag):num+1,i],linewidth=1)[0] for i in range(num_particles)]
+#     plt.title(f"t={num*dt:.2f}s\n ({x[num]:.4f},{y[num]:.4f},{z[num]:.4f})")
+    return plot
+
+# Create an empty plot object
+plot = [ax.plot(x[0:5,i], y[0:5,i], z[0:5,i])[0] for i in range(num_particles)]
+# print(plot)
+# Set up animation
+plt.title("Brownian Motion 3D Animation")
+ani = animation.FuncAnimation(fig, update, frames=n//frame_multiplier, fargs=(x, y, z, plot,ax), interval=dt*1000*frame_multiplier, blit=False)
+ani.save('Brownian-Motion-3D.gif', fps=15, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+plt.show()
+                         </pre>
+                    </code></div>
 
                 <h3>Poisson Process</h3>
                 When we were working with discrete-time Markov chains, we had a matrix or depiction of
