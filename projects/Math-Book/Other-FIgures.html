@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Other Figures</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Differential Equation">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/Math-Book/Fourier-Series"/>       
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        <!-- </script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/Miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "Table-of-Contents.html">Math Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Fourier-Series">
+            <h1>Fourier Series</h1>
+            <h2>Introduction</h2>
+            <img src="Runge-Kutta-Euler-Method-Comparison.png" alt="Runge-Kutta Euler Method Comparison style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the ODE to be solved (dy/dt = y)
+def ode_function(t,y,r,K):
+    return r * y * (1 - y / K)
+
+def analytic_solution(t, y0, r, K):
+    return K / (1 + ((K - y0) / y0) * np.exp(-r * t))
+
+
+# Implement the Euler method
+def euler_method(t,y, dt,r,K):
+    return y + dt * ode_function(t,y,r,K)
+
+# Implement the 4th order Runge-Kutta method
+def runge_kutta_method(t, y, dt, r, K):
+    k1 = dt * ode_function(t, y, r, K)
+    k2 = dt * ode_function(t + 0.5 * dt, y + 0.5 * k1, r, K)
+    k3 = dt * ode_function(t + 0.5 * dt, y + 0.5 * k2, r, K)
+    k4 = dt * ode_function(t + dt, y + k3, r, K)
+    return y + (1/6) * (k1 + 2 * k2 + 2 * k3 + k4)
+
+# Initial conditions
+t0 = 0
+y0 = 0.1
+dt = 5
+t_end = 125
+r = 0.1
+K = 10
+
+# Arrays to store the results
+times = np.arange(t0, t_end, dt)
+euler_y = [y0]
+rk_y = [y0]
+
+
+# Perform the integration using the Euler method and the Runge-Kutta method
+for t in times[1:]:
+    euler_y.append(euler_method(t,euler_y[-1], dt,r,K))
+    rk_y.append(runge_kutta_method(t,rk_y[-1], dt,r,K))
+
+plt.figure(figsize=(9,6))
+analytic_times = np.linspace(t0,t_end,1000)
+analytic_y = [analytic_solution(t, y0, r, K) for t in analytic_times]
+# Plotting
+plt.plot(analytic_times, analytic_y, label='Analytical Solution', color='tab:blue')
+plt.plot(times, euler_y, label=f'Euler Method dt={dt}', linestyle='dotted', color='tab:red')
+plt.plot(times, rk_y, label=f'Runge-Kutta Method dt={dt}', color='tab:green', linestyle='dashed')
+plt.xlabel('Time (t)')
+plt.ylabel('y(t)')
+plt.legend()
+plt.title(r'Comparison of Numerical Methods for $\frac{dy}{dt}=0.1\times y(1-\frac{y}{100})$')
+plt.grid(True)
+plt.show()
+                
+            </pre>
+            </code>
+            </div>
+
+<br><br>
+<img src="Fourier-Series-Sawtooth-Wave.gif" alt="Sawtooth Wave Fourier Series" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+# Define the angular frequency of the square wave
+#omega = 2 * np.pi
+omega =  np.pi
+
+# Define the time array
+t = np.linspace(-np.pi, np.pi, 1000)
+
+# Define the number of terms in the Fourier series
+n_terms = 50
+
+fig, ax = plt.subplots()
+
+# Plot the original square wave for comparison
+ax.plot(t, (t/1-1) % 2 - 1, linestyle='dashed', color='red', label='Sawtooth wave')
+line, = ax.plot(t, np.zeros_like(t), label='Approximation', color='blue',alpha=.7)
+ax.legend()
+
+# Customize the plot
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.title('Fourier Series Approximation of a Square Wave')
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.ylim([-3,3])
+plt.grid(True)
+
+def init():
+    line.set_ydata([np.nan] * len(t))
+    return line,
+
+def update(frame):
+    n = frame + 1  # n takes only odd values for square wave
+    fourier_series = sum((2/np.pi) * ((-1)**(n+1) / n) * np.sin(n * omega * t) for n in range(1, n+1))
+    line.set_ydata(fourier_series)  # set the y-data to the computed Fourier series
+    ax.set_title(f'Fourier Series Approximation - {n} terms')
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=[0,1,2,3,4,9,19,99], init_func=init, blit=True, interval=1000)
+ani.save('Fourier-Series-Sawtooth-Wave.gif', fps=1, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+plt.show()
+                
+                
+            </pre>
+            </code>
+            </div>
+
+
+        </div>
+
+        <div id="Exercises">
+            <h2>Exercises</h2>
+            <ol>
+
+            </ol>
+
+
+        </div>
+
+        </div>        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
