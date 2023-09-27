@@ -59,6 +59,61 @@
             <div id="First-Order">
             <h1>First Order</h1>
             <h2>Introduction</h2>
+
+                <h3>Slope Field</h3>
+                Slope fields, also known as direction fields or vector fields, provide a graphical representation of the solutions to first-order ordinary differential equations (ODEs) of the form \(\frac{dy}{dx}=f(x)\). They offer a powerful tool to visualize the behavior of solutions without solving the differential equation analytically, allowing insights into the qualitative properties of solutions.
+                <br>
+                <h4>Constructing Slope Fields</h4>
+                <ol>
+                    <li>Select a Grid: Choose a set of points \((x,y)\) in the region of interest.</li>
+                <li>Compute SLopes: Evaluate \(f(x,y)\) at each point to determine the slope of the segment or arrow at that point</li>
+                <li>Plot Arrows: Draw an arrow or a short line segment at each point in the direction of the computed slope</li>
+                </ol>
+                
+                <img src="Slope-Field.png" alt="Slope Field Example" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the function representing dy/dx. 
+# In this case, dy/dx = y - x, but you can replace this with any other function of x and y
+def slope_function(x, y):
+    return y - x
+
+# Define the x and y ranges for which we want to plot the slope field
+x = np.linspace(-10, 10, 20)  # Adjust the range and number of points as needed
+y = np.linspace(-10, 10, 20)  # Adjust the range and number of points as needed
+
+# Create a grid of points (x, y)
+X, Y = np.meshgrid(x, y)
+
+# Calculate the slopes (u, v) at each point (x, y)
+U = 1
+V = slope_function(X, Y)
+
+# Normalize the arrows to get a uniform appearance
+N = np.sqrt(U**2 + V**2)
+U /= N
+V /= N
+
+# Create the plot
+plt.quiver(X, Y, U, V, angles='xy', scale_units='xy', scale=1, color='r', alpha=0.6)
+plt.xlim([-10, 10])  # Adjust the x-limits of the plot as needed
+plt.ylim([-10, 10])  # Adjust the y-limits of the plot as needed
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
+plt.title('Slope Field: dy/dx = y - x')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
+                    
+</pre>
+                </code>
+</div>
+
            <h3>Separable</h3>
             A first order differential equation involves a function's first derivative and no higher order derivatives.
             <br>
@@ -218,13 +273,22 @@ plt.show()
 
         <div id="Exercises">
             <h2>Exercises</h2>
-            <ol>Separable
+            
+            <ol>
+                Slope Fields
+                <li>Construct a slope field for \(\frac{dy}{dx}=y\)</li>
+                <li>Construct a slope field for \(\frac{dy}{dx}=x\)</li>
+                <li>Construct a slope field for \(\frac{dy}{dx}=-\frac{y}{2}\)</li>
+                <li>Construct a slope field for \(\frac{dy}{dx}=xy\)</li>
+                
+
+                Separable
                 <li>\(\frac{dy}{dx}=xy\)</li>
                 <li>\(\frac{dy}{dx}=\frac{y}{1+x^2}\)</li>
                 <li>\(\frac{dy}{dx}=y(1-y)\)</li>
                 <li>\(\frac{dy}{dx}=e^x\sin(y)\)</li>
                 Linear
-                <li>\frac{dy}{dx}+2y=x</li>
+                <li>\(\frac{dy}{dx}+2y=x\)</li>
             </ol>
 
 

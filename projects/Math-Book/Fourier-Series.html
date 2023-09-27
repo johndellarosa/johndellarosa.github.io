@@ -56,82 +56,121 @@
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
-            <div id="Higher-Order">
-            <h1>Higher Order Linear</h1>
+            <div id="Fourier-Series">
+            <h1>Fourier Series</h1>
             <h2>Introduction</h2>
-            <h3>Linear Differential Equaiton</h3>
-            We say that a differential equation is <b>linear</b> if it is a linear polynomial in the function and its derivatives. 
-
-            $$a_n(x)y^{(n)}+a_{n-1}(x)y^{(n-1)}+\dots+a_1(x)y'+a_0(x)y=g(x)$$
-
+            <img src="Fourier-Series-Square-Wave.gif" alt="Square Wave Fourier Series" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+            import numpy as np
+            import matplotlib.pyplot as plt
             
-
-            <h2>Homogeneous Case</h2>
-
-            We can call a differential equation homogeoneous if g(x)=0
-
-            <h4>Superposition Principle</h4>
-            If \(y_{1}(x)\) and \(y_{2}(x)\) are two solutions of a homogeneous linear differential equation, 
-            then any linear combination \(c_1y_1(x)+c_2y_2(x)\) is also a solution.
+            # Define the system parameters
+            m = 1  # mass
+            k = 1  # spring constant
             
-            <h4>Characteristic Equation</h4>
-
-            Let us consider a second order homogeneous linear differential equation
-
-            $$ay''+by'+cy=0$$
-
-            Since the function and its derivatives must cancel each other out, we might guess that the answer is an exponential. 
-            $$y=e^{mx}$$
-
-            We have the following derivatives for y:
-            $$y'=me^{mx}$$
-            $$y''=m^2e^{mx}$$
-
-            Plugging in to our differential equation:
-
-            $$am^2e^{mx}+bme^{mx}+ce^{mx}=0$$
-            $$(am^2+bm+c)e^{mx}=0$$
+            # Damping values: c1 for underdamped, c2 for overdamped, and c3 for critically damped
+            c1 = 0.5  # underdamped
+            c2 = 3    # overdamped
+            c3 = 2 * np.sqrt(m*k)  # critically damped
             
-            If the product of two factors is 0, then at least one of the factors must be 0. 
-            Because \(e^{mx}\) will never be 0, we need not consider it for finding roots. 
-
-            We can then focus on the equation
-
-            $$am^2+bm+c=0$$
-            Which is a simple polynomial of m. We can then find the values of m for which the equation is 0, by factoring, quadratic equation, or completing the square. 
-            <br><br>
-            Let \(m_1\) and \(m_2\) be the roots of the polynomial.
-            <br>
-            If \(m_1\neq m_2\), we have the following solution
-
-            $$y=c_1e^{m_1x}+c_2e^{m_2x}$$
-
-            If \(m_1=m_2\), or we have repeated roots in the higher order case, the repeats will have an additional factor of x for the number repeat it is.
-
-            $$y=c_1e^{m_1x}+c_2xe^{m_1x}$$
-
-            <h3>Complex Roots</h3>
-            But what if we have complex roots?
-            <br>
-            \(e^{mx}\) is still valid for complex m.
-            Euler's formula gives the relationship for a complex exponent. 
-
-            $$e^{ix}=\cos x+i \sin(x)$$
-
-            Another relevant formula is that of de Moivre's which states
-
-            $$(\cos x+i\sin x)^n=\cos nx+i\sin nx$$
+            # Time vector
+            t = np.linspace(0, 10, 1000)
             
-            The real part of an exponent can be factored out, letting us get
+            # Responses
+            # Underdamped response
+            omega_0 = np.sqrt(k/m)
+            zeta1 = c1 / (2 * np.sqrt(m*k))
+            omega_d1 = omega_0 * np.sqrt(1 - zeta1**2)
+            phi = np.arctan(np.sqrt(1 - zeta1**2) / zeta1)
+            x1 = (1/np.sqrt(1 - zeta1**2)) * np.exp(-zeta1 * omega_0 * t) * np.sin(omega_d1 * t + phi)
+            
+            # Overdamped response
+            zeta2 = c2 / (2 * np.sqrt(m*k))
+            alpha1 = -zeta2 * omega_0 + omega_0 * np.sqrt(zeta2**2 - 1)
+            alpha2 = -zeta2 * omega_0 - omega_0 * np.sqrt(zeta2**2 - 1)
+            C1 = alpha2 / (alpha2 - alpha1)
+            C2 = -alpha1 / (alpha2 - alpha1)
+            x2 = C1 * np.exp(alpha1 * t) + C2 * np.exp(alpha2 * t)
+            
+            # Critically damped response
+            x3 = (1 + omega_0 * t) * np.exp(-omega_0 * t)
+            
+            # Plotting
+            plt.figure(figsize=(10, 6))
+            plt.plot(t, x1, label='Underdamped (Oscillatory)')
+            plt.plot(t, x2, label='Overdamped (Non-Oscillatory)')
+            plt.plot(t, x3, label='Critically Damped (Fastest Return)')
+            plt.axhline(0, color='black',linewidth=0.5)
+            plt.axvline(0, color='black',linewidth=0.5)
+            plt.xlabel('Time (s)')
+            plt.ylabel('Displacement from Equilibrium (cm)')
+            plt.title('Underdamped vs. Overdamped vs. Critically Damped Response')
+            plt.grid(True)
+            plt.legend()
+            plt.show()
+                
+            </pre>
+            </code>
+            </div>
 
-            $$e^{(a+bi)x}=e^{ax}\left[cos(bx)+i\sin(bx)\right]$$
-
-            Since actually do not care whether the constants in front of solutions are real or complex, we get the solutions
-
-            $$y=e^{ax}\left[c_1\cos(bx)+c_2\sin(bx)\right]$$
-            as the solution if the root is m=a+bi
 <br><br>
+<img src="Fourier-Series-Sawtooth-Wave.gif" alt="Sawtooth Wave Fourier Series" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
+# Define the angular frequency of the square wave
+#omega = 2 * np.pi
+omega =  np.pi
+
+# Define the time array
+t = np.linspace(-np.pi, np.pi, 1000)
+
+# Define the number of terms in the Fourier series
+n_terms = 50
+
+fig, ax = plt.subplots()
+
+# Plot the original square wave for comparison
+ax.plot(t, (t/1-1) % 2 - 1, linestyle='dashed', color='red', label='Sawtooth wave')
+line, = ax.plot(t, np.zeros_like(t), label='Approximation', color='blue',alpha=.7)
+ax.legend()
+
+# Customize the plot
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.title('Fourier Series Approximation of a Square Wave')
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.ylim([-3,3])
+plt.grid(True)
+
+def init():
+    line.set_ydata([np.nan] * len(t))
+    return line,
+
+def update(frame):
+    n = frame + 1  # n takes only odd values for square wave
+    fourier_series = sum((2/np.pi) * ((-1)**(n+1) / n) * np.sin(n * omega * t) for n in range(1, n+1))
+    line.set_ydata(fourier_series)  # set the y-data to the computed Fourier series
+    ax.set_title(f'Fourier Series Approximation - {n} terms')
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=[0,1,2,3,4,9,19,99], init_func=init, blit=True, interval=1000)
+ani.save('Fourier-Series-Sawtooth-Wave.gif', fps=1, 
+            #extra_args=['-vcodec', 'libx264']
+            )
+plt.show()
+                
+                
+            </pre>
+            </code>
+            </div>
 
 
         </div>
