@@ -193,6 +193,63 @@ plt.show()
                 <h2>Nonhomogeneous</h2>
                 But what if \(g(x)\neq 0\)?
 
+                <img src="Nonhomogeneous-Spring-Harmonic.png" alt="Nonhomogeneous Spring Harmonic" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+                    import numpy as np
+                    from scipy.integrate import odeint
+                    import matplotlib.pyplot as plt
+                    from scipy.signal import square
+                    
+                    # Define the system parameters
+                    m = 1.0  # Mass
+                    b = 0.5  # Damping coefficient
+                    k = 10.0  # Spring constant
+                    
+                    # Define the square wave forcing term
+                    A = 1.0  # Amplitude of the square wave
+                    f = 0.5  # Frequency of the square wave
+                    F = lambda t: A * square(2 * np.pi * f * t)# if (t >= 2 and t <= 8) else 0
+                    
+                    # Define the ODE system
+                    def system(Y, t):
+                        x, v = Y
+                        dxdt = v
+                        dvdt = (F(t) - b * v - k * x) / m
+                        return [dxdt, dvdt]
+                    
+                    # Time array
+                    t = np.linspace(0, 20, 1000)
+                    
+                    # Initial conditions: x = 0, v = 0
+                    Y0 = [0, 0]
+                    
+                    # Solve the ODE
+                    solution = odeint(system, Y0, t)
+                    
+                    # Extract the position (x) from the solution
+                    x = solution[:, 0]
+                    
+                    # Plot the solution
+                    plt.figure(figsize=(10,6))
+                    plt.plot(t, x, label="Position ($x$)")
+                    plt.plot(t, [F(ti) for ti in t], linestyle="--", label="Forcing Term ($F(t)$)")
+                    plt.title("Spring Harmonic with Piecewise Forcing Function")
+                    plt.xlabel("Time ($t$)")
+                    plt.ylabel("Amplitude")
+                    plt.axhline(0, color='black',linewidth=0.5)
+                    plt.axvline(0, color='black',linewidth=0.5)
+                    plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
+                    plt.legend()
+                    plt.tight_layout()
+                    plt.savefig("Nonhomogeneous-Spring-Harmonic.png")
+                    plt.show()
+                       
+                </pre>
+                </code>
+                </div>
+
                 There are multiple ways to solve these sorts of equations. 
                 <h3>Method of Undetermined Coefficients</h3>
                 <h4>Cases</h4>
