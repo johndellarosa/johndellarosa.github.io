@@ -3,187 +3,187 @@
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 	<loc>https://johndellarosa.github.io/</loc>
-	<lastmod>2023-09-24T08:06:19+01:00</lastmod>
+	<lastmod>2023-09-27T06:44:47+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/biography</loc>
-	<lastmod>2023-09-24T08:06:47+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:09+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/resume</loc>
-	<lastmod>2023-09-24T08:06:48+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:09+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects</loc>
-	<lastmod>2023-09-24T08:07:04+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:21+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Miscellaneous/options.html</loc>
-	<lastmod>2023-09-24T08:07:04+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:21+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Miscellaneous/section-id.html</loc>
-	<lastmod>2023-09-24T08:07:04+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:21+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Table-of-Contents</loc>
-	<lastmod>2023-09-24T08:07:04+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:22+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/Miscellaneous</loc>
-	<lastmod>2023-09-24T08:07:04+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:22+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Math-Book/Table-of-Contents</loc>
-	<lastmod>2023-09-24T08:07:05+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Trial</loc>
-	<lastmod>2023-09-24T08:07:06+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Trial/Privacy</loc>
-	<lastmod>2023-09-24T08:07:06+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:23+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Volterra-Defense</loc>
-	<lastmod>2023-09-24T08:07:06+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:23+01:00</lastmod>
 	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Volterra-Defense/Privacy</loc>
-	<lastmod>2023-09-24T08:07:07+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:24+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Right-Ascension</loc>
-	<lastmod>2023-09-24T08:07:07+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:24+01:00</lastmod>
 	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Right-Ascension/Privacy</loc>
-	<lastmod>2023-09-24T08:07:07+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:24+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Introduction</loc>
-	<lastmod>2023-09-24T08:07:09+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:26+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Probability</loc>
-	<lastmod>2023-09-24T08:07:09+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:26+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Basic-Thermodynamics</loc>
-	<lastmod>2023-09-24T08:07:10+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:27+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Advanced-Thermodynamics</loc>
-	<lastmod>2023-09-24T08:07:10+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Kinetics-Equilibrium</loc>
-	<lastmod>2023-09-24T08:07:11+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:27+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Statistical-Mechanics</loc>
-	<lastmod>2023-09-24T08:07:12+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:29+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Finite-Difference</loc>
-	<lastmod>2023-09-24T08:07:12+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:29+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo</loc>
-	<lastmod>2023-09-24T08:07:13+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:30+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Protein-Biochemistry</loc>
-	<lastmod>2023-09-24T08:07:13+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:31+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Protein-Folding</loc>
-	<lastmod>2023-09-24T08:07:14+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:31+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Nucleic-Acids</loc>
-	<lastmod>2023-09-24T08:07:15+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:32+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Ligand-Binding</loc>
-	<lastmod>2023-09-24T08:07:15+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:32+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Michaelis-Menten</loc>
-	<lastmod>2023-09-24T08:07:16+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Stochastic-Processes</loc>
-	<lastmod>2023-09-24T08:07:16+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:33+01:00</lastmod>
 	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Math-Trial</loc>
+	<lastmod>2023-09-27T06:45:34+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Diffusion</loc>
-	<lastmod>2023-09-24T08:07:17+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Quantum-Mechanics</loc>
-	<lastmod>2023-09-24T08:07:18+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Glossary</loc>
-	<lastmod>2023-09-24T08:07:18+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo-Exercises</loc>
-	<lastmod>2023-09-24T08:07:19+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/First-Order</loc>
-	<lastmod>2023-09-24T08:07:19+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Higher-Order</loc>
-	<lastmod>2023-09-24T08:07:20+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Laplace-Transform</loc>
-	<lastmod>2023-09-24T08:07:20+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:34+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Electrochemistry</loc>
-	<lastmod>2023-09-24T08:07:31+01:00</lastmod>
+	<lastmod>2023-09-27T06:45:35+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Quantum-Mechanics</loc>
+	<lastmod>2023-09-27T06:45:35+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Glossary</loc>
+	<lastmod>2023-09-27T06:45:36+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo-Exercises</loc>
+	<lastmod>2023-09-27T06:45:36+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Math-Book/First-Order</loc>
+	<lastmod>2023-09-27T06:45:37+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Math-Book/Higher-Order</loc>
+	<lastmod>2023-09-27T06:45:37+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Math-Book/Laplace-Transform</loc>
+	<lastmod>2023-09-27T06:45:38+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Math-Book/Fourier-Series</loc>
+	<lastmod>2023-09-27T06:45:38+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/Math-Trial/Privacy</loc>
+	<lastmod>2023-09-27T06:45:43+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 </urlset>
