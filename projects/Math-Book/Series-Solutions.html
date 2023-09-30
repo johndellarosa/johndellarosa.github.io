@@ -152,7 +152,61 @@
             From there, we can further determine \(a_0\) and \(a_1\) if we have initial conditions.
 
 
+            <figure>
+                <img src="Harmonic-Oscillator-Series-Approximation.png" alt="Harmonic Oscillator Series Approximation" style="margin:auto; display: block;  width:clamp(300px,60vw, 800px)"/>
+                <figcaption>Harmonic Oscillator Series Approximation</figcaption>
+            </figure><br>
+                <button type="button" class="collapsible">Python Code</button>
+                <div class="content">
+                <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import seaborn as sns
+sns.set_theme(style='whitegrid')
+# Define the number of terms to be considered
+terms = [1,
+            2, 5, 8]
 
+def sin_approx(x,n):
+    accum = 0
+    for i in range(0,n):
+        accum += (-1)**i/(math.factorial(2*i+1))*(x**(2*i+1))
+    return accum
+
+# Define the x range
+x = np.linspace(0, 2*np.pi, 1000)
+
+# Define the exact solutions
+# cos_x = np.cos(x)
+sin_x = np.sin(x)
+
+# Initialize the figure
+plt.figure(figsize=(10,6))
+
+# Loop over the number of terms
+for n in terms:
+#     approx_sin = [sin_approx(i,n) for i in x]
+#     print(n, approx_sin)
+    plt.plot(x, [sin_approx(i,n) for i in x], label=f'Approx Sin, {n} terms', linewidth=2, linestyle='dotted')
+    
+# Plot the exact solutions
+# plt.plot(x, cos_x, label='Exact Cos', color='black', linewidth=1)
+plt.plot(x, sin_x, label='Exact Sin', color='tab:grey', linewidth=2)
+
+# Customize the plot
+plt.title('Convergence of Power Series Solution to Simple Harmonic Oscillator')
+plt.xlabel('x')
+plt.ylabel('y(x)')
+plt.ylim([-3,3])
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.legend()
+
+# Show the plot
+plt.show()
+</pre>
+                </code></div>
 
 
 
