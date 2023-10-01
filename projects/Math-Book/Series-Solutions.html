@@ -36,7 +36,23 @@
       
 
         <script src="../../math.js" type="text/javascript"></script> -->
+        <style>
+            table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-left: auto;
+margin-right: auto;
+}
 
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+</style>
     </head>
     <body>
         <div class="navbar">
@@ -85,7 +101,7 @@
             $$y(x)=c_1\sin(x)+c_2\cos(x)$$
 
             Now, let us forget that solution and just assume that our solution has the form of a power series:
-            $$y(x)=\sum_{n=0}^{\infty}a_n(x)^n$$
+            $$y(x)=\sum_{n=0}^{\infty}a_nx^n$$
             Let us take derivatives since we need to be able to substitute in for those as well.
             
             $$y'(x)=\sum_{n=1}^\infty a_{n}nx^{n-1}$$
@@ -104,17 +120,17 @@
 
             Plugging our series into the differential equation:
 
-            $$\sum_{n=0}^\infty a_{n+2} (n+2)(n+1)x^{n}+\sum_{n=0}^{\infty}a_n(x)^n=0$$
+            $$\sum_{n=0}^\infty a_{n+2} (n+2)(n+1)x^{n}+\sum_{n=0}^{\infty}a_nx^n=0$$
 
             Since these are two infinite sums with the same index, we can combine them:
-            $$\sum_{n=0}^\infty (a_{n} + (n+2)(n+1)a_{n+2})(x)^n=0$$
+            $$\sum_{n=0}^\infty (a_{n} + (n+2)(n+1)a_{n+2})x^n=0$$
 
             For two polynomials, they are the same if each coefficient is the same. 
             How is this relevant? Well, we can write 0 as 
             $$0=0+0x+0x^2+\dots$$
             Thus, each coefficient in our infinite sum must equal 0.
 
-            $$a_{n+2}(n+2)(n+1)+a_n=0\forall n$$
+            $$a_{n+2}(n+2)(n+1)+a_n=0\hspace{1cm}\forall n\geq 0$$
 
             We get the recurrance relationship
 
@@ -208,8 +224,55 @@ plt.show()
 </pre>
                 </code></div>
 
+                <h3>Common Series</h3>
+
+                <table>
+                    <tr>
+                        <th>Series</th>
+                        <th>Function</th>
+                    </tr>
+                    <tr>
+                        <td>\(\sum_{k=0}^{\infty}\frac{x^k}{k!}\)</td>
+                        <td>\(e^x\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(\sum_{k=0}^{\infty}\frac{(-1)^{k}x^{2k+1}}{(2k+1)!}\)</td>
+                        <td>\(\sin x\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(\sum_{k=0}^{\infty}\frac{(-1)^{k}x^{2k}}{(2k)!}\)</td>
+                        <td>\(\cos x\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(\sum_{k=0}^{\infty}\frac{x^{2k+1}}{(2k+1)!}\)</td>
+                        <td>\(\sinh x\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(\sum_{k=0}^{\infty}\frac{x^{2k}}{(2k)!}\)</td>
+                        <td>\(\cosh x\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(\sum_{k=0}^{\infty}\frac{(-1)^{n+1}x^n}{n}\)</td>
+                        <td>\(\ln(1+x)\)</td>
+                    </tr>
+
+                    <!-- Additional rows can be added for more functions and their Laplace Transforms -->
+                </table>
 
 
+<h2>Frobenius Method</h2>
+The Frobenius method is an extension of the power series method and is particularly useful when the point \(x_0\) is a regular singular point. 
+It assumes a solution of the form 
+$$y(x)=\sum_{n=0}^\infty a_n(x-x_0)^{n+r}$$
+where r is a scalar, called the <b>index</b>. When solving, we also determine the value of r.
+
+<h3>Solving with Frobenius Method</h3>
+The steps are as follows:
+<ol>
+    <li>Substitute the series, just like in the power series method</li>
+    <li>Equate coefficients to get a recurrence relation for \(a_n\)</li>
+    <li>Solve for the index, r</li>
+</ol>
 
 
         </div>
