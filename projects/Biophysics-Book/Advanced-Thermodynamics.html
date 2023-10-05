@@ -62,6 +62,51 @@
                 <h2>Introduction</h2>
                 This section will delve deeper into thermodynamics. Multivariable calculus will be used to expand upon topics covered earlier as well as introduce new topics. 
                 The <b>Fundamental Thermodynamic Relation</b> will be covered as an extension of the first law.
+            
+            <h3>Chemical Potential</h3>
+            
+            Previously, we did not consider chemical reactions in our thermodynamic calculations. 
+            The chemical potential, denoted by \(\mu\), is a fundamental concept in thermodynamics and statistical mechanics. 
+            It represents the change in the system's free energy as the number of particles changes, all other variables being held constant.
+            In a multicomponent system, the chemical potential of each component is crucial for understanding phase equilibrium, reaction equilibrium, and various other phenomena.
+
+            <h4>Definition</h4>
+            The chemical potential of a species i in a system is defined as the partial derivative of the system's energy, enthalpy, or free energy with respect to the number of moles (\(n_i)\) of that species, holding everything else constant. 
+
+            $$\mu_i=(\frac{\partial E}{\partial n_i})_{S,V,n_{j\neq i}}$$
+
+            In terms of the chemical potential, the differential of the energy is given by:
+
+            $$dE=\sum_i \mu_i dn_i$$
+
+            <h4>Physical Significance</h4>
+            The chemical potential is a measure of the 'chemical drive' or tendency of species to enter or leave a phase or to react in a chemical reaction. It plays a vital role in:
+                <ul>
+                    <li>Phase Equilibria: Dictating the distribution of species between phases at equilibrium.
+                    </li>
+                    <li>Reaction Equilibria: Determining the direction and extent of reactions.
+                    </li>
+                </ul>
+                
+
+            <h4>Phase Change</h4>
+
+            At phase equilibrium, the chemical potential of each component is equal in all phases:
+
+            $$\mu_i^\alpha=\mu_i^\beta$$
+            where alpha and beta denote different phases.
+
+            <h4>Chemical Potential and Reaction Equilibrium</h4>
+
+            At reaction equilibrium, the total chemical potential of reactants equals that of products, leading to the condition:
+
+            $$\sum_i\nu_i\mu_i=0$$
+
+            where \(\nu_i\) is the stoichiometric coefficient for specie i.
+
+            
+
+
                 <h2>Laws of Thermodynamics Revisited</h2>
             <h3>Total derivatives</h3>
 
