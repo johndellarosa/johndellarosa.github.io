@@ -72,8 +72,27 @@
     
                 $$S+E\rightleftharpoons_{k_{-1}}^{k_1} E\cdot S \rightarrow^{k_{cat}} E+P$$
     
+                <h3>Assumptions of Michaelis-Menten</h3>
+                <h4>Steady-State</h4>
+                The steady-state assumption posits that during the enzyme-substrate reaction, the concentration of the enzyme-substrate complex remains constant over time.
+
+                $$\frac{d[E\cdot S]}{dt}=0$$
+
+                <h4>Rapid Equilibrium</h4>
+                Enzyme-substrate binding and unbinding processes reach equilibrium much faster than the catalytic step of converting substrate to product.
+
                 
-    
+                <h4>Single Substrate Reaction</h4>
+                The mechanism involves a single substrate molecule binding to the enzyme. 
+
+                <h4>Substrate and Enzyme Concentration</h4>
+                The assumption that the enzyme concentration is much lower than the substrate concentration, which simplifies the mathematical treatment of the kinetics.
+
+
+                <h4>No Reverse Reaction</h4>
+                The assumption that the product does not rebind significantly to the enzyme to form the enzyme-substrate complex again
+
+
                 <h3>Derivation of Kinetics Equation</h3>
     
                 There is a fixed amount of enzyme - either the enzyme is bound or unbound. Let us call the total amount of Enzyme, \(E_0\)
@@ -436,6 +455,10 @@ plt.show()</pre>
     
             With this form of inhibition, the inhibitor binds to the \(E\cdot S\) complex, not E, and prevents enzyme activity as well as substrate dissociation. In a Lineweaver-Burk plot, this would appear as a parallel shift downward. 
     
+    $$v_0=\frac{k_{cat}E_0[S]}{K_m+[S](1+[I]/K_{iu})}$$
+    where [I] is the concenntration of the uncompetitive inhibitor and \(K_{iu}\) is the uncompetitive inhibition constant.
+
+
             The following are the effects of uncompetitive inhibition:
             <ol>
                 <li>\(v_{\text{max}}\) decreases</li>
@@ -457,6 +480,9 @@ plt.show()</pre>
             <br><br>
     This has the effect of essentially reducing the amount of enzyme present, as if less had been added in the first place. 
     The following are the effects of non-competitive inhibition:
+
+$$v=\frac{V_{max}}{(1+\frac{K_m}{[S]})(1+\frac{[I]}{K_i})}$$
+
     <ol>
         <li>\(v_{\text{max}}\) decreases</li>
         <li>\(k_M\) is unaffected</li>

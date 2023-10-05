@@ -793,6 +793,95 @@ plt.show()</pre>
                     <li>The work done to the system in an isothermal process is the <b>minimum</b> work that can <b>inputted</b> to go from the initial state to the final state. Paths going from right to left must go above this curve.</li>
                 </ul>
 
+                <h3>Thermodynamic Cycles</h3>
+                <h4>Introduction</h4>
+                Thermodynamic cycles are sequences of processes that start and end in the same state, typically involving the transfer of heat and work. These cycles are fundamental in understanding how energy is converted and transferred in thermodynamic system
+
+                <h4>Carnot Cycle</h4>
+
+                The Carnot cycle is a theoretical cycle that represents the maximum possible efficiency a heat engine can achieve. It consists of two isothermal (constant temperature) and two adiabatic (no heat transfer) processes:
+
+                It has the following steps:
+
+                <h5>Isothermal Expansion</h5>
+                The working substance (e.g., an ideal gas) undergoes an isothermal expansion at a high temperature \(T_H\), absorbing heat \(Q_H\)  from the hot reservoir.
+
+                <h5>Adiabatic Expansion</h5>
+                The system expands adiabatically, with no heat exchange with the surroundings. The temperature of the system decreases during this process.
+
+                <h5>Isothermal Compression</h5>
+                The system is in contact with a cold resevoir at temperature \(T_C\) and undergoes isothermal compression, expelling heat \(Q_C\) to the cold resevoir. 
+
+                <h5>Adiabatic Compression</h5>
+                The system is compressed adiabatically, with no heat exchange. The temperature of the system increases during this process.
+
+                <figure>
+                    <img src="Carnot-Cycle.png" alt="Carnot Cycle" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+                    <figcaption>Carnot Cycle Example</figcaption>
+                    </figure>
+                    <button type="button" class="collapsible">Python Code</button>
+                    <div class="content">
+                    <code style="margin: auto; width: 50%;"><pre>
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define parameters
+R = 8.314  # Ideal gas constant
+n = .25  # number of moles
+T_H = 400  # High temperature
+T_C = 350  # Low temperature
+V_1 = 2    # Initial volume
+V_2 = 4    # Final volume of isothermal expansion
+gamma = 1.4  # heat capacity ratio
+# Using the relationship PV^gamma = constant to find V_3
+V_3 = V_2 * (T_H/T_C)**(1/(gamma-1))
+V_4 = V_1 * (T_H/T_C)**(1/(gamma-1))
+
+
+# Isothermal Expansion (1 to 2)
+V_iso_exp = np.linspace(V_1, V_2, 100)
+P_iso_exp = n * R * T_H / V_iso_exp
+
+# Adiabatic Expansion (2 to 3)
+
+V_adiab_exp = np.linspace(V_2, V_3, 100)
+P_adiab_exp = P_iso_exp[-1] * (V_2**gamma) / (V_adiab_exp**gamma)
+
+# Isothermal Compression (3 to 4)
+
+V_iso_comp = np.linspace(V_3, V_4, 100)
+P_iso_comp = n * R * T_C / V_iso_comp
+
+# Adiabatic Compression (4 to 1)
+V_adiab_comp = np.linspace(V_4, V_1, 100)
+# Correcting the equation for adiabatic compression
+P_adiab_comp = P_iso_exp[0] * (V_1**gamma) / (V_adiab_comp**gamma)
+
+# Plotting the Carnot cycle
+plt.figure(figsize=(9, 6))
+plt.plot(np.concatenate((V_iso_exp, V_adiab_exp, V_iso_comp, V_adiab_comp)),
+            np.concatenate((P_iso_exp, P_adiab_exp, P_iso_comp, P_adiab_comp)),linewidth=2)
+
+plt.fill_between(np.concatenate((V_iso_exp, V_adiab_exp, V_iso_comp, V_adiab_comp)),
+            np.concatenate((P_iso_exp, P_adiab_exp, P_iso_comp, P_adiab_comp)),alpha=0.3)
+
+plt.scatter([V_iso_exp[0],V_adiab_exp[0],V_iso_comp[0],V_adiab_comp[0]],
+            [P_iso_exp[0],P_adiab_exp[0],P_iso_comp[0],P_adiab_comp[0]],color='black',zorder=10)
+
+# Annotating the plot
+plt.text(V_1+.1, n * R * T_H / V_1, '1', fontsize=14, ha='right')
+plt.text(V_2, n * R * T_H / V_2+10, '2', fontsize=14, ha='right')
+plt.text(V_3, n * R * T_C / V_3+10, '3', fontsize=14, ha='right')
+plt.text(V_4, n * R * T_C / V_4-20, '4', fontsize=14, ha='right')
+
+plt.title('Carnot Cycle on a PV Diagram')
+plt.xlabel('Volume (L)')
+plt.ylabel('Pressure (Pa)')
+plt.grid(True)
+plt.show()
+</pre>
+                    </code></div>
+
                 <h3>Heat Capacity</h3>
 
                 Heat capacity is the amount of heat required to raise the temperature of a system by 1 degree. 
