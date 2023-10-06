@@ -222,6 +222,23 @@ plt.show()
 </pre>
                 </code></div>
 
+                <h2>Error in Monte Carlo</h2>
+
+                <h3>Sources of Error</h3>
+
+                <h4>Sampling Error</h4>
+                Arises due to the finite number of samples used in the simulation. As the number of samples increases, the sampling error decreases, but at the cost of computational resources.
+
+                <h4>Model Error</h4>
+                Occurs when the model used in the simulation does not perfectly represent the real system being studied. This type of error is inherent to the model itself and cannot be reduced by increasing the number of samples.
+
+                <h3>Estimation of Error</h3>
+                The standard error (SE) gives an estimate of the sampling error in the MC estimate. It is given by the formula:
+
+                $$SE=\frac{s}{\sqrt{n}}$$
+                where s is the sample standard deviation and n is the number of samples. 
+
+
                 <h2>Biology Applications of Monte Carlo</h2>
                 A classic example is modeling bacteria population.
 
