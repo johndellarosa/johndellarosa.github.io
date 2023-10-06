@@ -222,7 +222,7 @@ plt.show()</pre>
 
                 The slope is \(\frac{1}{V_{max}}\). The Michaelis-Menten constant is calculated from the y-intercept multiplied by \(V_{max}\).
                 
-                <h5>Using Hanes-Woolf Plots</h5>
+                <h5>Considerations</h5>
 
                 Unlike the Lineweaver-Burk plot, the Hanes-Woolf plot tends to distribute errors more evenly, providing a more accurate linear representation of the data.
 
@@ -308,6 +308,11 @@ plt.legend(['Data',
             f'OLS: y={results.params[1]}x+{results.params[0]}'])
 plt.show()</pre>
                 </code></div>   
+
+
+
+
+
                 <h5>Noise and Estimations</h5>
                 One thing to note is the heteroskedasticity in the graph above. Ordinary Least Squares (OLS) is the best, unbiased linear model when the Gauss-Markov conditions are satisfied - one of which is homoskedasticity (variance of errors is constant over X). 
                 In practice, this can lead to bad estimates as the noisy values on the right can drastically affect the best-fit parameters.
@@ -338,6 +343,80 @@ plt.show()</pre>
                         </ul>
                     </li>
                 </ul>
+
+        <h4>Curve Fitting</h4>
+        Non-linear curve fitting involves adjusting the parameters of a mathematical model to minimize the difference between the observed data and the model predictions, without linearizing the data or the model.
+
+        Various software tools like GraphPad Prism, SigmaPlot, or specialized programs in R and Python, are available for performing non-linear curve fitting on enzyme kinetics data.
+<br><br>
+<h5>Advantages</h5>
+Unlike linearization methods, non-linear curve fitting does not distort the error structure of the data, providing more accurate estimates of parameters
+
+The parameters, \(V_{max}\) and \(K_m\) are directly estimated from the curve fitting, without the need for further transformation or interpretation.
+
+<h5>Drawbacks</h5>
+
+
+Non-linear curve fitting often requires initial guesses for the parameters, and the results may be sensitive to these initial values.
+<br>
+Non-linear curve fitting can be more complex and computationally intensive compared to linearization methods.
+
+        <figure>
+            <img src="Michaelis-Menten-Curve-Fit.png" alt="Michaelis-Menten Curve Fitting" style="margin:auto; display: block;  width:clamp(300px,50vw, 1000px)"/>
+            <figcaption>Michaelis-Menten Curve Fitting Example</figcaption>
+        </figure><br>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Define the Michaelis-Menten function
+def michaelis_menten(S, Vmax, Km):
+    return (Vmax * S) / (Km + S)
+
+# Sample data (substrate concentration and reaction velocity)
+np.random.seed(0)
+k_M = 4e-1
+k_cat = 10
+E_0 = 1e-12
+sns.set_theme(style='whitegrid')
+n = 20
+S_array = np.geomspace(1e-2,1e1,n)
+v_array = k_cat*E_0*S_array/(k_M+S_array)
+noise = np.random.normal(size=(n))*2e-13
+v_array = v_array + noise
+
+# Perform the curve fitting
+params, covariance = curve_fit(michaelis_menten, S_array, v_array, p0=[4, 1])
+
+# Extract the fitted parameters
+Vmax_fitted, Km_fitted = params
+
+# Print the results
+print(f'Fitted Vmax: {Vmax_fitted:}')
+print(f'Fitted Km: {Km_fitted:.2f}')
+
+# Generate fitted values for plotting
+S_fitted = np.linspace(0, S_array.max(), 1000)
+v_fitted = michaelis_menten(S_fitted, Vmax_fitted, Km_fitted)
+
+# Plot the data and the fitted curve
+plt.figure(figsize=(9,6))
+plt.scatter(S_array, v_array, color='red', label='Data',s=5)
+plt.plot(S_fitted, v_fitted, label=f'Fit (Vmax={Vmax_fitted*1e12:.2f}E-12, Km={Km_fitted:.2f})')
+plt.title("Michaelis-Menten Curve Fitting")
+plt.xlabel("Substrate Concentration (mM)")
+plt.ylabel(f"$v_0$ (M/s)")
+plt.xticks([i*5e-1 for i in range(0,22)])
+plt.yticks([i*1e-12 for i in range(0,11)])
+plt.legend()
+plt.grid(True)
+plt.show()
+</pre>
+            </code></div>   
 
     
     <h4>Enzyme Specificity</h4>
@@ -560,6 +639,10 @@ $$v=\frac{V_{max}}{(1+\frac{K_m}{[S]})(1+\frac{[I]}{K_i})}$$
                     <li>Scenario: An inhibitor increases the Km of an enzyme from 5 mM to 20 mM but does not change the Vmax. Classify this inhibitor.</li>
                     <li>True or False: A non-competitive inhibitor binds only to the enzyme-substrate complex.</li>
                     <li>For a reaction following Michaelis-Menten kinetics, describe what is happening at the molecular level when the substrate concentration is much higher than the Km.</li>
+                    <li>Explain the basic principle behind non-linear curve fitting and how it differs from linearization methods.</li>
+                    <li>Describe the steps involved in performing non-linear curve fitting on Michaelis-Menten kinetics data.</li>
+                    <li>Discuss the advantages of using non-linear curve fitting for analyzing enzyme kinetics.</li>
+                    <li>What are some considerations and limitations when employing non-linear curve fitting in enzyme kinetics analysis?</li>
                 </ol>
 
 
