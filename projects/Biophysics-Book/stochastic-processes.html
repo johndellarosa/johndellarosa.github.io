@@ -52,7 +52,7 @@
             <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
         
         </div>
-<h2><a href= "Table-of-Contents">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+<h2><a href= "table-of-contents">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Stochastic-Processes">
@@ -212,7 +212,7 @@ print(steady_state(transition_matrix))
     
                 <br><br>
                 <figure>
-                <img src="Markov-states.png" alt="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
+                <img src="markov-states.png" alt="Time evolution of states in markov chain" style="margin:auto; display: block;  width:clamp(300px,30vw, 600px)"/>
                 <figcaption>Average composition of Markov states over time</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -261,7 +261,7 @@ print(steady_state(transition_matrix))
     
                 The following depicts a simulation of 5000 particles at various time points using Python.
                 <figure>
-                <img src="Diffusion.png" alt="1D Random walk over time" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
+                <img src="diffusion.png" alt="1D Random walk over time" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
                 <figcaption>1D Random Walk Simulation</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -284,7 +284,7 @@ print(steady_state(transition_matrix))
     
                 We can easily extend this model to a higher number of dimensions by having independent random walks along each axis. 
     <figure>
-    <img src="Diffusion2D.png" alt="2D random walk over time" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
+    <img src="diffusion2d.png" alt="2D random walk over time" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
     <figcaption>2D Random Walk Simulation</figcaption>
 </figure><br>
     <button type="button" class="collapsible">Python Code</button>
@@ -321,7 +321,7 @@ plt.show()</pre>
                 Another area is the concept of a biased walk; i.e. one where the jumps in one direction are favored. We used 50% probabilities for each direction in our initial model, but there's no need for it to be this way. 
                 We could have just as easily set \(P(\Delta x=+1)=0.75\) instead. We would observe a fraction still winding up in the negative integers.
                 <figure>
-                <img src="Biased-Diffusion.png" alt="Random walk with drift" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
+                <img src="biased-diffusion.png" alt="Random walk with drift" style="margin:auto; display: block;  width:clamp(300px,50vw, 900px)"/>
                 <figcaption>Random Walk with Drift Simulation</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -412,7 +412,7 @@ plt.show()</pre>
 
                 <h5>Example Basic Brownian Motion Simulation</h5>
                 <figure>
-                <img src="Brownian-Motion-Simulation.gif" alt="Brownian Motion Simulation Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="brownian-motion-simulation.gif" alt="Brownian Motion Simulation Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Brownian Motion Simulation</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -478,7 +478,7 @@ plt.show()          </pre>
                 In order to add a drift, we can calculate the drift amount at each time point in our simulation and then add it scaled by dT. 
                 
                 <figure>
-                <img src="Brownian-Motion-Drift-Simulation.gif" alt="Brownian Motion with Drift Simulation Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="brownian-motion-drift-simulation.gif" alt="Brownian Motion with Drift Simulation Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Brownian Motion with Drift Simulation</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -562,7 +562,7 @@ plt.show()</pre>
                 Let us consider a Bessel process, Y, given by 
                 $$dY_t=\frac{1}{Y_t}dt+dW_t$$
                 <figure>
-                <img src="Bessel-Process.png" alt="Bessel Process Simulation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="bessel-process.png" alt="Bessel Process Simulation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Bessel Process Simulation</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -625,7 +625,7 @@ plt.show()</pre>
                 While a single simulation is not proof, you can observe how in the example simulation, there is an overall upward trend over time for \(B_t^2\) as \(B_t\) is more likely to be further from 0 as t increases (\(B_t\sim N(0,t)\)). The fluctuations become more drastic as \(B_t\) gets further from 0 as well.
 
                 <figure>
-                <img src="Brownian-Motion-Squared.gif" alt="Brownian Motion Squared Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="brownian-motion-squared.gif" alt="Brownian Motion Squared Animation" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Brownian Motion Squared Simulation</figcaption>
             </figure><br>
                 One interesting thing of note is that you can see in the dynamics that the \(f(B_t)\) will never be negative. 
@@ -682,7 +682,7 @@ Similar to Random Walks, Brownian Motion can be extended to higher dimensions by
 
 
                 <figure>
-                    <img src="Brownian-Motion-3D.gif" alt="Brownian Motion 3D Animation" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                    <img src="brownian-motion-3d.gif" alt="Brownian Motion 3D Animation" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                     <figcaption>Brownian Motion 3D Simulation</figcaption>
                 </figure><br>
 
@@ -809,7 +809,7 @@ plt.show()
                 However, it is useful to understand how to do things like Inverse Transform Sampling.
                 
                 <figure>
-                <img src="Poisson-Graph.png" alt="Poisson Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="poisson-graph.png" alt="Poisson Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Poisson Process Simulation</figcaption>
             </figure>
             <br>
@@ -881,7 +881,7 @@ plt.show()</pre>
                 <br>
                 Note that the variable X is not continuous during jumps. Vertical lines are added on the graph for visual clarity.
                 <figure>
-                <img src="Compound-Poisson-Process-Graph.png" alt="Compound Poisson Process Graph" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <img src="compound-poisson-process-graph.png" alt="Compound Poisson Process Graph" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                 <figcaption>Compound Poisson Process Example</figcaption>
             </figure>
             <br>
@@ -932,7 +932,7 @@ plt.show()</pre>
                 where J has rate \(\lambda=0.01\) and \(J\sim N(0.15,0.2)\)
 
                 <figure>
-                <img src="Jump-Process.png" alt="Jump Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="jump-process.png" alt="Jump Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Jump Process Example</figcaption>
             </figure>
             <br>
@@ -986,7 +986,7 @@ plt.show()</pre>
                 <h5>Euler-Maruyama Method for Jump Diffusion</h5>
                 
                 <figure>
-                <img src="Geometric-BM-Jump-Diffusion.png" alt="Jump Diffusion Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="geometric-bm-jump-diffusion.png" alt="Jump Diffusion Process Graph" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Junmp Diffusion Example</figcaption>
             </figure>
             <br>

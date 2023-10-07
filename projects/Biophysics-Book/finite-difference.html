@@ -52,7 +52,7 @@
             <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
         
         </div>
-        <h2><a href= "Table-of-Contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+        <h2><a href= "table-of-contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
@@ -89,9 +89,9 @@
 
                 $$y(0)=0$$
                 <figure>
-                <img src="Euler-Method-ODE.png" alt="Euler Method for ODE" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <img src="euler-method-ode.png" alt="Euler Method for ODE" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                 <figcaption>Euler Method for Quadratic Polynomial</figcaption>
-            </figure><br>
+            </figure><br><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -144,9 +144,9 @@ plt.show()
 
                 $$y(0)=1$$
                 <figure>
-                <img src="Euler-Gaussian.png" alt="Euler method for Exponential" style="margin:auto; display: block;  width:clamp(300px,45vw, 800px)"/>
+                <img src="euler-gaussian.png" alt="Euler method for Exponential" style="margin:auto; display: block;  width:clamp(300px,45vw, 800px)"/>
                 <figcaption>Euler Method for Gaussian Differential Equation</figcaption>
-            </figure><br>
+            </figure><br><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -215,9 +215,9 @@ plt.show()
                 Taking the deriative with respect to other variables works the same. 
                 When taking partial derivatives with respect to a variable, simply do not change the other variables like with normal partial differentiation. 
                 <figure>
-                <img src="Finite-Difference-Operators.png" alt="Finite Difference Forward, Backward, Central Differences" style="margin:auto; display: block;  width:clamp(300px,70vw, 900px)"/>
+                <img src="finite-difference-operators.png" alt="Finite Difference Forward, Backward, Central Differences" style="margin:auto; display: block;  width:clamp(300px,70vw, 900px)"/>
                 <figcaption>Comparison of Finite Difference Operators</figcaption>
-            </figure><br>
+            </figure><br><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -298,7 +298,7 @@ plt.show()
                 <h4>Effect of the value of \(\Delta x\)</h4>
                 Smaller values of \(\Delta x\) make for better approximations, but stability conditions must be paid attention to.
                 <figure>
-                <img src="Secant-Lines.png" alt="Secant Line Estimations for Derivative" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
+                <img src="secant-lines.png" alt="Secant Line Estimations for Derivative" style="margin:auto; display: block;  width:clamp(300px,50vw, 800px)"/>
                 <figcaption>Effect of Delta x Size for Secant Line</figcaption>
             </figure><br>
                 <button type="button" class="collapsible">Python Code</button>
@@ -409,9 +409,9 @@ plt.show()
                 In the simulation below, the temperature is higher at the center and then follows the heat equation dynamics. 
 
                 <figure>
-                <img src="Heat-Equation-Explicit-Finite-Difference.gif" alt="Heat Equation Explicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <img src="heat-equation-explicit-finite-difference.gif" alt="Heat Equation Explicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                 <figcaption>Heat Equation Solved by Explicit Finite Difference Method</figcaption>
-            </figure><br>
+            </figure><br><br>
                 <button type="button" class="collapsible">Python Code</button>
                 <div class="content">
                 <code style="margin: auto; width: 50%;"><pre>
@@ -489,7 +489,7 @@ anim.save("Heat-Equation-Finite-Difference.gif",fps=20)
 
 $$\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}=\alpha \frac{u_{i+1}^{n+1}-2u_{i}^{n+1}+u_{i-1}^{n+1}}{(\Delta x)^2}$$
 where i is the spatial index and n is the time index. 
-<br>
+<br><br>
 <!-- <img src="Heat-Equation-Implicit-Finite-Difference.gif" alt="Heat Equation Implicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/> -->
 <button type="button" class="collapsible">Python Code</button>
 <div class="content">
@@ -614,9 +614,9 @@ where i is the spatial index and n is the time index.
                 where n is the time index, i is in the spatial index. Given the above definition of hyperbolic PDE, it may not be obvious why the one-way wave equation satisfies this criterium. 
                 This is because the one-way wave equation is formed as a decomposition of the regular wave equation \(\frac{\partial^2 u}{\partial t^2}=c^2\nabla^2 u\)
                 <figure>
-                <img src="One-Way-Wave-Equation-Finite-Difference.gif" alt="Heat Equation Implicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+                <img src="one-way-wave-equation-finite-difference.gif" alt="Heat Equation Implicit Finite Difference" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
                 <figcaption>Wave Equation Finite Difference Method</figcaption>
-            </figure><br>
+            </figure><br><br>
                 <button type="button" class="collapsible">Python Code</button>
 <div class="content">
 <code style="margin: auto; width: 50%;"><pre>
