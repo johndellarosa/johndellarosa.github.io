@@ -3,52 +3,52 @@
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 <url>
 	<loc>https://johndellarosa.github.io/</loc>
-	<lastmod>2023-10-06T09:16:48+01:00</lastmod>
+	<lastmod>2023-10-08T00:23:06+01:00</lastmod>
 	<priority>1.0</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Portrait.jpg</image:loc>
+			<image:loc>https://johndellarosa.github.io/portrait.jpg</image:loc>
 	</image:image>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/resume</loc>
-	<lastmod>2023-10-06T09:16:50+01:00</lastmod>
+	<lastmod>2023-10-08T00:23:08+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/biography</loc>
-	<lastmod>2023-10-06T09:16:51+01:00</lastmod>
+	<lastmod>2023-10-08T00:23:09+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects</loc>
-	<lastmod>2023-10-06T09:16:52+01:00</lastmod>
+	<lastmod>2023-10-08T00:23:09+01:00</lastmod>
 	<priority>1.0</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Distribution-Library-Example-1.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/distribution-library-example-1.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Distribution-Library-Example-2.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/distribution-library-example-2.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Sample-gui.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/sample-gui.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Distribution-Library-Example-3.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/distribution-library-example-3.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/VOX-FCOM-Spread-Trading.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/vox-fcom-spread-trading.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Spread-Trade-Holdings.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/spread-trade-holdings.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Math-Trial-Icon.jpg</image:loc>
+			<image:loc>https://johndellarosa.github.io/math-trial-icon.jpg</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Math-Trial-Gameplay.jpg</image:loc>
+			<image:loc>https://johndellarosa.github.io/math-trial-gameplay.jpg</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/Math-Trial-Operations.jpg</image:loc>
+			<image:loc>https://johndellarosa.github.io/math-trial-operations.jpg</image:loc>
 	</image:image>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/Volterra-Defense/volterra-high-resolution-color-logo.png</image:loc>
@@ -58,482 +58,453 @@
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Miscellaneous/options.html</loc>
-	<lastmod>2023-10-06T09:16:52+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/table-of-contents</loc>
+	<lastmod>2023-10-08T00:23:09+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Miscellaneous/section-id.html</loc>
-	<lastmod>2023-10-06T09:16:52+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/math-book/table-of-contents</loc>
+	<lastmod>2023-10-08T00:23:09+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/Miscellaneous</loc>
-	<lastmod>2023-10-06T09:16:52+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Table-of-Contents</loc>
-	<lastmod>2023-10-06T09:16:52+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/miscellaneous/options</loc>
+	<lastmod>2023-10-08T00:23:09+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Introduction</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/miscellaneous/section-id</loc>
+	<lastmod>2023-10-08T00:23:09+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Probability</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Set-Subset.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Set-Union.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Set-Intersection.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Set-Difference.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Set-Complement.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Set-Cartesian-Product.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Inclusion-Exclusion-Principle.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Binomial-PMF-CDF.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Arcsine-PDF-CDF.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Area-Under-Curve.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Conditional-Probability-Venn-Diagram.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Multivariate-Distribution.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Multivariate-Density.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Marginal-Distributions.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Conditional-Distribution.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Pearson-Correlation.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Spearman-Correlation.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Convolution.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Binomial-Example.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Entropy-Permutations.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Normal-Distribution.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Statistics</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Law-of-Large-Numbers.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Central-Limit-Theorem.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Basic-Thermodynamics</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Pendulum-Conservation-of-Energy.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Hookes-Law.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Coulomb.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Morse-Potential.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Lennard-Jones-Potential.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Ideal-Gas-Law-Simulation.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Isotherm-Curves.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Isobaric-Process.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Isochoric-Process.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Adiabatic-Process.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/PV-Path-Dependence.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Carnot-Cycle.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Advanced-Thermodynamics</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/introduction</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Kinetics-Equilibrium</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/probability</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Rate-Law-Comparison.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-subset.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Arrhenius-Plot.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-union.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Dynamic-Equilibrium.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-intersection.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Collision-Theory-Molecular-Simulation.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-difference.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Vant-Hoff-Plot.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-complement.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-cartesian-product.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/inclusion-exclusion-principle.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/binomial-pmf-cdf.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/arcsine-pdf-cdf.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/area-under-curve.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/conditional-probability-venn-diagram.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/multivariate-distribution.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/multivariate-density.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/marginal-distributions.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/conditional-distribution.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/pearson-correlation.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/spearman-correlation.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/convolution.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/binomial-example.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/entropy-permutations.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/normal-distribution.png</image:loc>
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Statistical-Mechanics</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/statistics</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Boltzmann-Distribution-Graph.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/law-of-large-numbers.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Maxwell-Boltzmann-Graph.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/central-limit-theorem.png</image:loc>
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Finite-Difference</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/basic-thermodynamics</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Euler-Method-ODE.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/pendulum-conservation-of-energy.gif</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Euler-Gaussian.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hookes-law.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Finite-Difference-Operators.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/coulomb.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Secant-Lines.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/morse-potential.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Heat-Equation-Explicit-Finite-Difference.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/lennard-jones-potential.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/One-Way-Wave-Equation-Finite-Difference.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/ideal-gas-law-simulation.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/isotherm-curves.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/isobaric-process.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/isochoric-process.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/adiabatic-process.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/pv-path-dependence.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/carnot-cycle.png</image:loc>
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo-Pi-Animation.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo-Pi-Static.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo-Bacteria.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Protein-Biochemistry</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Protein-Folding</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Local-Minima.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Optimization-2D.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Funnel.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Nucleic-Acids</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Chargaffs-Rules.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Nucleic-Acid-Melting-Curve.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Ligand-Binding</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Ligand-Binding-Saturation-Plot.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Scatchard-Plot.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Hill-Equation.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Hill-Plot.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Michaelis-Menten</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Michaelis-Menten-Graph.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Eadie-Hofstee-Diagram.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Hanes-Woolf-Plot.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Lineweaver-Burk-Plot.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Michaelis-Menten-Noise.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Lineweaver-Burk-Noise.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Lineweaver-Burk-Inhibitor.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Unlabeled-Michaelis-Menten.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Sample-Eadie-Hofstee.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Sample-Hanes-Woolf.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Sample-Lineweaver-Burk.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Stochastic-Processes</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Markov-states.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Diffusion.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Diffusion2D.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Biased-Diffusion.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Brownian-Motion-Simulation.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Brownian-Motion-Drift-Simulation.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Bessel-Process.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Brownian-Motion-Squared.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Brownian-Motion-3D.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Poisson-Graph.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Compound-Poisson-Process-Graph.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Jump-Process.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Geometric-BM-Jump-Diffusion.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Diffusion</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Osmosis-Simulation.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Ficks-First-Law.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Ficks-Second-Law-Animation.gif</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Electrochemistry</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Hodgkin-Huxley.gif</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Hodgkin-Huxley-Variables-Over-Time.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Biophysics-Book/Galves-Locherbach-Basic.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Quantum-Mechanics</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/advanced-thermodynamics</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Glossary</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Biophysics-Book/Monte-Carlo-Exercises</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Table-of-Contents</loc>
-	<lastmod>2023-10-06T09:16:53+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/First-Order</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/kinetics-equilibrium</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Slope-Field.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/rate-law-comparison.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Exponential.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/arrhenius-plot.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/dynamic-equilibrium.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/collision-theory-molecular-simulation.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/vant-hoff-plot.png</image:loc>
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Higher-Order</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/statistical-mechanics</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Spring-Dampening.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/boltzmann-distribution-graph.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Nonhomogeneous-Spring-Harmonic.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Laplace-Transform</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Sine-Laplace-Transform.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/maxwell-boltzmann-graph.png</image:loc>
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Fourier-Series</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/finite-difference</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Fourier-Series-Square-Wave.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/euler-method-ode.png</image:loc>
 	</image:image>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Fourier-Series-Sawtooth-Wave.gif</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/euler-gaussian.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/finite-difference-operators.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/secant-lines.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/heat-equation-explicit-finite-difference.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/one-way-wave-equation-finite-difference.gif</image:loc>
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/Math-Trial</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Trial/Privacy</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Volterra-Defense</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Right-Ascension</loc>
-	<lastmod>2023-10-06T09:16:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Right-Ascension/Privacy</loc>
-	<lastmod>2023-10-06T09:16:55+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Volterra-Defense/Privacy</loc>
-	<lastmod>2023-10-06T09:16:55+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/First-Order-System-of-Equations</loc>
-	<lastmod>2023-10-06T09:16:59+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Math-Book/Series-Solutions</loc>
-	<lastmod>2023-10-06T09:16:59+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/Math-Book/Harmonic-Oscillator-Series-Approximation.png</image:loc>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo-pi-animation.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo-pi-static.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo-bacteria.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/protein-biochemistry</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/protein-folding</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/local-minima.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/optimization-2D.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/funnel.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/nucleic-acids</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/chargaffs-rules.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/nucleic-acid-melting-curve.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/ligand-binding</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/ligand-binding-saturation-plot.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/scatchard-plot.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hill-equation.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hill-plot.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/michaelis-menten</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/michaelis-menten-graph.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/eadie-hofstee-diagram.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hanes-woolf-plot.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/lineweaver-burk-plot.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/michaelis-menten-noise.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/lineweaver-burk-noise.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/michaelis-menten-curve-fit.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/lineweaver-burk-inhibitor.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/unlabeled-michaelis-menten.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/sample-eadie-hofstee.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/sample-hanes-woolf.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/sample-lineweaver-burk.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/stochastic-processes</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/markov-states.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/diffusion.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/diffusion2d.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/biased-diffusion.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/brownian-motion-simulation.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/brownian-motion-drift-simulation.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/bessel-process.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/brownian-motion-squared.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/brownian-motion-3d.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/poisson-graph.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/compound-poisson-process-graph.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/jump-process.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/geometric-bm-jump-diffusion.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/diffusion</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/osmosis-simulation.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/ficks-first-law.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/ficks-second-law-animation.gif</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/electrochemistry</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hodgkin-huxley.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hodgkin-huxley-variables-over-time.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/galves-locherbach-basic.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/quantum-mechanics</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/glossary</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/first-order</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/slope-field.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/exponential.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/higher-order</loc>
+	<lastmod>2023-10-08T00:23:11+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/spring-dampening.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/nonhomogeneous-spring-harmonic.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/laplace-transform</loc>
+	<lastmod>2023-10-08T00:23:18+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/sine-laplace-transform.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/first-order-system-of-equations</loc>
+	<lastmod>2023-10-08T00:23:18+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/series-solutions</loc>
+	<lastmod>2023-10-08T00:23:19+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/harmonic-oscillator-series-approximation.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/fourier-series</loc>
+	<lastmod>2023-10-08T00:23:19+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/fourier-series-square-wave.gif</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/fourier-series-sawtooth-wave.gif</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/math-book/other-figures</loc>
+	<lastmod>2023-10-08T00:23:19+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/math-book/runge-kutta-euler-method-comparison.png</image:loc>
 	</image:image>
 </url>
 </urlset>
