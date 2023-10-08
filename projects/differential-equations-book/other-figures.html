@@ -15,7 +15,7 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Higher Order Differential Equations</title>
+            <title>Other Figures</title>
     
         <!-- Meta tags -->
         
@@ -29,8 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/Math-Book/PDE-Introduction"/>       
-            
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/differential-equations-book/other-figures"/>       
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
         <!-- </script> -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -57,81 +56,75 @@
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
-            <div id="Higher-Order">
-            <h1>Higher Order Linear</h1>
+            <div id="Fourier-Series">
+            <h1>Other Figures</h1>
             <h2>Introduction</h2>
-            <h3>Linear Differential Equaiton</h3>
-            We say that a differential equation is <b>linear</b> if it is a linear polynomial in the function and its derivatives. 
+            <img src="runge-kutta-euler-method-comparison.png" alt="Runge-Kutta Euler Method Comparison" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)"/>
+            <button type="button" class="collapsible">Python Code</button>
+            <div class="content">
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
 
-            $$a_n(x)y^{(n)}+a_{n-1}(x)y^{(n-1)}+\dots+a_1(x)y'+a_0(x)y=g(x)$$
+# Define the ODE to be solved (dy/dt = y)
+def ode_function(t,y,r,K):
+    return r * y * (1 - y / K)
 
-            
+def analytic_solution(t, y0, r, K):
+    return K / (1 + ((K - y0) / y0) * np.exp(-r * t))
 
-            <h2>Homogeneous Case</h2>
 
-            We can call a differential equation homogeoneous if g(x)=0
+# Implement the Euler method
+def euler_method(t,y, dt,r,K):
+    return y + dt * ode_function(t,y,r,K)
 
-            <h4>Superposition Principle</h4>
-            If \(y_{1}(x)\) and \(y_{2}(x)\) are two solutions of a homogeneous linear differential equation, 
-            then any linear combination \(c_1y_1(x)+c_2y_2(x)\) is also a solution.
-            
-            <h4>Characteristic Equation</h4>
+# Implement the 4th order Runge-Kutta method
+def runge_kutta_method(t, y, dt, r, K):
+    k1 = dt * ode_function(t, y, r, K)
+    k2 = dt * ode_function(t + 0.5 * dt, y + 0.5 * k1, r, K)
+    k3 = dt * ode_function(t + 0.5 * dt, y + 0.5 * k2, r, K)
+    k4 = dt * ode_function(t + dt, y + k3, r, K)
+    return y + (1/6) * (k1 + 2 * k2 + 2 * k3 + k4)
 
-            Let us consider a second order homogeneous linear differential equation
+# Initial conditions
+t0 = 0
+y0 = 0.1
+dt = 5
+t_end = 125
+r = 0.1
+K = 10
 
-            $$ay''+by'+cy=0$$
+# Arrays to store the results
+times = np.arange(t0, t_end, dt)
+euler_y = [y0]
+rk_y = [y0]
 
-            Since the function and its derivatives must cancel each other out, we might guess that the answer is an exponential. 
-            $$y=e^{mx}$$
 
-            We have the following derivatives for y:
-            $$y'=me^{mx}$$
-            $$y''=m^2e^{mx}$$
+# Perform the integration using the Euler method and the Runge-Kutta method
+for t in times[1:]:
+    euler_y.append(euler_method(t,euler_y[-1], dt,r,K))
+    rk_y.append(runge_kutta_method(t,rk_y[-1], dt,r,K))
 
-            Plugging in to our differential equation:
+plt.figure(figsize=(9,6))
+analytic_times = np.linspace(t0,t_end,1000)
+analytic_y = [analytic_solution(t, y0, r, K) for t in analytic_times]
+# Plotting
+plt.plot(analytic_times, analytic_y, label='Analytical Solution', color='tab:blue')
+plt.plot(times, euler_y, label=f'Euler Method dt={dt}', linestyle='dotted', color='tab:red')
+plt.plot(times, rk_y, label=f'Runge-Kutta Method dt={dt}', color='tab:green', linestyle='dashed')
+plt.xlabel('Time (t)')
+plt.ylabel('y(t)')
+plt.legend()
+plt.title(r'Comparison of Numerical Methods for $\frac{dy}{dt}=0.1\times y(1-\frac{y}{100})$')
+plt.grid(True)
+plt.show()
+                
+            </pre>
+            </code>
+            </div>
 
-            $$am^2e^{mx}+bme^{mx}+ce^{mx}=0$$
-            $$(am^2+bm+c)e^{mx}=0$$
-            
-            If the product of two factors is 0, then at least one of the factors must be 0. 
-            Because \(e^{mx}\) will never be 0, we need not consider it for finding roots. 
-
-            We can then focus on the equation
-
-            $$am^2+bm+c=0$$
-            Which is a simple polynomial of m. We can then find the values of m for which the equation is 0, by factoring, quadratic equation, or completing the square. 
-            <br><br>
-            Let \(m_1\) and \(m_2\) be the roots of the polynomial.
-            <br>
-            If \(m_1\neq m_2\), we have the following solution
-
-            $$y=c_1e^{m_1x}+c_2e^{m_2x}$$
-
-            If \(m_1=m_2\), or we have repeated roots in the higher order case, the repeats will have an additional factor of x for the number repeat it is.
-
-            $$y=c_1e^{m_1x}+c_2xe^{m_1x}$$
-
-            <h3>Complex Roots</h3>
-            But what if we have complex roots?
-            <br>
-            \(e^{mx}\) is still valid for complex m.
-            Euler's formula gives the relationship for a complex exponent. 
-
-            $$e^{ix}=\cos x+i \sin(x)$$
-
-            Another relevant formula is that of de Moivre's which states
-
-            $$(\cos x+i\sin x)^n=\cos nx+i\sin nx$$
-            
-            The real part of an exponent can be factored out, letting us get
-
-            $$e^{(a+bi)x}=e^{ax}\left[cos(bx)+i\sin(bx)\right]$$
-
-            Since actually do not care whether the constants in front of solutions are real or complex, we get the solutions
-
-            $$y=e^{ax}\left[c_1\cos(bx)+c_2\sin(bx)\right]$$
-            as the solution if the root is m=a+bi
 <br><br>
+
 
 
         </div>
@@ -141,7 +134,7 @@
             <ol>
 
             </ol>
-
+<br>
 
         </div>
 

@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/math-book/higher-order"/>       
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/differential-equations-book/higher-order"/>       
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
         <!-- </script> -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -191,6 +191,35 @@ plt.show()
 </code>
 </div>
 
+    <h3>Cauchy-Euler Equations</h3>
+    Cauchy-Euler equations are a class of linear differential equations that have variable coefficients.
+    The general form of a Cauchy-Euler equation of order n is given by:
+    $$x^ny^{(n)}+a_{n-1}x^{n-1}y^{(n-1)}+\dots+a_1xy'+a_0y=0$$
+
+    <h4>Characteristic Equation</h4>
+    While we previously assumed an exponential solution for regular homogeneous equations, for Cauchy-Euler equations we assume a solution of the form
+
+    $$y=x^m$$
+
+    Plugging this in gives us the characteristic equation
+
+    $$m(m-1)(m-2)\dots(m-(n-1))+a_{n-1}m(m-1)\dots(m-2)+\dots+a_0=0$$
+
+    We solve the polynomial for m similar to before.
+
+    <h4>Solutions</h4>
+    For distinct real roots, the general solution is
+
+    $$y(x)=c_1x^{m_1}+\dots+c_nx^{m_n}$$
+
+    If a root m is repeated k times, the corresponding terms gain powers of \(\ln(x)\)
+
+    $$x^m,x^m\ln(x),x^m(\ln(x))^2\dots,x^m(\ln(x))^{k-1}$$
+    For complex roots \(m=\alpha\pm i\beta\), the corresponding terms in the general solution are
+
+    $$x^\alpha\cos(\beta\ln(x))\text{ and }x^\alpha\sin(\beta\ln(x))$$
+
+
 
                 <h2>Nonhomogeneous</h2>
                 But what if \(g(x)\neq 0\)?
@@ -313,6 +342,11 @@ plt.show()
         <div id="Exercises">
             <h2>Exercises</h2>
             <ol>
+                <li>Solve the Cauchy-Euler equation:
+                    <ol>
+                        <li>\(x^2y''+xy'-y=0\)</li>
+                    </ol>
+                </li>
 
             </ol>
 

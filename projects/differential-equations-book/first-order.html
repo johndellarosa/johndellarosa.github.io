@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/math-book/first-order"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/differential-equations-book/first-order"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
         <!-- </script> -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -114,11 +114,14 @@ plt.show()
                 </code>
 </div>
 
+
+
            <h3>Separable</h3>
             A first order differential equation involves a function's first derivative and no higher order derivatives.
             <br>
             We can write a first-order differential equation as
             $$\frac{dy}{dx}=f(y,x)$$
+            where f is a real-valued function
             <br>
             The simplest example would be
             $$y'(t)=k$$
@@ -197,7 +200,7 @@ plt.show()
 </div>
 
 
-            <h3>Linear Equation</h3>
+            <h3>Linear  Equation</h3>
             A linear equation is of the form
 
             $$\frac{dy}{dx}+p(x)y=q(x)$$
@@ -269,8 +272,16 @@ plt.show()
 
 
 
+            <h2>Nonlinear First Order Equations</h2>
 
+            <h3>Bernoulli Differential Equation</h3>
+            Bernoulli's equation is a nonlinear first order differential equation given by 
 
+            $$y'+P(x)y=Q(x)y^n$$
+            where n is a real number. Bernoulli’s equation can be linearized by substituting 
+            \(v=y^{1-n}\), leading to a linear differential equation in v.
+            
+            
 
         </div>
 
