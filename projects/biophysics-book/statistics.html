@@ -181,7 +181,72 @@ plt.show()
 </pre>
 </code></div>
 
-<h2>Data</h2>
+<h2>Statistical Tests</h2>
+
+<h3>T-Tests</h3>
+The t-test is a statistical method used to determine whether there is a significant difference between the means of two groups.
+
+<h4>Assumptions of T-test</h4>
+<h5>Normality of Residuals</h5>
+Residuals should be normally distributed
+
+
+
+
+<h5>Homogeneity of Variances</h5>
+The variances among the groups should be equal.
+
+<h5>Independence of Observations</h5>
+The observations should be independent of each other.
+
+<h4>Types of T-tests</h4>
+
+<h5>One-Sample</h5>
+Used to determine if the mean of a single group differs significantly from a known or hypothesized mean.
+<h5>Two-Sample</h5>
+Compares the means of two independent groups to determine if they significantly differ from each other.
+
+<h4>Performing Two-Sample T-test</h4>
+<h5>Null Hypothesis</h5>
+The null hypothesis posits that there is no significant difference between the means of the groups being compared.
+<h5>Alternative Hypothesis</h5>
+The alternative hypothesis posits that there is a significant difference between the means of the groups.
+<h5>Calculation</h5>
+Calculate the t-statistic using the formula: 
+
+$$t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{{\frac{{s_1^2}}{{n_1}} + \frac{{s_2^2}}{{n_2}}}}}$$ where 
+
+\(\bar{x}_i\) is the sample mean for i, \(s_i^2\) is the sample variance for i, and \(n_i\) is the sample size for i.
+
+<h5>Decision</h5>
+Compare the absolute value of the t-statistic to the critical t-value from the t-distribution table based on the chosen level of significance (e.g., 0.05) and degrees of freedom. 
+
+<br><br>
+If the absolute value of the t-statistic is greater than the critical t-value, reject the null hypothesis.
+
+<h3>Analysis of Variance (ANOVA)</h3>
+Analysis of Variance, abbreviated as ANOVA, is a statistical method used to compare the means of three or more independent groups to determine if there is a significant difference among them. 
+
+<h4>Assumptions of ANOVA</h4>
+The same assumptions as the T-test
+<h5>Normality of Residuals</h5>
+Residuals should be normally distributed
+
+<h5>Homogeneity of Variances</h5>
+The variances among the groups should be equal.
+
+<h5>Independence of Observations</h5>
+The observations should be independent of each other.
+
+<h4>Types of ANOVA</h4>
+
+<h5>One-way ANOVA</h5>
+Used to compare the means of three or more independent groups based on one factor or independent variable.
+<h5>Two-way ANOVA</h5>
+Expands on one-way ANOVA by considering two factors or independent variables, allowing for the examination of interactions between factors.
+
+
+<h2>Modeling</h2>
 
     <h3>Ordinary Least Squares</h3>
 
