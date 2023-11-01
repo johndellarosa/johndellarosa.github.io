@@ -433,12 +433,16 @@ plt.show()
 
 
                 <h4>Galves-Locherbach model</h4>
+
+                The Galves-Locherbach model (GL model) is a mathematical model designed to represent networks of neurons, encompassing intrinsic stochasticity. It is part of a broader class of non-Markovian processes with a countable number of interacting components in both discrete and continuous time. 
+
+
                 <h5>Stochastic Chains with Memory</h5>
                 In the Markov chains, the only information in the filtration that you needed to condition on was the present state. 
                 In a stochastic chain with memory, you can condition on other things, such as time since a given event.
 
                 <h5>Basics</h5>
-                In a basic Galves-Locherbach model, a neuron is either firing or not. Each neuron only remembers the past as far back as the last time it fired. 
+                In a basic Galves-Locherbach model, a neuron is either firing or not and is influenced by the states of other neurons in the network. Each neuron only remembers the past as far back as the last time it fired. 
                 The probability that a neuron fires at a given time point is a function taking values on [0,1] that monotonically increases with respect to the time since last fired. 
 <br><br>
                 The figure below uses a sigmoidal probability model centered at L=5. By modifying the probability function, you can change the dynamics, such as adding a refractory period.
