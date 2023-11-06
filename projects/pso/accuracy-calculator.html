@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Tech Damage Calculator</title>
+        <title>PSO Accuracy Calculator</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, tech damage calculator">
+    <meta name="keywords" content="PSO, Phantasy Star Online, accuracy calculator">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="PSO tech damage calculator">
+    <meta name="description" content="Phantasy Star Online accuracy calculator">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/tech-damage">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/accuracy-calculator">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -38,6 +38,69 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <script type="text/javascript" src="./pso-functions.js"></script>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif; /* Use a nice font */
+    }
+
+    .center-container {
+        text-align: center; /* Center-aligns the content */
+        margin-top: 30px; /* Adds some space at the top */
+    }
+
+    #user-input, #process-btn {
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+    }
+
+    #process-btn {
+        cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+    }
+
+    #process-btn:hover {
+        background-color: #0056b3; /* Darkens the button when hovered */
+    }
+
+    #data-table {
+        margin-top: 20px; /* Adds some space between the button and the table */
+        text-align: left; /* Aligns the table content to the left */
+        width: 100%; /* Makes the table take up the full width */
+    }
+
+    table {
+        width: 95%; /* Set the width of the table to be 95% of its container */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapses the borders of the table */
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* Adds a border to table headers and cells */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    th {
+        background-color: #f2f2f2; /* Sets a background color for headers */
+        text-align: center; /* Centers header text */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    .input-container {
+            margin: 0 auto; /* Centers the container */
+            width: fit-content; /* Ensures the container only takes up as much width as needed */
+            padding: 10px; /* Adds some padding around the container */
+        }
+
+        label {
+            margin-right: 10px; /* Adds some space between the label and the input field */
+        }
+
+</style>
 
 </head>
 <body>
@@ -84,7 +147,7 @@
                 const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
                 globalJsonData = json;
                 // Now you have the JSON equivalent of your Excel's first sheet
-                console.log(enemy_data);
+                // console.log(enemy_data);
                 
                 // // Transform the array into an object keyed by the first column
                 // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
@@ -107,12 +170,18 @@
     </script>
 
 
-    <!-- Input field for the user to enter a value -->
-    <input type="text" id="user-input" placeholder="Enter a value" />
-
-    <!-- Button that will trigger processData when clicked -->
-    <button id="process-btn">Process Data</button>
-
+    <div class="center-container">
+        <!-- Container for the label and input field -->
+        <div class="input-container">
+            <!-- Label for the input field -->
+            <label for="user-input">ATA:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="text" id="user-input" placeholder="Enter ATA value" />
+        </div>
+        
+        <!-- Button that will trigger processData when clicked -->
+        <button id="process-btn">Process Data</button>
+    </div>
     <br><br>
     <div id="data-table"></div>
     
