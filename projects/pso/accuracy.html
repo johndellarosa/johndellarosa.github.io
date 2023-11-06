@@ -62,7 +62,9 @@
     <script>
         // URL to your hosted Excel file
         const enemy_file = './PSO_Enemy.xlsx';
-
+        // Define a global variable to hold the JSON data
+        let globalJsonData = null;
+        
         fetch(enemy_file)
             .then(response => {
                 if (response.ok) {
@@ -79,8 +81,8 @@
                 const worksheet = workbook.Sheets[firstSheetName];
                 
                 // Convert the sheet to JSON
-                const enemy_data = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-
+                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                globalJsonData = json;
                 // Now you have the JSON equivalent of your Excel's first sheet
                 console.log(enemy_data);
                 
