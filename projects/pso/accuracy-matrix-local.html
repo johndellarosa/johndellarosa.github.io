@@ -11,7 +11,7 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Tech Damage Calculator</title>
+        <title>PSO Accuracy Calculator</title>
 
     <!-- Meta tags -->
     
@@ -58,7 +58,7 @@
     
     </div> 
 
-    <div id="data-table"></div>
+
 
     <script>
         // Path to your local Excel file relative to the location of this HTML file
@@ -79,7 +79,7 @@
                     const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
                     const firstSheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[firstSheetName];
-                    const json = XLSX.utils.sheet_to_json(worksheet, { raw: false ,header:1});
+                    const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
                     
                     // Assign the JSON data to the global variable
                     globalJsonData = json;
@@ -107,47 +107,12 @@
             console.log('Data loaded:', jsonData);
 
             // If you need to perform operations on the data, you would typically call those functions from here.
-            processData(jsonData);
+            // processData(jsonData);
 
             return jsonData;
         });
 
-        function processData(data) {
-            // Create a table element
-            let table = document.createElement('table');
-            table.style.width = '100%';
-            table.setAttribute('border', '1');
-
-            // Generate table headers
-            let thead = document.createElement('thead');
-            let headerRow = document.createElement('tr');
-            
-            // Assuming first row of data contains headers
-            let headers = data[0];
-            headers.forEach(header => {
-                let th = document.createElement('th');
-                th.textContent = header;
-                headerRow.appendChild(th);
-            });
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-
-            // Generate table body
-            let tbody = document.createElement('tbody');
-            data.slice(1).forEach(row => { // Skip the header row
-                let tr = document.createElement('tr');
-                row.forEach(cell => {
-                    let td = document.createElement('td');
-                    td.textContent = cell;
-                    tr.appendChild(td);
-                });
-                tbody.appendChild(tr);
-            });
-            table.appendChild(tbody);
-
-            // Append the table to the div with id="data-table"
-            document.getElementById('data-table').appendChild(table);
-        }
+        
 
         // Later in the code, if you need to access the JSON data outside the callback, you can check if it has been loaded
         if (globalJsonData !== null) {
@@ -166,8 +131,42 @@
 
     </script>
 
+    <!-- Input field for the user to enter a value -->
+    <input type="text" id="user-input" placeholder="Enter a value" />
 
+    <!-- Button that will trigger processData when clicked -->
+    <button id="process-btn">Process Data</button>
+
+    <br><br>
+    <div id="data-table"></div>
     
+
+    <script>
+        // ... (Include the loadExcelFile and processData functions here)
+
+        // Function that handles the button click
+        function handleProcessButtonClick() {
+            // Get the value from the input field
+            const userInput = document.getElementById('user-input').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedInput = parseFloat(userInput);
+
+            // If the input value is not a number, display an error message
+            if (isNaN(processedInput)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+            let hitmatrix = generateMatrix(globalJsonData,processedInput);
+
+            processData(hitmatrix);
+        }
+
+        // Add event listener to the button
+        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
+    </script>
 
     <script>
         var coll = document.getElementsByClassName("collapsible");

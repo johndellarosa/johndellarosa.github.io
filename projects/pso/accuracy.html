@@ -37,6 +37,8 @@
   ></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="./pso-functions.js"></script>
+
 </head>
 <body>
     <div class="navbar">
@@ -100,6 +102,44 @@
             .catch(error => {
                 console.error('Fetch error:', error);
             });
+    </script>
+
+
+    <!-- Input field for the user to enter a value -->
+    <input type="text" id="user-input" placeholder="Enter a value" />
+
+    <!-- Button that will trigger processData when clicked -->
+    <button id="process-btn">Process Data</button>
+
+    <br><br>
+    <div id="data-table"></div>
+    
+
+    <script>
+        // ... (Include the loadExcelFile and processData functions here)
+
+        // Function that handles the button click
+        function handleProcessButtonClick() {
+            // Get the value from the input field
+            const userInput = document.getElementById('user-input').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedInput = parseFloat(userInput);
+
+            // If the input value is not a number, display an error message
+            if (isNaN(processedInput)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+            let hitmatrix = generateMatrix(globalJsonData,processedInput);
+
+            processData(hitmatrix);
+        }
+
+        // Add event listener to the button
+        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
     </script>
 
 

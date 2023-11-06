@@ -1,6 +1,6 @@
 function getEffectiveATA(totalATA, attackType, comboStep) {
-    const attackTypeModifier = { 'N': 1, 'H': 1.2, 'S': 1.5 }; // Example values
-    const comboStepAccuracy = { 1: 0.9, 2: 0.8, 3: 0.7 }; // Example values
+    const attackTypeModifier = { 'N': 1, 'H': 0.7, 'S': 0.5 }; // Example values
+    const comboStepAccuracy = { 1: 1.0, 2: 1.3, 3: 1.69 }; // Example values
     
     if (!['N', 'H', 'S'].includes(attackType)) {
       throw new Error("Attack type must be in ['N', 'H', 'S']");
@@ -37,10 +37,9 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
     console.error(error);
   }
 
-  function generateMatrix(enemy_stats){
+  function generateMatrix(enemy_stats,totalATA=100){
 
-  // Assuming total_ata is a constant value
-  const totalATA = 100;
+
 
   // Assuming enemy_stats is an array of objects where each object is a row from your Excel file
   // For example: 
@@ -52,7 +51,8 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   // Loop through each enemy stat object
   enemy_stats.forEach((row, index) => {
   let enemyEVP = row['EVP'];
-  let accData = {};
+  let accData = { 'Enemy': row['Enemy'] }; // Add the 'Enemy' as the first entry
+
 
   // Nested loops to go through attack types and combo steps
   ['N', 'H', 'S'].forEach(attackType => {
@@ -75,4 +75,51 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   console.log(accArray[0]);
 
   return accArray;
+}
+
+function processData(data) {
+    // Find the existing table by id, and if it exists, remove it
+    const existingTable = document.getElementById('data-table');
+    if (existingTable.firstChild) {
+        existingTable.removeChild(existingTable.firstChild);
+    }
+
+    // Create a new table element
+    let table = document.createElement('table');
+    table.style.width = '100%';
+    table.setAttribute('border', '1');
+
+    // Generate table headers
+    let thead = document.createElement('thead');
+    let headerRow = document.createElement('tr');
+    
+    // Assuming the first object in data array has all the headers as keys
+    let headers = Object.keys(data[0]);
+    headers.forEach(header => {
+        let th = document.createElement('th');
+        th.textContent = header; // Column letters as headers
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Generate table body
+    let tbody = document.createElement('tbody');
+    data.forEach(row => {
+        let tr = document.createElement('tr');
+        headers.forEach(header => {
+            let td = document.createElement('td');
+            let value = row[header];
+    if (!isNaN(value) && value !== null) {
+        value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
+    }
+    td.textContent = value;
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // Append the table to the div with id="data-table"
+    document.getElementById('data-table').appendChild(table);
 }
