@@ -173,7 +173,10 @@
 <h1>Phantasy Star Online Accuracy Caulcator</h1>
 
 <p>Calculates the percent chance of an attack dealing damage to an enemy. Currently accuracy drop due to distance with ranged weapons is not supported. Episode 1 normal mode values are displayed.</p>
-
+<ol>
+    <li>Letter refers to typoe of attack: N=normal, H=heavy, S=special</li>
+    <li>Number refers to which hit in the combo it is</li>
+</ol>
     <div class="center-container">
         <!-- Container for the label and input field -->
         <div class="input-container">
@@ -184,7 +187,7 @@
         </div>
         
         <!-- Button that will trigger processData when clicked -->
-        <button id="process-btn">Process Data</button>
+        <button id="process-btn">Calculate</button>
     </div>
     <br><br>
     <div id="data-table"></div>
