@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Accuracy Calculator</title>
+        <title>PSO Enemy Stats Table</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, accuracy calculator">
+    <meta name="keywords" content="PSO, Phantasy Star Online, enemy stats">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online accuracy calculator">
+    <meta name="description" content="Phantasy Star Online enemy stats table">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/accuracy-calculator">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/enemy-stats">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -147,6 +147,7 @@
                 // Convert the sheet to JSON
                 const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
                 globalJsonData = json;
+                processData(globalJsonData);
                 // Now you have the JSON equivalent of your Excel's first sheet
                 // console.log(enemy_data);
                 
@@ -170,31 +171,20 @@
             });
     </script>
 
-<h1>Phantasy Star Online Accuracy Caulcator</h1>
+<h1>Phantasy Star Online Enemy Stats</h1>
 
-<p>Calculates the percent chance of an attack dealing damage to an enemy. Currently accuracy drop due to distance with ranged weapons is not supported. Single player, episode 1 normal mode values are displayed.</p>
+<p>The stats correspond to the following parameters</p>
 <ol>
-    <li>Letter refers to type of attack: N=Normal, H=Heavy, S=Special</li>
-    <li>Number refers to which hit in the combo it is</li>
-    <li>Values above 100 mean 100% to hit. Values below 0 mean 0% chance to hit.</li>
+    <li>Single-player</li>
+    <li>Episode 1</li>
+    <li>Normal difficulty</li>
 </ol>
-    <div class="center-container">
-        <!-- Container for the label and input field -->
-        <div class="input-container">
-            <!-- Label for the input field -->
-            <label for="user-input">ATA:</label>
-            <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input" placeholder="Enter ATA value" />
-        </div>
-        
-        <!-- Button that will trigger processData when clicked -->
-        <button id="process-btn">Calculate</button>
-    </div>
-    <br><br>
+
+    <br>
     <div id="data-table"></div>
     
 
-    <script>
+    <!-- <script>
         // ... (Include the loadExcelFile and processData functions here)
 
         // Function that handles the button click
@@ -219,7 +209,7 @@
 
         // Add event listener to the button
         document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
-    </script>
+    </script> -->
 
 
     <script>
