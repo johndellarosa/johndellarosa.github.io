@@ -126,10 +126,10 @@
     <script>
         // URL to your hosted Excel file
         const enemy_file = './PSO_Enemy.xlsx';
-        const tech_file = './PSO_Tech.xlsx';
+        // const tech_file = './PSO_Tech.xlsx';
         // Define a global variable to hold the JSON data
         let globalEnemyData = null;
-        let globalTechData = null;
+        // let globalTechData = null;
         
         fetch(enemy_file)
             .then(response => {
@@ -171,45 +171,45 @@
                 console.error('Fetch error:', error);
             });
             // Fetch tech
-            fetch(tech_file)
-            .then(response => {
-                if (response.ok) {
-                    return response.arrayBuffer();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(arrayBuffer => {
-                // Use SheetJS to read the buffer
-                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+            // fetch(tech_file)
+            // .then(response => {
+            //     if (response.ok) {
+            //         return response.arrayBuffer();
+            //     }
+            //     throw new Error('Network response was not ok.');
+            // })
+            // .then(arrayBuffer => {
+            //     // Use SheetJS to read the buffer
+            //     const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // Assuming your sheet is the first sheet in the workbook
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
+            //     // Assuming your sheet is the first sheet in the workbook
+            //     const firstSheetName = workbook.SheetNames[0];
+            //     const worksheet = workbook.Sheets[firstSheetName];
                 
-                // Convert the sheet to JSON
-                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                globalTechData = json;
-                // Now you have the JSON equivalent of your Excel's first sheet
-                // console.log(enemy_data);
+            //     // Convert the sheet to JSON
+            //     const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+            //     globalTechData = json;
+            //     // Now you have the JSON equivalent of your Excel's first sheet
+            //     // console.log(enemy_data);
                 
-                // // Transform the array into an object keyed by the first column
-                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
-                //     const keys = Object.keys(current);
-                //     if (keys.length > 0) {
-                //         const index = current[keys[0]];
-                //         accumulator[index] = current;
-                //     }
-                //     return accumulator;
-                // }, {});
+            //     // // Transform the array into an object keyed by the first column
+            //     // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
+            //     //     const keys = Object.keys(current);
+            //     //     if (keys.length > 0) {
+            //     //         const index = current[keys[0]];
+            //     //         accumulator[index] = current;
+            //     //     }
+            //     //     return accumulator;
+            //     // }, {});
 
-                // // Now you have a JSON object indexed by the first column's entries
-                // console.log(jsonIndexedByFirstColumn);
+            //     // // Now you have a JSON object indexed by the first column's entries
+            //     // console.log(jsonIndexedByFirstColumn);
                 
-                // // Handle the JSON data here
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
+            //     // // Handle the JSON data here
+            // })
+            // .catch(error => {
+            //     console.error('Fetch error:', error);
+            // });
     </script>
 
 <h1>Phantasy Star Online Special Attack Calculator</h1>
