@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Enemy Stats Table</title>
+        <title>PSO Special Attack Calculator</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, enemy stats">
+    <meta name="keywords" content="PSO, Phantasy Star Online, special attack calculator">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online enemy stats table">
+    <meta name="description" content="Phantasy Star Online special attack calculator">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/enemy-stats">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/special-attack-calculator">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input, #process-btn {
+    #user-input,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -82,13 +82,13 @@
     th, td {
         border: 1px solid #ddd; /* Adds a border to table headers and cells */
         text-align: center; /* Centers header text */
-        padding: 8px; /* Adds space inside table headers and cells */
+        padding: 6px; /* Adds space inside table headers and cells */
     }
 
     th {
         background-color: #f2f2f2; /* Sets a background color for headers */
         text-align: center; /* Centers header text */
-        padding: 8px; /* Adds space inside table headers and cells */
+        padding: 6px; /* Adds space inside table headers and cells */
     }
 
     .input-container {
@@ -126,8 +126,10 @@
     <script>
         // URL to your hosted Excel file
         const enemy_file = './PSO_Enemy.xlsx';
+        const tech_file = './PSO_Tech.xlsx';
         // Define a global variable to hold the JSON data
-        let globalJsonData = null;
+        let globalEnemyData = null;
+        let globalTechData = null;
         
         fetch(enemy_file)
             .then(response => {
@@ -146,8 +148,47 @@
                 
                 // Convert the sheet to JSON
                 const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                globalJsonData = json;
-                processData(globalJsonData);
+                globalEnemyData = json;
+                // Now you have the JSON equivalent of your Excel's first sheet
+                // console.log(enemy_data);
+                
+                // // Transform the array into an object keyed by the first column
+                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
+                //     const keys = Object.keys(current);
+                //     if (keys.length > 0) {
+                //         const index = current[keys[0]];
+                //         accumulator[index] = current;
+                //     }
+                //     return accumulator;
+                // }, {});
+
+                // // Now you have a JSON object indexed by the first column's entries
+                // console.log(jsonIndexedByFirstColumn);
+                
+                // // Handle the JSON data here
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+            // Fetch tech
+            fetch(tech_file)
+            .then(response => {
+                if (response.ok) {
+                    return response.arrayBuffer();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(arrayBuffer => {
+                // Use SheetJS to read the buffer
+                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+
+                // Assuming your sheet is the first sheet in the workbook
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                
+                // Convert the sheet to JSON
+                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                globalTechData = json;
                 // Now you have the JSON equivalent of your Excel's first sheet
                 // console.log(enemy_data);
                 
@@ -171,57 +212,126 @@
             });
     </script>
 
-<h1>Phantasy Star Online Enemy Stats</h1>
+<h1>Phantasy Star Online Special Attack Calculator</h1>
 
-<p>The stats correspond to the following parameters</p>
+<p>Calculates the special attack damage/activation rate for the following parameters</p>
 <ol>
     <li>Single-player</li>
-    <li>Episode 1</li>
     <li>Normal difficulty</li>
+    <li>Episode 1</li>
 </ol>
+<p>Currently only the instant kill special is supported (Dim, Shadow, Dark, Hell).</p>
+<div class="center-container">
+        <!-- Container for the label and input field -->
+        <div class="input-container">
 
-    <br>
+            <!-- Label for the dropdown menu -->
+            <label for="special-select">Special:</label>
+            <!-- Dropdown menu for the user to select a value -->
+            <select id="special-select">
+                <!-- Option elements for the dropdown -->
+                <option value="Instant Kill">Instant Kill</option>
+                <!-- <option value="Shadow">Shadow</option>
+                <option value="Dark">Dark</option>
+                <option value="Hell">Hell</option> -->
+            
+
+            </select>
+
+            <!-- Label for the dropdown menu -->
+            <label for="weapon-select">Weapon Type:</label>
+            <!-- Dropdown menu for the user to select a value -->
+            <select id="weapon-select">
+                <!-- Option elements for the dropdown -->
+                <option value="Saber">Saber</option>
+                <option value="Sword">Sword</option>
+                <option value="Daggers">Daggers</option>
+                <option value="Partisan">Partisan</option>
+                <option value="Slicer">Slicer</option>
+                <option value="Handgun">Handgun</option>
+                <option value="Rifle">Rifle</option>
+                <option value="Mechgun">Mechgun</option>
+                <option value="Shot">Shot</option>
+                <option value="Cane">Cane</option>
+                <option value="Rod">Rod</option>
+                <option value="Wand">Wand</option>
+            </select>
+
+
+        </div>
+        
+        <!-- Button that will trigger processData when clicked -->
+        <button id="process-btn">Calculate</button>
+    </div>
+    <br><br>
     <div id="data-table"></div>
     
 
-    <!-- <script>
-        // ... (Include the loadExcelFile and processData functions here)
+    <script>
 
-        // Function that handles the button click
-        function handleProcessButtonClick() {
-            // Get the value from the input field
-            const userInput = document.getElementById('user-input').value;
+        const multiplier_map = new Map([
+            ['Saber',1],
+            ['Sword',0.5],
+            ['Daggers',0.5],
+            ['Partisan',0.5],
+            ['Slicer',1/3],
+            ['Handgun',1],
+            ['Rifle',1],
+            ['Mechgun',1/3],
+            ['Shot',1/3],
+            ['Cane',1],
+            ['Rod',1],
+            ['Wand',1]]
+            );
 
-            // Validate or transform the input value if necessary
-            // For example, convert the input value to a number
-            const processedInput = parseFloat(userInput);
+        // Function to Handle Button Click
+        function handleCalculateButtonClick() {
+            
+            
+            // Get the selected tech value
+            const selectedSpecial = document.getElementById('special-select').value;
+            console.log(selectedSpecial);
 
-            // If the input value is not a number, display an error message
-            if (isNaN(processedInput)) {
-                alert('Please enter a valid number');
-                return;
-            }
+            const selectedWeapon = document.getElementById('weapon-select').value;
 
-            let hitmatrix = generateMatrix(globalJsonData,processedInput);
+            const multiplier = multiplier_map.get(selectedWeapon);
 
-            processData(hitmatrix);
+            console.log(multiplier);
+
+            const results = calculateSpecial(globalEnemyData, selectedSpecial,multiplier);
+            // Perform your calculations here. This is a placeholder function call.
+            // You will need to replace 'calculateValuesBasedOnTech' with your actual
+            // calculation function and pass in the necessary parameters.
+            // const results = calculateValuesBasedOnTech(selectedTech);
+
+            // Now, display the results in your 'results-table' div or in any other way you prefer.
+            processData(results);
         }
 
-        // Add event listener to the button
-        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
-    </script> -->
-    <div class="bottom" style="text-align: center;">
-        <h3>PSO Modules</h3>           
-        <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
-        <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
-        <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
-        <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br>
-        
-        <a href="./enemy-stats">Enemy Stats Table</a><br><br>
-        <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
-    
-    </div>
+        // Function to Display Results (you will need to define this)
+        function displayResults(results) {
+            // Logic to display the results in the results-table div
+        }
 
+        // Function to Calculate Values Based on Selected Tech (you will need to define this)
+        function calculateValuesBasedOnTech(tech) {
+            // Your calculation logic here
+        }
+
+        // Add Event Listener to the Calculate Button
+        document.getElementById('process-btn').addEventListener('click', handleCalculateButtonClick);
+    </script>
+
+<div class="bottom" style="text-align: center;">
+    <h3>PSO Modules</h3>           
+    <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
+    <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
+    <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
+    <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br>
+    
+    <a href="./enemy-stats">Enemy Stats Table</a><br><br>
+    <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
+</div>
     <script>
         var coll = document.getElementsByClassName("collapsible");
         var i;
