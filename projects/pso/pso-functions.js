@@ -224,3 +224,105 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
     // Return the resulting array of tech damage objects.
     return tech_df;
   }
+
+  function calculateTechHits(enemy_stats, tech_powers, tech, mst, class_bonus, weapon_bonus, merge_bonus) {
+    
+    const resist_map = new Map([
+        ['Foie','EFR'],
+        ['Gifoie','EFR'],
+        ['Rafoie','EFR'],
+        ['Zonde','ETH'],
+        ['Gizonde','ETH'],
+        ['Razonde','ETH'],
+        ['Barta','EIC'],
+        ['Gibarta','EIC'],
+        ['Rabarta','EIC'],
+        ['Grants','ELT'],
+        ['Megid','EDK']]
+        );
+    
+
+
+    // const tech_power_at_level = tech_powers.find(tp => tp.Level === level);
+
+
+    // Initialize an empty array to hold the results.
+    let tech_df = [];
+    let resistance_key = resist_map.get(tech);
+    enemy_stats.forEach((row)=>{
+        // console.log(row.Enemy);
+        let enemy_resist = row[resistance_key] || 0; // Default to 0 if not defined
+        let enemy_health = row['HP'];
+        // console.log(enemy_resist);
+        let techDamage = { 0: row.Enemy};
+        tech_powers.forEach((tech_row)=>{
+            const floatDamage = parseFloat(tech_row[tech]);
+            let damageDealt = Tech_Damage(
+                mst,
+                floatDamage,
+                enemy_resist,
+                class_bonus,
+                weapon_bonus,
+                merge_bonus
+              );
+            if (damageDealt > 0){
+                techDamage[tech_row.Level] = Math.ceil(enemy_health/damageDealt);
+            }
+            else{
+                techDamage[tech_row.Level] = '-'
+            }
+              
+            // console.log(tech_row);
+        });
+        tech_df.push(techDamage);
+    }
+    )
+
+
+    // Object.entries(enemy_stats).forEach(([enemyName, resistances]) => {
+    //     // Create an object for the current enemy's tech damage.
+    //     let techDamage = { Enemy: enemyName };
+    
+    //     // Iterate over each tech in tech_powers.
+    //     Object.keys(tech_power_at_level).forEach(tech => {
+    //         console.log(tech);
+    //       if (tech !== 'Level') { // Skip the 'Level' property
+    //         // Get the resistance for the current enemy and tech.
+    //         let resistance_key = resist_map.get(tech);
+    //         console.log(resistance_key);
+    //         let enemy_resist = resistances[resistance_key] || 0; // Default to 0 if not defined
+    
+    //         // Calculate the tech damage and add it to the techDamage object with the tech as the key.
+    //         techDamage[tech] = Tech_Damage(
+    //           mst,
+    //           tech_power_at_level[tech],
+    //           enemy_resist,
+    //           class_bonus,
+    //           weapon_bonus,
+    //           merge_bonus
+    //         );
+    //       }
+    //     });
+
+
+    // // Iterate over each enemy in enemy_stats.
+    // enemy_stats.forEach((enemy, i) => {
+    //   // Create an object for the current enemy's tech damage.
+    //   let techDamage = { Enemy: enemy['Enemy'] }; // Assuming there is an 'Enemy' attribute.
+  
+    //   // Get the resistance for the current enemy.
+    //   let enemy_resist = enemy[resist_map.get(tech)]; // Assuming the resistance property is named like 'tech_resist'.
+    //   console.log(enemy_resist);
+    //   // Iterate over each tech's power.
+    //   Object.entries(tech_powers[tech]).forEach(([techName, basePower]) => {
+    //     // Calculate the tech damage and add it to the techDamage object with the techName as the key.
+    //     techDamage[techName] = Tech_Damage(mst, basePower, enemy_resist, class_bonus, weapon_bonus, merge_bonus);
+    //   });
+  
+      // Add the current enemy's tech damage object to the results array.
+    //   tech_df.push(techDamage);
+    // });
+  
+    // Return the resulting array of tech damage objects.
+    return tech_df;
+  }
