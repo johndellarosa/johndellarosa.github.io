@@ -126,8 +126,8 @@ function processData(data) {
 
 
 function Tech_Damage(MST, tech_base_power, resistance = 0, class_bonus = 0, weapon_bonus = 0, merge_bonus = 0) {
-    console.log(typeof(MST));
-    console.log(typeof(tech_base_power));
+    // console.log(typeof(MST));
+    // console.log(typeof(tech_base_power));
     return Math.floor((((MST + tech_base_power) / 5) * (1.0 + class_bonus + weapon_bonus + merge_bonus)) * (1 - resistance / 100));
 }
 
