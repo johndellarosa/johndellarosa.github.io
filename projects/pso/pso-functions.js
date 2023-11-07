@@ -374,7 +374,8 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
         if (special_attack == 'Instant Kill'){
             ['Dim','Shadow','Dark','Hell'].forEach((lvl) =>{
                 let activation_rate = Special_Instant_Kill(lvl,enemy_resist,special_reduction_multiplier);
-                rowData[`${lvl} Proc`] =`${activation_rate}%`;
+                
+                rowData[`${lvl} Proc`] =`${Math.round(activation_rate * 10) / 10}%`;
                 [1, 2, 3].forEach((comboStep) => {
                   // Use the accuracy function to calculate and assign the value to the accData object
                   let key = `${lvl} S${comboStep} Kill`;
