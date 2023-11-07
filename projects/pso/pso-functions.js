@@ -339,7 +339,7 @@ function Special_Instant_Kill(level,enemy_dark,special_reduction_multiplier){
     return Math.max((dark_map.get(level)-enemy_dark)*special_reduction_multiplier,0);
 }
 
-function calculateSpecial(enemy_stats, special_attack, special_reduction_multiplier) {
+function calculateSpecial(enemy_stats, special_attack, special_reduction_multiplier,ATA) {
     
     const resist_map = new Map([
         ['Instant Kill','EDK'],
@@ -366,12 +366,22 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
     enemy_stats.forEach((row)=>{
         // console.log(row.Enemy);
         let enemy_resist = row[resistance_key] || 0; // Default to 0 if not defined
+        let enemyEVP = row['EVP'];
+        
         // console.log(enemy_resist);
         let rowData = { 'Enemy': row['Enemy'] }; // Add the 'Enemy' as the first entry
 
         if (special_attack == 'Instant Kill'){
             ['Dim','Shadow','Dark','Hell'].forEach((lvl) =>{
-                rowData[lvl] = Special_Instant_Kill(lvl,enemy_resist,special_reduction_multiplier);
+                let activation_rate = Special_Instant_Kill(lvl,enemy_resist,special_reduction_multiplier);
+                rowData[`${lvl} Proc`] =`${activation_rate}%`;
+                [1, 2, 3].forEach((comboStep) => {
+                  // Use the accuracy function to calculate and assign the value to the accData object
+                  let key = `${lvl} S${comboStep} Kill`;
+                  let kill_chance = activation_rate*accuracy(ATA, 'S', comboStep, enemyEVP)/100;
+                  kill_chance = Math.round(kill_chance * 10) / 10;
+                  rowData[key] = `${kill_chance}%`;
+                })
             })
         }
         // Nested loops to go through attack types and combo steps

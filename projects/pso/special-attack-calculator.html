@@ -234,7 +234,7 @@
                 <!-- <option value="Shadow">Shadow</option>
                 <option value="Dark">Dark</option>
                 <option value="Hell">Hell</option> -->
-            
+
 
             </select>
 
@@ -256,6 +256,12 @@
                 <option value="Rod">Rod</option>
                 <option value="Wand">Wand</option>
             </select>
+
+            <!-- Label for the input field -->
+            <label for="user-input">ATA:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="text" id="user-input" placeholder="Enter ATA value" />
+            
 
 
         </div>
@@ -298,7 +304,21 @@
 
             console.log(multiplier);
 
-            const results = calculateSpecial(globalEnemyData, selectedSpecial,multiplier);
+            // Get the value from the input field
+            const userInput = document.getElementById('user-input').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedATA = parseFloat(userInput);
+            // console.log(processedMST);
+            // If the input value is not a number, display an error message
+            if (isNaN(processedATA)) {
+            alert('Please enter a valid ATA value');
+            return;
+            }
+
+
+            const results = calculateSpecial(globalEnemyData, selectedSpecial,multiplier,processedATA);
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
             // calculation function and pass in the necessary parameters.
