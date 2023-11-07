@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input, #process-btn {
+    #user-input,#user-input-distance, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -177,6 +177,8 @@
     <li>Letter refers to type of attack: N=Normal, H=Heavy, S=Special</li>
     <li>Number refers to which hit in the combo it is</li>
     <li>Values above 100 mean 100% to hit. Values below 0 mean 0% chance to hit.</li>
+    <li>Set Distance parameter to a non-zero value <b>only</b> if you are using non-ranger class with a ranged weapon. Leave as 0 if using melee weapons and/or if you are a ranger.</li>
+    <li>Handgun max range is 170 units. Mech gun max range is 85 units. Slicer max range is 95 units.</li>
 </ol>
     <div class="center-container">
         <!-- Container for the label and input field -->
@@ -185,6 +187,11 @@
             <label for="user-input">ATA:</label>
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input" placeholder="Enter ATA value" />
+
+                        <!-- Label for the input field -->
+                        <label for="user-input-distance">Distance:</label>
+                        <!-- Input field for the user to enter a value -->
+                        <input type="text" id="user-input-distance" value="0" />
         </div>
         
         <!-- Button that will trigger processData when clicked -->
@@ -212,7 +219,21 @@
                 return;
             }
 
-            let hitmatrix = generateMatrix(globalJsonData,processedInput);
+            // Get the value from the input field
+            const userInput_distance = document.getElementById('user-input-distance').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedInput_distance = parseFloat(userInput_distance);
+
+            // If the input value is not a number, display an error message
+            if (isNaN(processedInput_distance)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+
+            let hitmatrix = generateMatrix(globalJsonData,processedInput,processedInput_distance);
 
             processData(hitmatrix);
         }

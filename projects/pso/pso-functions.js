@@ -23,21 +23,21 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
     return enemyEVP * statusEffectMod[statusEffect];
   }
   
-  function accuracy(totalATA, attackType, comboStep, enemyEVP, statusEffect = null, distance = 0) {
+  function accuracy(totalATA, attackType, comboStep, enemyEVP,  distance = 0,statusEffect = null) {
     return getEffectiveATA(totalATA, attackType, comboStep) - 
       (0.2 * getEffectiveEVP(enemyEVP, statusEffect)) - 
       0.33 * distance;
   }
   
-  // Usage example:
-  try {
-    const acc = accuracy(100, 'N', 1, 50);
-    console.log(acc);
-  } catch (error) {
-    console.error(error);
-  }
+  // // Usage example:
+  // try {
+  //   const acc = accuracy(100, 'N', 1, 50);
+  //   console.log(acc);
+  // } catch (error) {
+  //   console.error(error);
+  // }
 
-  function generateMatrix(enemy_stats,totalATA=100){
+  function generateMatrix(enemy_stats,totalATA=100,distance=0){
 
 
 
@@ -59,7 +59,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
       [1, 2, 3].forEach(comboStep => {
       // Use the accuracy function to calculate and assign the value to the accData object
       let key = `${attackType} ${comboStep}`;
-      accData[key] = accuracy(totalATA, attackType, comboStep, enemyEVP);
+      accData[key] = accuracy(totalATA, attackType, comboStep, enemyEVP,distance);
       });
   });
 
