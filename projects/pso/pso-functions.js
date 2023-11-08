@@ -225,7 +225,7 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
     return tech_df;
   }
 
-  function calculateTechHits(enemy_stats, tech_powers, tech, mst, class_bonus, weapon_bonus, merge_bonus) {
+  function calculateTechHits(enemy_stats, tech_powers, tech, mst, class_bonus, weapon_bonus, merge_bonus, minlevel,maxlevel) {
     
     const resist_map = new Map([
         ['Foie','EFR'],
@@ -256,6 +256,14 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
         // console.log(enemy_resist);
         let techDamage = { 0: `${row.Enemy} ${row.HP}HP`};
         tech_powers.forEach((tech_row)=>{
+            // check range
+            let tech_level = tech_row.Level;
+
+            if (tech_level < minlevel || tech_level > maxlevel){
+              return;
+            }
+
+
             const floatDamage = parseFloat(tech_row[tech]);
             let damageDealt = Tech_Damage(
                 mst,

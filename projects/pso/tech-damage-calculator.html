@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus, #process-btn {
+    #user-input,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus,input, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -276,7 +276,27 @@
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input-merge-bonus" value="0" />
             
-
+            <form>
+                <label for="minNumber">Minimum Level:</label>
+                <input type="number" id="minNumber" name="minNumber" min="1" max="29" value="1" onblur="validateRange()">
+              
+                <label for="maxNumber">Maximum Level</label>
+                <input type="number" id="maxNumber" name="maxNumber" min="2" max="30" value="10" onblur="validateRange()">
+              </form>
+              
+              <script>
+              function validateRange() {
+                let minNumber = document.getElementById('minNumber');
+                let maxNumber = document.getElementById('maxNumber');
+                
+                if (parseInt(minNumber.value) >= parseInt(maxNumber.value)) {
+                  maxNumber.value = parseInt(minNumber.value) + 1;
+                }
+                
+                minNumber.max = parseInt(maxNumber.value) - 1;
+                maxNumber.min = parseInt(minNumber.value) + 1;
+              }
+              </script>
         </div>
         
         <!-- Button that will trigger processData when clicked -->
@@ -361,11 +381,18 @@
             const selectedTech = document.getElementById('tech-select').value;
             console.log(selectedTech);
 
+
+            let minNumber = parseInt(document.getElementById('minNumber').value);
+            let maxNumber = parseInt(document.getElementById('maxNumber').value);
+
             const resist = resist_map.get(selectedTech);
 
             console.log(resist);
-
-            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus)
+            console.log(minNumber);
+            console.log(maxNumber);
+            console.log(typeof(minNumber));
+            console.log(typeof(maxNumber));
+            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,minlevel=minNumber, maxlevel=maxNumber)
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
             // calculation function and pass in the necessary parameters.
@@ -389,6 +416,9 @@
         document.getElementById('process-btn').addEventListener('click', handleCalculateButtonClick);
     </script>
 
+
+  
+  
 <div class="bottom" style="text-align: center;">
     <h3>PSO Modules</h3>           
     <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
