@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input, #process-btn {
+    #user-input, #process-btn,#difficulty-select {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -140,31 +140,23 @@
                 // Use SheetJS to read the buffer
                 const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // Assuming your sheet is the first sheet in the workbook
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                
-                // Convert the sheet to JSON
-                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                globalJsonData = json;
-                processData(globalJsonData);
-                // Now you have the JSON equivalent of your Excel's first sheet
-                // console.log(enemy_data);
-                
-                // // Transform the array into an object keyed by the first column
-                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
-                //     const keys = Object.keys(current);
-                //     if (keys.length > 0) {
-                //         const index = current[keys[0]];
-                //         accumulator[index] = current;
-                //     }
-                //     return accumulator;
-                // }, {});
+                // // Assuming your sheet is the first sheet in the workbook
+                // const firstSheetName = workbook.SheetNames[0];
+                // const worksheet = workbook.Sheets[firstSheetName];
 
-                // // Now you have a JSON object indexed by the first column's entries
-                // console.log(jsonIndexedByFirstColumn);
-                
-                // // Handle the JSON data here
+                // // Convert the sheet to JSON
+                // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                // globalJsonData = json;
+
+                const allSheetsData = {};
+                // Loop over sheet names and convert each sheet to JSON
+                workbook.SheetNames.forEach(sheetName => {
+                    const worksheet = workbook.Sheets[sheetName];
+                    allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                });
+
+                // Now allSheetsData contains each sheet's data as a key-value pair
+                globalEnemyData = allSheetsData;
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -176,15 +168,51 @@
 <p>The stats correspond to the following parameters</p>
 <ol>
     <li>Single-player</li>
-    <li>Episode 1</li>
-    <li>Normal difficulty</li>
 </ol>
-<noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+
+<div class="center-container">
+    <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+
+    <!-- Container for the label and input field -->
+    <div class="input-container">
+        <!-- Label for the dropdown menu -->
+        <label for="difficulty-select">Difficulty:</label>
+        <!-- Dropdown menu for the user to select a value -->
+        <select id="difficulty-select">
+            <!-- Option elements for the dropdown -->
+            <option value="Ep1 Normal">Ep1 Normal</option>
+            <option value="Ep1 Hard">Ep1 Hard</option>
+            <option value="Ep1 V Hard">Ep1 V Hard</option>
+            <option value="Ep1 Ultimate">Ep1 Ultimate</option>
+        </select>
+        <br>
+    </div>
     
+    <!-- Button that will trigger processData when clicked -->
+    <button id="process-btn">Calculate</button>
+</div>
     <br>
 
     <div id="data-table"></div>
     
+
+    <script>
+        // ... (Include the loadExcelFile and processData functions here)
+
+        // Function that handles the button click
+        function handleProcessButtonClick() {
+
+                        // Get the selected tech value
+            const selectedDifficulty = document.getElementById('difficulty-select').value;
+            console.log(selectedDifficulty);
+
+            processData(globalEnemyData[selectedDifficulty]);
+        }
+
+        // Add event listener to the button
+        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
+    </script>
+
 
     <!-- <script>
         // ... (Include the loadExcelFile and processData functions here)

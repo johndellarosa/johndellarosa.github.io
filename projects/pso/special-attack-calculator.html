@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus, #process-btn {
+    #user-input,#difficulty-select, select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -142,30 +142,23 @@
                 // Use SheetJS to read the buffer
                 const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // Assuming your sheet is the first sheet in the workbook
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
+                // // Assuming your sheet is the first sheet in the workbook
+                // const firstSheetName = workbook.SheetNames[0];
+                // const worksheet = workbook.Sheets[firstSheetName];
                 
-                // Convert the sheet to JSON
-                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                globalEnemyData = json;
-                // Now you have the JSON equivalent of your Excel's first sheet
-                // console.log(enemy_data);
-                
-                // // Transform the array into an object keyed by the first column
-                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
-                //     const keys = Object.keys(current);
-                //     if (keys.length > 0) {
-                //         const index = current[keys[0]];
-                //         accumulator[index] = current;
-                //     }
-                //     return accumulator;
-                // }, {});
+                // // Convert the sheet to JSON
+                // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                // globalJsonData = json;
 
-                // // Now you have a JSON object indexed by the first column's entries
-                // console.log(jsonIndexedByFirstColumn);
-                
-                // // Handle the JSON data here
+                const allSheetsData = {};
+                // Loop over sheet names and convert each sheet to JSON
+                workbook.SheetNames.forEach(sheetName => {
+                    const worksheet = workbook.Sheets[sheetName];
+                    allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                });
+
+                // Now allSheetsData contains each sheet's data as a key-value pair
+                globalEnemyData = allSheetsData;
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -217,8 +210,7 @@
 <p>Calculates the special attack damage/activation rate for the following parameters</p>
 <ol>
     <li>Single-player</li>
-    <li>Normal difficulty</li>
-    <li>Episode 1</li>
+ 
 </ol>
 <p>Currently only the instant kill special is supported (Dim, Shadow, Dark, Hell).</p>
 <br>
@@ -266,7 +258,17 @@
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input" placeholder="Enter ATA value" />
             
-
+            <!-- Label for the dropdown menu -->
+            <label for="difficulty-select">Difficulty:</label>
+            <!-- Dropdown menu for the user to select a value -->
+            <select id="difficulty-select">
+                <!-- Option elements for the dropdown -->
+                <option value="Ep1 Normal">Ep1 Normal</option>
+                <option value="Ep1 Hard">Ep1 Hard</option>
+                <option value="Ep1 V Hard">Ep1 V Hard</option>
+                <option value="Ep1 Ultimate">Ep1 Ultimate</option>
+            </select>
+            <br>
 
         </div>
         
@@ -320,9 +322,11 @@
             alert('Please enter a valid ATA value');
             return;
             }
+                        // Get the selected tech value
+            const selectedDifficulty = document.getElementById('difficulty-select').value;
+            console.log(selectedDifficulty);
 
-
-            const results = calculateSpecial(globalEnemyData, selectedSpecial,multiplier,processedATA);
+            const results = calculateSpecial(globalEnemyData[selectedDifficulty], selectedSpecial,multiplier,processedATA);
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
             // calculation function and pass in the necessary parameters.

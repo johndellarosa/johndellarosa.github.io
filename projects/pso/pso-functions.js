@@ -1,3 +1,10 @@
+function clamp(value) {
+  // First, ensure the value is not less than 0
+  // Then, ensure the value is not more than 100
+  return Math.min(100, Math.max(0, value));
+}
+
+
 function getEffectiveATA(totalATA, attackType, comboStep) {
     const attackTypeModifier = { 'N': 1, 'H': 0.7, 'S': 0.5 }; // Example values
     const comboStepAccuracy = { 1: 1.0, 2: 1.3, 3: 1.69 }; // Example values
@@ -24,9 +31,11 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   }
   
   function accuracy(totalATA, attackType, comboStep, enemyEVP,  distance = 0,statusEffect = null) {
-    return getEffectiveATA(totalATA, attackType, comboStep) - 
+    let calcAccuracy =  getEffectiveATA(totalATA, attackType, comboStep) - 
       (0.2 * getEffectiveEVP(enemyEVP, statusEffect)) - 
       0.33 * distance;
+
+      return clamp(calcAccuracy);
   }
   
   // // Usage example:
@@ -37,7 +46,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   //   console.error(error);
   // }
 
-  function generateMatrix(enemy_stats,totalATA=100,distance=0){
+  function generateMatrix(enemy_stats,totalATA=100,distance=0,difficulty='Ep1 Normal'){
 
 
 
@@ -49,7 +58,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   let accArray = [];
 
   // Loop through each enemy stat object
-  enemy_stats.forEach((row, index) => {
+  enemy_stats[difficulty].forEach((row, index) => {
   let enemyEVP = row['EVP'];
   let accData = { 'Enemy': row['Enemy'] }; // Add the 'Enemy' as the first entry
 
@@ -225,7 +234,7 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
     return tech_df;
   }
 
-  function calculateTechHits(enemy_stats, tech_powers, tech, mst, class_bonus, weapon_bonus, merge_bonus, minlevel,maxlevel) {
+  function calculateTechHits(enemy_stats, tech_powers, tech, mst, class_bonus, weapon_bonus, merge_bonus,difficulty, minlevel,maxlevel) {
     
     const resist_map = new Map([
         ['Foie','EFR'],
@@ -249,7 +258,7 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
     // Initialize an empty array to hold the results.
     let tech_df = [];
     let resistance_key = resist_map.get(tech);
-    enemy_stats.forEach((row)=>{
+    enemy_stats[difficulty].forEach((row)=>{
         // console.log(row.Enemy);
         let enemy_resist = row[resistance_key] || 0; // Default to 0 if not defined
         let enemy_health = row['HP'];
@@ -388,7 +397,7 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
                   // Use the accuracy function to calculate and assign the value to the accData object
                   let key = `${lvl} S${comboStep} Kill`;
                   let kill_chance = activation_rate*accuracy(ATA, 'S', comboStep, enemyEVP)/100;
-                  kill_chance = Math.round(kill_chance * 10) / 10;
+                  kill_chance = Math.max(Math.round(kill_chance * 10) / 10,0);
                   rowData[key] = `${kill_chance}%`;
                 })
             })

@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus,input, #process-btn {
+    #user-input,#difficulty-select,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus,input, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -142,13 +142,25 @@
                 // Use SheetJS to read the buffer
                 const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // Assuming your sheet is the first sheet in the workbook
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
+                // // Assuming your sheet is the first sheet in the workbook
+                // const firstSheetName = workbook.SheetNames[0];
+                // const worksheet = workbook.Sheets[firstSheetName];
                 
-                // Convert the sheet to JSON
-                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                globalEnemyData = json;
+                // // Convert the sheet to JSON
+                // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                // globalEnemyData = json;
+
+                const allSheetsData = {};
+                // Loop over sheet names and convert each sheet to JSON
+                workbook.SheetNames.forEach(sheetName => {
+                    const worksheet = workbook.Sheets[sheetName];
+                    allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                });
+
+                // Now allSheetsData contains each sheet's data as a key-value pair
+                globalEnemyData = allSheetsData;
+
+
                 // Now you have the JSON equivalent of your Excel's first sheet
                 // console.log(enemy_data);
                 
@@ -217,8 +229,7 @@
 <p>Calculates the amount of damage that a tech should do for the following parameters</p>
 <ol>
     <li>Single-player</li>
-    <li>Normal difficulty</li>
-    <li>Episode 1</li>
+
 </ol>
 <p>Bonuses should be decimal values between 0 and 1, inclusive. Header number (excluding 0) corresponds to tech level.</p>
 <ul>
@@ -253,6 +264,19 @@
 
             </select>
             <br>
+
+                        <!-- Label for the dropdown menu -->
+                        <label for="difficulty-select">Difficulty:</label>
+                        <!-- Dropdown menu for the user to select a value -->
+                        <select id="difficulty-select">
+                            <!-- Option elements for the dropdown -->
+                            <option value="Ep1 Normal">Ep1 Normal</option>
+                            <option value="Ep1 Hard">Ep1 Hard</option>
+                            <option value="Ep1 V Hard">Ep1 V Hard</option>
+                            <option value="Ep1 Ultimate">Ep1 Ultimate</option>
+                        </select>
+                        <br>
+
             <!-- Label for the input field -->
             <label for="user-input">MST:</label>
             <!-- Input field for the user to enter a value -->
@@ -381,6 +405,10 @@
             const selectedTech = document.getElementById('tech-select').value;
             console.log(selectedTech);
 
+            // Get the selected tech value
+            const selectedDifficulty = document.getElementById('difficulty-select').value;
+            console.log(selectedDifficulty);
+
 
             let minNumber = parseInt(document.getElementById('minNumber').value);
             let maxNumber = parseInt(document.getElementById('maxNumber').value);
@@ -392,7 +420,7 @@
             console.log(maxNumber);
             console.log(typeof(minNumber));
             console.log(typeof(maxNumber));
-            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,minlevel=minNumber, maxlevel=maxNumber)
+            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,difficulty=selectedDifficulty,minlevel=minNumber, maxlevel=maxNumber)
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
             // calculation function and pass in the necessary parameters.
