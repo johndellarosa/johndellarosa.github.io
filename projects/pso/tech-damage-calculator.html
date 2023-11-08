@@ -227,6 +227,8 @@
     <li>FOnewm: +0.3 to Gi and Ra techs</li>
     <li>FOnewearl: +0.3 to Foie, Zonde, Barta; +100% range to Resta and Anti; Megid pierces</li>
 </ul>
+
+<p>Results are formatted as: Damage per cast (Number of casts required to kill)</p>
 <div class="center-container">
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
        
@@ -303,8 +305,8 @@
         // Function to Handle Button Click
         function handleCalculateButtonClick() {
             
-            // Get the value from the input field
-            const userInput = document.getElementById('user-input').value;
+                        // Get the value from the input field
+                        const userInput = document.getElementById('user-input').value;
 
             // Validate or transform the input value if necessary
             // For example, convert the input value to a number
@@ -354,7 +356,7 @@
             alert('Please enter a valid number');
             return;
             }
-            
+
             // Get the selected tech value
             const selectedTech = document.getElementById('tech-select').value;
             console.log(selectedTech);
@@ -363,7 +365,7 @@
 
             console.log(resist);
 
-            const results = calculateTechDamageForEnemies(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus)
+            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus)
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
             // calculation function and pass in the necessary parameters.
@@ -392,7 +394,7 @@
     <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
     <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
     <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
-    <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br>
+    <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
     
     <a href="./enemy-stats">Enemy Stats Table</a><br><br>
     <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>

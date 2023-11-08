@@ -254,7 +254,7 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
         let enemy_resist = row[resistance_key] || 0; // Default to 0 if not defined
         let enemy_health = row['HP'];
         // console.log(enemy_resist);
-        let techDamage = { 0: row.Enemy};
+        let techDamage = { 0: `${row.Enemy} ${row.HP}HP`};
         tech_powers.forEach((tech_row)=>{
             const floatDamage = parseFloat(tech_row[tech]);
             let damageDealt = Tech_Damage(
@@ -266,10 +266,10 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
                 merge_bonus
               );
             if (damageDealt > 0){
-                techDamage[tech_row.Level] = Math.ceil(enemy_health/damageDealt);
+                techDamage[tech_row.Level] = `${damageDealt}HP (${Math.ceil(enemy_health/damageDealt)})`;
             }
             else{
-                techDamage[tech_row.Level] = '-'
+                techDamage[tech_row.Level] = '0HP (-)'
             }
               
             // console.log(tech_row);
