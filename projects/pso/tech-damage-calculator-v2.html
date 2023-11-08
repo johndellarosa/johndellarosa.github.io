@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <title>PSO Technique Damage Calculator</title>
+
+    <!-- Meta tags -->
+    
+    <meta name="keywords" content="PSO, Phantasy Star Online, technique damage calculator">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="Phantasy Star Online technique damage calculator">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/tech-damage-calculator">     
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="./pso-functions.js"></script>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif; /* Use a nice font */
+    }
+
+    .center-container {
+        text-align: center; /* Center-aligns the content */
+        margin-top: 30px; /* Adds some space at the top */
+    }
+
+    #user-input,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus,input, #process-btn {
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+    }
+
+    #process-btn {
+        cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+    }
+
+    #process-btn:hover {
+        background-color: #0056b3; /* Darkens the button when hovered */
+    }
+
+    #data-table {
+        margin-top: 20px; /* Adds some space between the button and the table */
+        text-align: left; /* Aligns the table content to the left */
+        width: 100%; /* Makes the table take up the full width */
+    }
+
+    table {
+        width: 95%; /* Set the width of the table to be 95% of its container */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapses the borders of the table */
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* Adds a border to table headers and cells */
+        text-align: center; /* Centers header text */
+        padding: 6px; /* Adds space inside table headers and cells */
+    }
+
+    th {
+        background-color: #f2f2f2; /* Sets a background color for headers */
+        text-align: center; /* Centers header text */
+        padding: 6px; /* Adds space inside table headers and cells */
+    }
+
+    .input-container {
+            margin: 0 auto; /* Centers the container */
+            width: fit-content; /* Ensures the container only takes up as much width as needed */
+            padding: 10px; /* Adds some padding around the container */
+        }
+
+        label {
+            margin-right: 10px; /* Adds some space between the label and the input field */
+        }
+
+</style>
+
+</head>
+<body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="https://johndellarosa.github.io/index.html">Home</a>|
+        <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+        <!-- <a href="./index.html#education">Education</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#skills">Skills</a> -->
+        |
+        <a href="https://johndellarosa.github.io/biography.html">About</a>|
+        <a href="https://johndellarosa.github.io/projects.html"><u>Projects</u></a>|
+        <a href="https://johndellarosa.github.io/miscellaneous.html">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div> 
+
+    <script>
+        // URL to your hosted Excel file
+        const enemy_file = './PSO_Enemy.xlsx';
+        const tech_file = './PSO_Tech.xlsx';
+        // Define a global variable to hold the JSON data
+        let globalEnemyData = null;
+        let globalTechData = null;
+        
+        fetch(enemy_file)
+            .then(response => {
+                if (response.ok) {
+                    return response.arrayBuffer();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(arrayBuffer => {
+                // Use SheetJS to read the buffer
+                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+
+                // Assuming your sheet is the first sheet in the workbook
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                
+                // Convert the sheet to JSON
+                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                globalEnemyData = json;
+                // Now you have the JSON equivalent of your Excel's first sheet
+                // console.log(enemy_data);
+                
+                // // Transform the array into an object keyed by the first column
+                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
+                //     const keys = Object.keys(current);
+                //     if (keys.length > 0) {
+                //         const index = current[keys[0]];
+                //         accumulator[index] = current;
+                //     }
+                //     return accumulator;
+                // }, {});
+
+                // // Now you have a JSON object indexed by the first column's entries
+                // console.log(jsonIndexedByFirstColumn);
+                
+                // // Handle the JSON data here
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+            // Fetch tech
+            fetch(tech_file)
+            .then(response => {
+                if (response.ok) {
+                    return response.arrayBuffer();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(arrayBuffer => {
+                // Use SheetJS to read the buffer
+                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+
+                // Assuming your sheet is the first sheet in the workbook
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                
+                // Convert the sheet to JSON
+                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                globalTechData = json;
+                // Now you have the JSON equivalent of your Excel's first sheet
+                // console.log(enemy_data);
+                
+                // // Transform the array into an object keyed by the first column
+                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
+                //     const keys = Object.keys(current);
+                //     if (keys.length > 0) {
+                //         const index = current[keys[0]];
+                //         accumulator[index] = current;
+                //     }
+                //     return accumulator;
+                // }, {});
+
+                // // Now you have a JSON object indexed by the first column's entries
+                // console.log(jsonIndexedByFirstColumn);
+                
+                // // Handle the JSON data here
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    </script>
+
+<h1>Phantasy Star Online Tech Damage Calculator</h1>
+<h3><a href="./../pso.html">Return to Menu</a></h3>
+<p>Calculates the amount of damage that a tech should do for the following parameters</p>
+<ol>
+    <li>Single-player</li>
+    <li>Normal difficulty</li>
+    <li>Episode 1</li>
+</ol>
+<p>Bonuses should be decimal values between 0 and 1, inclusive. Header number (excluding 0) corresponds to tech level.</p>
+<ul>
+    <li>FOmar: +0.3 to Gi techs, +0.3 to Grants. +100% to S/D range</li>
+    <li>FOmarl: +0.5 to Grants. +100% range to Anti, Resta, S/D</li>
+    <li>FOnewm: +0.3 to Gi and Ra techs</li>
+    <li>FOnewearl: +0.3 to Foie, Zonde, Barta; +100% range to Resta and Anti; Megid pierces</li>
+</ul>
+
+<p>Results are formatted as: Damage per cast (Number of casts required to kill)</p>
+<div class="center-container">
+    <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+       
+    <!-- Container for the label and input field -->
+        <div class="input-container">
+
+            <!-- Label for the dropdown menu -->
+            <label for="tech-select">Tech:</label>
+            <!-- Dropdown menu for the user to select a value -->
+            <select id="tech-select">
+                <!-- Option elements for the dropdown -->
+                <option value="Foie">Foie</option>
+                <option value="Zonde">Zonde</option>
+                <option value="Barta">Barta</option>
+                <option value="Gifoie">Gifoie</option>
+                <option value="Gizonde">Gizonde</option>
+                <option value="Gibarta">Gibarta</option>
+                <option value="Rafoie">Rafoie</option>
+                <option value="Razonde">Razonde</option>
+                <option value="Rabarta">Rabarta</option>
+                <option value="Grants">Grants</option>
+
+            </select>
+            <br>
+            <!-- Label for the input field -->
+            <label for="user-input">MST:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="text" id="user-input" placeholder="Enter MST value" />
+
+            <br>
+            <!-- Label for the input field -->
+            <label for="user-input-class-bonus">Class Bonus:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="text" id="user-input-class-bonus" value="0" />
+            <br>
+            
+            <!-- Label for the input field -->
+            <label for="user-input-weapon-bonus">Weapon Bonus:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="text" id="user-input-weapon-bonus" value="0" />
+            <br>
+                        
+            <!-- Label for the input field -->
+            <label for="user-input-merge-bonus">Merge Bonus:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="text" id="user-input-merge-bonus" value="0" />
+            
+            <form>
+                <label for="minNumber">Minimum Level:</label>
+                <input type="number" id="minNumber" name="minNumber" min="1" max="29" value="1" onblur="validateRange()">
+              
+                <label for="maxNumber">Maximum Level</label>
+                <input type="number" id="maxNumber" name="maxNumber" min="2" max="30" value="10" onblur="validateRange()">
+              </form>
+              
+              <script>
+              function validateRange() {
+                let minNumber = document.getElementById('minNumber');
+                let maxNumber = document.getElementById('maxNumber');
+                
+                if (parseInt(minNumber.value) >= parseInt(maxNumber.value)) {
+                  maxNumber.value = parseInt(minNumber.value) + 1;
+                }
+                
+                minNumber.max = parseInt(maxNumber.value) - 1;
+                maxNumber.min = parseInt(minNumber.value) + 1;
+              }
+              </script>
+        </div>
+        
+        <!-- Button that will trigger processData when clicked -->
+        <button id="process-btn">Calculate</button>
+    </div>
+    <br><br>
+    <div id="data-table"></div>
+    
+
+    <script>
+
+        const resist_map = new Map([
+            ['Foie','EFR'],
+            ['Gifoie','EFR'],
+            ['Rafoie','EFR'],
+            ['Zonde','ETH'],
+            ['Gizonde','ETH'],
+            ['Razonde','ETH'],
+            ['Barta','EIC'],
+            ['Gibarta','EIC'],
+            ['Rabarta','EIC'],
+            ['Grants','ELT'],
+            ['Megid','EDK']]
+            );
+
+        // Function to Handle Button Click
+        function handleCalculateButtonClick() {
+            
+                        // Get the value from the input field
+                        const userInput = document.getElementById('user-input').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedMST = parseFloat(userInput);
+            // console.log(processedMST);
+            // If the input value is not a number, display an error message
+            if (isNaN(processedMST)) {
+                alert('Please enter a valid MST value');
+                return;
+            }
+
+            // Get the value from the input field
+            const class_bonus_ = document.getElementById('user-input-class-bonus').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedClassBonus = parseFloat(class_bonus_);
+            // console.log(processedClassBonus);
+            // If the input value is not a number, display an error message
+            if (isNaN(processedClassBonus)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+            // Get the value from the input field
+            const weapon_bonus_ = document.getElementById('user-input-weapon-bonus').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedWeaponBonus = parseFloat(weapon_bonus_);
+            // console.log(processedWeaponBonus);
+            // If the input value is not a number, display an error message
+            if (isNaN(processedWeaponBonus)) {
+            alert('Please enter a valid number');
+            return;
+            }
+
+            // Get the value from the input field
+            const merge_bonus_ = document.getElementById('user-input-merge-bonus').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedMergeBonus = parseFloat(weapon_bonus_);
+            // console.log(processedMergeBonus);
+            // If the input value is not a number, display an error message
+            if (isNaN(processedMergeBonus)) {
+            alert('Please enter a valid number');
+            return;
+            }
+
+            // Get the selected tech value
+            const selectedTech = document.getElementById('tech-select').value;
+            console.log(selectedTech);
+
+
+            let minNumber = parseInt(document.getElementById('minNumber').value);
+            let maxNumber = parseInt(document.getElementById('maxNumber').value);
+
+            const resist = resist_map.get(selectedTech);
+
+            console.log(resist);
+            console.log(minNumber);
+            console.log(maxNumber);
+            console.log(typeof(minNumber));
+            console.log(typeof(maxNumber));
+            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,minlevel=minNumber, maxlevel=maxNumber)
+            // Perform your calculations here. This is a placeholder function call.
+            // You will need to replace 'calculateValuesBasedOnTech' with your actual
+            // calculation function and pass in the necessary parameters.
+            // const results = calculateValuesBasedOnTech(selectedTech);
+
+            // Now, display the results in your 'results-table' div or in any other way you prefer.
+            processData(results);
+        }
+
+        // Function to Display Results (you will need to define this)
+        function displayResults(results) {
+            // Logic to display the results in the results-table div
+        }
+
+        // Function to Calculate Values Based on Selected Tech (you will need to define this)
+        function calculateValuesBasedOnTech(tech) {
+            // Your calculation logic here
+        }
+
+        // Add Event Listener to the Calculate Button
+        document.getElementById('process-btn').addEventListener('click', handleCalculateButtonClick);
+    </script>
+
+
+  
+  
+<div class="bottom" style="text-align: center;">
+    <h3>PSO Modules</h3>           
+    <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
+    <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
+    <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
+    <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
+    
+    <a href="./enemy-stats">Enemy Stats Table</a><br><br>
+    <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
+
+</div>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
+</body>
+</html>
