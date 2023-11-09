@@ -250,7 +250,7 @@
             <!-- Label for the dropdown menu -->
             <label for="class-select">Class:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id = "class-select" class="dropdown" >
+            <select id = "class-select" class="dropdown" onchange="OnValueChanged()">
                 <option value="HUmar"> HUmar </option>
                 <option value="HUnewearl"> HUnewearl </option>
                 <option value="HUcast"> HUcast </option>
@@ -269,7 +269,7 @@
             <!-- Label for the dropdown menu -->
             <label for="difficulty-select">Difficulty:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id="difficulty-select">
+            <select id="difficulty-select" onchange="OnValueChanged()">
                 <!-- Option elements for the dropdown -->
                 <option value="Ep1 Normal">Ep1 Normal</option>
                 <option value="Ep1 Hard">Ep1 Hard</option>
@@ -281,7 +281,7 @@
             <!-- Label for the input field -->
             <label for="user-input">MST:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input" min="0" value="60"/>
+            <input type="number" id="user-input" min="0" value="60" onchange="OnValueChanged()"/>
             </div>
             <br>
             <!-- <div class="form-group"> -->
@@ -298,25 +298,27 @@
             <!-- <input type="text" id="user-input-merge-bonus" value="0" /> -->
             <!-- </div> -->
             <label for="foie-level">Foie:</label>
-            <input type="number" id="foie-level" min="0" max="30" value="0" />
+            <input type="number" id="foie-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="zonde-level">Zonde:</label>
-            <input type="number" id="zonde-level" min="0" max="30"value="0"/>
+            <input type="number" id="zonde-level" min="0" max="30"value="0" onchange="OnValueChanged()"/>
             <label for="barta-level">Barta:</label>
-            <input type="number" id="barta-level" min="0" max="30" value="0"/>
+            <input type="number" id="barta-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="gifoie-level">Gifoie:</label>
-            <input type="number" id="gifoie-level" min="0" max="30" value="0"/>
+            <input type="number" id="gifoie-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="gizonde-level">Gizonde:</label>
-            <input type="number" id="gizonde-level" min="0" max="30" value="0"/>
+            <input type="number" id="gizonde-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="gibarta-level">Gibarta:</label>
-            <input type="number" id="gibarta-level" min="0" max="30" value="0"/>
+            <input type="number" id="gibarta-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="rafoie-level">Rafoie:</label>
-            <input type="number" id="rafoie-level" min="0" max="30" value="0"/>
+            <input type="number" id="rafoie-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="razonde-level">Razonde:</label>
-            <input type="number" id="razonde-level" min="0" max="30" value="0"/>
+            <input type="number" id="razonde-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="rabarta-level">Rabarta:</label>
-            <input type="number" id="rabarta-level" min="0" max="30" value="0"/>
+            <input type="number" id="rabarta-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
             <label for="grants-level">Grants:</label>
-            <input type="number" id="grants-level" min="0" max="30" value="0"/>
+            <input type="number" id="grants-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+            <label for="auto-update-box">Auto-update:</label>
+            <input type="checkbox" id="auto-update-box">
         </div>
         
         <!-- Button that will trigger processData when clicked -->
@@ -341,6 +343,16 @@
             ['Grants','ELT'],
             ['Megid','EDK']]
             );
+
+
+        function OnValueChanged(){
+            
+            const autoupdate = document.getElementById('auto-update-box').checked;
+
+            if (autoupdate){
+                handleCalculateButtonClick()
+            }
+        }
 
         // Function to Handle Button Click
         function handleCalculateButtonClick() {

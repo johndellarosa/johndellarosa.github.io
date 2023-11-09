@@ -199,17 +199,17 @@
             <!-- Label for the input field -->
             <label for="user-input">ATA:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input" placeholder="Enter ATA value" />
+            <input type="number" id="user-input" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
 
                         <!-- Label for the input field -->
                         <label for="user-input-distance">Distance:</label>
                         <!-- Input field for the user to enter a value -->
-                        <input type="text" id="user-input-distance" value="0" />
+                        <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
 
             <!-- Label for the dropdown menu -->
             <label for="difficulty-select">Difficulty:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id="difficulty-select">
+            <select id="difficulty-select" onchange="OnValueChanged()">
                 <!-- Option elements for the dropdown -->
                 <option value="Ep1 Normal">Ep1 Normal</option>
                 <option value="Ep1 Hard">Ep1 Hard</option>
@@ -217,6 +217,8 @@
                 <option value="Ep1 Ultimate">Ep1 Ultimate</option>
             </select>
             <br>
+            <label for="auto-update-box">Auto-update:</label>
+            <input type="checkbox" id="auto-update-box">
         </div>
         
         <!-- Button that will trigger processData when clicked -->
@@ -227,6 +229,16 @@
     
 
     <script>
+
+function OnValueChanged(){
+            
+            const autoupdate = document.getElementById('auto-update-box').checked;
+
+            if (autoupdate){
+                handleProcessButtonClick()
+            }
+        }
+
         // ... (Include the loadExcelFile and processData functions here)
 
         // Function that handles the button click

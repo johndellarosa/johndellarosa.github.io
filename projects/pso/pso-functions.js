@@ -111,11 +111,11 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   });
 
   // Now accArray is an array of objects, each object is a row equivalent to the pandas DataFrame
-  console.log(accArray);
+  // console.log(accArray);
 
   // If you need to find a particular value later, you can filter or find it in accArray.
   // For example, to find the accuracy data for the first enemy:
-  console.log(accArray[0]);
+  // console.log(accArray[0]);
 
   return accArray;
 }
@@ -392,24 +392,24 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
                 case "FOmarl":
                   if (tech == 'Grants'){
                     class_bonnus = 0.5;
-                    console.log("Fomarl grants bonus");
+                    // console.log("Fomarl grants bonus");
                   }
                   break;
                 case "FOnewm":
                   if (['Gifoie','Gizonde','Gibarta','Rafoie','Razonde','Rabarta'].includes(tech)){
                     class_bonus=0.3;
-                    console.log(`Fonewm bonus for ${tech}`);
+                    // console.log(`Fonewm bonus for ${tech}`);
                   }
                   break;
 
                 case "FOnewearl":
                   if (['Foie','Zonde','Barta'].includes(tech)){
                     class_bonus=0.3;
-                    console.log(`Foney bonus for ${tech}`);
+                    // console.log(`Foney bonus for ${tech}`);
                   }
                   break;
                 default:
-                  console.log(`No bonus for ${tech}`);
+                  // console.log(`No bonus for ${tech}`);
               }
 
               
@@ -482,8 +482,8 @@ function Special_Instant_Kill(level,enemy_dark,special_reduction_multiplier){
     ['Dark',78],
     ['Hell',93]]
     );
-    console.log(level);
-    console.log(dark_map.get(level));
+    // console.log(level);
+    // console.log(dark_map.get(level));
     return Math.max((dark_map.get(level)-enemy_dark)*special_reduction_multiplier,0);
 }
 
