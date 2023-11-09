@@ -255,7 +255,7 @@
             <!-- Label for the dropdown menu -->
             <label for="tech-select">Tech:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id="tech-select">
+            <select id="tech-select" onchange="OnValueChanged()">
                 <!-- Option elements for the dropdown -->
                 <option value="Foie">Foie</option>
                 <option value="Zonde">Zonde</option>
@@ -274,7 +274,7 @@
             <!-- Label for the dropdown menu -->
             <label for="difficulty-select">Difficulty:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id="difficulty-select">
+            <select id="difficulty-select" onchange="OnValueChanged()">
                 <!-- Option elements for the dropdown -->
                 <option value="Ep1 Normal">Ep1 Normal</option>
                 <option value="Ep1 Hard">Ep1 Hard</option>
@@ -286,28 +286,28 @@
             <!-- Label for the input field -->
             <label for="user-input">MST:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input" min="0" value="60" />
+            <input type="number" id="user-input" min="0" value="60" onchange="OnValueChanged()"/>
             </div>
             <br>
             <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input-class-bonus">Class Bonus:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input-class-bonus" value="0" />
+            <input type="text" id="user-input-class-bonus" value="0" onchange="OnValueChanged()"/>
             <br>
             </div>
             <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input-weapon-bonus">Weapon Bonus:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input-weapon-bonus" value="0" />
+            <input type="text" id="user-input-weapon-bonus" value="0" onchange="OnValueChanged()"/>
             </div>
             <br>
             <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input-merge-bonus">Merge Bonus:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input-merge-bonus" value="0" />
+            <input type="text" id="user-input-merge-bonus" value="0" onchange="OnValueChanged()"/>
             </div>
             <form>
                 <label for="minNumber">Minimum Level:</label>
@@ -315,7 +315,11 @@
               
                 <label for="maxNumber">Maximum Level</label>
                 <input type="number" id="maxNumber" name="maxNumber" min="2" max="30" value="10" onblur="validateRange()">
-              </form>
+                
+                <label for="auto-update-box">Auto-update:</label>
+                <input type="checkbox" id="auto-update-box">  
+            
+            </form>
               
               <script>
               function validateRange() {
@@ -355,6 +359,15 @@
             ['Megid','EDK']]
             );
 
+
+            function OnValueChanged(){
+            
+            const autoupdate = document.getElementById('auto-update-box').checked;
+
+            if (autoupdate){
+                handleCalculateButtonClick()
+            }
+        }
         // Function to Handle Button Click
         function handleCalculateButtonClick() {
             
