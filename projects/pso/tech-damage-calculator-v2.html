@@ -93,15 +93,29 @@
 
     .input-container {
             margin: 0 auto; /* Centers the container */
-            width: fit-content; /* Ensures the container only takes up as much width as needed */
+            /* width: fit-content; Ensures the container only takes up as much width as needed */
             padding: 10px; /* Adds some padding around the container */
         }
 
         label {
+            /* white-space: nowrap; */
             margin-right: 10px; /* Adds some space between the label and the input field */
+            flex-wrap: nowrap;
         }
 
-    
+
+
+        .input-group {
+    display: inline-flex; /* This will keep the label and input together */
+    margin-right: 10px; /* Space between groups */
+    flex-wrap: nowrap; /* Prevent wrapping within the group */
+    align-items: center; /* Centers the label vertically relative to the input */
+  }
+
+  .input-group label,
+  .input-group input {
+    white-space: nowrap; /* This will keep the text of label and the input on the same line */
+  }
 
 </style>
 
@@ -297,29 +311,45 @@
             <!-- Input field for the user to enter a value -->
             <!-- <input type="text" id="user-input-merge-bonus" value="0" /> -->
             <!-- </div> -->
+            <div class="form-container">
+            <div class="input-group">
             <label for="foie-level">Foie:</label>
             <input type="number" id="foie-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+            </div>
+            <div class="input-group">
             <label for="zonde-level">Zonde:</label>
             <input type="number" id="zonde-level" min="0" max="30"value="0" onchange="OnValueChanged()"/>
+            </div> <div class="input-group">
             <label for="barta-level">Barta:</label>
             <input type="number" id="barta-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+            </div><div class="input-group">
             <label for="gifoie-level">Gifoie:</label>
             <input type="number" id="gifoie-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+        </div><div class="input-group">
             <label for="gizonde-level">Gizonde:</label>
             <input type="number" id="gizonde-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+        </div><div class="input-group">
             <label for="gibarta-level">Gibarta:</label>
             <input type="number" id="gibarta-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+        </div><div class="input-group">
             <label for="rafoie-level">Rafoie:</label>
             <input type="number" id="rafoie-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+        </div><div class="input-group">
             <label for="razonde-level">Razonde:</label>
             <input type="number" id="razonde-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+        </div><div class="input-group">
             <label for="rabarta-level">Rabarta:</label>
             <input type="number" id="rabarta-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+        </div><div class="input-group">
             <label for="grants-level">Grants:</label>
             <input type="number" id="grants-level" min="0" max="30" value="0" onchange="OnValueChanged()"/>
+            </div>
+            <div class="input-group">
             <label for="auto-update-box">Auto-update:</label>
             <input type="checkbox" id="auto-update-box">
+            </div>
         </div>
+    </div>
         
         <!-- Button that will trigger processData when clicked -->
         <button id="process-btn">Calculate</button>
