@@ -11,7 +11,7 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Technique Damage Calculator</title>
+        <title>PSO Technique Damage Calculator V2</title>
 
     <!-- Meta tags -->
     
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/tech-damage-calculator">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/tech-damage-calculator-v2">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -101,6 +101,8 @@
             margin-right: 10px; /* Adds some space between the label and the input field */
         }
 
+    
+
 </style>
 
 </head>
@@ -149,7 +151,9 @@
                 // // Convert the sheet to JSON
                 // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
                 // globalEnemyData = json;
-
+                // Now you have the JSON equivalent of your Excel's first sheet
+                // console.log(enemy_data);
+                
                 const allSheetsData = {};
                 // Loop over sheet names and convert each sheet to JSON
                 workbook.SheetNames.forEach(sheetName => {
@@ -161,9 +165,6 @@
                 globalEnemyData = allSheetsData;
 
 
-                // Now you have the JSON equivalent of your Excel's first sheet
-                // console.log(enemy_data);
-                
                 // // Transform the array into an object keyed by the first column
                 // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
                 //     const keys = Object.keys(current);
@@ -224,7 +225,7 @@
             });
     </script>
 
-<h1>Phantasy Star Online Tech Damage Calculator</h1>
+<h1>Phantasy Star Online Tech Damage Calculator V2</h1>
 <h3><a href="./../pso.html">Return to Menu</a></h3>
 <p>Calculates the amount of damage that a tech should do for the following parameters</p>
 <ol>
@@ -239,88 +240,83 @@
     <li>FOnewearl: +0.3 to Foie, Zonde, Barta; +100% range to Resta and Anti; Megid pierces</li>
 </ul>
 
-<p>Results are formatted as: Damage per cast (Number of casts required to kill)</p>
+<p>Results are formatted as: Damage per hit (Number of hits required to kill)</p>
 <div class="center-container">
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
        
     <!-- Container for the label and input field -->
         <div class="input-container">
-
+            
             <!-- Label for the dropdown menu -->
-            <label for="tech-select">Tech:</label>
+            <label for="class-select">Class:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id="tech-select">
-                <!-- Option elements for the dropdown -->
-                <option value="Foie">Foie</option>
-                <option value="Zonde">Zonde</option>
-                <option value="Barta">Barta</option>
-                <option value="Gifoie">Gifoie</option>
-                <option value="Gizonde">Gizonde</option>
-                <option value="Gibarta">Gibarta</option>
-                <option value="Rafoie">Rafoie</option>
-                <option value="Razonde">Razonde</option>
-                <option value="Rabarta">Rabarta</option>
-                <option value="Grants">Grants</option>
-
-            </select>
+            <select id = "class-select" class="dropdown" >
+                <option value="HUmar"> HUmar </option>
+                <option value="HUnewearl"> HUnewearl </option>
+                <option value="HUcast"> HUcast </option>
+                <option value="HUcaseal"> HUcaseal </option>
+                <option value="RAmar"> RAmar </option>
+                <option value="RAmarl"> RAmarl </option>
+                <option value="RAcast"> RAcast </option>
+                <option value="RAcaseal"> RAcaseal </option>
+                <option value="FOmar"> FOmar </option>
+                <option value="FOmarl"> FOmarl </option>
+                <option value="FOnewm"> FOnewm </option>
+                <option value="FOnewearl"> FOnewearl </option>
+                </select>
             <br>
 
-                        <!-- Label for the dropdown menu -->
-                        <label for="difficulty-select">Difficulty:</label>
-                        <!-- Dropdown menu for the user to select a value -->
-                        <select id="difficulty-select">
-                            <!-- Option elements for the dropdown -->
-                            <option value="Ep1 Normal">Ep1 Normal</option>
-                            <option value="Ep1 Hard">Ep1 Hard</option>
-                            <option value="Ep1 V Hard">Ep1 V Hard</option>
-                            <option value="Ep1 Ultimate">Ep1 Ultimate</option>
-                        </select>
-                        <br>
-
+            <!-- Label for the dropdown menu -->
+            <label for="difficulty-select">Difficulty:</label>
+            <!-- Dropdown menu for the user to select a value -->
+            <select id="difficulty-select">
+                <!-- Option elements for the dropdown -->
+                <option value="Ep1 Normal">Ep1 Normal</option>
+                <option value="Ep1 Hard">Ep1 Hard</option>
+                <option value="Ep1 V Hard">Ep1 V Hard</option>
+                <option value="Ep1 Ultimate">Ep1 Ultimate</option>
+            </select>
+            <br>
+            <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input">MST:</label>
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input" placeholder="Enter MST value" />
-
+            </div>
             <br>
+            <!-- <div class="form-group"> -->
             <!-- Label for the input field -->
-            <label for="user-input-class-bonus">Class Bonus:</label>
+            <!-- <label for="user-input-weapon-bonus">Weapon Bonus:</label> -->
             <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input-class-bonus" value="0" />
-            <br>
-            
+            <!-- <input type="text" id="user-input-weapon-bonus" value="0" /> -->
+            <!-- </div> -->
+            <!-- <br> -->
+            <!-- <div class="form-group"> -->
             <!-- Label for the input field -->
-            <label for="user-input-weapon-bonus">Weapon Bonus:</label>
+            <!-- <label for="user-input-merge-bonus">Merge Bonus:</label> -->
             <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input-weapon-bonus" value="0" />
-            <br>
-                        
-            <!-- Label for the input field -->
-            <label for="user-input-merge-bonus">Merge Bonus:</label>
-            <!-- Input field for the user to enter a value -->
-            <input type="text" id="user-input-merge-bonus" value="0" />
-            
-            <form>
-                <label for="minNumber">Minimum Level:</label>
-                <input type="number" id="minNumber" name="minNumber" min="1" max="29" value="1" onblur="validateRange()">
-              
-                <label for="maxNumber">Maximum Level</label>
-                <input type="number" id="maxNumber" name="maxNumber" min="2" max="30" value="10" onblur="validateRange()">
-              </form>
-              
-              <script>
-              function validateRange() {
-                let minNumber = document.getElementById('minNumber');
-                let maxNumber = document.getElementById('maxNumber');
-                
-                if (parseInt(minNumber.value) >= parseInt(maxNumber.value)) {
-                  maxNumber.value = parseInt(minNumber.value) + 1;
-                }
-                
-                minNumber.max = parseInt(maxNumber.value) - 1;
-                maxNumber.min = parseInt(minNumber.value) + 1;
-              }
-              </script>
+            <!-- <input type="text" id="user-input-merge-bonus" value="0" /> -->
+            <!-- </div> -->
+            <label for="foie-level">Foie:</label>
+            <input type="number" id="foie-level" min="0" max="30" value="0" />
+            <label for="zonde-level">Zonde:</label>
+            <input type="number" id="zonde-level" min="0" max="30"value="0"/>
+            <label for="barta-level">Barta:</label>
+            <input type="number" id="barta-level" min="0" max="30" value="0"/>
+            <label for="gifoie-level">Gifoie:</label>
+            <input type="number" id="gifoie-level" min="0" max="30" value="0"/>
+            <label for="gizonde-level">Gizonde:</label>
+            <input type="number" id="gizonde-level" min="0" max="30" value="0"/>
+            <label for="gibarta-level">Gibarta:</label>
+            <input type="number" id="gibarta-level" min="0" max="30" value="0"/>
+            <label for="rafoie-level">Rafoie:</label>
+            <input type="number" id="rafoie-level" min="0" max="30" value="0"/>
+            <label for="razonde-level">Razonde:</label>
+            <input type="number" id="razonde-level" min="0" max="30" value="0"/>
+            <label for="rabarta-level">Rabarta:</label>
+            <input type="number" id="rabarta-level" min="0" max="30" value="0"/>
+            <label for="grants-level">Grants:</label>
+            <input type="number" id="grants-level" min="0" max="30" value="0"/>
         </div>
         
         <!-- Button that will trigger processData when clicked -->
@@ -362,21 +358,11 @@
                 return;
             }
 
-            // Get the value from the input field
-            const class_bonus_ = document.getElementById('user-input-class-bonus').value;
 
-            // Validate or transform the input value if necessary
-            // For example, convert the input value to a number
-            const processedClassBonus = parseFloat(class_bonus_);
-            // console.log(processedClassBonus);
-            // If the input value is not a number, display an error message
-            if (isNaN(processedClassBonus)) {
-                alert('Please enter a valid number');
-                return;
-            }
+
 
             // Get the value from the input field
-            const weapon_bonus_ = document.getElementById('user-input-weapon-bonus').value;
+            const weapon_bonus_ = 0//document.getElementById('user-input-weapon-bonus').value;
 
             // Validate or transform the input value if necessary
             // For example, convert the input value to a number
@@ -389,7 +375,7 @@
             }
 
             // Get the value from the input field
-            const merge_bonus_ = document.getElementById('user-input-merge-bonus').value;
+            const merge_bonus_ = 0 // document.getElementById('user-input-merge-bonus').value;
 
             // Validate or transform the input value if necessary
             // For example, convert the input value to a number
@@ -401,26 +387,31 @@
             return;
             }
 
-            // Get the selected tech value
-            const selectedTech = document.getElementById('tech-select').value;
-            console.log(selectedTech);
+            let levels_map_ = new Map(
+                [
+                    ['Foie',GrabInputIntAndParse('foie-level')],
+                    ['Zonde',GrabInputIntAndParse('zonde-level')],
+                    ['Barta',GrabInputIntAndParse('barta-level')],
+                    ['Gifoie',GrabInputIntAndParse('gifoie-level')],
+                    ['Gizonde',GrabInputIntAndParse('gizonde-level')],
+                    ['Gibarta',GrabInputIntAndParse('gibarta-level')],
+                    ['Rafoie',GrabInputIntAndParse('rafoie-level')],
+                    ['Razonde',GrabInputIntAndParse('razonde-level')],
+                    ['Rabarta',GrabInputIntAndParse('rabarta-level')],
+                    ['Grants',GrabInputIntAndParse('grants-level')],
+                ]
+            )
+
+            console.log(levels_map_);
 
             // Get the selected tech value
             const selectedDifficulty = document.getElementById('difficulty-select').value;
             console.log(selectedDifficulty);
+            const selectedClass = document.getElementById('class-select').value;
+            console.log(selectedDifficulty);
 
 
-            let minNumber = parseInt(document.getElementById('minNumber').value);
-            let maxNumber = parseInt(document.getElementById('maxNumber').value);
-
-            const resist = resist_map.get(selectedTech);
-
-            console.log(resist);
-            console.log(minNumber);
-            console.log(maxNumber);
-            console.log(typeof(minNumber));
-            console.log(typeof(maxNumber));
-            const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,difficulty=selectedDifficulty,minlevel=minNumber, maxlevel=maxNumber)
+            const results = calculateTechV2(globalEnemyData, globalTechData, processedMST, class_selection=selectedClass, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,difficulty=selectedDifficulty,levels_map=levels_map_)
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
             // calculation function and pass in the necessary parameters.
@@ -452,6 +443,7 @@
     <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
     <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
     <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
+    <a href="./tech-damage-calculator-v2">Tech Damage Calculator V2</a><br><br>
     <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
     
     <a href="./enemy-stats">Enemy Stats Table</a><br><br>

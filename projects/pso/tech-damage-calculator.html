@@ -100,7 +100,14 @@
         label {
             margin-right: 10px; /* Adds some space between the label and the input field */
         }
-
+/* Grid container for form groups */
+.form-group {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr); /* Adjust auto to your label width if needed */
+  grid-gap: 10px; /* Space between label and input */
+  margin-bottom: 15px;
+  align-items: center;
+}
 </style>
 
 </head>
@@ -238,7 +245,7 @@
     <li>FOnewearl: +0.3 to Foie, Zonde, Barta; +100% range to Resta and Anti; Megid pierces</li>
 </ul>
 
-<p>Results are formatted as: Damage per cast (Number of casts required to kill)</p>
+<p>Results are formatted as: Damage per hit (Number of hits required to kill)</p>
 <div class="center-container">
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
        
@@ -275,29 +282,33 @@
                 <option value="Ep1 Ultimate">Ep1 Ultimate</option>
             </select>
             <br>
+            <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input">MST:</label>
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input" placeholder="Enter MST value" />
-
+            </div>
             <br>
+            <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input-class-bonus">Class Bonus:</label>
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input-class-bonus" value="0" />
             <br>
-            
+            </div>
+            <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input-weapon-bonus">Weapon Bonus:</label>
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input-weapon-bonus" value="0" />
+            </div>
             <br>
-                        
+            <div class="form-group">
             <!-- Label for the input field -->
             <label for="user-input-merge-bonus">Merge Bonus:</label>
             <!-- Input field for the user to enter a value -->
             <input type="text" id="user-input-merge-bonus" value="0" />
-            
+            </div>
             <form>
                 <label for="minNumber">Minimum Level:</label>
                 <input type="number" id="minNumber" name="minNumber" min="1" max="29" value="1" onblur="validateRange()">
@@ -449,6 +460,7 @@
     <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
     <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
     <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
+    <a href="./tech-damage-calculator-v2">Tech Damage Calculator V2</a><br><br>
     <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
     
     <a href="./enemy-stats">Enemy Stats Table</a><br><br>

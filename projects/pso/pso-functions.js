@@ -1,7 +1,41 @@
-function clamp(value) {
+function clamp(value,maxNum=100, minNum=0) {
   // First, ensure the value is not less than 0
   // Then, ensure the value is not more than 100
-  return Math.min(100, Math.max(0, value));
+  return Math.min(maxNum, Math.max(minNum, value));
+}
+
+function GrabInputIntAndParse(id){
+      // Get the value from the input field
+      const entered = document.getElementById(id).value;
+
+      // Validate or transform the input value if necessary
+      // For example, convert the input value to a number
+      const processedInput = parseInt(entered);
+      // console.log(processedMergeBonus);
+      // If the input value is not a number, display an error message
+      if (isNaN(processedInput)) {
+      alert('Please enter a valid number');
+      return;
+      }
+
+      return processedInput;
+}
+
+function GrabInputFloatAndParse(id){
+  // Get the value from the input field
+  const entered = document.getElementById(id).value;
+
+  // Validate or transform the input value if necessary
+  // For example, convert the input value to a number
+  const processedInput = parseFloat(entered);
+  // console.log(processedMergeBonus);
+  // If the input value is not a number, display an error message
+  if (isNaN(processedInput)) {
+  alert('Please enter a valid number');
+  return;
+  }
+
+  return processedInput;
 }
 
 
@@ -296,50 +330,147 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
     )
 
 
-    // Object.entries(enemy_stats).forEach(([enemyName, resistances]) => {
-    //     // Create an object for the current enemy's tech damage.
-    //     let techDamage = { Enemy: enemyName };
+
+    // Return the resulting array of tech damage objects.
+    return tech_df;
+  }
+
+  function calculateTechV2(enemy_stats, tech_powers, mst, class_selection, weapon_bonus, merge_bonus,difficulty, levels_map) {
     
-    //     // Iterate over each tech in tech_powers.
-    //     Object.keys(tech_power_at_level).forEach(tech => {
-    //         console.log(tech);
-    //       if (tech !== 'Level') { // Skip the 'Level' property
-    //         // Get the resistance for the current enemy and tech.
-    //         let resistance_key = resist_map.get(tech);
-    //         console.log(resistance_key);
-    //         let enemy_resist = resistances[resistance_key] || 0; // Default to 0 if not defined
-    
-    //         // Calculate the tech damage and add it to the techDamage object with the tech as the key.
-    //         techDamage[tech] = Tech_Damage(
-    //           mst,
-    //           tech_power_at_level[tech],
-    //           enemy_resist,
-    //           class_bonus,
-    //           weapon_bonus,
-    //           merge_bonus
-    //         );
-    //       }
-    //     });
+    const resist_map = new Map([
+        ['Foie','EFR'],
+        ['Gifoie','EFR'],
+        ['Rafoie','EFR'],
+        ['Zonde','ETH'],
+        ['Gizonde','ETH'],
+        ['Razonde','ETH'],
+        ['Barta','EIC'],
+        ['Gibarta','EIC'],
+        ['Rabarta','EIC'],
+        ['Grants','ELT'],
+        ['Megid','EDK']]
+        );
+    console.log(class_selection);
 
 
-    // // Iterate over each enemy in enemy_stats.
-    // enemy_stats.forEach((enemy, i) => {
-    //   // Create an object for the current enemy's tech damage.
-    //   let techDamage = { Enemy: enemy['Enemy'] }; // Assuming there is an 'Enemy' attribute.
-  
-    //   // Get the resistance for the current enemy.
-    //   let enemy_resist = enemy[resist_map.get(tech)]; // Assuming the resistance property is named like 'tech_resist'.
-    //   console.log(enemy_resist);
-    //   // Iterate over each tech's power.
-    //   Object.entries(tech_powers[tech]).forEach(([techName, basePower]) => {
-    //     // Calculate the tech damage and add it to the techDamage object with the techName as the key.
-    //     techDamage[techName] = Tech_Damage(mst, basePower, enemy_resist, class_bonus, weapon_bonus, merge_bonus);
-    //   });
-  
-      // Add the current enemy's tech damage object to the results array.
-    //   tech_df.push(techDamage);
-    // });
-  
+    // const tech_power_at_level = tech_powers.find(tp => tp.Level === level);
+
+
+    // Initialize an empty array to hold the results.
+    let tech_df = [];
+    
+    enemy_stats[difficulty].forEach((row)=>{
+        // console.log(row.Enemy);
+        let enemy_health = row['HP'];
+        // console.log(enemy_resist);
+        let techDamage = { 'Enemy': `${row.Enemy} ${row.HP}HP`};
+        levels_map.forEach((lvl,tech)=>{
+          // console.log(tech);
+          // console.log(lvl);
+          let resistance_key = resist_map.get(tech);
+          let enemy_resist = row[resistance_key] || 0; // Default to 0 if not defined
+          let tech_level_index = lvl-1;
+          if (tech_level_index < 0 || tech_level_index >= 30){
+            techDamage[tech] = '-';
+          }
+          else{
+            // console.log('valid number');
+            // console.log(tech_powers);
+            //   console.log(tech_powers[lvl-1]);
+              const floatDamage = parseFloat(tech_powers[tech_level_index][tech]);
+
+              //handling class bonuses
+
+              var class_bonus = 0;
+
+              switch(class_selection){
+                case "FOmar":
+                  if (['Gifoie','Gizonde','Gibarta','Grants'].includes(tech)){
+                    class_bonus=0.3;
+                  }
+                  break;
+                case "FOmarl":
+                  if (tech == 'Grants'){
+                    class_bonnus = 0.5;
+                    console.log("Fomarl grants bonus");
+                  }
+                  break;
+                case "FOnewm":
+                  if (['Gifoie','Gizonde','Gibarta','Rafoie','Razonde','Rabarta'].includes(tech)){
+                    class_bonus=0.3;
+                    console.log(`Fonewm bonus for ${tech}`);
+                  }
+                  break;
+
+                case "FOnewearl":
+                  if (['Foie','Zonde','Barta'].includes(tech)){
+                    class_bonus=0.3;
+                    console.log(`Foney bonus for ${tech}`);
+                  }
+                  break;
+                default:
+                  console.log(`No bonus for ${tech}`);
+              }
+
+              
+
+
+
+            let damageDealt = Tech_Damage(
+                mst,
+                floatDamage,
+                enemy_resist,
+                class_bonus,
+                weapon_bonus,
+                merge_bonus
+              );
+
+              if (damageDealt > 0){
+                techDamage[tech] = `${damageDealt}HP (${Math.ceil(enemy_health/damageDealt)})`;
+            }
+            else{
+                techDamage[tech] = '0HP (-)'
+            }
+          }
+          
+
+        })
+
+        
+
+        // tech_powers.forEach((tech_row)=>{
+        //     // check range
+        //     let tech_level = tech_row.Level;
+
+        //     if (tech_level < minlevel || tech_level > maxlevel){
+        //       return;
+        //     }
+
+
+        //     const floatDamage = parseFloat(tech_row[tech]);
+        //     let damageDealt = Tech_Damage(
+        //         mst,
+        //         floatDamage,
+        //         enemy_resist,
+        //         class_bonus,
+        //         weapon_bonus,
+        //         merge_bonus
+        //       );
+        //     if (damageDealt > 0){
+        //         techDamage[tech_row.Level] = `${damageDealt}HP (${Math.ceil(enemy_health/damageDealt)})`;
+        //     }
+        //     else{
+        //         techDamage[tech_row.Level] = '0HP (-)'
+        //     }
+              
+        //     // console.log(tech_row);
+        // });
+        tech_df.push(techDamage);
+    }
+    )
+
+
+
     // Return the resulting array of tech damage objects.
     return tech_df;
   }
