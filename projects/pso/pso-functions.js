@@ -317,10 +317,10 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
                 merge_bonus
               );
             if (damageDealt > 0){
-                techDamage[tech_row.Level] = `${damageDealt}HP (${Math.ceil(enemy_health/damageDealt)})`;
+                techDamage[tech_row.Level] = `${damageDealt} (${Math.ceil(enemy_health/damageDealt)})`;
             }
             else{
-                techDamage[tech_row.Level] = '0HP (-)'
+                techDamage[tech_row.Level] = '0 (-)'
             }
               
             // console.log(tech_row);
@@ -426,10 +426,10 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
               );
 
               if (damageDealt > 0){
-                techDamage[tech] = `${damageDealt}HP (${Math.ceil(enemy_health/damageDealt)})`;
+                techDamage[tech] = `${damageDealt} (${Math.ceil(enemy_health/damageDealt)})`;
             }
             else{
-                techDamage[tech] = '0HP (-)'
+                techDamage[tech] = '0 (-)'
             }
           }
           

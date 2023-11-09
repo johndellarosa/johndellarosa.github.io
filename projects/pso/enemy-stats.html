@@ -157,6 +157,9 @@
 
                 // Now allSheetsData contains each sheet's data as a key-value pair
                 globalEnemyData = allSheetsData;
+
+
+                handleProcessButtonClick();
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -178,7 +181,7 @@
         <!-- Label for the dropdown menu -->
         <label for="difficulty-select">Difficulty:</label>
         <!-- Dropdown menu for the user to select a value -->
-        <select id="difficulty-select">
+        <select id="difficulty-select" onchange="handleProcessButtonClick()">
             <!-- Option elements for the dropdown -->
             <option value="Ep1 Normal">Ep1 Normal</option>
             <option value="Ep1 Hard">Ep1 Hard</option>
