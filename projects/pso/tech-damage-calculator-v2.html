@@ -237,6 +237,8 @@
             .catch(error => {
                 console.error('Fetch error:', error);
             });
+
+            
     </script>
 
 <h1>Phantasy Star Online Tech Damage Calculator V2</h1>
@@ -267,12 +269,12 @@
             <select id = "class-select" class="dropdown" onchange="OnValueChanged()">
                 <option value="HUmar"> HUmar </option>
                 <option value="HUnewearl"> HUnewearl </option>
-                <option value="HUcast"> HUcast </option>
-                <option value="HUcaseal"> HUcaseal </option>
+                <!-- <option value="HUcast"> HUcast </option>
+                <option value="HUcaseal"> HUcaseal </option> -->
                 <option value="RAmar"> RAmar </option>
                 <option value="RAmarl"> RAmarl </option>
-                <option value="RAcast"> RAcast </option>
-                <option value="RAcaseal"> RAcaseal </option>
+                <!-- <option value="RAcast"> RAcast </option>
+                <option value="RAcaseal"> RAcaseal </option> -->
                 <option value="FOmar"> FOmar </option>
                 <option value="FOmarl"> FOmarl </option>
                 <option value="FOnewm" selected> FOnewm </option>
@@ -346,7 +348,7 @@
             </div>
             <div class="input-group">
             <label for="auto-update-box">Auto-update:</label>
-            <input type="checkbox" id="auto-update-box">
+            <input type="checkbox" id="auto-update-box" checked>
             </div>
         </div>
     </div>
@@ -444,13 +446,13 @@
                 ]
             )
 
-            console.log(levels_map_);
+            // console.log(levels_map_);
 
             // Get the selected tech value
             const selectedDifficulty = document.getElementById('difficulty-select').value;
-            console.log(selectedDifficulty);
+            // console.log(selectedDifficulty);
             const selectedClass = document.getElementById('class-select').value;
-            console.log(selectedDifficulty);
+            // console.log(selectedDifficulty);
 
 
             const results = calculateTechV2(globalEnemyData, globalTechData, processedMST, class_selection=selectedClass, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,difficulty=selectedDifficulty,levels_map=levels_map_)
@@ -475,6 +477,8 @@
 
         // Add Event Listener to the Calculate Button
         document.getElementById('process-btn').addEventListener('click', handleCalculateButtonClick);
+    
+
     </script>
 
 
