@@ -86,10 +86,14 @@
     }
 
     th {
-        background-color: #f2f2f2; /* Sets a background color for headers */
+        background-color: #e0e0e0; /* Sets a background color for headers */
         text-align: center; /* Centers header text */
         padding: 8px; /* Adds space inside table headers and cells */
     }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
     .input-container {
             margin: 0 auto; /* Centers the container */
@@ -100,6 +104,14 @@
         label {
             margin-right: 10px; /* Adds some space between the label and the input field */
         }
+
+
+
+@media screen and (max-width: 600px) {
+    .data-table {
+        width: 100%;
+    }
+}
 
 </style>
 
