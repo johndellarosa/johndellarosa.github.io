@@ -55,6 +55,9 @@
         border: 1px solid #ccc; /* Adds a border to the input and button */
         border-radius: 5px; /* Rounds the corners of the input and button */
     }
+    /* input[type=number]:focus {
+    border: 3px solid #555;
+    } */
 
     #process-btn {
         cursor: pointer; /* Changes the cursor when hovering over the button */
@@ -95,21 +98,55 @@
     background-color: #f2f2f2;
 }
 
+
     .input-container {
             margin: 0 auto; /* Centers the container */
             width: fit-content; /* Ensures the container only takes up as much width as needed */
             padding: 10px; /* Adds some padding around the container */
+            
         }
 
         label {
             white-space: nowrap;
             margin-right: 10px; /* Adds some space between the label and the input field */
         }
+
+        .input-group {
+    display: inline-flex; /* This will keep the label and input together */
+    margin-right: 10px; /* Space between groups */
+    flex-wrap: nowrap; /* Prevent wrapping within the group */
+    align-items: center; /* Centers the label vertically relative to the input */
+  }
+
+  .input-group label,
+  .input-group input {
+    white-space: nowrap; /* This will keep the text of label and the input on the same line */
+  }
+
         input[type=number]::-webkit-inner-spin-button {
     opacity: 1
         }
 
-        
+        th, td {
+    min-width: 25px;
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
+#data-table {
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+
+
+}
+
 </style>
 
 </head>
@@ -206,15 +243,17 @@
         <!-- Container for the label and input field -->
         <div class="input-container">
             <!-- Label for the input field -->
+            <div class="input-group">
             <label for="user-input">ATA:</label>
             <!-- Input field for the user to enter a value -->
             <input type="number" id="user-input" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
-
+                </div>            <div class="input-group">
                         <!-- Label for the input field -->
                         <label for="user-input-distance">Distance:</label>
                         <!-- Input field for the user to enter a value -->
                         <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
-
+                    </div>
+                    <div class="input-group">
             <!-- Label for the dropdown menu -->
             <label for="difficulty-select">Difficulty:</label>
             <!-- Dropdown menu for the user to select a value -->
@@ -229,9 +268,12 @@
                 <option value="Ep2 V Hard">Ep2 V Hard</option>
                 <option value="Ep2 Ultimate">Ep2 Ultimate</option>
             </select>
+            </div>
             <br>
+            <div class="input-group">
             <label for="auto-update-box">Auto-update:</label>
             <input type="checkbox" id="auto-update-box" checked>
+            </div>
         </div>
         
         <!-- Button that will trigger processData when clicked -->
