@@ -391,7 +391,7 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
                   break;
                 case "FOmarl":
                   if (tech == 'Grants'){
-                    class_bonus = 0.5;
+                    class_bonnus = 0.5;
                     // console.log("Fomarl grants bonus");
                   }
                   break;

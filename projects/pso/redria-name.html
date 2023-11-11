@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <title>Phantasy Star Online Redria Name Generator</title>
+
+    <!-- Meta tags -->
+    
+    <meta name="keywords" content="Phantasy Star Online, Section ID calculator, PSO, Blue Burst">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="Phantasy Star Online Section ID Calculator Blue Burst and Console (Gamecube, Dreamcast, Xbox)">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/seedrandom"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="./random-words.js"></script>
+    <style>
+        .dropbtn {
+          background-color: #04AA6D;
+          color: white;
+          padding: 14px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+        }
+        
+        .dropbtn:hover, .dropbtn:focus {
+          background-color: #3e8e41;
+        }
+        
+        #myInput {
+          box-sizing: border-box;
+          background-image: url('searchicon.png');
+          background-position: 14px 12px;
+          background-repeat: no-repeat;
+          font-size: 16px;
+          padding: 14px 20px 12px 45px;
+          border: none;
+          border-bottom: 1px solid #ddd;
+        }
+        
+        #myInput:focus {outline: 3px solid #ddd;}
+        
+        .dropdown {
+          position: relative;
+          display: inline-block;
+          margin:5%;
+          width: clamp(125px,10vw,350px);
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f6f6f6;
+          min-width: 230px;
+          overflow: auto;
+          border: 1px solid #ddd;
+          z-index: 1;
+        }
+        
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+        
+        .dropdown a:hover {background-color: #ddd;}
+        
+        .show {display: block;}
+        
+        .bb-button{
+          background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  
+  display: flex;
+
+  margin:auto;
+  max-width: 40%;
+  font-size: clamp(6px,3vw, 24px);
+  justify-content: center;
+        }
+
+        .bb-button text {
+          margin: auto;
+        }
+
+
+        .app {
+          text-align: center;
+          margin: auto;
+          margin-top: 5%;
+          padding:5%;
+          width: 50%;
+          border: 3px solid green;
+        }
+
+        input {
+          margin: auto;
+          width: clamp(125px,10vw,350px);
+        }
+
+        </style>
+
+<script>
+        
+
+    function favTutorial() {
+    var mylist = document.getElementById("myList");
+    classSelected = mylist.options[mylist.selectedIndex].text;
+    console.log(classSelected);
+    generate_name();
+    }
+    </script>
+    
+</head>
+  <body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="https://johndellarosa.github.io/">Home</a>|
+        <a href="https://johndellarosa.github.io/resume">Resume</a>|
+        <a href="https://johndellarosa.github.io/biography">About</a>|
+        <a href="https://johndellarosa.github.io/projects">Projects</a>|
+        <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div>
+
+
+    <div class="app">
+<h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Section ID Calculator</h1>
+<h3><a href="./../pso.html">Return to Menu</a></h3>
+<noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+    <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button>
+
+    <select id = "myList" class="dropdown" onchange = "favTutorial()" >
+        <option value="HUmar"> HUmar </option>
+        <option value="HUnewearl"> HUnewearl </option>
+        <option value="HUcast"> HUcast </option>
+        <option value="HUcaseal"> HUcaseal </option>
+        <option value="RAmar"> RAmar </option>
+        <option value="RAmarl"> RAmarl </option>
+        <option value="RAcast"> RAcast </option>
+        <option value="RAcaseal"> RAcaseal </option>
+        <option value="FOmar"> FOmar </option>
+        <option value="FOmarl"> FOmarl </option>
+        <option value="FOnewm"> FOnewm </option>
+        <option value="FOnewearl"> FOnewearl </option>
+        </select>
+      <br>
+
+            <!-- Button that will trigger processData when clicked -->
+            <button id="process-btn">Calculate</button>
+
+
+    <br>
+    Result: <span id="section-id-result">Text</span>
+    </div>
+
+
+    <script>
+
+        var isBB = true;
+        var sectionIDMap = {
+        "0": "Viridia",
+        "1": "Greenill",
+        "2": "Skyly",
+        "3": "Bluefull",
+        "4": "Purplenum",
+        "5": "Pinkal",
+        "6": "Redria",
+        "7": "Oran",
+        "8": "Yellowboze",
+        "9": "Whitill"
+      };
+
+      var classOffsetMap = {
+        "HUmar": 5,
+        "HUnewearl": 6,
+        "HUcast": 7,
+        "HUcaseal": 4,
+        "RAmar": 8,
+        "RAmarl": 6,
+        "RAcast": 9,
+        "RAcaseal": 0,
+        "FOmar": 5,
+        "FOmarl": 1,
+        "FOnewm": 2,
+        "FOnewearl": 3
+      }
+
+
+
+
+        function toggle_Blue_Burst() {
+            isBB = !isBB;
+            // $("#myList").prop('disabled',!isBB);
+            if (isBB){
+              $(".bb-button")[0].style.backgroundColor = '#4CAF50';
+              $(".bb-button")[0].innerText = 'Blue Burst ✓';
+            }
+            else{
+              $(".bb-button")[0].style.backgroundColor = '#f44336';
+              $(".bb-button")[0].innerText = 'Blue Burst X';
+            }
+            generate_name();
+        }
+        favTutorial();
+        toggle_Blue_Burst();
+
+
+        function generate_name() {
+          raw_name = generate({ min:1, max: 2, minLength: 2, maxLength: 4 }).join(" ");
+
+          console.log(raw_name);
+          //output: ['you, 'are']
+          // var nameText = $("#playerName")[0].value
+          // if (nameText.length == 0){
+          //   $("#section-id-result")[0].innerText = '';
+          //   return;
+          // }
+          // console.log(`Name Text: ${nameText}`);
+          var sum = 0;
+          for (var i=0; i < raw_name.length; i++){
+
+              sum += raw_name.charCodeAt(i);
+          }
+
+          if (isBB){
+            console.log(`Class selected: ${classSelected}`);
+            var classOffset = classOffsetMap[classSelected];
+            sum += classOffset;
+          }
+          
+          console.log(`Sum: ${sum}`);
+          var lastDigit = sum.toString().at(-1);
+          console.log(`Last digit: ${lastDigit}`);
+
+          switch(lastDigit){
+
+
+            case("0"):
+            raw_name= raw_name + "!!";
+            break;
+            case("1"):
+              raw_name=`#${raw_name}`
+              break;
+            case("2"):
+            raw_name=`*${raw_name}*`
+              break;
+            case("3"):
+            raw_name=`${raw_name}!`
+              break;
+            case("4"):
+            raw_name=`${raw_name}*`
+              break;
+            case("5"):
+            raw_name=`${raw_name}:S`
+              break;
+            case("6"):
+              break;
+              case("7"):
+            raw_name=`${raw_name}:)`
+              break;
+              case("8"):
+            raw_name=`${raw_name}:(`
+              break;
+            case("9"):
+              raw_name=`${raw_name}a`
+              break;
+
+            default:
+              return raw_name;
+          }
+          console.log(raw_name);
+          $("#section-id-result")[0].innerText = raw_name;
+          // return raw_name;
+          // $("#section-id-result")[0].innerText = sectionIDMap[lastDigit];
+          //$("#section-id-result")[0].innerText = lastDigit;
+          
+        }
+        document.getElementById('process-btn').addEventListener('click', generate_name);
+    </script>
+<div class="bottom" style="text-align: center;">
+  <h3>PSO Modules</h3>           
+  <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
+  <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
+  <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
+  <a href="./tech-damage-calculator-v2">Tech Damage Calculator V2</a><br><br>
+  <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
+  
+  <a href="./enemy-stats">Enemy Stats Table</a><br><br>
+  <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
+
+</div>
+    <h3>Related links</h3>
+<p style="text-align: center;">
+  <a href="https://www.pso-world.com/sections.php?op=viewarticle&artid=452" rel="external">Common drop rates</a><br><br>
+  <a href="https://wiki.pioneer2.net/w/Section_IDs" rel="external">Summary and rare items</a>
+</p>
+<p style="text-align: center;">
+  Code references value maps of <a href="https://github.com/gar-mil/psocalc" rel="external">https://github.com/gar-mil/psocalc</a>
+</p>
+
+
+</body>
+
+
+</html>
