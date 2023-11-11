@@ -184,7 +184,7 @@
 
 
     <br>
-    Result: <span id="section-id-result">Text</span>
+    <!-- Result: <span id="section-id-result">Text</span> -->
 
     <ol id="name-list"></ol>
     </div>
@@ -254,9 +254,9 @@
           }
 
           var lastDigit = sum.toString().at(-1);
-          console.log(`Last digit: ${lastDigit}`);
+          // console.log(`Last digit: ${lastDigit}`);
           if (lastDigit == '3'){
-            console.log(test_name);
+            // console.log(test_name);
           }
           return lastDigit == '6';
         }
@@ -267,7 +267,7 @@
           while (!isValidRedria(raw_name)){
             modified_name = raw_name + "!";
             if (isValidRedria(modified_name)){
-              console.log('Found exclamation');
+              // console.log('Found exclamation');
               raw_name = modified_name;
               return modified_name;
 
@@ -275,7 +275,7 @@
             }
             modified_name = raw_name + "!!";
             if (isValidRedria(modified_name)){
-              console.log('Found exclamation');
+              // console.log('Found exclamation');
               raw_name = modified_name;
               return modified_name;
 
@@ -283,7 +283,7 @@
             }
             modified_name = raw_name + " :)";
             if (isValidRedria(modified_name)){
-              console.log('Found exclamation');
+              // console.log('Found exclamation');
               raw_name = modified_name;
               return modified_name;
 
@@ -298,7 +298,7 @@
             
 
           }
-          console.log(raw_name);
+          // console.log(raw_name);
           return raw_name;
 
           
@@ -319,7 +319,7 @@
           }
 
 
-          console.log(raw_name);
+          // console.log(raw_name);
           //output: ['you, 'are']
           // var nameText = $("#playerName")[0].value
           // if (nameText.length == 0){
@@ -339,9 +339,9 @@
             sum += classOffset;
           }
           
-          console.log(`Sum: ${sum}`);
+          // console.log(`Sum: ${sum}`);
           var lastDigit = sum.toString().at(-1);
-          console.log(`Last digit: ${lastDigit}`);
+          // console.log(`Last digit: ${lastDigit}`);
 
           switch(lastDigit){
 
@@ -380,7 +380,7 @@
               break;
               // return raw_name;
           }
-          console.log(raw_name);
+          // console.log(raw_name);
           $("#section-id-result")[0].innerText = raw_name;
           // return raw_name;
           // $("#section-id-result")[0].innerText = sectionIDMap[lastDigit];
@@ -393,8 +393,8 @@
             
             // Get the selected tech value
             const num_words = parseInt(document.getElementById('number-words-select').value);
-            console.log(num_words);
-            console.log(typeof(num_words));
+            // console.log(num_words);
+            // console.log(typeof(num_words));
 
             let namesList = [];
             for (let i=0;i < 20; i++){
@@ -402,7 +402,7 @@
               namesList.push(name);
             }
             
-            console.log()
+            // console.log()
             // $("#section-id-result")[0].innerText = new_name;
             let listElement = document.getElementById('name-list');
             listElement.innerHTML = ''; // Clear existing list items

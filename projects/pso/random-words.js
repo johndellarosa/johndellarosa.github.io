@@ -164,6 +164,7 @@ const wordList = [
   "between",
   "beyond",
   "bicycle",
+  "big",
   "bigger",
   "biggest",
   "bill",
