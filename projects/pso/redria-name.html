@@ -185,6 +185,8 @@
 
     <br>
     Result: <span id="section-id-result">Text</span>
+
+    <ol id="name-list"></ol>
     </div>
 
 
@@ -393,9 +395,22 @@
             const num_words = parseInt(document.getElementById('number-words-select').value);
             console.log(num_words);
             console.log(typeof(num_words));
-            new_name = generate_name_bruteforce(number_words=num_words);
 
-            $("#section-id-result")[0].innerText = new_name;
+            let namesList = [];
+            for (let i=0;i < 20; i++){
+              let name = generate_name_bruteforce(number_words=num_words);
+              namesList.push(name);
+            }
+            
+            console.log()
+            // $("#section-id-result")[0].innerText = new_name;
+            let listElement = document.getElementById('name-list');
+            listElement.innerHTML = ''; // Clear existing list items
+            namesList.forEach(name => {
+              let listItem = document.createElement('li');
+              listItem.textContent = name;
+              listElement.appendChild(listItem);
+  });
         }
 
         document.getElementById('process-btn').addEventListener('click', handleCalculateButtonClick);
