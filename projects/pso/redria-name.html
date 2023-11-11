@@ -155,7 +155,7 @@
 <h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Redria Name Generator</h1>
 <h3><a href="./../pso.html">Return to Menu</a></h3>
 <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
-    <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button>
+    <!-- <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button>
 
     <select id = "myList" class="dropdown" onchange = "favTutorial()" >
         <option value="HUmar"> HUmar </option>
@@ -171,8 +171,14 @@
         <option value="FOnewm"> FOnewm </option>
         <option value="FOnewearl"> FOnewearl </option>
         </select>
-      <br>
-
+      <br> -->
+      <label for="number-words-select"># Words</label>
+      <select id="number-words-select" onchange="handleCalculateButtonClick()">
+      
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+      <br><br>
             <!-- Button that will trigger processData when clicked -->
             <button id="process-btn">Calculate</button>
 
@@ -216,28 +222,96 @@
 
 
 
-        function toggle_Blue_Burst() {
-            isBB = !isBB;
-            // $("#myList").prop('disabled',!isBB);
-            if (isBB){
-              $(".bb-button")[0].style.backgroundColor = '#4CAF50';
-              $(".bb-button")[0].innerText = 'Blue Burst ✓';
-            }
-            else{
-              $(".bb-button")[0].style.backgroundColor = '#f44336';
-              $(".bb-button")[0].innerText = 'Blue Burst X';
-            }
-            generate_name();
-        }
-        favTutorial();
-        toggle_Blue_Burst();
+        // function toggle_Blue_Burst() {
+        //     isBB = !isBB;
+        //     // $("#myList").prop('disabled',!isBB);
+        //     if (isBB){
+        //       $(".bb-button")[0].style.backgroundColor = '#4CAF50';
+        //       $(".bb-button")[0].innerText = 'Blue Burst ✓';
+        //     }
+        //     else{
+        //       $(".bb-button")[0].style.backgroundColor = '#f44336';
+        //       $(".bb-button")[0].innerText = 'Blue Burst X';
+        //     }
+        //     generate_name();
+        // }
+        // favTutorial();
+        // toggle_Blue_Burst();
 
+        function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+          }
+
+        function isValidRedria(test_name){
+          if (test_name.length > 12){return false;}
+
+          var sum = 0;
+          for (var i=0; i < test_name.length; i++){
+
+              sum += test_name.charCodeAt(i);
+          }
+
+          var lastDigit = sum.toString().at(-1);
+          console.log(`Last digit: ${lastDigit}`);
+          if (lastDigit == '3'){
+            console.log(test_name);
+          }
+          return lastDigit == '6';
+        }
+
+        function generate_name_bruteforce(number_words=2){
+          raw_name = capitalizeFirstLetter(generate({ exactly: 1, wordsPerString: number_words })[0]);
+
+          while (!isValidRedria(raw_name)){
+            modified_name = raw_name + "!";
+            if (isValidRedria(modified_name)){
+              console.log('Found exclamation');
+              raw_name = modified_name;
+              return modified_name;
+
+
+            }
+            modified_name = raw_name + "!!";
+            if (isValidRedria(modified_name)){
+              console.log('Found exclamation');
+              raw_name = modified_name;
+              return modified_name;
+
+
+            }
+            modified_name = raw_name + " :)";
+            if (isValidRedria(modified_name)){
+              console.log('Found exclamation');
+              raw_name = modified_name;
+              return modified_name;
+
+
+            }
+            modified_name = raw_name + " :(";
+            if (isValidRedria(modified_name)){
+              // console.log('Found exclamation');
+              raw_name = modified_name;
+              return modified_name;
+
+
+            }
+
+
+
+            raw_name = capitalizeFirstLetter(generate({ exactly: 1, wordsPerString: number_words })[0]);
+
+            
+
+          }
+          console.log(raw_name);
+          return raw_name;
+
+          
+        }
 
         function generate_name() {
 
-          function capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-          }
+
           // raw_name = generate({ min:1, max: 2, minLength: 2, maxLength: 4 }).join(" ");
 
           raw_name = capitalizeFirstLetter(generate({ minLength: 2, maxLength: 10 }));
@@ -248,6 +322,7 @@
             raw_name_2 = generate({ maxLength: 9-raw_name_length });
             raw_name = `${raw_name} ${raw_name_2}`
           }
+
 
           console.log(raw_name);
           //output: ['you, 'are']
@@ -317,7 +392,20 @@
           //$("#section-id-result")[0].innerText = lastDigit;
           
         }
-        document.getElementById('process-btn').addEventListener('click', generate_name);
+
+        function handleCalculateButtonClick() {
+            
+            
+            // Get the selected tech value
+            const num_words = parseInt(document.getElementById('number-words-select').value);
+            console.log(num_words);
+            console.log(typeof(num_words));
+            new_name = generate_name_bruteforce(number_words=num_words);
+
+            $("#section-id-result")[0].innerText = new_name;
+        }
+
+        document.getElementById('process-btn').addEventListener('click', handleCalculateButtonClick);
     </script>
 <div class="bottom" style="text-align: center;">
 

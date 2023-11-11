@@ -183,3 +183,46 @@
             
           }
 
+          .data-table table th, .data-table table td {
+            min-width: 25px;
+        }
+        
+        .data-table {
+            overflow-x: auto;
+        }
+        
+        @media screen and (max-width: 600px) {
+            .data-table table {
+                font-size: 12px;
+            }
+        
+        
+        }
+
+        .data-table {
+            margin-top: 20px; /* Adds some space between the button and the table */
+            text-align: left; /* Aligns the table content to the left */
+            width: 100%; /* Makes the table take up the full width */
+        }
+    
+        .data-table table {
+            width: 95%; /* Set the width of the table to be 95% of its container */
+        margin: 20px auto; /* Center the table horizontally */
+        border-collapse: collapse; /* Collapses the borders of the table */
+        }
+    
+        .data-table table th,   .data-table table  td {
+            border: 1px solid #ddd; /* Adds a border to table headers and cells */
+            text-align: center; /* Centers header text */
+            padding: 6px; /* Adds space inside table headers and cells */
+        }
+    
+        .data-table table th {
+            background-color: #e0e0e0; /* Sets a background color for headers */
+            text-align: center; /* Centers header text */
+            padding: 8px; /* Adds space inside table headers and cells */
+        }
+    
+        .data-table table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
