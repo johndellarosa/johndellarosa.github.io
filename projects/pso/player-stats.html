@@ -213,16 +213,9 @@ input[type=checkbox] {
             });
     </script>
 
-<h1>Phantasy Star Online Accuracy Calculator</h1>
+<h1>Phantasy Star Online Player Stats</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p>Calculates the percent chance of an attack dealing damage to an enemy. Single player values are displayed.</p>
-<ol>
-    <li>Letter refers to type of attack: N=Normal, H=Heavy, S=Special</li>
-    <li>Number refers to which hit in the combo it is</li>
-    <li>Values above 100 mean 100% to hit. Values below 0 mean 0% chance to hit.</li>
-    <li>Set Distance parameter to a non-zero value <b>only</b> if you are using non-ranger class with a ranged weapon. Leave as 0 if using melee weapons and/or if you are a ranger.</li>
-    <li>Handgun max range is 170 units. Mech gun max range is 85 units. Slicer max range is 95 units.</li>
-</ol>
+<p style="text-align: center;">Stats for each player class for all 200 levels.</p>
     <div class="center-container">
         <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
@@ -238,12 +231,12 @@ input[type=checkbox] {
                 <!-- Option elements for the dropdown -->
                 <option value="HUmar" selected> HUmar </option>
                 <option value="HUnewearl"> HUnewearl </option>
-                <!-- <option value="HUcast"> HUcast </option>
-                <option value="HUcaseal"> HUcaseal </option> -->
+                <option value="HUcast"> HUcast </option>
+                <option value="HUcaseal"> HUcaseal </option>
                 <option value="RAmar"> RAmar </option>
                 <option value="RAmarl"> RAmarl </option>
-                <!-- <option value="RAcast"> RAcast </option>
-                <option value="RAcaseal"> RAcaseal </option> -->
+                <option value="RAcast"> RAcast </option>
+                <option value="RAcaseal"> RAcaseal </option>
                 <option value="FOmar"> FOmar </option>
                 <option value="FOmarl"> FOmarl </option>
                 <option value="FOnewm"> FOnewm </option>
@@ -314,7 +307,16 @@ function OnValueChanged(){
     <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
 
 </div>
+<h3>References</h3>
+<p style="text-align: center;">
+    Data processing was in part using code by qwerty on <a href="https://www.pioneer2.net/community/threads/default-player-level-tables.445/" rel="external">Ephinea</a>
 
+    <br><br>
+
+    
+    Values were taken from <a href="https://github.com/waytim/psobb/blob/master/PlyLevelTbl.prs" rel="external">Waytim</a>
+
+  </p>
     <script>
         var coll = document.getElementsByClassName("collapsible");
         var i;
