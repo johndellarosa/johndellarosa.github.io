@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Accuracy Calculator</title>
+        <title>PSO Player Stats</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, accuracy calculator">
+    <meta name="keywords" content="PSO, Phantasy Star Online, player stats">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online accuracy calculator">
+    <meta name="description" content="Phantasy Star Online player stats for all 200 levels">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/accuracy-calculator">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/player-stats">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -50,7 +50,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select,#user-input-distance, #process-btn {
+    #user-input,#class-select,#user-input-distance, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -172,7 +172,7 @@ input[type=checkbox] {
 
     <script>
         // URL to your hosted Excel file
-        const enemy_file = './PSO_Enemy.xlsx';
+        const enemy_file = './Character_stats.xlsx';
         // Define a global variable to hold the JSON data
         let globalJsonData = null;
         
@@ -190,7 +190,7 @@ input[type=checkbox] {
                 // // Assuming your sheet is the first sheet in the workbook
                 // const firstSheetName = workbook.SheetNames[0];
                 // const worksheet = workbook.Sheets[firstSheetName];
-                
+
                 // // Convert the sheet to JSON
                 // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
                 // globalJsonData = json;
@@ -203,25 +203,10 @@ input[type=checkbox] {
                 });
 
                 // Now allSheetsData contains each sheet's data as a key-value pair
-                globalEnemyData = allSheetsData;
+                globalCharacterStats = allSheetsData;
 
-                // Now you have the JSON equivalent of your Excel's first sheet
-                // console.log(enemy_data);
-                
-                // // Transform the array into an object keyed by the first column
-                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
-                //     const keys = Object.keys(current);
-                //     if (keys.length > 0) {
-                //         const index = current[keys[0]];
-                //         accumulator[index] = current;
-                //     }
-                //     return accumulator;
-                // }, {});
 
-                // // Now you have a JSON object indexed by the first column's entries
-                // console.log(jsonIndexedByFirstColumn);
-                
-                // // Handle the JSON data here
+                handleProcessButtonClick();
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -244,30 +229,26 @@ input[type=checkbox] {
         <!-- Container for the label and input field -->
         <div class="input-container">
             <!-- Label for the input field -->
-            <div class="input-group">
-            <label for="user-input">ATA:</label>
-            <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
-                </div>            <div class="input-group">
-                        <!-- Label for the input field -->
-                        <label for="user-input-distance">Distance:</label>
-                        <!-- Input field for the user to enter a value -->
-                        <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
-                    </div>
+
                     <div class="input-group">
             <!-- Label for the dropdown menu -->
-            <label for="difficulty-select">Difficulty:</label>
+            <label for="class-select">Class:</label>
             <!-- Dropdown menu for the user to select a value -->
-            <select id="difficulty-select" onchange="OnValueChanged()">
+            <select id="class-select" onchange="OnValueChanged()">
                 <!-- Option elements for the dropdown -->
-                <option value="Ep1 Normal">Ep1 Normal</option>
-                <option value="Ep1 Hard">Ep1 Hard</option>
-                <option value="Ep1 V Hard">Ep1 V Hard</option>
-                <option value="Ep1 Ultimate">Ep1 Ultimate</option>
-                <option value="Ep2 Normal">Ep2 Normal</option>
-                <option value="Ep2 Hard">Ep2 Hard</option>
-                <option value="Ep2 V Hard">Ep2 V Hard</option>
-                <option value="Ep2 Ultimate">Ep2 Ultimate</option>
+                <option value="HUmar" selected> HUmar </option>
+                <option value="HUnewearl"> HUnewearl </option>
+                <!-- <option value="HUcast"> HUcast </option>
+                <option value="HUcaseal"> HUcaseal </option> -->
+                <option value="RAmar"> RAmar </option>
+                <option value="RAmarl"> RAmarl </option>
+                <!-- <option value="RAcast"> RAcast </option>
+                <option value="RAcaseal"> RAcaseal </option> -->
+                <option value="FOmar"> FOmar </option>
+                <option value="FOmarl"> FOmarl </option>
+                <option value="FOnewm"> FOnewm </option>
+                <option value="FOnewearl"> FOnewearl </option>
+
             </select>
             </div>
             <br>
@@ -278,13 +259,24 @@ input[type=checkbox] {
         </div>
         
         <!-- Button that will trigger processData when clicked -->
-        <button id="process-btn">Calculate</button>
+        <button id="process-btn">Display</button>
     </div>
     <br><br>
     <div class="data-table"  id="data-table"></div>
     
 
     <script>
+
+fetch('./character_stats.json')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Process your data here
+    })
+    .catch(error => {
+        console.error('Error fetching data: ', error);
+    });
+
+class_data = new CharData();
 
 function OnValueChanged(){
             
@@ -300,38 +292,11 @@ function OnValueChanged(){
         // Function that handles the button click
         function handleProcessButtonClick() {
             // Get the value from the input field
-            const userInput = document.getElementById('user-input').value;
 
-            // Validate or transform the input value if necessary
-            // For example, convert the input value to a number
-            const processedInput = parseFloat(userInput);
+            const selectedClass = document.getElementById('class-select').value;
+            console.log(selectedClass);
 
-            // If the input value is not a number, display an error message
-            if (isNaN(processedInput)) {
-                alert('Please enter a valid number');
-                return;
-            }
-
-            // Get the value from the input field
-            const userInput_distance = document.getElementById('user-input-distance').value;
-
-            // Validate or transform the input value if necessary
-            // For example, convert the input value to a number
-            const processedInput_distance = parseFloat(userInput_distance);
-
-            // If the input value is not a number, display an error message
-            if (isNaN(processedInput_distance)) {
-                alert('Please enter a valid number');
-                return;
-            }
-
-                        // Get the selected tech value
-            const selectedDifficulty = document.getElementById('difficulty-select').value;
-            console.log(selectedDifficulty);
-
-            let hitmatrix = generateMatrix(globalEnemyData,processedInput,processedInput_distance,difficulty=selectedDifficulty);
-
-            processData(hitmatrix);
+            processData(globalCharacterStats[selectedClass]);
         }
 
         // Add event listener to the button
@@ -344,7 +309,7 @@ function OnValueChanged(){
     <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
     <a href="./tech-damage-calculator-v2">Tech Damage Calculator V2</a><br><br>
     <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
-    
+    <a href="./player-stats">Player Stats Table</a><br><br>
     <a href="./enemy-stats">Enemy Stats Table</a><br><br>
     <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
 

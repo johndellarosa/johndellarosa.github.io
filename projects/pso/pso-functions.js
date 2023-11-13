@@ -167,6 +167,53 @@ function processData(data) {
     document.getElementById('data-table').appendChild(table);
 }
 
+function processDataLevelTable(data) {
+    // Find the existing table by id, and if it exists, remove it
+    const existingTable = document.getElementById('data-table');
+    if (existingTable.firstChild) {
+        existingTable.removeChild(existingTable.firstChild);
+    }
+
+    // Create a new table element
+    let table = document.createElement('table');
+    table.style.width = '100%';
+    table.setAttribute('border', '1');
+
+    // Generate table headers
+    let thead = document.createElement('thead');
+    let headerRow = document.createElement('tr');
+    
+    // Assuming the first object in data array has all the headers as keys
+    let headers = Object.keys(['ATP', 'DFP', 'MST', 'ATA', 'EVP', 'LCK', 'HP']);
+    headers.forEach(header => {
+        let th = document.createElement('th');
+        th.textContent = header; // Column letters as headers
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Generate table body
+    let tbody = document.createElement('tbody');
+    data.forEach(row => {
+        let tr = document.createElement('tr');
+        headers.forEach(header => {
+            let td = document.createElement('td');
+            let value = row[header];
+    if (!isNaN(value) && value !== null) {
+        value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
+    }
+    td.textContent = value;
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // Append the table to the div with id="data-table"
+    document.getElementById('data-table').appendChild(table);
+}
+
 
 function Tech_Damage(MST, tech_base_power, resistance = 0, class_bonus = 0, weapon_bonus = 0, merge_bonus = 0) {
     // console.log(typeof(MST));
