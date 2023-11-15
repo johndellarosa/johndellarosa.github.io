@@ -194,13 +194,15 @@ input[type=checkbox] {
                 const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
                 globalJsonData = json;
 
+                handleProcessButtonClick();
+
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
 
 
-            handleProcessButtonClick();
+            
     </script>
 
 <h1>Phantasy Star Online Experience to Level</h1>
@@ -241,6 +243,8 @@ function OnValueChanged(){
 
         // Add event listener to the button
         document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
+    
+        // handleProcessButtonClick();
     </script>
 <div class="bottom" style="text-align: center;">
     <h3>PSO Modules</h3>           
