@@ -11,7 +11,7 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Player Stats</title>
+        <title>PSO Experience to Level</title>
 
     <!-- Meta tags -->
     
@@ -38,7 +38,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <script type="text/javascript" src="./pso-functions.js"></script>
-  <!-- <script type="text/javascript" src="./chardata.js"></script> -->
 
   <style>
     body {
@@ -172,11 +171,11 @@ input[type=checkbox] {
 
     <script>
         // URL to your hosted Excel file
-        const enemy_file = './Character_stats.xlsx';
+        const xp_file = './experience.xlsx';
         // Define a global variable to hold the JSON data
         let globalJsonData = null;
         
-        fetch(enemy_file)
+        fetch(xp_file)
             .then(response => {
                 if (response.ok) {
                     return response.arrayBuffer();
@@ -187,68 +186,28 @@ input[type=checkbox] {
                 // Use SheetJS to read the buffer
                 const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // // Assuming your sheet is the first sheet in the workbook
-                // const firstSheetName = workbook.SheetNames[0];
-                // const worksheet = workbook.Sheets[firstSheetName];
+                // Assuming your sheet is the first sheet in the workbook
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                
+                // Convert the sheet to JSON
+                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                globalJsonData = json;
 
-                // // Convert the sheet to JSON
-                // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                // globalJsonData = json;
-
-                const allSheetsData = {};
-                // Loop over sheet names and convert each sheet to JSON
-                workbook.SheetNames.forEach(sheetName => {
-                    const worksheet = workbook.Sheets[sheetName];
-                    allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                });
-
-                // Now allSheetsData contains each sheet's data as a key-value pair
-                globalCharacterStats = allSheetsData;
-
-
-                handleProcessButtonClick();
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
     </script>
 
-<h1>Phantasy Star Online Player Stats</h1>
+<h1>Phantasy Star Online Experience to Level</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p style="text-align: center;">Stats for each player class for all 200 levels.</p>
+<p style="text-align: center;">Experience required to level and cumulative experience.</p>
     <div class="center-container">
         <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
         <!-- Container for the label and input field -->
         <div class="input-container">
-            <!-- Label for the input field -->
-
-                    <div class="input-group">
-            <!-- Label for the dropdown menu -->
-            <label for="class-select">Class:</label>
-            <!-- Dropdown menu for the user to select a value -->
-            <select id="class-select" onchange="OnValueChanged()">
-                <!-- Option elements for the dropdown -->
-                <option value="HUmar" selected> HUmar </option>
-                <option value="HUnewearl"> HUnewearl </option>
-                <option value="HUcast"> HUcast </option>
-                <option value="HUcaseal"> HUcaseal </option>
-                <option value="RAmar"> RAmar </option>
-                <option value="RAmarl"> RAmarl </option>
-                <option value="RAcast"> RAcast </option>
-                <option value="RAcaseal"> RAcaseal </option>
-                <option value="FOmar"> FOmar </option>
-                <option value="FOmarl"> FOmarl </option>
-                <option value="FOnewm"> FOnewm </option>
-                <option value="FOnewearl"> FOnewearl </option>
-
-            </select>
-            </div>
-            <br>
-            <div class="input-group">
-            <label for="auto-update-box">Auto-update:</label>
-            <input type="checkbox" id="auto-update-box" checked>
-            </div>
         </div>
         
         <!-- Button that will trigger processData when clicked -->
@@ -273,11 +232,11 @@ class_data = new CharData();
 
 function OnValueChanged(){
             
-            const autoupdate = document.getElementById('auto-update-box').checked;
+            // const autoupdate = document.getElementById('auto-update-box').checked;
 
-            if (autoupdate){
-                handleProcessButtonClick()
-            }
+            // if (autoupdate){
+            //     handleProcessButtonClick()
+            // }
         }
 
         // ... (Include the loadExcelFile and processData functions here)
@@ -286,10 +245,7 @@ function OnValueChanged(){
         function handleProcessButtonClick() {
             // Get the value from the input field
 
-            const selectedClass = document.getElementById('class-select').value;
-            console.log(selectedClass);
-
-            processData(globalCharacterStats[selectedClass]);
+            processData(globalJsonData);
         }
 
         // Add event listener to the button
@@ -313,8 +269,7 @@ function OnValueChanged(){
 
     <br><br>
 
-    
-    Values were taken from <a href="https://github.com/waytim/psobb/blob/master/PlyLevelTbl.prs" rel="external">Waytim</a>
+    Parsing data and file help from AKDylie.
 
   </p>
     <script>
