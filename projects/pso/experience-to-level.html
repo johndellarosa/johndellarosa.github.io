@@ -198,6 +198,9 @@ input[type=checkbox] {
             .catch(error => {
                 console.error('Fetch error:', error);
             });
+
+
+            handleProcessButtonClick();
     </script>
 
 <h1>Phantasy Star Online Experience to Level</h1>
@@ -218,18 +221,6 @@ input[type=checkbox] {
     
 
     <script>
-
-fetch('./character_stats.json')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); // Process your data here
-    })
-    .catch(error => {
-        console.error('Error fetching data: ', error);
-    });
-
-class_data = new CharData();
-
 function OnValueChanged(){
             
             // const autoupdate = document.getElementById('auto-update-box').checked;
@@ -261,6 +252,7 @@ function OnValueChanged(){
     <a href="./player-stats">Player Stats Table</a><br><br>
     <a href="./enemy-stats">Enemy Stats Table</a><br><br>
     <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
+    <a href="./experience-to-level">Experience to Level Table</a><br><br>
 
 </div>
 <h3>References</h3>
