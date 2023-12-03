@@ -80,7 +80,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   //   console.error(error);
   // }
 
-  function generateMatrix(enemy_stats,totalATA=100,distance=0,difficulty='Ep1 Normal'){
+  function generate_accuracy_matrix(enemy_stats,totalATA=100,distance=0,difficulty='Ep1 Normal'){
 
 
 
@@ -119,6 +119,52 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
 
   return accArray;
 }
+
+function generate_enemy_damage_matrix(enemy_stats,total_DFP=100,difficulty='Ep1 Normal'){
+
+
+
+  // Assuming enemy_stats is an array of objects where each object is a row from your Excel file
+  // For example: 
+  // let enemy_stats = [{EVP: 50, ...}, {EVP: 60, ...}, ...];
+
+  // Initialize an empty array for the equivalent of a DataFrame
+  let damage_array = [];
+
+  // Loop through each enemy stat object
+  enemy_stats[difficulty].forEach((row, index) => {
+  let enemy_atp = row['ATP'];
+  let accData = { 'Enemy': row['Enemy'] }; // Add the 'Enemy' as the first entry
+
+
+  // // Nested loops to go through attack types and combo steps
+  // ['N', 'H', 'S'].forEach(attackType => {
+  //     [1, 2, 3].forEach(comboStep => {
+  //     // Use the accuracy function to calculate and assign the value to the accData object
+  //     let key = `${attackType} ${comboStep}`;
+  //     accData[key] = accuracy(total_DFP, attackType, comboStep, enemy_atp,distance);
+  //     });
+
+
+  // });
+
+  accData['Normal'] = Math.max(0,Math.floor((enemy_atp-total_DFP)/5))
+  accData['Crit'] = Math.floor(accData['Normal']*1.5)
+
+  // Add the accData to accArray
+  damage_array.push(accData);
+  });
+
+  // Now accArray is an array of objects, each object is a row equivalent to the pandas DataFrame
+  // console.log(accArray);
+
+  // If you need to find a particular value later, you can filter or find it in accArray.
+  // For example, to find the accuracy data for the first enemy:
+  // console.log(accArray[0]);
+
+  return damage_array;
+}
+
 
 function processData(data) {
     // Find the existing table by id, and if it exists, remove it
