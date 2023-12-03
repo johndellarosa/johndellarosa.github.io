@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select,#user-input-distance, #process-btn {
+    #user-input,#difficulty-select,#user-input-dfp,#user-input-hp, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -80,6 +80,7 @@
         width: 95%; /* Set the width of the table to be 95% of its container */
     margin: 20px auto; /* Center the table horizontally */
     border-collapse: collapse; /* Collapses the borders of the table */
+    table-layout: fixed;
     }
 
     th, td {
@@ -181,11 +182,18 @@ input[type=checkbox] {
         <div class="input-container">
             <!-- Label for the input field -->
             <div class="input-group">
-            <label for="user-input">Player DFP:</label>
+            <label for="user-input-dfp">Player DFP:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input" placeholder="Enter DFP value" value="20" min="0" onchange="OnValueChanged()"/>
+            <input type="number" id="user-input-dfp" placeholder="Enter DFP value" value="20" min="0" onchange="OnValueChanged()"/>
                 </div> 
-                    <div class="input-group">
+
+            <div class="input-group">
+                <label for="user-input-hp">Player HP:</label>
+                <!-- Input field for the user to enter a value -->
+                <input type="number" id="user-input-hp" placeholder="Enter HP value" value="100" min="0" onchange="OnValueChanged()"/>
+            </div> 
+                
+            <div class="input-group">
             <!-- Label for the dropdown menu -->
             <label for="difficulty-select">Difficulty:</label>
             <!-- Dropdown menu for the user to select a value -->
@@ -202,6 +210,10 @@ input[type=checkbox] {
             </select>
             </div>
             <br>
+            <div class="input-group">
+                <label for="color-box">Color Mode:</label>
+                <input type="checkbox" id="color-box" checked onchange="OnValueChanged()">
+                </div>
             <div class="input-group">
             <label for="auto-update-box">Auto-update:</label>
             <input type="checkbox" id="auto-update-box" checked>
@@ -325,25 +337,37 @@ function OnValueChanged(){
     // Function that handles the button click
     function handleProcessButtonClick() {
         // Get the value from the input field
-        const userInput = document.getElementById('user-input').value;
+        const userInputDFP = document.getElementById('user-input-dfp').value;
 
         // Validate or transform the input value if necessary
         // For example, convert the input value to a number
-        const processedInput = parseFloat(userInput);
+        const processedInputDFP = parseFloat(userInputDFP);
 
         // If the input value is not a number, display an error message
-        if (isNaN(processedInput)) {
+        if (isNaN(processedInputDFP)) {
             alert('Please enter a valid number');
             return;
         }
 
+        const userInputHP = document.getElementById('user-input-hp').value;
+
+        // Validate or transform the input value if necessary
+        // For example, convert the input value to a number
+        const processedInputHP = parseFloat(userInputHP);
+
+        // If the input value is not a number, display an error message
+        if (isNaN(processedInputHP)) {
+            alert('Please enter a valid number');
+            return;
+        }
+        const isColorMode = document.getElementById('color-box').checked;
                     // Get the selected tech value
         const selectedDifficulty = document.getElementById('difficulty-select').value;
         console.log(selectedDifficulty);
 
-        let hitmatrix = generate_enemy_damage_matrix(globalEnemyData,processedInput,difficulty=selectedDifficulty);
+        let hitmatrix = generate_enemy_damage_matrix(globalEnemyData,processedInputDFP,difficulty=selectedDifficulty);
 
-        processData(hitmatrix);
+        processDataEnemyHit(hitmatrix,processedInputHP, isColorMode);
     }
 
     // Add event listener to the button

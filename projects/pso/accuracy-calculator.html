@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select,#user-input-distance, #process-btn {
+    #user-input,#difficulty-select,#user-input-distance, #process-btn, #status-select {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -170,8 +170,82 @@ input[type=checkbox] {
     </div> 
 
     <script>
-        // URL to your hosted Excel file
-        const enemy_file = './PSO_Enemy.xlsx';
+
+    </script>
+
+<h1>Phantasy Star Online Accuracy Calculator</h1>
+<h3><a href="./../pso">Return to Menu</a></h3>
+<p>Calculates the percent chance of an attack dealing damage to an enemy. Single player values are displayed.</p>
+<ol>
+    <li>Letter refers to type of attack: N=Normal, H=Heavy, S=Special</li>
+    <li>Number refers to which hit in the combo it is</li>
+    <li>Values above 100 mean 100% to hit. Values below 0 mean 0% chance to hit.</li>
+    <li>Set Distance parameter to a non-zero value <b>only</b> if you are using non-ranger class with a ranged weapon. Leave as 0 if using melee weapons and/or if you are a ranger.</li>
+    <li>Handgun max range is 170 units. Mech gun max range is 85 units. Slicer max range is 95 units.</li>
+</ol>
+    <div class="center-container">
+        <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+    
+        <!-- Container for the label and input field -->
+        <div class="input-container">
+            <!-- Label for the input field -->
+            <div class="input-group">
+            <label for="user-input">ATA:</label>
+            <!-- Input field for the user to enter a value -->
+            <input type="number" id="user-input" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
+                </div>            <div class="input-group">
+                        <!-- Label for the input field -->
+                        <label for="user-input-distance">Distance:</label>
+                        <!-- Input field for the user to enter a value -->
+                        <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
+                    </div>
+                    <div class="input-group">
+            <!-- Label for the dropdown menu -->
+            <label for="difficulty-select">Difficulty:</label>
+            <!-- Dropdown menu for the user to select a value -->
+            <select id="difficulty-select" onchange="OnValueChanged()">
+                <!-- Option elements for the dropdown -->
+                <option value="Ep1 Normal">Ep1 Normal</option>
+                <option value="Ep1 Hard">Ep1 Hard</option>
+                <option value="Ep1 V Hard">Ep1 V Hard</option>
+                <option value="Ep1 Ultimate">Ep1 Ultimate</option>
+                <option value="Ep2 Normal">Ep2 Normal</option>
+                <option value="Ep2 Hard">Ep2 Hard</option>
+                <option value="Ep2 V Hard">Ep2 V Hard</option>
+                <option value="Ep2 Ultimate">Ep2 Ultimate</option>
+            </select>
+            </div>
+            <div class="input-group">
+                <!-- Label for the dropdown menu -->
+                <label for="status-select">Status Effect:</label>
+                <!-- Dropdown menu for the user to select a value -->
+                <select id="status-select" onchange="OnValueChanged()">
+                    <!-- Option elements for the dropdown -->
+                    <option value="None">None</option>
+                    <option value="Frozen">Frozen</option>
+                    <option value="Paralyzed">Paralyzed</option>
+                    <option value="Both">Both</option>
+
+                </select>
+                </div>
+            <br>
+            <div class="input-group">
+            <label for="auto-update-box">Auto-update:</label>
+            <input type="checkbox" id="auto-update-box" checked>
+            </div>
+        </div>
+        
+        <!-- Button that will trigger processData when clicked -->
+        <button id="process-btn">Calculate</button>
+    </div>
+    <br><br>
+    <div class="data-table"  id="data-table"></div>
+    
+
+    <script>
+
+                // URL to your hosted Excel file
+                const enemy_file = './PSO_Enemy.xlsx';
         // Define a global variable to hold the JSON data
         let globalJsonData = null;
         
@@ -221,69 +295,11 @@ input[type=checkbox] {
                 // console.log(jsonIndexedByFirstColumn);
                 
                 // // Handle the JSON data here
+                OnValueChanged();
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
-    </script>
-
-<h1>Phantasy Star Online Accuracy Calculator</h1>
-<h3><a href="./../pso">Return to Menu</a></h3>
-<p>Calculates the percent chance of an attack dealing damage to an enemy. Single player values are displayed.</p>
-<ol>
-    <li>Letter refers to type of attack: N=Normal, H=Heavy, S=Special</li>
-    <li>Number refers to which hit in the combo it is</li>
-    <li>Values above 100 mean 100% to hit. Values below 0 mean 0% chance to hit.</li>
-    <li>Set Distance parameter to a non-zero value <b>only</b> if you are using non-ranger class with a ranged weapon. Leave as 0 if using melee weapons and/or if you are a ranger.</li>
-    <li>Handgun max range is 170 units. Mech gun max range is 85 units. Slicer max range is 95 units.</li>
-</ol>
-    <div class="center-container">
-        <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
-    
-        <!-- Container for the label and input field -->
-        <div class="input-container">
-            <!-- Label for the input field -->
-            <div class="input-group">
-            <label for="user-input">ATA:</label>
-            <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
-                </div>            <div class="input-group">
-                        <!-- Label for the input field -->
-                        <label for="user-input-distance">Distance:</label>
-                        <!-- Input field for the user to enter a value -->
-                        <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
-                    </div>
-                    <div class="input-group">
-            <!-- Label for the dropdown menu -->
-            <label for="difficulty-select">Difficulty:</label>
-            <!-- Dropdown menu for the user to select a value -->
-            <select id="difficulty-select" onchange="OnValueChanged()">
-                <!-- Option elements for the dropdown -->
-                <option value="Ep1 Normal">Ep1 Normal</option>
-                <option value="Ep1 Hard">Ep1 Hard</option>
-                <option value="Ep1 V Hard">Ep1 V Hard</option>
-                <option value="Ep1 Ultimate">Ep1 Ultimate</option>
-                <option value="Ep2 Normal">Ep2 Normal</option>
-                <option value="Ep2 Hard">Ep2 Hard</option>
-                <option value="Ep2 V Hard">Ep2 V Hard</option>
-                <option value="Ep2 Ultimate">Ep2 Ultimate</option>
-            </select>
-            </div>
-            <br>
-            <div class="input-group">
-            <label for="auto-update-box">Auto-update:</label>
-            <input type="checkbox" id="auto-update-box" checked>
-            </div>
-        </div>
-        
-        <!-- Button that will trigger processData when clicked -->
-        <button id="process-btn">Calculate</button>
-    </div>
-    <br><br>
-    <div class="data-table"  id="data-table"></div>
-    
-
-    <script>
 
 function OnValueChanged(){
             
@@ -328,7 +344,11 @@ function OnValueChanged(){
             const selectedDifficulty = document.getElementById('difficulty-select').value;
             console.log(selectedDifficulty);
 
-            let hitmatrix = generate_accuracy_matrix(globalEnemyData,processedInput,processedInput_distance,difficulty=selectedDifficulty);
+                                    // Get the selected tech value
+            const selectedStatus = document.getElementById('status-select').value;
+            console.log(selectedStatus);
+
+            let hitmatrix = generate_accuracy_matrix(globalEnemyData,processedInput,processedInput_distance,difficulty=selectedDifficulty,enemy_status=selectedStatus);
 
             processData(hitmatrix);
         }

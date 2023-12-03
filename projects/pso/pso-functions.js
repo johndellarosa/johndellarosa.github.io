@@ -55,6 +55,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   function getEffectiveEVP(enemyEVP, statusEffect = null) {
     const statusEffectMod = {
       null: 1,
+      'None': 1,
       'Paralyzed': 0.85,
       'Shocked': 0.85,
       'Frozen': 0.75,
@@ -80,7 +81,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
   //   console.error(error);
   // }
 
-  function generate_accuracy_matrix(enemy_stats,totalATA=100,distance=0,difficulty='Ep1 Normal'){
+  function generate_accuracy_matrix(enemy_stats,totalATA=100,distance=0,difficulty='Ep1 Normal',enemy_status='None'){
 
 
 
@@ -102,7 +103,7 @@ function getEffectiveATA(totalATA, attackType, comboStep) {
       [1, 2, 3].forEach(comboStep => {
       // Use the accuracy function to calculate and assign the value to the accData object
       let key = `${attackType} ${comboStep}`;
-      accData[key] = accuracy(totalATA, attackType, comboStep, enemyEVP,distance);
+      accData[key] = accuracy(totalATA, attackType, comboStep, enemyEVP,distance,statusEffect=enemy_status);
       });
   });
 
@@ -199,18 +200,77 @@ function processData(data) {
         headers.forEach(header => {
             let td = document.createElement('td');
             let value = row[header];
-    if (!isNaN(value) && value !== null) {
-        value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
-    }
-    td.textContent = value;
-            tr.appendChild(td);
-        });
+            if (!isNaN(value) && value !== null) {
+                value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
+            }
+          td.textContent = value;
+                  tr.appendChild(td);
+              });
         tbody.appendChild(tr);
     });
     table.appendChild(tbody);
 
     // Append the table to the div with id="data-table"
     document.getElementById('data-table').appendChild(table);
+}
+
+function processDataEnemyHit(data,playerMaxHP,colorMode) {
+  // Find the existing table by id, and if it exists, remove it
+  const existingTable = document.getElementById('data-table');
+  if (existingTable.firstChild) {
+      existingTable.removeChild(existingTable.firstChild);
+  }
+
+  // Create a new table element
+  let table = document.createElement('table');
+  table.style.width = '100%';
+  table.setAttribute('border', '1');
+
+  // Generate table headers
+  let thead = document.createElement('thead');
+  let headerRow = document.createElement('tr');
+  
+  // Assuming the first object in data array has all the headers as keys
+  let headers = Object.keys(data[0]);
+  headers.forEach(header => {
+      let th = document.createElement('th');
+      th.textContent = header; // Column letters as headers
+      headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Generate table body
+  let tbody = document.createElement('tbody');
+  data.forEach(row => {
+      let tr = document.createElement('tr');
+      headers.forEach(header => {
+          let td = document.createElement('td');
+          let value = row[header];
+          if (!isNaN(value) && value !== null) {
+              value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
+                // Set cell background color based on value
+              if (colorMode){
+                  percentage = value/playerMaxHP;
+                  if (percentage < .25) {
+                    td.style.backgroundColor = '#ccffcc';
+                } else if (percentage < 1) {
+                    td.style.backgroundColor = '#ffffb3';
+                } else {
+                    td.style.backgroundColor = '#ffb3b3';
+                }
+              }
+
+          }
+        td.textContent = value;
+                tr.appendChild(td);
+            });
+      tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+
+  // Append the table to the div with id="data-table"
+  document.getElementById('data-table').appendChild(table);
 }
 
 function processDataLevelTable(data) {
