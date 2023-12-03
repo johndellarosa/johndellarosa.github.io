@@ -149,8 +149,8 @@ function generate_enemy_damage_matrix(enemy_stats,total_DFP=100,difficulty='Ep1 
 
   // });
 
-  accData['Normal'] = Math.max(0,Math.floor((enemy_atp-total_DFP)/5))
-  accData['Crit'] = Math.floor(accData['Normal']*1.5)
+  accData['Normal'] = Math.max(0,(enemy_atp-total_DFP)/5);
+  accData['Crit'] = accData['Normal']*1.5;
 
   // Add the accData to accArray
   damage_array.push(accData);
@@ -248,11 +248,10 @@ function processDataEnemyHit(data,playerMaxHP,colorMode) {
           let td = document.createElement('td');
           let value = row[header];
           if (!isNaN(value) && value !== null) {
-              value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
                 // Set cell background color based on value
               if (colorMode){
                   percentage = value/playerMaxHP;
-                  if (percentage < .25) {
+                  if (percentage <= .25) {
                     td.style.backgroundColor = '#ccffcc';
                 } else if (percentage < 1) {
                     td.style.backgroundColor = '#ffffb3';
@@ -261,6 +260,10 @@ function processDataEnemyHit(data,playerMaxHP,colorMode) {
                 }
               }
 
+          }
+          if (!isNaN(value)){
+            value = Math.floor(value);
+            
           }
         td.textContent = value;
                 tr.appendChild(td);
