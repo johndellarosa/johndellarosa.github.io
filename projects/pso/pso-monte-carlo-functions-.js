@@ -142,3 +142,63 @@ function createHistogram(data,binSize) {
     });
 }
 
+function prepareCdfData(data) {
+    // Sort the data
+    let sortedData = [...data].sort((a, b) => a - b);
+
+    // Calculate the CDF
+    let cdfData = [];
+    let uniqueValues = [...new Set(sortedData)]; // Get unique values
+
+    uniqueValues.forEach(value => {
+        let count = sortedData.filter(v => v <= value).length;
+        let probability = count / sortedData.length;
+        cdfData.push({ x: value, y: probability });
+    });
+
+    return cdfData;
+}
+
+function createCdfChart(data) {
+    const ctx = document.getElementById('cdfChart').getContext('2d');
+
+    // Destroy previous chart if it exists
+    if (window.cdfChartInstance) {
+        window.cdfChartInstance.destroy();
+    }
+
+    // Create new chart
+    window.cdfChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'CDF',
+                data: data,
+                backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                fill: false,
+                pointRadius: 2,
+                pointHoverRadius: 5,
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Waves Required'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Probability'
+                    }
+                }
+            }
+        }
+    });
+}

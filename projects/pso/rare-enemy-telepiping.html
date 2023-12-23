@@ -224,9 +224,9 @@ input[type=checkbox] {
 <div id="chartContainer">
 <canvas id="wavesHistogram"></canvas>
 </div>
-
-
-
+<div id="chartContainer">
+<canvas id="cdfChart"></canvas>
+</div>
     <script>
 
     let trialData;
@@ -255,10 +255,11 @@ input[type=checkbox] {
 
     );
         let numWavesArray = trialData.map(trial => trial['Num Waves']);
-
+        let cdfData = prepareCdfData(numWavesArray);
 
         
         createHistogram(numWavesArray, binsize=bin_size_);
+        createCdfChart(cdfData);
     }
 
 
