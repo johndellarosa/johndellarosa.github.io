@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Experience to Level</title>
+        <title>PSO Rare Enemy Piping Simulation</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, player stats">
+    <meta name="keywords" content="PSO, Phantasy Star Online, rare enemy, telepipe">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online player stats for all 200 levels">
+    <meta name="description" content="Phantasy Star Online Rare Enemy Telepiping Simulation">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/experience-to-level">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/rare-enemy-telepiping">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -38,6 +38,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <script type="text/javascript" src="./pso-functions.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript" src="./pso-monte-carlo-functions-.js"></script>
 
   <style>
     body {
@@ -49,15 +51,12 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#class-select,#user-input-distance, #process-btn {
+    #user-input,#difficulty-select, select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
         border-radius: 5px; /* Rounds the corners of the input and button */
     }
-    /* input[type=number]:focus {
-    border: 3px solid #555;
-    } */
 
     #process-btn {
         cursor: pointer; /* Changes the cursor when hovering over the button */
@@ -91,7 +90,7 @@
     th, td {
         border: 1px solid #ddd; /* Adds a border to table headers and cells */
         text-align: center; /* Centers header text */
-        padding: 8px; /* Adds space inside table headers and cells */
+        padding: 6px; /* Adds space inside table headers and cells */
     }
 
     th {
@@ -109,7 +108,6 @@
             margin: 0 auto; /* Centers the container */
             width: fit-content; /* Ensures the container only takes up as much width as needed */
             padding: 10px; /* Adds some padding around the container */
-            
         }
 
         label {
@@ -137,10 +135,6 @@
     min-width: 25px;
 }
 
-input[type=checkbox] {
-    transform: scale(1.5);
-}
-
 #data-table {
     overflow-x: auto;
 }
@@ -152,7 +146,9 @@ input[type=checkbox] {
 
 
 }
-
+input[type=checkbox] {
+    transform: scale(1.5);
+}
 </style>
 
 </head>
@@ -175,85 +171,100 @@ input[type=checkbox] {
     
     </div> 
 
-    <script>
-        // URL to your hosted Excel file
-        const xp_file = './experience.xlsx';
-        // Define a global variable to hold the JSON data
-        let globalJsonData = null;
-        
-        fetch(xp_file)
-            .then(response => {
-                if (response.ok) {
-                    return response.arrayBuffer();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(arrayBuffer => {
-                // Use SheetJS to read the buffer
-                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // Assuming your sheet is the first sheet in the workbook
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                
-                // Convert the sheet to JSON
-                const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                globalJsonData = json;
-
-                handleProcessButtonClick();
-
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
-
-
-            
-    </script>
-
-<h1>Phantasy Star Online Experience to Level</h1>
+<h1>Phantasy Star Rare Enemy Piping Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p style="text-align: center;">Experience required to level and cumulative experience.</p>
-    <div class="center-container">
-        <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+<p>Simulates how many pipes it would take to get a set number of rare drops from a rare enemy by doing the piping strategy.</p>
+<div class="center-container">
+    <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
-        <!-- Container for the label and input field -->
-        <div class="input-container">
-        </div>
-        
-        <!-- Button that will trigger processData when clicked -->
-        <button id="process-btn">Display</button>
+    <div>
+        <label for="numTrials">Number of Trials:</label>
+        <input type="number" id="numTrials" value="100" min="1" max="100000">
     </div>
-    <br><br>
-    <div class="data-table"  id="data-table"></div>
-    
+<div>
+    <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
+    <input type="number" id="lilyThreshold" value="7" min="0" max="50">
+</div>
+<div>
+    <label for="originalLilies">Original Number of Enemy in Wave:</label>
+    <input type="number" id="originalLilies" value="9" min="1" max="50">
+</div>
+<div>
+    <label for="narLilyChance">Rare Enemy Probability:</label>
+    <input type="number" id="narLilyChance" value=".002" min="0.00001" max="1">
+</div>
+<div>
+    <label for="rareDropChance">Desired Drop from Rare Enemy Probability:</label>
+    <input type="number" id="rareDropChance" value=".875" min="0" max="1">
+</div>
+<div>
+    <label for="dropsDesired">Desired # of Rare Drops:</label>
+    <input type="number" id="dropsDesired" value="1" min="0" max="30">
+</div>
+
+
+<button onclick="runSimulation()">Run Simulation</button>
+<br><br>
+<div>
+    <label for="binSize">Histogram Bin Size:</label>
+    <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
+</div>
+
+
+
+<canvas id="wavesHistogram"></canvas>
+
+
+
 
     <script>
-function OnValueChanged(){
-            
-            // const autoupdate = document.getElementById('auto-update-box').checked;
 
-            // if (autoupdate){
-            //     handleProcessButtonClick()
-            // }
-        }
+    let trialData;
+    runSimulation();
 
-        // ... (Include the loadExcelFile and processData functions here)
+    function runSimulation() {
 
-        // Function that handles the button click
-        function handleProcessButtonClick() {
-            // Get the value from the input field
+        /*NUM_TRIALS = 1000,LILY_THRESHOLD = 7, 
+        ORIGINAL_LILIES = 9, LILIES_AFTER_RESET = 9, DESIRED_DROPS = 4,
+    p_nar_lily = 1/500, p_god_hp = 7/8,*/
+        const LILY_THRESHOLD_ = parseInt(document.getElementById('lilyThreshold').value);
+        const NUM_TRIALS_ = parseInt(document.getElementById('numTrials').value);
+        const ORIGINAL_LILIES_ = parseInt(document.getElementById('originalLilies').value);
+        const DESIRED_DROPS_ = parseInt(document.getElementById('dropsDesired').value);
+        const P_NAR_LILY_ = parseFloat(document.getElementById('narLilyChance').value);
+        const P_RARE_DROP_ = parseFloat(document.getElementById('rareDropChance').value);
+        const bin_size_ = parseInt(document.getElementById('binSize').value);
+        
 
-            processData(globalJsonData);
-        }
 
-        // Add event listener to the button
-        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
-    
-        // handleProcessButtonClick();
+
+    trialData = runMultipleTrials(NUM_TRIALS=NUM_TRIALS_, 
+    LILY_THRESHOLD=LILY_THRESHOLD_, ORIGINAL_LILIES=ORIGINAL_LILIES_,
+    LILIES_AFTER_RESET=ORIGINAL_LILIES_, DESIRED_DROPS = DESIRED_DROPS_,
+    p_nar_lily = P_NAR_LILY_, p_god_hp = P_RARE_DROP_
+
+    );
+        let numWavesArray = trialData.map(trial => trial['Num Waves']);
+
+
+        
+        createHistogram(numWavesArray, binsize=bin_size_);
+    }
+
+
+        function OnValueChanged(){
+        const bin_size_ = parseInt(document.getElementById('binSize').value);
+        // const autoupdate = document.getElementById('auto-update-box').checked;
+        let numWavesArray = trialData.map(trial => trial['Num Waves']);
+        createHistogram(numWavesArray, binsize=bin_size_);
+    }
+
+
     </script>
+
 <div class="bottom" style="text-align: center;">
-    <h3><a href="./../pso.html">PSO Modules</a> </h3>            
+    <h3><a href="./../pso.html">PSO Modules</a> </h3>      
     <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
     <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
     <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
@@ -264,17 +275,12 @@ function OnValueChanged(){
     <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
     <a href="./experience-to-level">Experience to Level Table</a><br><br>
     <a href="./rare-enemy-telepiping.html">Rare Enemy Telepiping</a><br><br>
-
 </div>
+
 <h3>References</h3>
 <p style="text-align: center;">
-    Data processing was in part using code by qwerty on <a href="https://www.pioneer2.net/community/threads/default-player-level-tables.445/" rel="external">Ephinea</a>
+    Special data and formula taken from <a href="https://wiki.pioneer2.net/w/Weapons#Special_Attacks" rel="external">Ephinea</a>
 
-    <br><br>
-
-    Parsing data and file help from <a href="https://www.youtube.com/@akdylie">AKDylie</a>.
-
-  </p>
     <script>
         var coll = document.getElementsByClassName("collapsible");
         var i;

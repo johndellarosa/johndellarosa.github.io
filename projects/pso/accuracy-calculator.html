@@ -80,7 +80,10 @@
         width: 95%; /* Set the width of the table to be 95% of its container */
     margin: 20px auto; /* Center the table horizontally */
     border-collapse: collapse; /* Collapses the borders of the table */
+    
     }
+
+
 
     th, td {
         border: 1px solid #ddd; /* Adds a border to table headers and cells */
@@ -146,6 +149,13 @@ input[type=checkbox] {
 
 
 }
+
+thead tr th {
+    align-self: flex-start;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    }
 
 </style>
 
@@ -367,6 +377,7 @@ function OnValueChanged(){
     <a href="./enemy-stats">Enemy Stats Table</a><br><br>
     <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
     <a href="./experience-to-level">Experience to Level Table</a><br><br>
+    <a href="./rare-enemy-telepiping.html">Rare Enemy Telepiping</a><br><br>
 </div>
 
 <h3>References</h3>
