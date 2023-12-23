@@ -115,6 +115,9 @@ function createHistogram(data,binSize) {
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false, // This will allow the chart to fill the container height
+        
             scales: {
                 y: {
                     beginAtZero: true,

@@ -149,6 +149,14 @@
 input[type=checkbox] {
     transform: scale(1.5);
 }
+
+
+#chartContainer {
+    max-height: 200vh; /* Set the maximum height you want */
+    min-height: 50vh;
+    position: relative;
+}
+
 </style>
 
 </head>
@@ -180,7 +188,7 @@ input[type=checkbox] {
     
     <div>
         <label for="numTrials">Number of Trials:</label>
-        <input type="number" id="numTrials" value="100" min="1" max="100000">
+        <input type="number" id="numTrials" value="1000" min="1" max="100000">
     </div>
 <div>
     <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
@@ -212,9 +220,9 @@ input[type=checkbox] {
 </div>
 
 
-
+<div id="chartContainer">
 <canvas id="wavesHistogram"></canvas>
-
+</div>
 
 
 
