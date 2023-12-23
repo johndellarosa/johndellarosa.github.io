@@ -51,7 +51,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select, select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus, #process-btn {
+    #user-input,.input-group input, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -186,35 +186,35 @@ input[type=checkbox] {
 <div class="center-container">
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
-    <div>
+    <div class="input-group">
         <label for="numTrials">Number of Trials:</label>
         <input type="number" id="numTrials" value="1000" min="1" max="100000">
     </div>
-<div>
+<div class="input-group">
     <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
     <input type="number" id="lilyThreshold" value="7" min="0" max="50">
 </div>
-<div>
+<div class="input-group">
     <label for="originalLilies">Original Number of Enemy in Wave:</label>
     <input type="number" id="originalLilies" value="9" min="1" max="50">
 </div>
-<div>
+<div class="input-group">
     <label for="narLilyChance">Rare Enemy Probability:</label>
     <input type="number" id="narLilyChance" value=".002" min="0.00001" max="1">
 </div>
-<div>
+<div class="input-group">
     <label for="rareDropChance">Desired Drop from Rare Enemy Probability:</label>
     <input type="number" id="rareDropChance" value=".875" min="0" max="1">
 </div>
-<div>
+<div class="input-group">
     <label for="dropsDesired">Desired # of Rare Drops:</label>
     <input type="number" id="dropsDesired" value="1" min="0" max="30">
 </div>
 
 
-<button onclick="runSimulation()">Run Simulation</button>
+<button id="process-btn" onclick="runSimulation()">Run Simulation</button>
 <br><br>
-<div>
+<div class="input-group">
     <label for="binSize">Histogram Bin Size:</label>
     <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
 </div>
