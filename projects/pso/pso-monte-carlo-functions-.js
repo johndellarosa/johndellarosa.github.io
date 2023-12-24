@@ -68,7 +68,7 @@ function runMultipleTrials(NUM_TRIALS = 1000,LILY_THRESHOLD = 7, ORIGINAL_LILIES
 }
 
 
-function createHistogram(data,binSize) {
+function createHistogram(data,binSize,x_title="Waves Required",y_title="Percentage (%)") {
     // Define the bin size
     // const binSize = 10;
 
@@ -123,13 +123,13 @@ function createHistogram(data,binSize) {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Percentage (%)'
+                        text: y_title
                     }
                 },
                 x: {
                     title: {
                         display: true,
-                        text: 'Waves Required'
+                        text: x_title
                     }
                 }
             },
@@ -159,7 +159,7 @@ function prepareCdfData(data) {
     return cdfData;
 }
 
-function createCdfChart(data) {
+function createCdfChart(data, x_title='Waves Required',y_title='Probability') {
     const ctx = document.getElementById('cdfChart').getContext('2d');
 
     // Destroy previous chart if it exists
@@ -189,16 +189,54 @@ function createCdfChart(data) {
                     position: 'bottom',
                     title: {
                         display: true,
-                        text: 'Waves Required'
+                        text: x_title
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Probability'
+                        text: y_title
                     }
                 }
             }
         }
     });
 }
+
+
+// function simulateTrialRareDrop(DESIRED_DROPS = 1, p_drop = .01) {
+// let num_drops = 0;
+// let enemies_seen = 0;
+
+
+
+
+// while (num_drops < DESIRED_DROPS) {
+// waves++; // increase # of waves
+// enemies_seen += lilies_in_wave; // increase # of lilies seen
+// let nar_lilies = binomial(lilies_in_wave, p_nar_lily); // calculate # of nar lilies in wave
+// nar_lilies_killed += nar_lilies;
+// timer += time_to_kill_lily * nar_lilies; // killing nar lily takes time
+
+// let num_god_hp_drops_this_wave = nar_lilies ? binomial(nar_lilies, p_god_hp) : 0;
+// num_drops += num_god_hp_drops_this_wave;
+
+// lilies_in_wave -= nar_lilies; // killing nar lily reduces number in subsequent waves
+
+// if (num_drops < DESIRED_DROPS) {
+// if (lilies_in_wave <= LILY_THRESHOLD) {
+// // reset quest
+// timer += time_for_to_get_to_spot; // technically should be a bit longer since it takes time to quit
+// lilies_in_wave = LILIES_AFTER_RESET;
+// mission_resets++;
+// } else {
+// // continue piping
+// timer += time_per_pipe;
+// }
+// }
+// }
+
+// return [waves, timer, enemies_seen, nar_lilies_killed, mission_resets];
+// }
+
+

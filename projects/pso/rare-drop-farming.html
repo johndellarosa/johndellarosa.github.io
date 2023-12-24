@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Rare Enemy Piping Simulation</title>
+        <title>PSO Rare Drop Farming Simulation</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, rare enemy, telepipe">
+    <meta name="keywords" content="PSO, Phantasy Star Online, rare drop">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online Rare Enemy Telepiping Simulation">
+    <meta name="description" content="Phantasy Star Online Rare Drop Farming Simulation">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/rare-enemy-telepiping">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/rare-drop-farming">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -40,7 +40,8 @@
   <script type="text/javascript" src="./pso-functions.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="text/javascript" src="./pso-monte-carlo-functions-.js"></script>
-
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-base-randu@umd/browser.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-dists-negative-binomial-quantile@umd/browser.js"></script>
   <style>
     body {
         font-family: Arial, sans-serif; /* Use a nice font */
@@ -152,10 +153,17 @@ input[type=checkbox] {
 }
 
 
+#chartContainer {
+    max-height: 200vh; /* Set the maximum height you want */
+    min-height: 50vh;
+    position: relative;
+}
+
 #histogramContainer {
     max-height: 50vh; /* Set the maximum height you want */
     min-height: 40vh;
     position: relative;
+    text-align: center; /* Centers header text */
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
@@ -164,6 +172,8 @@ input[type=checkbox] {
     max-height: 50vh; /* Set the maximum height you want */
     min-height: 20vh;
     position: relative;
+    text-align: center; /* Centers header text */
+    margin: auto;
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
@@ -192,9 +202,9 @@ input[type=checkbox] {
     </div> 
 
 
-<h1>Phantasy Star Online Rare Enemy Piping Simulation</h1>
+<h1>PSO Rare Drop Farming Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p>Simulates how many pipes it would take to get a set number of rare drops from a rare enemy by doing the piping strategy.</p>
+<p>Simulates trials for how many enemy kills it would take in order to get a given number of a given drop. If the drops are independent between enemies, this should follow a Negative Binomial Distribution.</p>
 <div class="center-container">
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
@@ -203,23 +213,11 @@ input[type=checkbox] {
         <input type="number" id="numTrials" value="1000" min="1" max="100000">
     </div>
 <div class="input-group">
-    <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
-    <input type="number" id="lilyThreshold" value="7" min="0" max="50">
+    <label for="rareDropChance">Drop Rate:</label>
+    <input type="number" id="rareDropChance" value="0.01" min="0" max="1" style="width: 5em;">
 </div>
 <div class="input-group">
-    <label for="originalLilies">Original Number of Enemy in Wave:</label>
-    <input type="number" id="originalLilies" value="9" min="1" max="50">
-</div>
-<div class="input-group">
-    <label for="narLilyChance">Rare Enemy Probability:</label>
-    <input type="number" id="narLilyChance" value=".002" min="0.00001" max="1">
-</div>
-<div class="input-group">
-    <label for="rareDropChance">Drop Rate from Rare:</label>
-    <input type="number" id="rareDropChance" value="0.875" min="0" max="1" style="width: 5em;">
-</div>
-<div class="input-group">
-    <label for="dropsDesired">Desired # of Rare Drops:</label>
+    <label for="dropsDesired">Desired # of Drops:</label>
     <input type="number" id="dropsDesired" value="1" min="0" max="30">
 </div>
 
@@ -241,6 +239,25 @@ input[type=checkbox] {
     <script>
 
     let trialData;
+
+    function runMultipleTrialsRareDrop(NUM_TRIALS = 1000, DESIRED_DROPS = 1, P_RARE_DROP =0.01) {
+    let results = [];
+    var dist = new quantile(DESIRED_DROPS, P_RARE_DROP );
+
+
+    for (let i = 0; i < NUM_TRIALS; i++) {
+        let percentile = Math.random();
+
+        results.push({
+            'Num Waves': quantile(percentile, DESIRED_DROPS, P_RARE_DROP)+1
+        });
+    }
+
+    return results;
+}
+
+
+
     runSimulation();
 
     function runSimulation() {
@@ -248,29 +265,26 @@ input[type=checkbox] {
         /*NUM_TRIALS = 1000,LILY_THRESHOLD = 7, 
         ORIGINAL_LILIES = 9, LILIES_AFTER_RESET = 9, DESIRED_DROPS = 4,
     p_nar_lily = 1/500, p_god_hp = 7/8,*/
-        const LILY_THRESHOLD_ = parseInt(document.getElementById('lilyThreshold').value);
+
         const NUM_TRIALS_ = parseInt(document.getElementById('numTrials').value);
-        const ORIGINAL_LILIES_ = parseInt(document.getElementById('originalLilies').value);
+        
         const DESIRED_DROPS_ = parseInt(document.getElementById('dropsDesired').value);
-        const P_NAR_LILY_ = parseFloat(document.getElementById('narLilyChance').value);
+  
         const P_RARE_DROP_ = parseFloat(document.getElementById('rareDropChance').value);
         const bin_size_ = parseInt(document.getElementById('binSize').value);
         
 
 
 
-    trialData = runMultipleTrials(NUM_TRIALS=NUM_TRIALS_, 
-    LILY_THRESHOLD=LILY_THRESHOLD_, ORIGINAL_LILIES=ORIGINAL_LILIES_,
-    LILIES_AFTER_RESET=ORIGINAL_LILIES_, DESIRED_DROPS = DESIRED_DROPS_,
-    p_nar_lily = P_NAR_LILY_, p_god_hp = P_RARE_DROP_
-
+    trialData = runMultipleTrialsRareDrop(NUM_TRIALS=NUM_TRIALS_, 
+    DESIRED_DROPS = DESIRED_DROPS_, P_RARE_DROP=P_RARE_DROP_
     );
         let numWavesArray = trialData.map(trial => trial['Num Waves']);
         let cdfData = prepareCdfData(numWavesArray);
 
         
-        createHistogram(numWavesArray, binsize=bin_size_);
-        createCdfChart(cdfData,x_title="Number of Waves");
+        createHistogram(numWavesArray, binsize=bin_size_,x_title="Enemies Required");
+        createCdfChart(cdfData,x_title="Enemies Required");
     }
 
 
@@ -300,7 +314,7 @@ input[type=checkbox] {
 
 <h3>References</h3>
 <p style="text-align: center;">
-    Default probabilities taken from <a href="https://wiki.pioneer2.net/w/Nar_Lily" rel="external">Ephinea</a>
+    Code uses this <a href="https://github.com/stdlib-js/stats-base-dists-negative-binomial-quantile" rel="external">library</a>
 
     <script>
         var coll = document.getElementsByClassName("collapsible");
