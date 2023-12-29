@@ -230,7 +230,7 @@ input[type=checkbox] {
             const selectedPlayerLevel = parseInt(document.getElementById('playerLevel').value);
 
             if (selectedPlayerLevel <= 0){
-                document.getElementById('playerLevel').value = 0;
+                document.getElementById('playerLevel').value = 1;
                 selectedPlayerLevel = 1;
             }
             else if (selectedPlayerLevel > 200){
@@ -354,6 +354,27 @@ input[type=checkbox] {
         // Add event listener to the button
         document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
     </script> -->
+
+    <br>
+    <h2>Pre-Level 11 Shop Appearance Probabilities</h2>
+<p>Before level 11, the probability of seeing a given tech in the shop for a given visit is:</p>
+<ul>
+    <li>~69.13% for Foie, Barta, Zonde, Resta, Anti</li>
+    <li>~16.2% for Deband, Jellen</li>
+    <li>~11.0% for Shifta, Zalure</li>
+</ul>
+<h2>Levels 11-25 Shop Probabilities</h2>
+<p>The probability of seeing a given tech in the shop for a given visit is:</p>
+<ul>
+    <li>~34.6% for Foie, Barta, Zonde, Resta, Anti, Zalure</li>
+    <li>~38.6% for Gifoie, Gizonde, Gibarta</li>
+    <li>~11.1% for Rafoie, Razonde, Rabarta</li>
+    <li>~30.4% for Shifta, Deband, Jellen</li>
+    <li>~26.0% for Ryuker, Reverser</li>
+</ul>
+
+
+
     <div class="bottom" style="text-align: center;">
         <h3><a href="./../pso.html">PSO Modules</a> </h3>         
 
