@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <title>PSO Tool Shop Technique Probabilities</title>
+
+    <!-- Meta tags -->
+    
+    <meta name="keywords" content="PSO, Phantasy Star Online, tool shop, technique, probability">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="Phantasy Star Online tool shop technique probabilities">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/shop-tech-probabilities">     
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="./pso-functions.js"></script>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif; /* Use a nice font */
+    }
+
+    .center-container {
+        text-align: center; /* Center-aligns the content */
+        margin-top: 30px; /* Adds some space at the top */
+    }
+
+    #user-input, #process-btn,#difficulty-select {
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+    }
+
+    #process-btn {
+        cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+    }
+
+    #process-btn:hover {
+        background-color: #0056b3; /* Darkens the button when hovered */
+    }
+
+    #data-table {
+        margin-top: 20px; /* Adds some space between the button and the table */
+        text-align: left; /* Aligns the table content to the left */
+        width: 100%; /* Makes the table take up the full width */
+    }
+
+    table {
+        width: 95%; /* Set the width of the table to be 95% of its container */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapses the borders of the table */
+    }
+
+    thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* Adds a border to table headers and cells */
+        text-align: center; /* Centers header text */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    th {
+        background-color: #e0e0e0; /* Sets a background color for headers */
+        text-align: center; /* Centers header text */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+    .input-container {
+            margin: 0 auto; /* Centers the container */
+            width: fit-content; /* Ensures the container only takes up as much width as needed */
+            padding: 10px; /* Adds some padding around the container */
+        }
+
+        label {
+            margin-right: 10px; /* Adds some space between the label and the input field */
+        }
+
+        th, td {
+    min-width: 25px;
+}
+
+#data-table {
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+
+
+}
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
+
+</style>
+
+</head>
+<body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="https://johndellarosa.github.io/index.html">Home</a>|
+        <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+        <!-- <a href="./index.html#education">Education</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#skills">Skills</a> -->
+        |
+        <a href="https://johndellarosa.github.io/biography.html">About</a>|
+        <a href="https://johndellarosa.github.io/projects.html"><u>Projects</u></a>|
+        <a href="https://johndellarosa.github.io/miscellaneous.html">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div> 
+
+    <script>
+        // URL to your hosted Excel file
+        const enemy_file = './tech_shop_tables.xlsx';
+        // Define a global variable to hold the JSON data
+        let globalJsonData = null;
+        
+        fetch(enemy_file)
+            .then(response => {
+                if (response.ok) {
+                    return response.arrayBuffer();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(arrayBuffer => {
+                // Use SheetJS to read the buffer
+                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+
+                // // Assuming your sheet is the first sheet in the workbook
+                // const firstSheetName = workbook.SheetNames[0];
+                // const worksheet = workbook.Sheets[firstSheetName];
+
+                // // Convert the sheet to JSON
+                // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                // globalJsonData = json;
+
+                const allSheetsData = {};
+                // Loop over sheet names and convert each sheet to JSON
+                workbook.SheetNames.forEach(sheetName => {
+                    const worksheet = workbook.Sheets[sheetName];
+                    allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+                });
+
+                // Now allSheetsData contains each sheet's data as a key-value pair
+                globalEnemyData = allSheetsData;
+
+
+                handleProcessButtonClick();
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    </script>
+
+<h1>Phantasy Star Online Technique Shop Data</h1>
+<h3><a href="./../pso">Return to Menu</a></h3>
+<p>Values are quoted in terms of weight used for calculations, commonly interpreted as a percent. However, this is more accurately stated to be the probability of appearing in the first tech spot in the shop. The probability of it appearing in the shop is a more complicated calculation.</p>
+
+
+<div class="center-container">
+    <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
+
+    <!-- Container for the label and input field -->
+    <div class="input-container">
+        <div class="input-group">
+            <label for="playerLevel">Player Level:</label>
+            <input type="number" id="playerLevel" value="5" min="1" max="200" onblur="handleProcessButtonClick()">
+        </div>
+    </div>
+    
+    <!-- Button that will trigger processData when clicked -->
+    <button id="process-btn">Display</button>
+</div>
+    <br>
+
+    <div class="data-table"  id="data-table"></div>
+    
+
+    <script>
+        // ... (Include the loadExcelFile and processData functions here)
+
+        // Function that handles the button click
+        function handleProcessButtonClick() {
+
+                        // Get the selected tech value
+            const selectedPlayerLevel = parseInt(document.getElementById('playerLevel').value);
+            console.log(selectedPlayerLevel);
+
+            const tableIndex = GetToolTable(selectedPlayerLevel);
+            // console.
+            let my_table = globalEnemyData[tableIndex];
+
+            // console.log(my_table);
+
+            let techLevelDistributions = {};
+            let diskProbs = {};
+            // const playerLevel = 27;
+            // const tableIndex = globalEnemyData(playerLevel); // Assuming getToolTable is defined elsewhere
+
+            my_table.forEach((row, i) => {
+                // console.log(`foreach i: ${i}`);
+                // console.log(`foreach i: ${row['Name']}`);
+                // console.log("Row content:", JSON.stringify(row, null, 2));
+                if (row['Type'] === "0") {
+                    techLevelDistributions[row['Name']] = {0: 1};
+                } else if (row['Type'] === "1") {
+                    // console.log(playerLevel);
+                    const clippedLevel = Math.min(99, selectedPlayerLevel);
+                    // console.log(`clipped level: ${clippedLevel}`);
+                    // console.log(typeof(clippedLevel));
+                    const new_val = Math.floor(clippedLevel / parseInt(row['Min'])) - 1;
+                    // console.log(new_val);
+                    const new_key = clamp(new_val, 0, 14);
+                    // console.log(new_key);
+                    techLevelDistributions[row['Name']] = { [clamp(Math.floor(clippedLevel / parseInt(row['Min'])) - 1, 0, 14)]: 1 };
+                } else if (row['Type'] === "2") {
+                    const minLevel = Math.max(row['Min'] - 1, 0);
+                    let baseUniformProbs = {};
+                    for (let j = 0; j < row['Max']; j++) {
+                        baseUniformProbs[j] = 1;
+                    }
+                    let probs = {};
+                    for (let j = minLevel; j <= row['Max']; j++) {
+                        probs[j] = 1;
+                    }
+                    for (let j = 0; j < minLevel; j++) {
+                        probs[minLevel] += 1;
+                    }
+                    let denom = Object.values(probs).reduce((a, b) => a + b, 0);
+
+                    // Uncomment to log probabilities and denominator
+                    // console.log(probs);
+                    // console.log(denom);
+
+                    Object.keys(probs).forEach(j => {
+                        probs[j] /= denom;
+                    });
+                    // console.log(`probs ${row['Name']} is ${probs}`);
+                    // Uncomment to log adjusted probabilities
+                    // console.log(probs);
+
+                    techLevelDistributions[row['Name']] = probs;
+                }
+                // Object.keys(techLevelDistributions[i]).forEach(level => {
+                //     diskProbs[`${i} ${parseInt(level) + 1}`] = row['Tech Prob'] * techLevelDistributions[i][level];
+                // });
+                // console.log("techLevelDistributions:", techLevelDistributions);
+                if (techLevelDistributions[row['Name']]) {
+                    // console.log("Processing i =", row['Name'], "techLevelDistributions[i]:", techLevelDistributions[row['Name']]);
+                    Object.keys(techLevelDistributions[row['Name']]).forEach(level => {
+                        diskProbs[`${row['Name']} ${parseInt(level) + 1}`] = row['Tech Prob'] * techLevelDistributions[row['Name']][level];
+                    });
+                } else {
+                    // console.log("techLevelDistributions[i] is undefined or null for i =", row['Name']);
+                }
+            });
+
+            // console.log('Disk Probs:');
+            // console.log(diskProbs);
+            const diskProbsTable = createTableFromObject(diskProbs);
+
+            // Get the container
+            const container = document.getElementById('data-table');
+
+            // Clear existing content
+            container.innerHTML = '';
+
+            // Append the new table to the container
+            container.appendChild(diskProbsTable);
+        }
+
+        // Add event listener to the button
+        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
+    </script>
+
+
+    <!-- <script>
+        // ... (Include the loadExcelFile and processData functions here)
+
+        // Function that handles the button click
+        function handleProcessButtonClick() {
+            // Get the value from the input field
+            const userInput = document.getElementById('user-input').value;
+
+            // Validate or transform the input value if necessary
+            // For example, convert the input value to a number
+            const processedInput = parseFloat(userInput);
+
+            // If the input value is not a number, display an error message
+            if (isNaN(processedInput)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+            let hitmatrix = generateMatrix(globalJsonData,processedInput);
+
+            processData(hitmatrix);
+        }
+
+        // Add event listener to the button
+        document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
+    </script> -->
+    <div class="bottom" style="text-align: center;">
+        <h3><a href="./../pso.html">PSO Modules</a> </h3>         
+
+    </div>
+
+    <h3>References</h3>
+    <p style="text-align: center;">
+
+        Parsing data and file help done in collaboration with <a href="https://www.youtube.com/@akdylie">AKDylie</a>.<br>
+
+
+        Data and formula taken from <a href="https://github.com/fuzziqersoftware/newserv/tree/master" rel="external">Newserv</a>
+    
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
+</body>
+</html>

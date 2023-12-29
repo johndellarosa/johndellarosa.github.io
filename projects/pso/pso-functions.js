@@ -743,3 +743,66 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
     // Return the resulting array of tech damage objects.
     return output_df;
   }
+
+  function GetToolTable(player_level){
+    if (player_level < 11){
+      return 0;
+    }
+    else if (player_level < 26){
+      return 1;
+    }
+    else if (player_level < 43){
+      return 2;
+    }
+    else if (player_level < 61){
+      return 3;
+    }
+    return 4;
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function createTableFromObject(data) {
+  // Create table elements
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
+
+  // Create the header row
+  const headerRow = document.createElement('tr');
+  const th1 = document.createElement('th');
+  th1.textContent = 'Disk';
+  const th2 = document.createElement('th');
+  th2.textContent = 'Probability (%)';
+  headerRow.appendChild(th1);
+  headerRow.appendChild(th2);
+  thead.appendChild(headerRow);
+
+  // Add the header to the table
+  table.appendChild(thead);
+
+  // Create and append rows to the table body
+  Object.entries(data).forEach(([key, value]) => {
+    if (value === 0) {
+      return;
+  }
+
+      const row = document.createElement('tr');
+      const cell1 = document.createElement('td');
+      cell1.textContent = key;
+      const cell2 = document.createElement('td');
+
+      cell2.textContent = parseFloat(value).toFixed(2);
+      row.appendChild(cell1);
+      row.appendChild(cell2);
+      tbody.appendChild(row);
+  });
+
+  // Add the body to the table
+  table.appendChild(tbody);
+
+  // Return the complete table
+  return table;
+}
