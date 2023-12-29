@@ -228,6 +228,16 @@ input[type=checkbox] {
 
                         // Get the selected tech value
             const selectedPlayerLevel = parseInt(document.getElementById('playerLevel').value);
+
+            if (selectedPlayerLevel <= 0){
+                document.getElementById('playerLevel').value = 0;
+                selectedPlayerLevel = 1;
+            }
+            else if (selectedPlayerLevel > 200){
+                document.getElementById('playerLevel').value = 200;
+                selectedPlayerLevel = 200;
+            }
+
             console.log(selectedPlayerLevel);
 
             const tableIndex = GetToolTable(selectedPlayerLevel);
