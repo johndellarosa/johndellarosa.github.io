@@ -670,7 +670,7 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
     enemy_stats.forEach((row)=>{
         // console.log(row.Enemy);
         let enemy_resist = row[resistance_key] || 0; // Default to 0 if not defined
-        let enemyEVP = row['EVP'];
+        let enemyEVP = parseInt(row['EVP']);
         
         // console.log(enemy_resist);
         let rowData = { 'Enemy': row['Enemy'] }; // Add the 'Enemy' as the first entry
@@ -684,6 +684,8 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
                   // Use the accuracy function to calculate and assign the value to the accData object
                   let key = `${lvl} S${comboStep} Kill`;
                   let kill_chance = activation_rate*accuracy(ATA, 'S', comboStep, enemyEVP)/100;
+                  console.log(`kill chance: ${kill_chance}`);
+                  console.log(typeof(kill_chance));
                   kill_chance = Math.max(Math.round(kill_chance * 10) / 10,0);
                   rowData[key] = `${kill_chance}%`;
                 })
@@ -760,9 +762,9 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
     return 4;
   }
 
-  function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-}
+//   function clamp(value, min, max) {
+//     return Math.max(min, Math.min(max, value));
+// }
 
 function createTableFromObject(data) {
   // Create table elements
