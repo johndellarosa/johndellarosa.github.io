@@ -11,7 +11,7 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>Phantasy Star Online Redria Name Generator</title>
+        <title>Phantasy Star Online Name Generator</title>
 
     <!-- Meta tags -->
     <meta name="robots" content="noindex">
@@ -20,7 +20,7 @@
     <meta name="description" content="Phantasy Star Online Section ID Calculator Blue Burst and Console (Gamecube, Dreamcast, Xbox)">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/redria-name">   
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/name-generator">   
     <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
@@ -152,7 +152,7 @@
 
 
     <div class="app">
-<h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Redria Name Generator</h1>
+<h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Section ID Name Generator</h1>
 <h3><a href="./../pso.html">Return to Menu</a></h3>
 <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     <!-- <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button>
@@ -172,6 +172,21 @@
         <option value="FOnewearl"> FOnewearl </option>
         </select>
       <br> -->
+      <label for="desiredID">Desired Section ID</label>
+      <select id = "desiredID" class="dropdown" onchange = "handleCalculateButtonClick()" >
+        <option value="0"> Viridia </option>
+        <option value="1"> Greenill </option>
+        <option value="2"> Skyly </option>
+        <option value="3"> Bluefull </option>
+        <option value="4"> Purplenum </option>
+        <option value="5"> Pinkal </option>
+        <option value="6"> Redria </option>
+        <option value="7"> Oran </option>
+        <option value="8"> Yellowboze </option>
+        <option value="9"> Whitll </option>
+
+        </select>
+
       <label for="number-words-select"># Words</label>
       <select id="number-words-select" onchange="handleCalculateButtonClick()">
       
@@ -244,7 +259,7 @@
                 return string.charAt(0).toUpperCase() + string.slice(1);
           }
 
-        function isValidRedria(test_name){
+        function isTargetID(test_name,targetID){
           if (test_name.length > 12){return false;}
 
           var sum = 0;
@@ -258,15 +273,15 @@
           if (lastDigit == '3'){
             // console.log(test_name);
           }
-          return lastDigit == '6';
+          return lastDigit == targetID;
         }
 
-        function generate_name_bruteforce(number_words=2){
+        function generate_name_bruteforce(number_words=2,targetID='0'){
           raw_name = capitalizeFirstLetter(generate({ exactly: 1, wordsPerString: number_words })[0]);
 
-          while (!isValidRedria(raw_name)){
+          while (!isTargetID(raw_name,targetID)){
             modified_name = raw_name + "!";
-            if (isValidRedria(modified_name)){
+            if (isTargetID(modified_name,targetID)){
               // console.log('Found exclamation');
               raw_name = modified_name;
               return modified_name;
@@ -274,7 +289,7 @@
 
             }
             modified_name = raw_name + "!!";
-            if (isValidRedria(modified_name)){
+            if (isTargetID(modified_name,targetID)){
               // console.log('Found exclamation');
               raw_name = modified_name;
               return modified_name;
@@ -282,7 +297,7 @@
 
             }
             modified_name = raw_name + " :)";
-            if (isValidRedria(modified_name)){
+            if (isTargetID(modified_name,targetID)){
               // console.log('Found exclamation');
               raw_name = modified_name;
               return modified_name;
@@ -396,9 +411,11 @@
             // console.log(num_words);
             // console.log(typeof(num_words));
 
+            const wantedID = document.getElementById('desiredID').value;
+
             let namesList = [];
             for (let i=0;i < 20; i++){
-              let name = generate_name_bruteforce(number_words=num_words);
+              let name = generate_name_bruteforce(number_words=num_words,targetID=wantedID);
               namesList.push(name);
             }
             
