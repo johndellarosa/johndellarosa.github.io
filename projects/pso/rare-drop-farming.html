@@ -205,8 +205,8 @@ input[type=checkbox] {
 <h1>PSO Rare Drop Farming Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
 <p>Simulates trials for how many enemy kills it would take in order to get a given number of a given drop. If the drops are independent between enemies, this should follow a Negative Binomial Distribution.</p>
-<br><br>
-<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials that required fewer than a given number of kills.</p><br><br>
+<br>
+<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials that required fewer than a given number of kills.</p><br>
 <p>For example, find the x-value for the pointer corresponding to y=0.25. 25% of the time, you would finish in fewer kills than whatever that x-value is.</p>
 <div class="center-container">
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
@@ -244,7 +244,13 @@ input[type=checkbox] {
     let trialData;
 
     function runMultipleTrialsRareDrop(NUM_TRIALS = 1000, DESIRED_DROPS = 1, P_RARE_DROP =0.01) {
-    let results = [];
+    
+    if (P_RARE_DROP == 0 || P_RARE_DROP == 1){
+        alert("Please set probability to value between 0 and 1 (non-inclusive)!");
+        return;
+    }
+    else{
+        let results = [];
     var dist = new quantile(DESIRED_DROPS, P_RARE_DROP );
 
 
@@ -257,6 +263,8 @@ input[type=checkbox] {
     }
 
     return results;
+    }
+
 }
 
 
@@ -293,6 +301,9 @@ input[type=checkbox] {
 
         function OnValueChanged(){
         const bin_size_ = parseInt(document.getElementById('binSize').value);
+
+            
+
         // const autoupdate = document.getElementById('auto-update-box').checked;
         let numWavesArray = trialData.map(trial => trial['Num Waves']);
         createHistogram(numWavesArray, binsize=bin_size_);

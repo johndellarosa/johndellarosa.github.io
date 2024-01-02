@@ -49,6 +49,11 @@ return count;
 function runMultipleTrials(NUM_TRIALS = 1000,LILY_THRESHOLD = 7, ORIGINAL_LILIES = 9, LILIES_AFTER_RESET = 9, DESIRED_DROPS = 4,
     p_nar_lily = 1/500, p_god_hp = 7/8,
     time_per_pipe = 0.35, time_for_to_get_to_spot = 15, time_to_kill_lily = 0.25) {
+
+    if (p_god_hp == 0){
+        alert("Please set probability to non-zero value!");
+        return;
+    }
     let results = [];
 
     for (let i = 0; i < NUM_TRIALS; i++) {
