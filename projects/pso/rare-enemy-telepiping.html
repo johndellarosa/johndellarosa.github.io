@@ -205,7 +205,7 @@ input[type=checkbox] {
     
     <div class="input-group">
         <label for="numTrials">Number of Trials:</label>
-        <input type="number" id="numTrials" value="1000" min="1" max="100000">
+        <input type="number" id="numTrials" value="1000" min="1" step="100" max="100000">
     </div>
 <div class="input-group">
     <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
@@ -217,15 +217,15 @@ input[type=checkbox] {
 </div>
 <div class="input-group">
     <label for="narLilyChance">Rare Enemy Probability:</label>
-    <input type="number" id="narLilyChance" value=".002" min="0.00001" max="1">
+    <input type="number" id="narLilyChance" value=".002" min="0.00001" step=".001" max="1">
 </div>
 <div class="input-group">
     <label for="rareDropChance">Drop Rate from Rare:</label>
-    <input type="number" id="rareDropChance" value="0.875" min="0" max="1" style="width: 5em;">
+    <input type="number" id="rareDropChance" value="0.875" min="0" max="1" step=".01" style="width: 5em;">
 </div>
 <div class="input-group">
     <label for="dropsDesired">Desired # of Rare Drops:</label>
-    <input type="number" id="dropsDesired" value="1" min="0" max="30">
+    <input type="number" id="dropsDesired" value="1" min="0" max="100">
 </div>
 
 
