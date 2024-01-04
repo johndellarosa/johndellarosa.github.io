@@ -1,6 +1,7 @@
-function clamp(value,maxNum=100, minNum=0) {
+function clamp(value, minNum=0,maxNum=100) {
   // First, ensure the value is not less than 0
   // Then, ensure the value is not more than 100
+
   return Math.min(maxNum, Math.max(minNum, value));
 }
 

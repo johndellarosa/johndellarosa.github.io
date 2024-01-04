@@ -254,7 +254,7 @@ input[type=checkbox] {
             my_table.forEach((row, i) => {
                 // console.log(`foreach i: ${i}`);
                 // console.log(`foreach i: ${row['Name']}`);
-                // console.log("Row content:", JSON.stringify(row, null, 2));
+                console.log("Row content:", JSON.stringify(row, null, 2));
                 if (row['Type'] === "0") {
                     techLevelDistributions[row['Name']] = {0: 1};
                 } else if (row['Type'] === "1") {
@@ -263,10 +263,12 @@ input[type=checkbox] {
                     // console.log(`clipped level: ${clippedLevel}`);
                     // console.log(typeof(clippedLevel));
                     const new_val = Math.floor(clippedLevel / parseInt(row['Min'])) - 1;
-                    // console.log(new_val);
-                    const new_key = clamp(new_val, 0, 14);
-                    // console.log(new_key);
-                    techLevelDistributions[row['Name']] = { [clamp(Math.floor(clippedLevel / parseInt(row['Min'])) - 1, 0, 14)]: 1 };
+                    console.log(`new_val for ${row['Name']}`);
+                    console.log(new_val);
+                    const new_key = clamp(new_val,0,14);
+                    console.log(typeof(new_key));
+                    console.log(new_key);
+                    techLevelDistributions[row['Name']] = { [new_key]: 1 };
                 } else if (row['Type'] === "2") {
                     const minLevel = Math.max(row['Min'] - 1, 0);
                     let baseUniformProbs = {};
@@ -299,6 +301,7 @@ input[type=checkbox] {
                 //     diskProbs[`${i} ${parseInt(level) + 1}`] = row['Tech Prob'] * techLevelDistributions[i][level];
                 // });
                 // console.log("techLevelDistributions:", techLevelDistributions);
+
                 if (techLevelDistributions[row['Name']]) {
                     // console.log("Processing i =", row['Name'], "techLevelDistributions[i]:", techLevelDistributions[row['Name']]);
                     Object.keys(techLevelDistributions[row['Name']]).forEach(level => {
@@ -308,7 +311,7 @@ input[type=checkbox] {
                     // console.log("techLevelDistributions[i] is undefined or null for i =", row['Name']);
                 }
             });
-
+            console.log(techLevelDistributions);
             // console.log('Disk Probs:');
             // console.log(diskProbs);
             const diskProbsTable = createTableFromObject(diskProbs);
