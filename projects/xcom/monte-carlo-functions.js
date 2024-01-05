@@ -9,7 +9,7 @@ function simulateTrial(attack_min, attack_max, hit_chance, ammo,armor_shred, cri
 let enemy_armor = enemy_armor_initial;
 let enemy_hp = enemy_hp_initial;
 let ammo_remaining = ammo;
-console.log(instant_kill_chance);
+// console.log(instant_kill_chance);
 for (let i =0; i < ammo; i++ ){
     if (enemy_hp <= 0){
         break;
@@ -18,7 +18,7 @@ for (let i =0; i < ammo; i++ ){
     let hit = (Math.random() < hit_chance);
     if (hit){
         let instant_kill = (Math.random() < instant_kill_chance);
-        console.log(instant_kill);
+        // console.log(instant_kill);
         if (instant_kill){
             enemy_armor = 0;
             enemy_hp = 0;
