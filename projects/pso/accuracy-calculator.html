@@ -200,9 +200,9 @@ thead tr th {
         <div class="input-container">
             <!-- Label for the input field -->
             <div class="input-group">
-            <label for="user-input">ATA:</label>
+            <label for="user-input-ata">ATA:</label>
             <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
+            <input type="number" id="user-input-ata" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
                 </div>            <div class="input-group">
                         <!-- Label for the input field -->
                         <label for="user-input-distance">Distance:</label>
@@ -325,14 +325,14 @@ function OnValueChanged(){
         // Function that handles the button click
         function handleProcessButtonClick() {
             // Get the value from the input field
-            const userInput = document.getElementById('user-input').value;
+            const userInputATA = document.getElementById('user-input-ata').value;
 
             // Validate or transform the input value if necessary
             // For example, convert the input value to a number
-            const processedInput = parseFloat(userInput);
+            const processedInputATA = parseFloat(userInputATA);
 
             // If the input value is not a number, display an error message
-            if (isNaN(processedInput)) {
+            if (isNaN(processedInputATA)) {
                 alert('Please enter a valid number');
                 return;
             }
@@ -358,7 +358,7 @@ function OnValueChanged(){
             const selectedStatus = document.getElementById('status-select').value;
             console.log(selectedStatus);
 
-            let hitmatrix = generate_accuracy_matrix(globalEnemyData,processedInput,processedInput_distance,difficulty=selectedDifficulty,enemy_status=selectedStatus);
+            let hitmatrix = generate_accuracy_matrix(globalEnemyData,processedInputATA,processedInput_distance,selectedDifficulty,selectedStatus);
 
             processData(hitmatrix);
         }

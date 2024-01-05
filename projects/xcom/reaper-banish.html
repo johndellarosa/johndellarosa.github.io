@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Rare Enemy Piping Simulation</title>
+        <title>XCOM 2 Banish Simulation</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, rare enemy, telepipe">
+    <meta name="keywords" content="XCOM 2, Reaper, Banish">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online Rare Enemy Telepiping Simulation">
+    <meta name="description" content="XCOM 2 Reaper Banish Outcome Simulator">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/rare-enemy-telepiping">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/xcom/reaper-banish">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -37,9 +37,9 @@
   ></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-  <script type="text/javascript" src="./pso-functions.js"></script>
+  <!-- <script type="text/javascript" src="./pso-functions.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="text/javascript" src="./pso-monte-carlo-functions-.js"></script>
+  <script type="text/javascript" src="./monte-carlo-functions.js"></script>
 
   <style>
     body {
@@ -192,12 +192,12 @@ input[type=checkbox] {
     </div> 
 
 
-<h1>Phantasy Star Online Rare Enemy Piping Simulation</h1>
+<h1>XCOM 2 Banish Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p>Simulates how many pipes it would take to get a set number of rare drops from a rare enemy by doing the piping strategy.</p>
+<p>Simulates the outcome of using the Reaper's Banish ability.</p>
 <br>
-<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials that required fewer than a given number of waves.</p><br>
-<p>For example, find the x-value for the pointer corresponding to y=0.25. 25% of the time, you would finish in fewer waves than whatever that x-value is.</p>
+<p>To do: incorporate dodging.</p><br>
+<p>For example, find the x-value for the pointer corresponding to y=0.25. 25% of the time, the enemy would have at most whatever that x-value is as their remaining HP.</p>
 
 
 <div class="center-container">
@@ -208,32 +208,55 @@ input[type=checkbox] {
         <input type="number" id="numTrials" value="1000" min="1" step="100" max="100000">
     </div>
 <div class="input-group">
-    <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
-    <input type="number" id="lilyThreshold" value="7" min="0" max="50">
+    <label for="inputAttackMin">Attack Min:</label>
+    <input type="number" id="inputAttackMin" value="3" min="0" max="50">
 </div>
 <div class="input-group">
-    <label for="originalLilies">Original Number of Enemy in Wave:</label>
-    <input type="number" id="originalLilies" value="9" min="1" max="50">
+    <label for="inputAttackMax">Attack Max:</label>
+    <input type="number" id="inputAttackMax" value="4" min="1" max="50">
 </div>
 <div class="input-group">
-    <label for="narLilyChance">Rare Enemy Probability:</label>
-    <input type="number" id="narLilyChance" value=".002" min="0.00001" step=".001" max="1">
+    <label for="inputHitPercent">Hit %:</label>
+    <input type="number" id="inputHitPercent" value="50" min="0" step=".001" max="100">
 </div>
 <div class="input-group">
-    <label for="rareDropChance">Drop Rate from Rare:</label>
-    <input type="number" id="rareDropChance" value="0.875" min="0" max="1" step=".01" style="width: 5em;">
+    <label for="inputAmmo">Ammo:</label>
+    <input type="number" id="inputAmmo" value="3" min="1" max="20" step=".01" style="width: 5em;">
 </div>
 <div class="input-group">
-    <label for="dropsDesired">Desired # of Rare Drops:</label>
-    <input type="number" id="dropsDesired" value="1" min="0" max="100">
+    <label for="inputArmorShred">Armor Shred Per Shot:</label>
+    <input type="number" id="inputArmorShred" value="0" min="0" max="100">
 </div>
-
-
+<div class="input-group">
+    <label for="inputCritBonus">Crit Bonus Damage:</label>
+    <input type="number" id="inputCritBonus" value="3" min="0" max="100">
+</div>
+<div class="input-group">
+    <label for="inputCritChance">Crit Chance %:</label>
+    <input type="number" id="inputCritChance" value="20" min="0" max="100">
+</div>
+<div class="input-group">
+    <label for="inputRepeater">Repeater %:</label>
+    <input type="number" id="inputRepeater" value="0" min="0" max="100">
+</div>
+<div class="input-group">
+    <label for="inputEnemyHP">Enemy HP:</label>
+    <input type="number" id="inputEnemyHP" value="10" min="0" max="100">
+</div>
+<div class="input-group">
+    <label for="inputEnemyArmor">Enemy Armor:</label>
+    <input type="number" id="inputEnemyArmor" value="0" min="0" max="100">
+</div>
+<br>
+<button id="vektor-btn" onclick="setInputs(3,4,3,3)">Vektor Rifle Default</button>
+<button id="temnotic-btn" onclick="setInputs(4,5,4,3)">Temnotic Rifle Default</button>
+<button id="shadow-lance-btn" onclick="setInputs(5,6,5,3)">Shadow Lance Default</button>
+<br>
 <button id="process-btn" onclick="runSimulation()">Run Simulation</button>
 <br><br>
 <div class="input-group">
     <label for="binSize">Histogram Bin Size:</label>
-    <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
+    <input type="number" id="binSize" value="1" min="1" max="10" onblur="OnValueChanged()">
 </div>
 
 
@@ -248,59 +271,58 @@ input[type=checkbox] {
     let trialData;
     runSimulation();
 
-    function runSimulation() {
+    function setInputs(damage_min, damage_max, crit_bonus, default_mag){
+        document.getElementById('inputAttackMin').value = damage_min;
+        document.getElementById('inputAttackMax').value = damage_max;
 
-        /*NUM_TRIALS = 1000,LILY_THRESHOLD = 7, 
-        ORIGINAL_LILIES = 9, LILIES_AFTER_RESET = 9, DESIRED_DROPS = 4,
-    p_nar_lily = 1/500, p_god_hp = 7/8,*/
-        const LILY_THRESHOLD_ = parseInt(document.getElementById('lilyThreshold').value);
+        document.getElementById('inputCritBonus').value = crit_bonus;
+        document.getElementById('inputAmmo').value = default_mag;
+    }
+
+
+    function runSimulation() {
+        /* runMultipleTrials(attack_min, attack_max, 
+        hit_chance, ammo,armor_shred, crit_bonus, 
+        crit_chance, instant_kill_chance, 
+        enemy_hp_initial, enemy_armor_initial, num_trials = 1000) */
+
         const NUM_TRIALS_ = parseInt(document.getElementById('numTrials').value);
-        const ORIGINAL_LILIES_ = parseInt(document.getElementById('originalLilies').value);
-        const DESIRED_DROPS_ = parseInt(document.getElementById('dropsDesired').value);
-        const P_NAR_LILY_ = parseFloat(document.getElementById('narLilyChance').value);
-        const P_RARE_DROP_ = parseFloat(document.getElementById('rareDropChance').value);
+        const ATTACK_MIN = parseInt(document.getElementById('inputAttackMin').value);
+        const ATTACK_MAX = parseInt(document.getElementById('inputAttackMax').value);
+        const HIT_CHANCE = parseFloat(document.getElementById('inputHitPercent').value)/100;
+        const AMMO = parseInt(document.getElementById('inputAmmo').value);
+        const ARMOR_SHRED = parseInt(document.getElementById('inputArmorShred').value);
+        const CRIT_BONUS = parseInt(document.getElementById('inputCritBonus').value);
+        const CRIT_CHANCE = parseFloat(document.getElementById('inputCritChance').value)/100;
+        const REPEATER = parseFloat(document.getElementById('inputRepeater').value)/100;
+        const ENEMY_HP = parseInt(document.getElementById('inputEnemyHP').value);
+        const ENEMY_ARMOR = parseInt(document.getElementById('inputEnemyArmor').value);
         const bin_size_ = parseInt(document.getElementById('binSize').value);
         
 
 
-
-    trialData = runMultipleTrials(NUM_TRIALS_, 
-    LILY_THRESHOLD_, ORIGINAL_LILIES_,
-    ORIGINAL_LILIES_, DESIRED_DROPS_,
-     P_NAR_LILY_, P_RARE_DROP_
-
+    trialData = runMultipleTrials(ATTACK_MIN, ATTACK_MAX, HIT_CHANCE, AMMO, ARMOR_SHRED,
+    CRIT_BONUS, CRIT_CHANCE, REPEATER, ENEMY_HP, ENEMY_ARMOR, NUM_TRIALS_
     );
-        let numWavesArray = trialData.map(trial => trial['Num Waves']);
-        let cdfData = prepareCdfData(numWavesArray);
-
-        
-        createHistogram(numWavesArray, bin_size_);
-        createCdfChart(cdfData,x_title="Number of Waves");
+        let enemyHPArray = trialData.map(trial => trial['Enemy HP']);
+        let cdfData = prepareCdfData(enemyHPArray);
+        createHistogram(enemyHPArray, bin_size_,'Final Enemy HP');
+        createCdfChart(cdfData,x_title="Final Enemy HP");
     }
 
 
         function OnValueChanged(){
         const bin_size_ = parseInt(document.getElementById('binSize').value);
         // const autoupdate = document.getElementById('auto-update-box').checked;
-        let numWavesArray = trialData.map(trial => trial['Num Waves']);
-        createHistogram(numWavesArray, bin_size_);
+        let enemyHPArray = trialData.map(trial => trial['Enemy HP']);
+        createHistogram(enemyHPArray, bin_size_,'Final Enemy HP');
     }
 
 
     </script>
 
 <div class="bottom" style="text-align: center;">
-    <h3><a href="./../pso.html">PSO Modules</a> </h3>      
-    <a href="./section-id">Phantasy Star Online Section ID Calculator</a><br><br>
-    <a href="./accuracy-calculator">Accuracy Calculator</a><br><br>
-    <a href="./tech-damage-calculator">Tech Damage Calculator</a><br><br>
-    <a href="./tech-damage-calculator-v2">Tech Damage Calculator V2</a><br><br>
-    <!-- <a href="./tech-hits-calculator">Tech Casts Required Calculator</a><br><br> -->
-    <a href="./player-stats">Player Stats Table</a><br><br>
-    <a href="./enemy-stats">Enemy Stats Table</a><br><br>
-    <a href="./special-attack-calculator">Special Attack Calculator</a><br><br>
-    <a href="./experience-to-level">Experience to Level Table</a><br><br>
-    <a href="./rare-enemy-telepiping.html">Rare Enemy Telepiping</a><br><br>
+
 </div>
 
 <h3>References</h3>

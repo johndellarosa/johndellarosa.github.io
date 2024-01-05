@@ -372,7 +372,7 @@ function OnValueChanged(){
         const selectedDifficulty = document.getElementById('difficulty-select').value;
         console.log(selectedDifficulty);
 
-        let hitmatrix = generate_enemy_damage_matrix(globalEnemyData,processedInputDFP,difficulty=selectedDifficulty);
+        let hitmatrix = generate_enemy_damage_matrix(globalEnemyData,processedInputDFP,selectedDifficulty);
 
         processDataEnemyHit(hitmatrix,processedInputHP, isColorMode);
     }
