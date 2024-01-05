@@ -9,15 +9,16 @@ function simulateTrial(attack_min, attack_max, hit_chance, ammo,armor_shred, cri
 let enemy_armor = enemy_armor_initial;
 let enemy_hp = enemy_hp_initial;
 let ammo_remaining = ammo;
-
+console.log(instant_kill_chance);
 for (let i =0; i < ammo; i++ ){
     if (enemy_hp <= 0){
         break;
     }
     ammo_remaining--;
-    let hit = Math.random() < hit_chance;
+    let hit = (Math.random() < hit_chance);
     if (hit){
-        let instant_kill = Math.random < instant_kill_chance;
+        let instant_kill = (Math.random() < instant_kill_chance);
+        console.log(instant_kill);
         if (instant_kill){
             enemy_armor = 0;
             enemy_hp = 0;
@@ -26,7 +27,7 @@ for (let i =0; i < ammo; i++ ){
         else{
             enemy_armor = Math.max(0, enemy_armor - armor_shred);
             let damage_roll = getRandomInt(attack_min, attack_max+1);
-            let crit = Math.random < crit_chance;
+            let crit = Math.random() < crit_chance;
             if (crit){
                 damage_roll += crit_bonus;
             }
@@ -146,9 +147,17 @@ function prepareCdfData(data) {
 
     // Calculate the CDF
     let cdfData = [];
-    let uniqueValues = [...new Set(sortedData)]; // Get unique values
+    // let uniqueValues = [...new Set(sortedData)]; // Get unique values
 
-    uniqueValues.forEach(value => {
+    let minValue = sortedData[0];
+    let maxValue = sortedData[sortedData.length - 1];
+    let rangeValues = [];
+    
+    for (let i = minValue; i <= maxValue; i++) {
+        rangeValues.push(i);
+    }
+
+    rangeValues.forEach(value => {
         let count = sortedData.filter(v => v <= value).length;
         let probability = count / sortedData.length;
         cdfData.push({ x: value, y: probability });
