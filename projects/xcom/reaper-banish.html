@@ -194,7 +194,7 @@ input[type=checkbox] {
 
 <h1>XCOM 2 Banish Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p>Simulates the outcome of using the Reaper's Banish ability.</p>
+<p>Simulates the outcome of using the Reaper's Banish ability. To use, set the input values to match the test scenario then press the "Run Simulation" button. Preset values for each tier can be applied by clicking on the weapon names.</p>
 <br>
 <p>To do: incorporate dodging.</p><br>
 <p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials where the enemy had less than that amount of HP.</p><br>
@@ -205,50 +205,54 @@ input[type=checkbox] {
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
     <div class="input-group">
-        <label for="numTrials">Number of Trials in Simulation:</label>
+        <label for="numTrials"><abbr title="Number of simulations to perform. Higher numbers will give better statistics, closer to real probabilities, but can take longer.">Number of Trials in Simulation:</abbr></label>
         <input type="number" id="numTrials" value="1000" min="1" step="100" max="100000">
     </div>
     <br>
 <div class="input-group">
-    <label for="inputAttackMin">Damage Min:</label>
+    <label for="inputAttackMin"><abbr title="Lower bound for the damage range for a shot">Damage Min:</abbr</label>
     <input type="number" id="inputAttackMin" value="3" min="0" max="50">
 </div>
 <div class="input-group">
-    <label for="inputAttackMax">Damage Max:</label>
+    <label for="inputAttackMax"><abbr title="Upper bound for the damage range for a shot">Damage Max:</abbr</label>
     <input type="number" id="inputAttackMax" value="4" min="1" max="50">
 </div>
 <div class="input-group">
-    <label for="inputCritBonus">Crit Bonus Damage:</label>
+    <label for="inputCritBonus"><abbr title="Bonus damage when weapon gets a critical hit">Crit Bonus Damage:</abbr></label>
     <input type="number" id="inputCritBonus" value="3" min="0" max="100">
 </div>
 <div class="input-group">
-    <label for="inputCritChance">Crit Chance %:</label>
+    <label for="inputCritChance"><abbr title="Chance per hit to get a critical hit. Out of 100.">Crit Chance %:</abbr></label>
     <input type="number" id="inputCritChance" value="20" min="0" max="100">
 </div>
 
 <div class="input-group">
-    <label for="inputAmmo">Ammo:</label>
+    <label for="inputAmmo"><abbr title="Ammo remaining in magazine before using Banish">Ammo:</abbr></label>
     <input type="number" id="inputAmmo" value="3" min="1" max="30" step="1" style="width: 5em;">
 </div>
 <div class="input-group">
-    <label for="inputArmorShred">Armor Shred Per Shot:</label>
+    <label for="inputArmorShred"><abbr title="Armor shred per shot if Reaper has ability">Armor Shred Per Shot:</abbr></label>
     <input type="number" id="inputArmorShred" value="0" min="0" max="100">
 </div>
 
 <div class="input-group">
-    <label for="inputRepeater">Repeater %:</label>
-    <input type="number" id="inputRepeater" value="0" min="0" max="100">
+    <label for="inputRepeater"><abbr title="Repeater instant kill proc chance. Out of 100.">Repeater %:</abbr></label>
+    <input type="number" id="inputRepeater" value="0" min="0" max="100" step="5">
 </div>
 <div class="input-group">
-    <label for="inputHitPercent">Hit %:</label>
+    <label for="inputStock"><abbr title="Damage dealt to enemy upon missing due to stock attachment.">Stock Damage:</abbr></label>
+    <input type="number" id="inputStock" value="0" min="0" max="100" step="1">
+</div>
+<div class="input-group">
+    <label for="inputHitPercent"><abbr title="Listed percent chance to hit enemy when selecting Banish"> Hit %:</abbr></label>
     <input type="number" id="inputHitPercent" value="50" min="0" step="1" max="100">
 </div>
 <div class="input-group">
-    <label for="inputEnemyHP">Enemy HP:</label>
+    <label for="inputEnemyHP"><abbr title="Enemy HP before casting Banish">Enemy HP:</abbr></label>
     <input type="number" id="inputEnemyHP" value="10" min="0" max="1000">
 </div>
 <div class="input-group">
-    <label for="inputEnemyArmor">Enemy Armor:</label>
+    <label for="inputEnemyArmor"><abbr title="Enemy armor before using Banish">Enemy Armor:</abbr></label>
     <input type="number" id="inputEnemyArmor" value="0" min="0" max="100">
 </div>
 <br>
@@ -296,6 +300,7 @@ input[type=checkbox] {
         const ATTACK_MAX = parseInt(document.getElementById('inputAttackMax').value);
         const HIT_CHANCE = parseFloat(document.getElementById('inputHitPercent').value)/100;
         const AMMO = parseInt(document.getElementById('inputAmmo').value);
+        const STOCK = parseInt(document.getElementById('inputStock').value);
         const ARMOR_SHRED = parseInt(document.getElementById('inputArmorShred').value);
         const CRIT_BONUS = parseInt(document.getElementById('inputCritBonus').value);
         const CRIT_CHANCE = parseFloat(document.getElementById('inputCritChance').value)/100;
@@ -307,7 +312,7 @@ input[type=checkbox] {
 
 
     trialData = runMultipleTrials(ATTACK_MIN, ATTACK_MAX, HIT_CHANCE, AMMO, ARMOR_SHRED,
-    CRIT_BONUS, CRIT_CHANCE, REPEATER, ENEMY_HP, ENEMY_ARMOR, NUM_TRIALS_
+    CRIT_BONUS, CRIT_CHANCE, REPEATER, STOCK, ENEMY_HP, ENEMY_ARMOR, NUM_TRIALS_
     );
         let enemyHPArray = trialData.map(trial => trial['Enemy HP']);
         let cdfData = prepareCdfData(enemyHPArray);

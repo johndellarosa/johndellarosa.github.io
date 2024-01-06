@@ -5,7 +5,7 @@ function getRandomInt(min, max) {
   }
 
 
-function simulateTrial(attack_min, attack_max, hit_chance, ammo,armor_shred, crit_bonus, crit_chance, instant_kill_chance, enemy_hp_initial, enemy_armor_initial) {
+function simulateTrial(attack_min, attack_max, hit_chance, ammo,armor_shred, crit_bonus, crit_chance, instant_kill_chance, stock, enemy_hp_initial, enemy_armor_initial) {
 let enemy_armor = enemy_armor_initial;
 let enemy_hp = enemy_hp_initial;
 let ammo_remaining = ammo;
@@ -15,7 +15,9 @@ for (let i =0; i < ammo; i++ ){
         break;
     }
     ammo_remaining--;
+    let damage = 0;
     let hit = (Math.random() < hit_chance);
+    let damage_roll = 0;
     if (hit){
         let instant_kill = (Math.random() < instant_kill_chance);
         // console.log(instant_kill);
@@ -26,16 +28,26 @@ for (let i =0; i < ammo; i++ ){
         }
         else{
             enemy_armor = Math.max(0, enemy_armor - armor_shred);
-            let damage_roll = getRandomInt(attack_min, attack_max+1);
+            damage_roll = getRandomInt(attack_min, attack_max+1);
             let crit = Math.random() < crit_chance;
             if (crit){
                 damage_roll += crit_bonus;
             }
-            let damage = Math.max(1,damage_roll-enemy_armor);
-
-            enemy_hp = Math.max(0, enemy_hp - damage);
+            
         }
+        damage = Math.max(1,damage_roll-enemy_armor);
     }
+    else{
+        if (stock > 0){
+            damage_roll = stock;
+            damage = Math.max(1,damage_roll-enemy_armor);
+        }
+
+    }
+
+    
+
+    enemy_hp = Math.max(0, enemy_hp - damage);
 }
 
 return [enemy_hp, ammo_remaining];
@@ -50,13 +62,13 @@ if (Math.random() < p) count++;
 return count;
 }
 
-function runMultipleTrials(attack_min, attack_max, hit_chance, ammo,armor_shred, crit_bonus, crit_chance, instant_kill_chance, enemy_hp_initial, enemy_armor_initial, num_trials = 1000) {
+function runMultipleTrials(attack_min, attack_max, hit_chance, ammo,armor_shred, crit_bonus, crit_chance, instant_kill_chance,stock, enemy_hp_initial, enemy_armor_initial, num_trials = 1000) {
 
 
     let results = [];
 
     for (let i = 0; i < num_trials; i++) {
-        let trialResult = simulateTrial(attack_min, attack_max, hit_chance, ammo,armor_shred, crit_bonus, crit_chance, instant_kill_chance, enemy_hp_initial, enemy_armor_initial);
+        let trialResult = simulateTrial(attack_min, attack_max, hit_chance, ammo,armor_shred, crit_bonus, crit_chance, instant_kill_chance, stock, enemy_hp_initial, enemy_armor_initial);
         results.push({
             'Enemy HP': trialResult[0],
             'Ammo': trialResult[1],
