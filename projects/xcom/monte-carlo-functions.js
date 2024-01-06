@@ -67,12 +67,19 @@ function runMultipleTrials(attack_min, attack_max, hit_chance, ammo,armor_shred,
 }
 
 
-function createHistogram(data,binSize,x_title="Waves Required",y_title="Percentage (%)") {
+function createHistogram(data,binSize,x_title="Final Enemy HP",y_title="Percentage (%)",max_x = null) {
     // Define the bin size
     // const binSize = 10;
 
     // Find the maximum wave number and calculate the number of bins needed
     let maxWave = Math.max(...data);
+    if (max_x == null){
+        
+    }
+    else{
+        maxWave=max_x;
+    }
+
     let numBins = Math.ceil((maxWave + 1) / binSize);
 
     // Initialize an array to store counts for each bin
@@ -126,11 +133,12 @@ function createHistogram(data,binSize,x_title="Waves Required",y_title="Percenta
                     }
                 },
                 x: {
+                    max:maxWave,
                     title: {
                         display: true,
                         text: x_title
                     }
-                }
+                },
             },
             plugins: {
                 legend: {
@@ -166,12 +174,21 @@ function prepareCdfData(data) {
     return cdfData;
 }
 
-function createCdfChart(data, x_title='Waves Required',y_title='Probability') {
+function createCdfChart(data, x_title='Final Enemy HP',y_title='Probability',max_x = null) {
     const ctx = document.getElementById('cdfChart').getContext('2d');
 
     // Destroy previous chart if it exists
     if (window.cdfChartInstance) {
         window.cdfChartInstance.destroy();
+    }
+
+
+    let maxWave = Math.max(...data);
+    if (max_x == null){
+        
+    }
+    else{
+        maxWave=max_x;
     }
 
     // Create new chart
@@ -192,14 +209,18 @@ function createCdfChart(data, x_title='Waves Required',y_title='Probability') {
         options: {
             scales: {
                 x: {
+                    
                     type: 'linear',
                     position: 'bottom',
+                    max:maxWave,
                     title: {
                         display: true,
                         text: x_title
                     }
                 },
                 y: {
+                    beginAtZero: true,
+                    max:1,
                     title: {
                         display: true,
                         text: y_title
