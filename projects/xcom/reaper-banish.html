@@ -213,7 +213,7 @@ input[type=checkbox] {
 <p>Simulates the outcome of using the Reaper's Banish ability. To use, set the input values to match the test scenario then press the "Run Simulation" button. Preset values for each tier can be applied by clicking on the weapon names.</p>
 
 <p>To do: incorporate dodging.</p>
-<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials where the enemy had less than that amount of HP.</p>
+<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials where the enemy had at most that amount of HP remaining.</p>
 <p>For example, find the x-value for the pointer corresponding to y=0.25. 25% of the time, the enemy would have at most whatever that x-value is as their remaining HP.</p>
 
 
@@ -244,7 +244,7 @@ input[type=checkbox] {
 
 <div class="input-group">
     <label for="inputAmmo"><abbr title="Ammo remaining in magazine before using Banish">Ammo:</abbr></label>
-    <input type="number" id="inputAmmo" value="3" min="1" max="30" step="1" style="width: 5em;">
+    <input type="number" id="inputAmmo" value="3" min="1" max="30" step="1">
 </div>
 <div class="input-group">
     <label for="inputArmorShred"><abbr title="Armor shred per shot if Reaper has ability">Armor Shred Per Shot:</abbr></label>
