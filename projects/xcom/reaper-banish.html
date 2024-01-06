@@ -35,7 +35,13 @@
     src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
     crossorigin
   ></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+  $( document ).tooltip();
+</script>
+    </script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <!-- <script type="text/javascript" src="./pso-functions.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -169,6 +175,16 @@ input[type=checkbox] {
     align-items: center; /* Center vertically */
 }
 
+/* fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 210px;
+  } */
+
 </style>
 
 </head>
@@ -195,9 +211,9 @@ input[type=checkbox] {
 <h1>XCOM 2 Banish Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
 <p>Simulates the outcome of using the Reaper's Banish ability. To use, set the input values to match the test scenario then press the "Run Simulation" button. Preset values for each tier can be applied by clicking on the weapon names.</p>
-<br>
-<p>To do: incorporate dodging.</p><br>
-<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials where the enemy had less than that amount of HP.</p><br>
+
+<p>To do: incorporate dodging.</p>
+<p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials where the enemy had less than that amount of HP.</p>
 <p>For example, find the x-value for the pointer corresponding to y=0.25. 25% of the time, the enemy would have at most whatever that x-value is as their remaining HP.</p>
 
 
