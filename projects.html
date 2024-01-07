@@ -34,7 +34,26 @@
       src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
       crossorigin></script> -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-</head>
+      <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+      <script>
+        $( function() {
+          $( ".accordion" ).accordion({
+            heightStyle: "content",
+            collapsible: true,
+            active: false,
+          });
+        } );
+        </script>
+        <style>
+            img {
+                margin-left: auto;
+  margin-right: auto;
+            }
+
+            
+        </style>
+    </head>
 <body>
     <div class="navbar">
         <b style="margin-right:10px">John Della Rosa</b>| 
@@ -81,10 +100,11 @@
         <h4 style="text-align: center;">Click project names to expand</h4>
 
         <h2>Physical Sciences</h2>
-        <button type="button" class="collapsible">Biophysical Chemsitry e-Textbook (in progress)</button>
-            <div class="content">
+        <div class="accordion">
+            <h2>Biophysical Chemistry Textbook</h2>
+                <div>
                 <h2><a style="text-align:center" href="./projects/biophysics-book/table-of-contents">Link</a></h2>
-                <h2>Goal</h2>
+                <h3>Goal</h3>
                 <ul>
                     <li>Make a free, online biophysical chemistry textbook</li>
                     <!-- <li></li> -->
@@ -95,38 +115,43 @@
                     <li><a href="https://oercommons.org/courses/biophysical-chemistry">OER Commons</a></li>
                     
                 </ul>
+
             </div>
-            <button type="button" class="collapsible">Math e-Textbook (in progress)</button>
-            <div class="content">
+            <h2>Differential Equation Textbook</h2>
+            <div>
                 <h2><a style="text-align:center" href="./projects/differential-equations-book/table-of-contents">Link</a></h2>
                 <h2>Goal</h2>
                 <ul>
-                    <li>Make a free, online biophysical chemistry textbook</li>
+                    <li>Make a free, online differential equations textbook</li>
                     <!-- <li></li> -->
                 </ul>
             </div>
+        </div>
         <h2>Financial Mathematics</h2>
-        <button type="button" class="collapsible" >Stochastic Variable Classes Library </button>
-            <div class="content">
-                <h2><a style="text-align:center" href="https://github.com/johndellarosa/DistributionLibrary" target="_blank">Link</a></h2>
-                <h2>Goal</h2>
+        
+        <div class="accordion">
+
+        <h3>Stochastic Variable Classes Library </h3>
+            <div style="justify-content: center;">
+                <h4><a style="text-align:center" href="https://github.com/johndellarosa/DistributionLibrary" target="_blank">Link</a></h4>
+                <h4>Goal</h4>
                 <ul>
                     <li>Make a Python library that allows for representation of random variables as classes and allows for common operations</li>
                     <!-- <li></li> -->
                 </ul>
-                <h2>Working Features</h2>
+                <h4>Working Features</h4>
                 <ul>
                     <li>Random variables with common distributions can be instantiated with appropriate parameters</li>
                     <li>Support for some common operations such as addition of random variables to yield new instance with appropriate properties</li>
                     <li>Sampling for some distributions</li>
                 </ul>
-                <h2>Future directions</h2>
+                <h4>Future directions</h4>
                 <ul>
                     <li>Fix numerical integration issues</li>
                     <li>Allow for representation of random variables with more difficult to represent supports</li>
                     <li>Allow for sampling from more types of distributions</li>
                 </ul>
-                <h2>Sample</h2>
+                <h4>Sample</h4>
                 <figure>
                     <img src="distribution-library-example-1.png" alt="Discrete Addition and Scaling" style="display: block;  max-width: 100%;max-height: 15%;">
                     <figcaption style="text-align: center;"> Discrete Random Variable Addition and Scaling </figcaption>
@@ -146,9 +171,10 @@
                 <figcaption style="text-align: center;"> Sample Syntax and Exponentiation </figcaption>
             </figure>
             </div>
+            <h3>Quantitative Finance Projects</h3>
+            <div>
+                
 
-            <button type="button" class="collapsible">Quantitative Finance Projects </button>
-            <div class="content">
                 <p style="text-align:center">As part of my Master's coursework, I've completed numerous projects. Due to concerns about copying, what can be shown is limited. More information can be given upon request.
                 </p>
                 <h2>Spread Trading</h2>
@@ -163,15 +189,19 @@
                     <figcaption style="text-align: center;"> Holdings over time </figcaption>
                 </figure>
 
-                
+
 
             </div>
-            <hr>
-            <br>
+            </div>
 
-            <h2><a href="./projects/pso">Phantasy Star Online</a></h2>
-            <button type="button" class="collapsible" >Modules</button>
-                <div class="content" style="text-align: center;">  
+            <br>
+            
+            <h2>Video Game Tools and Statistics</h2>
+            <div class="accordion">
+                <h3>Phantasy Star Online</h3>
+                <div  style="text-align: center;">
+                <h4><a href="./projects/pso">Main Page</a></h4>
+         
                     <br><br>         
                     <a href="./projects/pso/section-id">Phantasy Star Online Section ID Calculator</a><br><br>
                     <a href="./projects/pso/accuracy-calculator">Accuracy Calculator</a><br><br>
@@ -182,21 +212,29 @@
                     <a href="./projects/pso/player-stats">Player Stats Table</a><br><br>
                     <a href="./projects/pso/enemy-stats">Enemy Stats Table</a><br><br>
                     <a href="./projects/pso/damage-from-enemies">Enemy Damage Calculator</a><br><br>
-                    <a href="./projects/pso/special-attack-calculator">Special Attack Calculator</a><br><br><br>
-                    <a href="./projects/pso/experience-to-level">Experience to Level</a><br><br><br>
+                    <a href="./projects/pso/special-attack-calculator">Special Attack Calculator</a><br><br>
+                    <a href="./projects/pso/experience-to-level">Experience to Level</a><br><br>
                     <a href="./projects/pso/rare-enemy-telepiping">Rare Enemy Telepiping</a><br><br>
                     <a href="./projects/pso/rare-drop-farming">Rare Drop Farming</a><br><br>
-                </div>
-                <hr>
+
+            </div>
+            <h3>XCOM 2</h3>
+            <div  style="text-align: center;">
+                <a href="./projects/xcom/reaper-banish">XCOM 2 Reaper Banish Simulation</a>
+            </div>
+            </div>
+        
                 <br>
 
-            <h2>Games</h2>
+            <h2>My Games and Apps</h2>
             
 
-            <button type="button" class="collapsible">Speed Math Mobile App</button>
-            <div class="content">
+
+            <div class="accordion">
+                <h4>Speed Math Mobile App</h4>
+                <div>
                 <h2><a href="./projects/Math-Trial">Math Trial</a></h2>
-                <h3>Downloads</h3>
+                <h4>Downloads</h4>
                 <p style="text-align: center;"><a href="https://play.google.com/store/apps/details?id=com.JohnDellaRosa.Math_Trial">Google Play</a></p>
                 <p style="text-align: center;"><a href="https://apps.apple.com/us/app/mathtrial/id6448317075">Apple Store</a></p>
             
@@ -219,8 +257,8 @@
                 
 
             </div>
-            <button type="button" class="collapsible">Volterra Defense</button>
-            <div class="content">
+            <h3>Volterra Defense</h3>
+            <div >
                 <h2><a href="./projects/Volterra-Defense">Main Page</a></h2>
                 <h3>Downloads</h3>
                 <p style="text-align: center;"><a href="https://play.google.com/store/apps/details?id=com.JohnDellaRosa.VolterraDefense">Google Play</a></p>
@@ -237,9 +275,9 @@
 
             </div>
 
-
-            <button type="button" class="collapsible">Right Ascension</button>
-            <div class="content">
+            <h3>
+           Right Ascension</h3>
+            <div >
                 <h2><a href="./projects/Right-Ascension">Main Page</a></h2>
                 <h3>Downloads</h3>
                 <p style="text-align: center;"><a href="https://play.google.com/store/apps/details?id=com.JohnDellaRosa.RightAscension">Google Play</a></p>
@@ -251,31 +289,16 @@
                     <figcaption style="text-align: center;"> Right Ascension Logo </figcaption>
                 </figure>
             </div>
-
-            <hr>
+        </div>
+        
             <br>
             <h2>Minor Projects</h2>
             <br>
             <div style="text-align: center;">
             <a href="./projects/miscellaneous/options">Options Pricer</a><br><br>
-            <a href="./projects/xcom/reaper-banish">XCOM 2 Reaper Banish Simulation</a><br><br>
+            <br><br>
+       
         </div>
     <br><br><br><br>
-    <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-            content.style.display = "none";
-            } else {
-            content.style.display = "block";
-            }
-        });
-        } 
-        </script>
 </body>
 </html>

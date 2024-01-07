@@ -283,7 +283,7 @@ input[type=checkbox] {
     <label for="binSize">Histogram Bin Size:</label>
     <input type="number" id="binSize" value="1" min="1" max="10" onblur="OnValueChanged()">
 </div>
-
+<div id="progressbar" style="display:none;"></div>
 
 <div id="histogramContainer">
 <canvas id="wavesHistogram"></canvas>
@@ -310,7 +310,8 @@ input[type=checkbox] {
         hit_chance, ammo,armor_shred, crit_bonus, 
         crit_chance, instant_kill_chance, 
         enemy_hp_initial, enemy_armor_initial, num_trials = 1000) */
-
+        $("#progressbar").show();
+        $("#progressbar").progressbar({ value: false });
         const NUM_TRIALS_ = parseInt(document.getElementById('numTrials').value);
         const ATTACK_MIN = parseInt(document.getElementById('inputAttackMin').value);
         const ATTACK_MAX = parseInt(document.getElementById('inputAttackMax').value);
@@ -326,15 +327,20 @@ input[type=checkbox] {
         const bin_size_ = parseInt(document.getElementById('binSize').value);
         
 
-
-    trialData = runMultipleTrials(ATTACK_MIN, ATTACK_MAX, HIT_CHANCE, AMMO, ARMOR_SHRED,
+        // Ensure UI updates before starting the calculation
+        setTimeout(function() {
+            trialData = runMultipleTrials(ATTACK_MIN, ATTACK_MAX, HIT_CHANCE, AMMO, ARMOR_SHRED,
     CRIT_BONUS, CRIT_CHANCE, REPEATER, STOCK, ENEMY_HP, ENEMY_ARMOR, NUM_TRIALS_
     );
         let enemyHPArray = trialData.map(trial => trial['Enemy HP']);
         let cdfData = prepareCdfData(enemyHPArray);
         createHistogram(enemyHPArray, bin_size_,"Final Enemy HP","Percentage (%)",ENEMY_HP);
         createCdfChart(cdfData,x_title='Final Enemy HP',y_title='Probability',max_x = ENEMY_HP);
-    }
+   
+            // After calculation
+            $("#progressbar").hide();
+        }, 0); // Short timeout to allow UI update
+ }
 
 
         function OnValueChanged(){

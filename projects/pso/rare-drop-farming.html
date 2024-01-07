@@ -36,6 +36,8 @@
     crossorigin
   ></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
   <script type="text/javascript" src="./pso-functions.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -232,7 +234,7 @@ input[type=checkbox] {
     <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
 </div>
 
-
+<div id="progressbar" style="display:none;"></div>
 <div id="histogramContainer">
 <canvas id="wavesHistogram"></canvas>
 </div>
@@ -273,6 +275,9 @@ input[type=checkbox] {
 
     function runSimulation() {
 
+        $("#progressbar").show();
+        $("#progressbar").progressbar({ value: false }); // Indeterminate progress
+        
         /*NUM_TRIALS = 1000,LILY_THRESHOLD = 7, 
         ORIGINAL_LILIES = 9, LILIES_AFTER_RESET = 9, DESIRED_DROPS = 4,
     p_nar_lily = 1/500, p_god_hp = 7/8,*/
@@ -284,10 +289,9 @@ input[type=checkbox] {
         const P_RARE_DROP_ = parseFloat(document.getElementById('rareDropChance').value);
         const bin_size_ = parseInt(document.getElementById('binSize').value);
         
-
-
-
-    trialData = runMultipleTrialsRareDrop(NUM_TRIALS=NUM_TRIALS_, 
+        // Ensure UI updates before starting the calculation
+        setTimeout(function() {
+            trialData = runMultipleTrialsRareDrop(NUM_TRIALS=NUM_TRIALS_, 
     DESIRED_DROPS = DESIRED_DROPS_, P_RARE_DROP=P_RARE_DROP_
     );
         let numWavesArray = trialData.map(trial => trial['Num Waves']);
@@ -296,6 +300,13 @@ input[type=checkbox] {
         
         createHistogram(numWavesArray, binsize=bin_size_,x_title="Enemies Required");
         createCdfChart(cdfData,x_title="Enemies Required");
+
+            // After calculation
+            $("#progressbar").hide();
+        }, 0); // Short timeout to allow UI update
+
+
+
     }
 
 
