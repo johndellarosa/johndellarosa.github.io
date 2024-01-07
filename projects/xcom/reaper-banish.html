@@ -329,7 +329,8 @@ input[type=checkbox] {
 
         // Ensure UI updates before starting the calculation
         setTimeout(function() {
-            trialData = runMultipleTrials(ATTACK_MIN, ATTACK_MAX, HIT_CHANCE, AMMO, ARMOR_SHRED,
+            try {
+                trialData = runMultipleTrials(ATTACK_MIN, ATTACK_MAX, HIT_CHANCE, AMMO, ARMOR_SHRED,
     CRIT_BONUS, CRIT_CHANCE, REPEATER, STOCK, ENEMY_HP, ENEMY_ARMOR, NUM_TRIALS_
     );
         let enemyHPArray = trialData.map(trial => trial['Enemy HP']);
@@ -337,8 +338,15 @@ input[type=checkbox] {
         createHistogram(enemyHPArray, bin_size_,"Final Enemy HP","Percentage (%)",ENEMY_HP);
         createCdfChart(cdfData,x_title='Final Enemy HP',y_title='Probability',max_x = ENEMY_HP);
    
+            } catch (error) {
+                console.log(error);
+            }
+            finally {
+
             // After calculation
             $("#progressbar").hide();
+            }
+
         }, 0); // Short timeout to allow UI update
  }
 

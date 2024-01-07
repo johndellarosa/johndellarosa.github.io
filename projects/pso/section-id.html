@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   
     <style>
         .dropbtn {
@@ -61,7 +63,7 @@
         .dropdown {
           position: relative;
           display: inline-block;
-          margin:5%;
+          /* margin:2%; */
           width: clamp(125px,10vw,350px);
         }
         
@@ -86,25 +88,8 @@
         
         .show {display: block;}
         
-        .bb-button{
-          background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  text-align: center;
-  text-decoration: none;
-  
-  display: flex;
+        
 
-  margin:auto;
-  max-width: 40%;
-  font-size: clamp(6px,3vw, 24px);
-  justify-content: center;
-        }
-
-        .bb-button text {
-          margin: auto;
-        }
 
 
         .app {
@@ -121,18 +106,13 @@
           width: clamp(125px,10vw,350px);
         }
 
+        .ui-button {
+          margin-top:5px;
+          margin-bottom:5px;
+        }
+        
         </style>
 
-<script>
-        
-
-    function favTutorial() {
-    var mylist = document.getElementById("myList");
-    classSelected = mylist.options[mylist.selectedIndex].text;
-    console.log(classSelected);
-    check_name();
-    }
-    </script>
     
 </head>
   <body>
@@ -155,9 +135,24 @@
 <h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Section ID Calculator</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
 <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
-    <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button>
+    <!-- <button class="bb-button" onclick="toggle_Blue_Burst()">Blue Burst?</button> -->
 
-    <select id = "myList" class="dropdown" onchange = "favTutorial()" >
+      <fieldset>
+        <legend>Game Version</legend>
+        <label for="DCCheckbox">Dreamcast</label>
+        <input type="radio" name="game-version-button" id="DCCheckbox" class="game-version-button">
+        <label for="GCCheckbox">Gamecube</label>
+        <input type="radio" name="game-version-button" id="GCCheckbox"class="game-version-button" checked>
+        <label for="XBCheckbox">Xbox</label>
+        <input type="radio" name="game-version-button" id="XBCheckbox"class="game-version-button">
+        <label for="PCCheckbox">PC (non BB)</label>
+        <input type="radio" name="game-version-button" id="PCCheckbox"class="game-version-button">
+        <label for="BlueBurstCheckbox">Blue Burst</label>
+      <input type="radio" name="game-version-button" id="BlueBurstCheckbox"class="game-version-button">
+    </fieldset>
+    <br>
+    <label for="classList" >Class</label><br>
+    <select id = "classList" class="dropdown" onchange = "check_name()" >
         <option value="HUmar"> HUmar </option>
         <option value="HUnewearl"> HUnewearl </option>
         <option value="HUcast"> HUcast </option>
@@ -171,90 +166,16 @@
         <option value="FOnewm"> FOnewm </option>
         <option value="FOnewearl"> FOnewearl </option>
         </select>
-      <br>
-    <input id="playerName" type="'text" maxlength="12">
-    <br>
+      <br><br>
+      <label for="playerName">Name</label><br>
+    <input id="playerName" type="text" maxlength="12" >
+    <br><br>
     Result: <span id="section-id-result">Text</span>
     </div>
 
 
     <script>
 
-        var isBB = true;
-        var sectionIDMap = {
-        "0": "Viridia",
-        "1": "Greenill",
-        "2": "Skyly",
-        "3": "Bluefull",
-        "4": "Purplenum",
-        "5": "Pinkal",
-        "6": "Redria",
-        "7": "Oran",
-        "8": "Yellowboze",
-        "9": "Whitill"
-      };
-
-      var classOffsetMap = {
-        "HUmar": 5,
-        "HUnewearl": 6,
-        "HUcast": 7,
-        "HUcaseal": 4,
-        "RAmar": 8,
-        "RAmarl": 6,
-        "RAcast": 9,
-        "RAcaseal": 0,
-        "FOmar": 5,
-        "FOmarl": 1,
-        "FOnewm": 2,
-        "FOnewearl": 3
-      }
-
-
-        function toggle_Blue_Burst() {
-            isBB = !isBB;
-            // $("#myList").prop('disabled',!isBB);
-            if (isBB){
-              $(".bb-button")[0].style.backgroundColor = '#4CAF50';
-              $(".bb-button")[0].innerText = 'Blue Burst ✓';
-            }
-            else{
-              $(".bb-button")[0].style.backgroundColor = '#f44336';
-              $(".bb-button")[0].innerText = 'Blue Burst X';
-            }
-            check_name();
-        }
-        favTutorial();
-        toggle_Blue_Burst();
-
-
-        function check_name() {
-          var nameText = $("#playerName")[0].value
-          if (nameText.length == 0){
-            $("#section-id-result")[0].innerText = '';
-            return;
-          }
-          console.log(`Name Text: ${nameText}`);
-          var sum = 0;
-          for (var i=0; i < nameText.length; i++){
-
-              sum += nameText.charCodeAt(i);
-          }
-
-          if (isBB){
-            console.log(`Class selected: ${classSelected}`);
-            var classOffset = classOffsetMap[classSelected];
-            sum += classOffset;
-          }
-          
-          console.log(`Sum: ${sum}`);
-          var lastDigit = sum.toString().at(-1);
-          console.log(`Last digit: ${lastDigit}`);
-          $("#section-id-result")[0].innerText = sectionIDMap[lastDigit];
-          //$("#section-id-result")[0].innerText = lastDigit;
-          
-        }
-
-        $("#playerName").on('change keydown paste input', check_name);
 
     </script>
 <div class="bottom" style="text-align: center;">
@@ -279,6 +200,105 @@
   Code references value maps of <a href="https://github.com/gar-mil/psocalc" rel="external">https://github.com/gar-mil/psocalc</a>
 </p>
 
+<script>
+
+  $( function() {
+      $( "input:radio" ).checkboxradio();
+      // $("fieldset")..hide();
+    } );
+  
+    // Bind event handlers
+    $( "input:radio").on( "change", check_name );
+          
+  
+      // function classChange() {
+      // var mylist = document.getElementById("classList");
+      // classSelected = mylist.options[mylist.selectedIndex].text;
+      // console.log(classSelected);
+      // check_name();
+      // }
+  
+              // var isBB = true;
+              var sectionIDMap = {
+          "0": "Viridia",
+          "1": "Greenill",
+          "2": "Skyly",
+          "3": "Bluefull",
+          "4": "Purplenum",
+          "5": "Pinkal",
+          "6": "Redria",
+          "7": "Oran",
+          "8": "Yellowboze",
+          "9": "Whitill"
+        };
+  
+        var classOffsetMap = {
+          "HUmar": 5,
+          "HUnewearl": 6,
+          "HUcast": 7,
+          "HUcaseal": 4,
+          "RAmar": 8,
+          "RAmarl": 6,
+          "RAcast": 9,
+          "RAcaseal": 0,
+          "FOmar": 5,
+          "FOmarl": 1,
+          "FOnewm": 2,
+          "FOnewearl": 3
+        }
+  
+  
+          // function toggle_Blue_Burst() {
+          //     isBB = !isBB;
+          //     // $("#classList").prop('disabled',!isBB);
+          //     if (isBB){
+          //       $(".bb-button")[0].style.backgroundColor = '#4CAF50';
+          //       $(".bb-button")[0].innerText = 'Blue Burst ✓';
+          //     }
+          //     else{
+          //       $(".bb-button")[0].style.backgroundColor = '#f44336';
+          //       $(".bb-button")[0].innerText = 'Blue Burst X';
+          //     }
+          //     check_name();
+          // }
+          check_name();
+          // toggle_Blue_Burst();
+  
+  
+          function check_name() {
+            var nameText = $("#playerName")[0].value;
+            let isBB = $("#BlueBurstCheckbox")[0].checked;
+            // console.log(`isBB: ${isBB}`);
+            let classSelected = $("#classList")[0].value;
+            // console.log(`isBB: ${isBB}`);
+            if (nameText.length == 0){
+              $("#section-id-result")[0].innerText = '';
+              return;
+            }
+            // console.log(`Name Text: ${nameText}`);
+            var sum = 0;
+            for (var i=0; i < nameText.length; i++){
+  
+                sum += nameText.charCodeAt(i);
+            }
+  
+            if (isBB){
+              console.log(`Class selected: ${classSelected}`);
+              var classOffset = classOffsetMap[classSelected];
+              sum += classOffset;
+            }
+            
+            // console.log(`Sum: ${sum}`);
+            var lastDigit = sum.toString().at(-1);
+            // console.log(`Last digit: ${lastDigit}`);
+            $("#section-id-result")[0].innerText = sectionIDMap[lastDigit];
+            //$("#section-id-result")[0].innerText = lastDigit;
+            
+          }
+  
+          $("#playerName").on('change keydown paste input', check_name);
+  
+      </script>
 
 </body>
 

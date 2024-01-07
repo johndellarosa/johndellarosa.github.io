@@ -215,7 +215,7 @@ input[type=checkbox] {
     
     <div class="input-group">
         <label for="numTrials">Number of Trials:</label>
-        <input type="number" id="numTrials" value="1000" min="1" max="100000" step="100">
+        <input type="number" id="numTrials" value="1000" min="1" max="50000" step="100">
     </div>
 <div class="input-group">
     <label for="rareDropChance">Drop Rate:</label>
@@ -291,18 +291,26 @@ input[type=checkbox] {
         
         // Ensure UI updates before starting the calculation
         setTimeout(function() {
-            trialData = runMultipleTrialsRareDrop(NUM_TRIALS=NUM_TRIALS_, 
-    DESIRED_DROPS = DESIRED_DROPS_, P_RARE_DROP=P_RARE_DROP_
-    );
-        let numWavesArray = trialData.map(trial => trial['Num Waves']);
-        let cdfData = prepareCdfData(numWavesArray);
+            try{
+                trialData = runMultipleTrialsRareDrop(NUM_TRIALS=NUM_TRIALS_, 
+            DESIRED_DROPS = DESIRED_DROPS_, P_RARE_DROP=P_RARE_DROP_
+            );
+                let numWavesArray = trialData.map(trial => trial['Num Waves']);
+                let cdfData = prepareCdfData(numWavesArray);
 
         
-        createHistogram(numWavesArray, binsize=bin_size_,x_title="Enemies Required");
-        createCdfChart(cdfData,x_title="Enemies Required");
+                createHistogram(numWavesArray, binsize=bin_size_,x_title="Enemies Required");
+                createCdfChart(cdfData,x_title="Enemies Required");
 
-            // After calculation
-            $("#progressbar").hide();
+            } catch (error){
+                console.error(error);
+            }
+            finally {
+                // After calculation
+                $("#progressbar").hide();
+            }
+
+
         }, 0); // Short timeout to allow UI update
 
 

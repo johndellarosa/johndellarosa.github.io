@@ -208,7 +208,7 @@ input[type=checkbox] {
     
     <div class="input-group">
         <label for="numTrials">Number of Trials:</label>
-        <input type="number" id="numTrials" value="1000" min="1" step="100" max="100000">
+        <input type="number" id="numTrials" value="5000" min="1" step="100" max="100000">
     </div>
 <div class="input-group">
     <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
@@ -270,7 +270,8 @@ input[type=checkbox] {
 
 
         setTimeout(function() {
-            trialData = runMultipleTrials(NUM_TRIALS_, 
+            try{
+                trialData = runMultipleTrials(NUM_TRIALS_, 
             LILY_THRESHOLD_, ORIGINAL_LILIES_,
             ORIGINAL_LILIES_, DESIRED_DROPS_,
             P_NAR_LILY_, P_RARE_DROP_
@@ -282,7 +283,13 @@ input[type=checkbox] {
                 
                 createHistogram(numWavesArray, bin_size_);
                 createCdfChart(cdfData,x_title="Number of Waves");
+            } catch (error) {
+
+            } finally{
+
                 $("#progressbar").hide();
+            }
+ 
         }, 0); // Short timeout to allow UI update
     }
 
