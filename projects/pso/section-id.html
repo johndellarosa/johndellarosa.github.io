@@ -110,8 +110,28 @@
           margin-top:5px;
           margin-bottom:5px;
         }
+
+        /* fieldset label.ui-checkboxradio-checked {
+  border-color: #00af00;
+  background: #00c800;
+} */
+
+        .red { background-color: red; }
+        /* Custom color when focused */
+
+        .custom-hover { background-color: lightblue; }
+.custom-active { background-color: lightgreen; }
+.custom-focus { background-color: lightcoral; }
+
+
+        .blue { background-color: blue; }
+        .green { background-color: green; }
         
+
+
         </style>
+
+<style id="dynamic-styles"></style>
 
     
 </head>
@@ -140,15 +160,15 @@
       <fieldset>
         <legend>Game Version</legend>
         <label for="DCCheckbox">Dreamcast</label>
-        <input type="radio" name="game-version-button" id="DCCheckbox" class="game-version-button">
+        <input type="radio" name="game-version-button" id="DCCheckbox" class="game-version-button" data-background-color="#f6a828" data-circle-color="#ef8c08">
         <label for="GCCheckbox">Gamecube</label>
-        <input type="radio" name="game-version-button" id="GCCheckbox"class="game-version-button" checked>
+        <input type="radio" name="game-version-button" id="GCCheckbox" checked class="game-version-button" data-background-color="#8b47ff" data-circle-color="#5510c9">
         <label for="XBCheckbox">Xbox</label>
-        <input type="radio" name="game-version-button" id="XBCheckbox"class="game-version-button">
+        <input type="radio" name="game-version-button" id="XBCheckbox" class="game-version-button"data-background-color="#459e00" data-circle-color="#286205">
         <label for="PCCheckbox">PC (non BB)</label>
-        <input type="radio" name="game-version-button" id="PCCheckbox"class="game-version-button">
+        <input type="radio" name="game-version-button" id="PCCheckbox" class="game-version-button" data-background-color="#ff2929" data-circle-color="#b50000">
         <label for="BlueBurstCheckbox">Blue Burst</label>
-      <input type="radio" name="game-version-button" id="BlueBurstCheckbox"class="game-version-button">
+      <input type="radio" name="game-version-button" id="BlueBurstCheckbox" class="game-version-button" data-background-color="#007fff" data-circle-color="#003eff">
     </fieldset>
     <br>
     <label for="classList" >Class</label><br>
@@ -205,8 +225,35 @@
   $( function() {
       $( "input:radio" ).checkboxradio();
       // $("fieldset")..hide();
+
     } );
-  
+
+    $(function() {
+    $(".game-version-button").on("change", function() {
+        var newColor = $(this).data("background-color");
+        var newCircleColor = $(this).data("circle-color");
+        updateRadioStyle(newColor,newCircleColor);
+    });
+});
+
+
+
+function updateRadioStyle(color,circle_color) {
+    var styleEl = document.getElementById('dynamic-styles');
+    console.log(`calling updateRadioStyle with color ${color}`);
+    if (styleEl) {
+        styleEl.innerHTML = `.ui-state-active { background-color: ${color}; border: ${circle_color};} 
+        .ui-button.ui-state-active:hover { background: ${color}; }
+        .ui-button.ui-state-active:active { background: ${color}; }
+        .ui-state-active .ui-icon {border: ${circle_color};}
+        .ui-state-active:hover {border: ${circle_color};}`;
+        
+    }
+}
+var newColor = $("#GCCheckbox").data("background-color");
+        var newCircleColor = $("#GCCheckbox").data("circle-color");
+        updateRadioStyle(newColor,newCircleColor);
+
     // Bind event handlers
     $( "input:radio").on( "change", check_name );
           
