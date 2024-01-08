@@ -187,7 +187,7 @@
         <option value="FOnewearl"> FOnewearl </option>
         </select>
       <br><br>
-      <label for="playerName">Name</label><br>
+      <label for="playerName"><abbr title="Name to check">Name</abbr></label><br>
     <input id="playerName" type="text" maxlength="12" >
     <br><br>
     Result: <span id="section-id-result">Text</span>
@@ -243,10 +243,10 @@ function updateRadioStyle(color,circle_color) {
     console.log(`calling updateRadioStyle with color ${color}`);
     if (styleEl) {
         styleEl.innerHTML = `.ui-state-active { background-color: ${color}; border: ${circle_color};} 
-        .ui-button.ui-state-active:hover { background: ${color}; }
-        .ui-button.ui-state-active:active { background: ${color}; }
+        .ui-button.ui-state-active:hover { background: ${color}; border: ${circle_color}; }
+        .ui-button.ui-state-active:active { background: ${color}; border: ${circle_color}; }
         .ui-state-active .ui-icon {border: ${circle_color};}
-        .ui-state-active:hover {border: ${circle_color};}`;
+        .ui-state-active:hover {border: ${circle_color};  border: ${circle_color};}`;
         
     }
 }

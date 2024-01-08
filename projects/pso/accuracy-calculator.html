@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select,#user-input-distance, #process-btn, #status-select {
+    #user-input,#user-input-ata,#difficulty-select,#user-input-distance, #process-btn, #status-select {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -200,12 +200,12 @@ thead tr th {
         <div class="input-container">
             <!-- Label for the input field -->
             <div class="input-group">
-            <label for="user-input-ata">ATA:</label>
+            <label for="user-input-ata"><abbr title="Player accuracy stat, including equipment bonuses">>ATA:</abbr</label>
             <!-- Input field for the user to enter a value -->
             <input type="number" id="user-input-ata" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
                 </div>            <div class="input-group">
                         <!-- Label for the input field -->
-                        <label for="user-input-distance">Distance:</label>
+                        <label for="user-input-distance"><abbr title="Distance to target in PSO units. Ignore if melee or ranger">Distance:</abbr></label>
                         <!-- Input field for the user to enter a value -->
                         <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
                     </div>
@@ -227,7 +227,7 @@ thead tr th {
             </div>
             <div class="input-group">
                 <!-- Label for the dropdown menu -->
-                <label for="status-select">Status Effect:</label>
+                <label for="status-select"><abbr title="Enemy's status">Status Effect:</abbr></label>
                 <!-- Dropdown menu for the user to select a value -->
                 <select id="status-select" onchange="OnValueChanged()">
                     <!-- Option elements for the dropdown -->

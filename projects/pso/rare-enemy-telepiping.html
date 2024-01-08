@@ -207,27 +207,27 @@ input[type=checkbox] {
     <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
     <div class="input-group">
-        <label for="numTrials">Number of Trials:</label>
+        <label for="numTrials"><abbr title="Number of simulations to perform. Higher numbers will give better statistics, closer to real probabilities, but can take longer.">Number of Times to Simulate:</abbr></label>
         <input type="number" id="numTrials" value="5000" min="1" step="100" max="100000">
     </div>
 <div class="input-group">
-    <label for="lilyThreshold">Enemies Left Reset Threshold:</label>
+    <label for="lilyThreshold"><abbr title="When the number of enemies left reaches this number, reset the quest"> Enemies Left Reset Threshold:</abbr></label>
     <input type="number" id="lilyThreshold" value="7" min="0" max="50">
 </div>
 <div class="input-group">
-    <label for="originalLilies">Original Number of Enemy in Wave:</label>
+    <label for="originalLilies"><abbr title="How many enemies will be in the wave every time quest is reset">Original Number of Enemy in Wave:</abbr></label>
     <input type="number" id="originalLilies" value="9" min="1" max="50">
 </div>
 <div class="input-group">
-    <label for="narLilyChance">Rare Enemy Probability:</label>
+    <label for="narLilyChance"><abbr title="Probability for a single enemy to be spawned as rare. Default is 1/500.">Rare Enemy Probability:</abbr></label>
     <input type="number" id="narLilyChance" value=".002" min="0.00001" step=".001" max="1">
 </div>
 <div class="input-group">
-    <label for="rareDropChance">Drop Rate from Rare:</label>
+    <label for="rareDropChance"><abbr title="Probability for rare enemy to drop desired item upon its death. Default is 7/8."> Drop Rate from Rare:</abbr></label>
     <input type="number" id="rareDropChance" value="0.875" min="0" max="1" step=".01" style="width: 5em;">
 </div>
 <div class="input-group">
-    <label for="dropsDesired">Desired # of Rare Drops:</label>
+    <label for="dropsDesired"><abbr title="How many of the specified drop you wish to farm. Default is 1."> Desired # of Rare Drops:</abbr></label>
     <input type="number" id="dropsDesired" value="1" min="0" max="100">
 </div>
 
@@ -235,7 +235,7 @@ input[type=checkbox] {
 <button id="process-btn" onclick="runSimulation()">Run Simulation</button>
 <br><br>
 <div class="input-group">
-    <label for="binSize">Histogram Bin Size:</label>
+    <label for="binSize"><abbr title="Specifies x-axis bin size for graph.">Histogram Bin Size:</abbr></label>
     <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
 </div>
 <div id="progressbar" style="display:none;"></div>
