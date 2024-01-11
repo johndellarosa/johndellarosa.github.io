@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select,#user-input-dfp,#user-input-hp, #process-btn {
+    #user-input,#difficulty-select,#mode-select,#user-input-dfp,#user-input-hp, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -198,6 +198,18 @@ input[type=checkbox] {
                 <!-- Input field for the user to enter a value -->
                 <input type="number" id="user-input-hp" placeholder="Enter HP value" value="100" min="0" onchange="OnValueChanged()"/>
             </div> 
+            <div class="input-container">
+                <!-- Label for the dropdown menu -->
+                <label for="mode-select">Mode:</label>
+                <!-- Dropdown menu for the user to select a value -->
+                <select id="mode-select" onchange="OnValueChanged()">
+                    <!-- Option elements for the dropdown -->
+                    <option value="Solo">Solo</option>
+                    <option value="Online">Online</option>
+        
+                </select>
+                <br>
+            </div>
                 
             <div class="input-group">
             <!-- Label for the dropdown menu -->
@@ -213,6 +225,10 @@ input[type=checkbox] {
                 <option value="Ep2 Hard">Ep2 Hard</option>
                 <option value="Ep2 V Hard">Ep2 V Hard</option>
                 <option value="Ep2 Ultimate">Ep2 Ultimate</option>
+                <option value="Ep4 Normal">Ep4 Normal</option>
+                <option value="Ep4 Hard">Ep4 Hard</option>
+                <option value="Ep4 V Hard">Ep4 V Hard</option>
+                <option value="Ep4 Ultimate">Ep4 Ultimate</option>
             </select>
             </div>
             <br>
@@ -274,7 +290,7 @@ input[type=checkbox] {
     // URL to your hosted Excel file
     const enemy_file = './PSO_Enemy.xlsx';
     // Define a global variable to hold the JSON data
-    let globalJsonData = null;
+    let globalJsonData_offline = null;
     
     fetch(enemy_file)
         .then(response => {
@@ -290,7 +306,7 @@ input[type=checkbox] {
             // // Assuming your sheet is the first sheet in the workbook
             // const firstSheetName = workbook.SheetNames[0];
             // const worksheet = workbook.Sheets[firstSheetName];
-            
+
             // // Convert the sheet to JSON
             // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
             // globalJsonData = json;
@@ -303,26 +319,52 @@ input[type=checkbox] {
             });
 
             // Now allSheetsData contains each sheet's data as a key-value pair
-            globalEnemyData = allSheetsData;
+            globalJsonData_offline = allSheetsData;
 
-            // Now you have the JSON equivalent of your Excel's first sheet
-            // console.log(enemy_data);
-            
-            // // Transform the array into an object keyed by the first column
-            // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
-            //     const keys = Object.keys(current);
-            //     if (keys.length > 0) {
-            //         const index = current[keys[0]];
-            //         accumulator[index] = current;
-            //     }
-            //     return accumulator;
-            // }, {});
 
-            // // Now you have a JSON object indexed by the first column's entries
-            // console.log(jsonIndexedByFirstColumn);
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+
+
+        // URL to your hosted Excel file
+    const enemy_file_online = './Enemy-Online-Stats.xlsx';
+    // Define a global variable to hold the JSON data
+    let globalJsonData_online = null;
+    
+    fetch(enemy_file_online)
+        .then(response => {
+            if (response.ok) {
+                return response.arrayBuffer();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(arrayBuffer => {
+            // Use SheetJS to read the buffer
+            const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+
+            // // Assuming your sheet is the first sheet in the workbook
+            // const firstSheetName = workbook.SheetNames[0];
+            // const worksheet = workbook.Sheets[firstSheetName];
+
+            // // Convert the sheet to JSON
+            // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+            // globalJsonData = json;
+
+            const allSheetsData = {};
+            // Loop over sheet names and convert each sheet to JSON
+            workbook.SheetNames.forEach(sheetName => {
+                const worksheet = workbook.Sheets[sheetName];
+                allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+            });
+
+            // Now allSheetsData contains each sheet's data as a key-value pair
+            globalJsonData_online = allSheetsData;
+
+
             
-            // // Handle the JSON data here
-            handleProcessButtonClick();
         })
         .catch(error => {
             console.error('Fetch error:', error);
@@ -371,8 +413,21 @@ function OnValueChanged(){
                     // Get the selected tech value
         const selectedDifficulty = document.getElementById('difficulty-select').value;
         console.log(selectedDifficulty);
+        const mode = document.getElementById('mode-select').value;
 
-        let hitmatrix = generate_enemy_damage_matrix(globalEnemyData,processedInputDFP,selectedDifficulty);
+
+        let hitmatrix = 0;
+        if(mode == 'Solo'){
+
+        // processData(globalJsonData_offline[selectedDifficulty]);
+        hitmatrix=generate_enemy_damage_matrix(globalJsonData_offline,processedInputDFP,selectedDifficulty);
+        }
+        else{
+        // processData(globalJsonData_online[selectedDifficulty]);
+        hitmatrix=generate_enemy_damage_matrix(globalJsonData_online,processedInputDFP,selectedDifficulty);
+        
+        }
+         
 
         processDataEnemyHit(hitmatrix,processedInputHP, isColorMode);
     }

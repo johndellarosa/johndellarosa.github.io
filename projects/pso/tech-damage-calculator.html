@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#difficulty-select,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus,input, #process-btn {
+    #user-input,#mode-select,#difficulty-select,select,#user-input-class-bonus,#user-input-weapon-bonus,#user-input-merge-bonus,input, #process-btn {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -145,63 +145,94 @@ input[type=number]::-webkit-inner-spin-button {
     </div> 
 
     <script>
-        // URL to your hosted Excel file
-        const enemy_file = './PSO_Enemy.xlsx';
+
         const tech_file = './PSO_Tech.xlsx';
         // Define a global variable to hold the JSON data
-        let globalEnemyData = null;
+
         let globalTechData = null;
         
-        fetch(enemy_file)
-            .then(response => {
-                if (response.ok) {
-                    return response.arrayBuffer();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(arrayBuffer => {
-                // Use SheetJS to read the buffer
-                const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+        // URL to your hosted Excel file
+    const enemy_file = './PSO_Enemy.xlsx';
+    // Define a global variable to hold the JSON data
+    let globalJsonData_offline = null;
+    
+    fetch(enemy_file)
+        .then(response => {
+            if (response.ok) {
+                return response.arrayBuffer();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(arrayBuffer => {
+            // Use SheetJS to read the buffer
+            const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-                // // Assuming your sheet is the first sheet in the workbook
-                // const firstSheetName = workbook.SheetNames[0];
-                // const worksheet = workbook.Sheets[firstSheetName];
-                
-                // // Convert the sheet to JSON
-                // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                // globalEnemyData = json;
-                // Now you have the JSON equivalent of your Excel's first sheet
-                // console.log(enemy_data);
-                
-                const allSheetsData = {};
-                // Loop over sheet names and convert each sheet to JSON
-                workbook.SheetNames.forEach(sheetName => {
-                    const worksheet = workbook.Sheets[sheetName];
-                    allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-                });
+            // // Assuming your sheet is the first sheet in the workbook
+            // const firstSheetName = workbook.SheetNames[0];
+            // const worksheet = workbook.Sheets[firstSheetName];
 
-                // Now allSheetsData contains each sheet's data as a key-value pair
-                globalEnemyData = allSheetsData;
+            // // Convert the sheet to JSON
+            // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+            // globalJsonData = json;
 
-
-                // // Transform the array into an object keyed by the first column
-                // const jsonIndexedByFirstColumn = enemy_data.reduce((accumulator, current) => {
-                //     const keys = Object.keys(current);
-                //     if (keys.length > 0) {
-                //         const index = current[keys[0]];
-                //         accumulator[index] = current;
-                //     }
-                //     return accumulator;
-                // }, {});
-
-                // // Now you have a JSON object indexed by the first column's entries
-                // console.log(jsonIndexedByFirstColumn);
-                
-                // // Handle the JSON data here
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
+            const allSheetsData = {};
+            // Loop over sheet names and convert each sheet to JSON
+            workbook.SheetNames.forEach(sheetName => {
+                const worksheet = workbook.Sheets[sheetName];
+                allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
             });
+
+            // Now allSheetsData contains each sheet's data as a key-value pair
+            globalJsonData_offline = allSheetsData;
+
+
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+
+
+        // URL to your hosted Excel file
+    const enemy_file_online = './Enemy-Online-Stats.xlsx';
+    // Define a global variable to hold the JSON data
+    let globalJsonData_online = null;
+    
+    fetch(enemy_file_online)
+        .then(response => {
+            if (response.ok) {
+                return response.arrayBuffer();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(arrayBuffer => {
+            // Use SheetJS to read the buffer
+            const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
+
+            // // Assuming your sheet is the first sheet in the workbook
+            // const firstSheetName = workbook.SheetNames[0];
+            // const worksheet = workbook.Sheets[firstSheetName];
+
+            // // Convert the sheet to JSON
+            // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+            // globalJsonData = json;
+
+            const allSheetsData = {};
+            // Loop over sheet names and convert each sheet to JSON
+            workbook.SheetNames.forEach(sheetName => {
+                const worksheet = workbook.Sheets[sheetName];
+                allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+            });
+
+            // Now allSheetsData contains each sheet's data as a key-value pair
+            globalJsonData_online = allSheetsData;
+
+
+            
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
             // Fetch tech
             fetch(tech_file)
             .then(response => {
@@ -284,6 +315,18 @@ input[type=number]::-webkit-inner-spin-button {
 
             </select>
             <br>
+            <div class="input-container">
+                <!-- Label for the dropdown menu -->
+                <label for="mode-select">Mode:</label>
+                <!-- Dropdown menu for the user to select a value -->
+                <select id="mode-select" onchange="OnValueChanged()">
+                    <!-- Option elements for the dropdown -->
+                    <option value="Solo">Solo</option>
+                    <option value="Online">Online</option>
+        
+                </select>
+                <br>
+            </div>
 
             <!-- Label for the dropdown menu -->
             <label for="difficulty-select">Difficulty:</label>
@@ -298,6 +341,10 @@ input[type=number]::-webkit-inner-spin-button {
                 <option value="Ep2 Hard">Ep2 Hard</option>
                 <option value="Ep2 V Hard">Ep2 V Hard</option>
                 <option value="Ep2 Ultimate">Ep2 Ultimate</option>
+                <option value="Ep4 Normal">Ep4 Normal</option>
+                <option value="Ep4 Hard">Ep4 Hard</option>
+                <option value="Ep4 V Hard">Ep4 V Hard</option>
+                <option value="Ep4 Ultimate">Ep4 Ultimate</option>
             </select>
             <br>
             <div class="form-group">
@@ -459,6 +506,18 @@ input[type=number]::-webkit-inner-spin-button {
             console.log(maxNumber);
             console.log(typeof(minNumber));
             console.log(typeof(maxNumber));
+
+            const mode = document.getElementById('mode-select').value;
+
+            let globalEnemyData = 0;
+            if(mode == 'Solo'){
+
+                globalEnemyData=globalJsonData_offline;
+            }
+            else{
+                globalEnemyData=globalJsonData_online;
+            }
+
             const results = calculateTechHits(globalEnemyData, globalTechData, selectedTech, processedMST, class_bonus=processedClassBonus, weapon_bonus=processedWeaponBonus, merge_bonus=processedMergeBonus,difficulty=selectedDifficulty,minlevel=minNumber, maxlevel=maxNumber)
             // Perform your calculations here. This is a placeholder function call.
             // You will need to replace 'calculateValuesBasedOnTech' with your actual
