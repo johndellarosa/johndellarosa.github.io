@@ -233,15 +233,19 @@ input[type=checkbox] {
     <label for="inputAttackMax"><abbr title="Upper bound for the damage range for a shot">Damage Max:</abbr</label>
     <input type="number" id="inputAttackMax" value="4" min="1" max="50">
 </div>
+
 <div class="input-group">
-    <label for="inputCritBonus"><abbr title="Bonus damage when weapon gets a critical hit">Crit Bonus Damage:</abbr></label>
-    <input type="number" id="inputCritBonus" value="3" min="0" max="100">
+    <label for="inputHitPercent"><abbr title="Listed percent chance to hit enemy when selecting Banish"> Hit %:</abbr></label>
+    <input type="number" id="inputHitPercent" value="50" min="0" step="1" max="100">
 </div>
 <div class="input-group">
     <label for="inputCritChance"><abbr title="Chance per hit to get a critical hit. Out of 100.">Crit Chance %:</abbr></label>
     <input type="number" id="inputCritChance" value="20" min="0" max="100">
 </div>
-
+<div class="input-group">
+    <label for="inputCritBonus"><abbr title="Bonus damage when weapon gets a critical hit">Crit Bonus Damage:</abbr></label>
+    <input type="number" id="inputCritBonus" value="3" min="0" max="100">
+</div>
 <div class="input-group">
     <label for="inputAmmo"><abbr title="Ammo remaining in magazine before using Banish">Ammo:</abbr></label>
     <input type="number" id="inputAmmo" value="3" min="1" max="30" step="1">
@@ -259,10 +263,7 @@ input[type=checkbox] {
     <label for="inputStock"><abbr title="Damage dealt to enemy upon missing due to stock attachment.">Stock Damage:</abbr></label>
     <input type="number" id="inputStock" value="0" min="0" max="100" step="1">
 </div>
-<div class="input-group">
-    <label for="inputHitPercent"><abbr title="Listed percent chance to hit enemy when selecting Banish"> Hit %:</abbr></label>
-    <input type="number" id="inputHitPercent" value="50" min="0" step="1" max="100">
-</div>
+
 <div class="input-group">
     <label for="inputEnemyHP"><abbr title="Enemy HP before casting Banish">Enemy HP:</abbr></label>
     <input type="number" id="inputEnemyHP" value="10" min="0" max="1000">

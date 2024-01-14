@@ -29,7 +29,7 @@ for (let i =0; i < ammo; i++ ){
         else{
             enemy_armor = Math.max(0, enemy_armor - armor_shred);
             damage_roll = getRandomInt(attack_min, attack_max+1);
-            let crit = Math.random() < crit_chance;
+            let crit = Math.random() < (crit_chance/hit_chance);
             if (crit){
                 damage_roll += crit_bonus;
             }
