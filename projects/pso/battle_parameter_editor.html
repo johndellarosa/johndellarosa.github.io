@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <title>Phantasy Star Online Battle Parameter Editor</title>
+
+    <!-- Meta tags -->
+    
+    <meta name="keywords" content="Phantasy Star Online, Section ID calculator, PSO, Blue Burst">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="Phantasy Star Online Section ID Calculator Blue Burst and Console (Gamecube, Dreamcast, Xbox)">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/battle_parameter_editor">     
+   
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  
+    <style>
+        .dropbtn {
+          background-color: #04AA6D;
+          color: white;
+          padding: 14px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+        }
+        
+        .dropbtn:hover, .dropbtn:focus {
+          background-color: #3e8e41;
+        }
+        
+        #myInput {
+          box-sizing: border-box;
+          background-image: url('searchicon.png');
+          background-position: 14px 12px;
+          background-repeat: no-repeat;
+          font-size: 16px;
+          padding: 14px 20px 12px 45px;
+          border: none;
+          border-bottom: 1px solid #ddd;
+        }
+        
+        #myInput:focus {outline: 3px solid #ddd;}
+        
+        .dropdown {
+          position: relative;
+          display: inline-block;
+          /* margin:2%; */
+          width: clamp(125px,10vw,350px);
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f6f6f6;
+          min-width: 230px;
+          overflow: auto;
+          border: 1px solid #ddd;
+          z-index: 1;
+        }
+        
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+        
+        .dropdown a:hover {background-color: #ddd;}
+        
+        .show {display: block;}
+        
+        
+
+
+
+        .app {
+          text-align: center;
+          margin: auto;
+          margin-top: 5%;
+          padding:5%;
+          width: 50%;
+          border: 3px solid green;
+        }
+
+        input {
+          margin: auto;
+          width: clamp(125px,10vw,350px);
+        }
+
+        .ui-button {
+          margin-top:5px;
+          margin-bottom:5px;
+        }
+
+        /* fieldset label.ui-checkboxradio-checked {
+  border-color: #00af00;
+  background: #00c800;
+} */
+
+        .red { background-color: red; }
+        /* Custom color when focused */
+
+        .custom-hover { background-color: lightblue; }
+.custom-active { background-color: lightgreen; }
+.custom-focus { background-color: lightcoral; }
+
+
+        .blue { background-color: blue; }
+        .green { background-color: green; }
+        
+
+
+        </style>
+
+<style id="dynamic-styles"></style>
+
+    
+</head>
+  <body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="https://johndellarosa.github.io/">Home</a>|
+        <a href="https://johndellarosa.github.io/resume">Resume</a>|
+        <a href="https://johndellarosa.github.io/biography">About</a>|
+        <a href="https://johndellarosa.github.io/projects">Projects</a>|
+        <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div>
+
+
+<h1 style=" text-align: center; justify-content: center; font-size: clamp(18px, 8vw, 36px);">Battle Parameter Editor</h1>
+<h3><a href="./../pso">Return to Menu</a></h3>
+
+<h2><a href="https://github.com/johndellarosa/pso_battle_parameter_editor">Link</a></h2>
+Above is a link to the Github repository.
+<h2>Background</h2>
+In Phantasy Star Online, enemy stats are stored in binary files with the extention .bat. The game loads these parameters to determine enemy stats. 
+<br>
+By better understanding these files, we can
+<ol>
+  <li>Better understand the game</li>
+  <li>Create mods</li>
+</ol>
+<h2>Repository Files</h2>
+<h3>Editor Code</h3>
+The PSO_Battle_Parameter_Editor.py file contains tools that help read and manipulate the Battle Parameter files. Instructions for how to use the code will be further down.
+
+<h3>Memory Map Code</h3>
+There is a markdown file which maps out some of the enemy abilities and the locations in data that affect them. This can be used to denote possible values to change.
+
+<h2>Using the Python Library</h2>
+
+<h3>Installing</h3>
+<ul>
+  <li>The simplest way is to download the .py file and place it in the same directory as the file you wish to use, such as a Jupyter notebook or another .py file</li>
+  <li>You can import the file by using import PSO_Battle_Parameter_Editor as pso to import it with alias pso</li>
+</ul>
+
+<h3>Loading Data</h3>
+Data is loaded and manipulated using the Table class. This can be done by by calling the Table constructor which takes two arguments:
+<ol>
+  <li>Battle parameter file location (string)</li>
+  <li>Episode number (1,2,4) An example is: <code>file = pso.Table('BattleParamEntry.dat',episode=1)</code> </li>
+</ol>
+
+<h3>Viewing the Data</h3>
+There are 4 main sections to the file:
+<ol>
+  <li>Stats</li>
+  <li>Attack</li>
+  <li>Resist</li>
+  <li>Movement</li>
+</ol>
+Each of these 4 sections is further divided into 4 subsections (1 for each difficulty)
+<ol>
+  <li>Normal</li>
+  <li>Hard</li>
+  <li>Very Hard</li>
+  <li>Ultimate</li>
+</ol>
+
+
+The byte-level data is stored in the table instance's data attribute. However, there are a number of functions that provide a more convenient way of viewing the data.
+<br>
+<h4>Get Address</h4>
+For each of the table sections, there is an associated "Get Address" function
+<ol>
+  <li>get_address_stats(enemy, difficulty)</li>
+  <li>get_address_attack(enemy, difficulty)</li>
+  <li>get_address_resist(enemy, difficulty)</li>
+  <li>get_address_movement(enemy, difficulty)</li>
+</ol>
+You can call this method from the table instance and it will print information for that enemy and table. This is an easy way to get information, such as
+<ul>
+  <li>Data Addresses</li>
+  <li>Current Values</li>
+  <li>Data Types</li>
+</ul> 
+
+The enemy parameter can be a string that corresponds to the enemy name (all caps and underscores instead of spaces). It can also be an integer if you know the 0-based indexed row number.<br>
+The difficulty parameter can be a string corresponding to the English name of the difficulty or an integer out of 0, 1, 2, 3.
+
+
+<h3>Modifying the Data</h3>
+There are several methods that can be called to edit the data.
+
+
+
+
+<h3>References</h3>
+<p style="text-align: center;">
+    Some damage values taken from <a href="https://wiki.pioneer2.net/w/Game_mechanics" rel="external">Ephinea</a><br>
+    Understanding of file structure taken from Fuzziqersoftware/NewServ.<br>
+    Help from <a href="https://www.youtube.com/@akdylie">AKDylie</a>.<br>
+    Inspired in part by <a href="https://github.com/Solybum">Solybum</a>
+</p>
+
+</body>
+
+
+</html>
