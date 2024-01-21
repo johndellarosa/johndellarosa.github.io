@@ -178,6 +178,9 @@ There is a markdown file which maps out some of the enemy abilities and the loca
   <li>The simplest way is to download the .py file and place it in the same directory as the file you wish to use, such as a Jupyter notebook or another .py file</li>
   <li>You can import the file by using import PSO_Battle_Parameter_Editor as pso to import it with alias pso</li>
 </ul>
+<img src="images/pso-module-import.png" style="width:clamp(100px,60vw,600px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+   
+
 
 <h3>Loading Data</h3>
 Data is loaded and manipulated using the Table class. This can be done by by calling the Table constructor which takes two arguments:
@@ -185,7 +188,8 @@ Data is loaded and manipulated using the Table class. This can be done by by cal
   <li>Battle parameter file location (string)</li>
   <li>Episode number (1,2,4) An example is: <code>file = pso.Table('BattleParamEntry.dat',episode=1)</code> </li>
 </ol>
-
+<img src="images/pso-module-create-table.png" style="width:clamp(100px,60vw,600px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+   
 <h3>Viewing the Data</h3>
 There are 4 main sections to the file:
 <ol>
@@ -204,7 +208,22 @@ Each of these 4 sections is further divided into 4 subsections (1 for each diffi
 
 
 The byte-level data is stored in the table instance's data attribute. However, there are a number of functions that provide a more convenient way of viewing the data.
+
+
 <br>
+
+<h4>Slicing</h4>
+Bytes at a given position can be seen using slicing, such as
+
+<code>file[20:25]</code>
+<br>
+Keep in mind that the indices are 0-based and the end index is not included. 
+While it is possible to directly modify the bytes by using the index and assignment operator, this is discouraged.
+
+<img src="images/pso-module-slicing.png" style="width:clamp(100px,40vw,400px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+   
+
+
 <h4>Get Address</h4>
 For each of the table sections, there is an associated "Get Address" function
 <ol>
@@ -220,16 +239,44 @@ You can call this method from the table instance and it will print information f
   <li>Data Types</li>
 </ul> 
 
+<img src="images/pso-module-get-address.png" style="width:clamp(100px,60vw,600px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+   
+
 The enemy parameter can be a string that corresponds to the enemy name (all caps and underscores instead of spaces). It can also be an integer if you know the 0-based indexed row number.<br>
 The difficulty parameter can be a string corresponding to the English name of the difficulty or an integer out of 0, 1, 2, 3.
+
+<h4>Get Table</h4>
+
+For a more readable summary of values can be retrieved using get_table methods. This returns a Pandas dataframe.<br>
+NOTE: Currently, modifications made to pandas dataframes do not cause changes to the underlying data, so do not attempt to modify using this.
+<img src="images/pso-module-get-stat-table.png" style="width:clamp(100px,60vw,600px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+   
 
 
 <h3>Modifying the Data</h3>
 There are several methods that can be called to edit the data.
 
+<h4>Set Property</h4>
 
+The safest way to make changes is using set property methods. Currently the stats and resist tables support this method. 
+The method requires only
+<ol>
+  <li>Numerical value you want to set the property to</li>
+  <li>The name of the property to change</li>
+  <li>The enemy name</li>
+  <li>The difficulty to make the change in</li>
+</ol>
 
-
+<img src="images/pso-module-set-property.png" style="width:clamp(100px,60vw,600px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+   
+<h4>Set with Datatype</h4>
+A more flexible method is using set_with_data_type. This sets a value by providing a value, the datatype to format it as, and the start location for it to write to. The datatype and location should be figured by using get_address calls. An advantage to this over directly setting using assignment is that it formats the bytes appropriately for you.
+<img src="images/pso-module-set-datatype.png" style="width:clamp(100px,60vw,600px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+  
+<h3>Saving Changes</h3>
+Changes made to the python object do not automatically write to the file in case of user error. A new file can be outputted with the changes made using the write method, which takes the new file name as a parameter.
+<img src="images/pso-module-write.png" style="width:clamp(100px,40vw,400px); margin-left: auto;margin-right: auto;display: block;" alt="John Della Rosa photo">
+  
 <h3>References</h3>
 <p style="text-align: center;">
     Some damage values taken from <a href="https://wiki.pioneer2.net/w/Game_mechanics" rel="external">Ephinea</a><br>
