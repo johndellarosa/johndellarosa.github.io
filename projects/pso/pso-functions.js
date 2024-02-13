@@ -507,7 +507,7 @@ function calculateTechDamageForEnemies(enemy_stats, tech_powers, tech, mst, clas
         ['Grants','ELT'],
         ['Megid','EDK']]
         );
-    console.log(class_selection);
+    // console.log(class_selection);
 
 
     // const tech_power_at_level = tech_powers.find(tp => tp.Level === level);
@@ -685,8 +685,8 @@ function calculateSpecial(enemy_stats, special_attack, special_reduction_multipl
                   // Use the accuracy function to calculate and assign the value to the accData object
                   let key = `${lvl} S${comboStep} Kill`;
                   let kill_chance = activation_rate*accuracy(ATA, 'S', comboStep, enemyEVP)/100;
-                  console.log(`kill chance: ${kill_chance}`);
-                  console.log(typeof(kill_chance));
+                  // console.log(`kill chance: ${kill_chance}`);
+                  // console.log(typeof(kill_chance));
                   kill_chance = Math.max(Math.round(kill_chance * 10) / 10,0);
                   rowData[key] = `${kill_chance}%`;
                 })
@@ -865,7 +865,7 @@ function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max
         accData[att] = 100* getProb(att, def, dice1Min, dice1Max, dice2Min, dice2Max, pref);
 
 
-        console.log(`${att},${def}: ${accData[att]}`);
+        // console.log(`${att},${def}: ${accData[att]}`);
     });
 
     // Add the accData to accArray
