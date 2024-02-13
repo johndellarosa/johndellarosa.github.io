@@ -874,3 +874,81 @@ function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max
 
   return accArray;
 }
+
+
+function processDataDice(data, headerOrder=false, precision=1) {
+  // Find the existing table by id, and if it exists, remove it
+  const existingTable = document.getElementById('data-table');
+  if (existingTable && existingTable.firstChild) {
+      existingTable.removeChild(existingTable.firstChild);
+  }
+
+  // Create a new table element
+  let table = document.createElement('table');
+  table.style.width = '100%';
+  table.setAttribute('border', '1');
+
+  // Generate table headers
+  let thead = document.createElement('thead');
+  let headerRow = document.createElement('tr');
+
+  // Use the provided headerOrder if available, else fallback to the first item's keys
+  let headers = headerOrder || Object.keys(data[0]);
+  headers.forEach(header => {
+      let th = document.createElement('th');
+      th.textContent = header; // Column letters as headers
+      headerRow.appendChild(th);
+  });
+  // Add an extra header for the row sum
+  let th = document.createElement('th');
+  th.textContent = 'Row Sum';
+  headerRow.appendChild(th);
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Generate table body and calculate sums, skipping the first column for summation
+  let tbody = document.createElement('tbody');
+  let columnSums = ['Column Sums'].concat(new Array(headers.length - 1).fill(0));
+  data.forEach(row => {
+      let tr = document.createElement('tr');
+      let rowSum = 0;
+      headers.forEach((header, index) => {
+          let td = document.createElement('td');
+          let value = row[header];
+          // Skip the first column for sum calculations
+          if (index > 0 && typeof value === 'number') {
+            rowSum += value;  
+            value = Math.round(value * (10 ** precision)) / (10 **precision); // Rounds to 2 decimal places
+
+              columnSums[index] += value; // Correct index for columnSums
+          }
+          td.textContent = value;
+          tr.appendChild(td);
+      });
+      // Append row sum at the end of the row
+      let sumTd = document.createElement('td');
+      sumTd.textContent = Math.round(rowSum * 10**precision) / 10**precision; // Rounds to 2 decimal places
+      tr.appendChild(sumTd);
+      tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+
+  // Add a row for column sums
+  let sumRow = document.createElement('tr');
+  columnSums.forEach((sum, index) => {
+      let td = document.createElement('td');
+      // Check if it's the label or a sum
+      if (index === 0) {
+          td.textContent = sum; // The label "Column Sums"
+      } else {
+          td.textContent = Math.round(sum * (10**precision)) / (10**precision); // Rounded sums for each column
+      }
+      sumRow.appendChild(td);
+  });
+
+  tbody.appendChild(sumRow);
+
+  // Append the table to the div with id="data-table"
+  document.getElementById('data-table').appendChild(table);
+}
