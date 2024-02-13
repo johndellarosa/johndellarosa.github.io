@@ -168,7 +168,7 @@ function generate_enemy_damage_matrix(enemy_stats,total_DFP=100,difficulty='Ep1 
 }
 
 
-function processData(data) {
+function processData(data, headerOrder=false, precision=1) {
     // Find the existing table by id, and if it exists, remove it
     const existingTable = document.getElementById('data-table');
     if (existingTable.firstChild) {
@@ -184,8 +184,8 @@ function processData(data) {
     let thead = document.createElement('thead');
     let headerRow = document.createElement('tr');
     
-    // Assuming the first object in data array has all the headers as keys
-    let headers = Object.keys(data[0]);
+    // Use the provided headerOrder if available, else fallback to the first item's keys
+    let headers = headerOrder || Object.keys(data[0]);
     headers.forEach(header => {
         let th = document.createElement('th');
         th.textContent = header; // Column letters as headers
@@ -202,7 +202,7 @@ function processData(data) {
             let td = document.createElement('td');
             let value = row[header];
             if (!isNaN(value) && value !== null) {
-                value = Math.round(value * 10) / 10; // Rounds to 1 decimal place
+                value = Math.round(value * (10 ** precision)) / (10 ** precision); // Rounds to 1 decimal place
             }
           td.textContent = value;
                   tr.appendChild(td);
@@ -808,4 +808,69 @@ function createTableFromObject(data) {
 
   // Return the complete table
   return table;
+}
+
+
+function getProbSpecificRoll(dice1Roll, dice2Roll, dice1Min, dice1Max, dice2Min, dice2Max) {
+  if (dice1Roll >= dice1Min && dice1Roll <= dice1Max && dice2Roll >= dice2Min && dice2Roll <= dice2Max) {
+      return 1 / ((dice1Max - dice1Min + 1) * (dice2Max - dice2Min + 1));
+  } else {
+      return 0;
+  }
+}
+
+function getProb(attack, defense, dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max = 6, pref = 0) {
+  if (pref === 1) {
+      if (defense > attack) {
+          return 0;
+      } else if (attack > defense) {
+          return getProbSpecificRoll(attack, defense, dice1Min, dice1Max, dice2Min, dice2Max) + getProbSpecificRoll(defense, attack, dice1Min, dice1Max, dice2Min, dice2Max);
+      } else {
+          return getProbSpecificRoll(attack, defense, dice1Min, dice1Max, dice2Min, dice2Max);
+      }
+  } else if (pref === 2) {
+      if (defense < attack) {
+          return 0;
+      } else if (attack < defense) {
+          return getProbSpecificRoll(attack, defense, dice1Min, dice1Max, dice2Min, dice2Max) + getProbSpecificRoll(defense, attack, dice1Min, dice1Max, dice2Min, dice2Max);
+      } else {
+          return getProbSpecificRoll(attack, defense, dice1Min, dice1Max, dice2Min, dice2Max);
+      }
+  } else {
+      return getProbSpecificRoll(attack, defense, dice1Min, dice1Max, dice2Min, dice2Max);
+  }
+}
+
+
+function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max = 6, pref = 0){
+
+
+
+  // Assuming enemy_stats is an array of objects where each object is a row from your Excel file
+  // For example: 
+  // let enemy_stats = [{EVP: 50, ...}, {EVP: 60, ...}, ...];
+
+  // Initialize an empty array for the equivalent of a DataFrame
+  let accArray = [];
+  let dice_range = [1,2,3,4,5,6,7,8,9];
+  // Loop through each enemy stat object
+  dice_range.forEach((def) => {
+    let accData = { 'Defense\\Attack': def }; // Add the 'Enemy' as the first entry
+    
+
+    // Nested loops to go through attack types and combo steps
+    dice_range.forEach( att => {
+        
+        // Use the accuracy function to calculate and assign the value to the accData object
+        accData[att] = 100* getProb(att, def, dice1Min, dice1Max, dice2Min, dice2Max, pref);
+
+
+        console.log(`${att},${def}: ${accData[att]}`);
+    });
+
+    // Add the accData to accArray
+    accArray.push(accData);
+  });
+
+  return accArray;
 }

@@ -11,13 +11,13 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <title>PSO Accuracy Calculator</title>
+        <title>PSO Episode 3 Dice Calculator</title>
 
     <!-- Meta tags -->
     
-    <meta name="keywords" content="PSO, Phantasy Star Online, accuracy calculator">
+    <meta name="keywords" content="PSO, Phantasy Star Online, dice calculator">
     <meta name="author" content="John Della Rosa" >
-    <meta name="description" content="Phantasy Star Online accuracy calculator">
+    <meta name="description" content="Phantasy Star Online dice calculator">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
     <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
-    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/accuracy-calculator">     
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/dice">     
     <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
     <script
     src="https://unpkg.com/react@17/umd/react.development.js"
@@ -49,7 +49,7 @@
         margin-top: 30px; /* Adds some space at the top */
     }
 
-    #user-input,#user-input-ata,#difficulty-select,#mode-select,#user-input-distance, #process-btn, #status-select {
+    input[type=number], #user-input,#user-input-ata,#difficulty-select,#mode-select,#user-input-distance, #process-btn, #status-select {
         margin: 10px; /* Adds space around the input and button */
         padding: 10px; /* Adds space inside the input and button */
         border: 1px solid #ccc; /* Adds a border to the input and button */
@@ -181,81 +181,71 @@ thead tr th {
 
     <script>
 
+        function validateRangeMaxButton(self, target) {
+                let minNumber = document.getElementById(target);
+                let maxNumber = document.getElementById(self);
+                console.log(`min: ${minNumber.value} max: ${maxNumber.value}`)
+                
+                if (parseInt(minNumber.value) > parseInt(maxNumber.value)) {
+                    minNumber.value = parseInt(maxNumber.value);
+                }
+                
+                OnValueChanged();
+              }
+
+
+              function validateRangeMinButton(self, target) {
+                let minNumber = document.getElementById(self);
+                let maxNumber = document.getElementById(target);
+                console.log(`min: ${minNumber.value} max: ${maxNumber.value}`)
+                if (parseInt(minNumber.value) > parseInt(maxNumber.value)) {
+                    maxNumber.value = parseInt(minNumber.value);
+                }
+                
+                OnValueChanged();
+              }
     </script>
 
-<h1>Phantasy Star Online Accuracy Calculator</h1>
+<h1>Phantasy Star Online Episode 3 Dice Outcome Calculator</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p>Calculates the percent chance of an attack dealing damage to an enemy. Single player values are displayed.</p>
-<ol>
-    <li>Letter refers to type of attack: N=Normal, H=Heavy, S=Special</li>
-    <li>Number refers to which hit in the combo it is</li>
-    <li>Values above 100 mean 100% to hit. Values below 0 mean 0% chance to hit.</li>
-    <li>Set Distance parameter to a non-zero value <b>only</b> if you are using non-ranger class with a ranged weapon. Leave as 0 if using melee weapons and/or if you are a ranger.</li>
-    <li>Handgun max range is 170 units. Mech gun max range is 85 units. Slicer max range is 95 units.</li>
-</ol>
+<p>Calculates the probability of each dice outcome in Phantasy Star Online Episode 3. Currently does not take into account Dice Boost mechanism which prevents repeated bad rolls.</p>
+
     <div class="center-container">
         <noscript><p style="text-align: center; color: red;">Javascript must be enabled!</p></noscript>
     
         <!-- Container for the label and input field -->
         <div class="input-container">
-            <!-- Label for the input field -->
-            <div class="input-group">
-            <label for="user-input-ata"><abbr title="Player accuracy stat, including equipment bonuses">ATA:</abbr</label>
-            <!-- Input field for the user to enter a value -->
-            <input type="number" id="user-input-ata" placeholder="Enter ATA value" value="70" min="0" onchange="OnValueChanged()"/>
-                </div>            <div class="input-group">
-                        <!-- Label for the input field -->
-                        <label for="user-input-distance"><abbr title="Distance to target in PSO units. Ignore if melee or ranger">Distance:</abbr></label>
-                        <!-- Input field for the user to enter a value -->
-                        <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
-                    </div>
-                    <div class="input-group">
-            <!-- Label for the dropdown menu -->
 
-            <div class="input-container">
+            <div class="input-group">
+
                 <!-- Label for the dropdown menu -->
-                <label for="mode-select">Mode:</label>
+                <label for="mode-select">Dice Swapping:</label>
                 <!-- Dropdown menu for the user to select a value -->
                 <select id="mode-select" onchange="OnValueChanged()">
                     <!-- Option elements for the dropdown -->
-                    <option value="Solo">Solo</option>
-                    <option value="Online">Online</option>
+
+                    <option value="0">No Swap</option>
+                    <option value="1" selected>Attack Higher</option>
+                    <option value="2">Defense Higher</option>
         
                 </select>
                 
             </div>
-            <div class="input-container">
-            <label for="difficulty-select">Difficulty:</label>
-            <!-- Dropdown menu for the user to select a value -->
-            <select id="difficulty-select" onchange="OnValueChanged()">
-                <!-- Option elements for the dropdown -->
-                <option value="Ep1 Normal">Ep1 Normal</option>
-                <option value="Ep1 Hard">Ep1 Hard</option>
-                <option value="Ep1 V Hard">Ep1 V Hard</option>
-                <option value="Ep1 Ultimate">Ep1 Ultimate</option>
-                <option value="Ep2 Normal">Ep2 Normal</option>
-                <option value="Ep2 Hard">Ep2 Hard</option>
-                <option value="Ep2 V Hard">Ep2 V Hard</option>
-                <option value="Ep2 Ultimate">Ep2 Ultimate</option>
-                <option value="Ep4 Normal">Ep4 Normal</option>
-                <option value="Ep4 Hard">Ep4 Hard</option>
-                <option value="Ep4 V Hard">Ep4 V Hard</option>
-                <option value="Ep4 Ultimate">Ep4 Ultimate</option>
-            </select>
-            </div>
-            <div class="input-group">
-                <!-- Label for the dropdown menu -->
-                <label for="status-select"><abbr title="Enemy's status">Status Effect:</abbr></label>
-                <!-- Dropdown menu for the user to select a value -->
-                <select id="status-select" onchange="OnValueChanged()">
-                    <!-- Option elements for the dropdown -->
-                    <option value="None">None</option>
-                    <option value="Frozen">Frozen</option>
-                    <option value="Paralyzed">Paralyzed</option>
-                    <option value="Both">Both</option>
+            <form>
+                <label for="minNumber1">Dice 1 Min</label>
+                <input type="number" id="minNumber1" name="minNumber" min="1" max="9" value="1" onchange="validateRangeMinButton('minNumber1','maxNumber1')">
+              
+                <label for="maxNumber1">Dice 1 Max</label>
+                <input type="number" id="maxNumber1" name="maxNumber" min="1" max="9" value="6" onchange="validateRangeMaxButton('maxNumber1','minNumber1')">
 
-                </select>
-                </div>
+                <label for="minNumber2">Dice 2 Min</label>
+                <input type="number" id="minNumber2" name="minNumber" min="1" max="9" value="1" onchange="validateRangeMinButton('minNumber2','maxNumber2')">
+              
+                <label for="maxNumber2">Dice 2 Max</label>
+                <input type="number" id="maxNumber2" name="maxNumber" min="1" max="9" value="6" onchange="validateRangeMaxButton('maxNumber2','minNumber2')">
+
+            </form>
+
             <br>
             <div class="input-group">
             <label for="auto-update-box">Auto-update:</label>
@@ -272,90 +262,8 @@ thead tr th {
 
     <script>
 
-               // URL to your hosted Excel file
-    const enemy_file = './PSO_Enemy.xlsx';
-    // Define a global variable to hold the JSON data
-    let globalJsonData_offline = null;
-    
-    fetch(enemy_file)
-        .then(response => {
-            if (response.ok) {
-                return response.arrayBuffer();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(arrayBuffer => {
-            // Use SheetJS to read the buffer
-            const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
 
-            // // Assuming your sheet is the first sheet in the workbook
-            // const firstSheetName = workbook.SheetNames[0];
-            // const worksheet = workbook.Sheets[firstSheetName];
-
-            // // Convert the sheet to JSON
-            // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-            // globalJsonData = json;
-
-            const allSheetsData = {};
-            // Loop over sheet names and convert each sheet to JSON
-            workbook.SheetNames.forEach(sheetName => {
-                const worksheet = workbook.Sheets[sheetName];
-                allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-            });
-
-            // Now allSheetsData contains each sheet's data as a key-value pair
-            globalJsonData_offline = allSheetsData;
-
-
-
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
-
-
-        // URL to your hosted Excel file
-    const enemy_file_online = './Enemy-Online-Stats.xlsx';
-    // Define a global variable to hold the JSON data
-    let globalJsonData_online = null;
-    
-    fetch(enemy_file_online)
-        .then(response => {
-            if (response.ok) {
-                return response.arrayBuffer();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(arrayBuffer => {
-            // Use SheetJS to read the buffer
-            const workbook = XLSX.read(arrayBuffer, { type: 'buffer' });
-
-            // // Assuming your sheet is the first sheet in the workbook
-            // const firstSheetName = workbook.SheetNames[0];
-            // const worksheet = workbook.Sheets[firstSheetName];
-
-            // // Convert the sheet to JSON
-            // const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-            // globalJsonData = json;
-
-            const allSheetsData = {};
-            // Loop over sheet names and convert each sheet to JSON
-            workbook.SheetNames.forEach(sheetName => {
-                const worksheet = workbook.Sheets[sheetName];
-                allSheetsData[sheetName] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
-            });
-
-            // Now allSheetsData contains each sheet's data as a key-value pair
-            globalJsonData_online = allSheetsData;
-
-
-            
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
-
-function OnValueChanged(){
+        function OnValueChanged(){
             
             const autoupdate = document.getElementById('auto-update-box').checked;
 
@@ -364,63 +272,68 @@ function OnValueChanged(){
             }
         }
 
+
+
         // ... (Include the loadExcelFile and processData functions here)
 
         // Function that handles the button click
         function handleProcessButtonClick() {
             // Get the value from the input field
-            const userInputATA = document.getElementById('user-input-ata').value;
-
-            // Validate or transform the input value if necessary
-            // For example, convert the input value to a number
-            const processedInputATA = parseFloat(userInputATA);
+            const userDice1Min = parseInt(document.getElementById('minNumber1').value);
 
             // If the input value is not a number, display an error message
-            if (isNaN(processedInputATA)) {
+            if (isNaN(userDice1Min)) {
+                alert('Please enter a valid number');
+                return;
+            }
+            const userDice1Max = parseInt(document.getElementById('maxNumber1').value);
+
+            // If the input value is not a number, display an error message
+            if (isNaN(userDice1Max)) {
                 alert('Please enter a valid number');
                 return;
             }
 
-            // Get the value from the input field
-            const userInput_distance = document.getElementById('user-input-distance').value;
-
-            // Validate or transform the input value if necessary
-            // For example, convert the input value to a number
-            const processedInput_distance = parseFloat(userInput_distance);
+            const userDice2Min = parseInt(document.getElementById('minNumber2').value);
 
             // If the input value is not a number, display an error message
-            if (isNaN(processedInput_distance)) {
+            if (isNaN(userDice2Min)) {
+                alert('Please enter a valid number');
+                return;
+            }
+            const userDice2Max = parseInt(document.getElementById('maxNumber2').value);
+
+            // If the input value is not a number, display an error message
+            if (isNaN(userDice2Max)) {
                 alert('Please enter a valid number');
                 return;
             }
 
-                        // Get the selected tech value
-            const selectedDifficulty = document.getElementById('difficulty-select').value;
-            console.log(selectedDifficulty);
+            const mode = parseInt(document.getElementById('mode-select').value);
 
-                                    // Get the selected tech value
-            const selectedStatus = document.getElementById('status-select').value;
-            console.log(selectedStatus);
-            const mode = document.getElementById('mode-select').value;
             let hitmatrix=0;
-            if(mode == 'Solo'){
 
-            // processData(globalJsonData_offline[selectedDifficulty]);
-            hitmatrix = generate_accuracy_matrix(globalJsonData_offline,processedInputATA,processedInput_distance,selectedDifficulty,selectedStatus);
+            hitmatrix = generate_dice_matrix(userDice1Min, userDice1Max, userDice2Min, userDice2Max, mode);
 
-            }
-            else{
-            // processData(globalJsonData_online[selectedDifficulty]);
+            // if(mode == 'Solo'){
+
             // // processData(globalJsonData_offline[selectedDifficulty]);
-            hitmatrix = generate_accuracy_matrix(globalJsonData_online,processedInputATA,processedInput_distance,selectedDifficulty,selectedStatus);
+            // hitmatrix = generate_dice_matrix(userDice1Min, userDice1Max, userDice2Min, userDice2Max, mode);
 
-            }
+            // }
+            // else{
+            // // processData(globalJsonData_online[selectedDifficulty]);
+            // // // processData(globalJsonData_offline[selectedDifficulty]);
+            // hitmatrix = generate_accuracy_matrix(globalJsonData_online,processedInputATA,processedInput_distance,selectedDifficulty,selectedStatus);
+
+            // }
             
-            processData(hitmatrix);
+            processData(hitmatrix, ['Defense\\Attack',1,2,3,4,5,6,7,8,9],3);
         }
 
         // Add event listener to the button
         document.getElementById('process-btn').addEventListener('click', handleProcessButtonClick);
+        handleProcessButtonClick()
     </script>
 <div class="bottom" style="text-align: center;">
     <h3><a href="./../pso.html">PSO Modules</a> </h3>     
