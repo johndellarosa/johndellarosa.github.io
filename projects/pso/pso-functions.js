@@ -898,7 +898,7 @@ function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max
 
     for (const [index, row] of accArray.entries()){
       for (const [index_2, element] of accArray.entries()){
-        console.log(index,index_2);
+        // console.log(index,index_2);
         accArray[index][index_2] *= 100 ;
         accArray[index][index_2]/= normalization_factor;
       }
