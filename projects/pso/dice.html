@@ -248,7 +248,7 @@ thead tr th {
             <br>
             <div class="input-group">
             <label for="dice-boost-box">Dice Boost:</label>
-            <input type="checkbox" id="dice-boost-box" >
+            <input type="checkbox" id="dice-boost-box"  onchange="OnValueChanged()">
             </div>
             <br>
             <br>
@@ -259,7 +259,7 @@ thead tr th {
         </div>
         
         <!-- Button that will trigger processData when clicked -->
-        <button id="process-btn">Calculate</button>
+        <button id="process-btn" >Calculate</button>
     </div>
     <br><br>
     <div class="data-table"  id="data-table"></div>
