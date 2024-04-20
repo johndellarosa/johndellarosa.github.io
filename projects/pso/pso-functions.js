@@ -842,7 +842,7 @@ function getProb(attack, defense, dice1Min = 1, dice1Max = 6, dice2Min = 1, dice
 }
 
 
-function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max = 6, pref = 0){
+function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max = 6, pref = 0, dice_boost=false){
 
 
 
@@ -853,6 +853,7 @@ function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max
   // Initialize an empty array for the equivalent of a DataFrame
   let accArray = [];
   let dice_range = [1,2,3,4,5,6,7,8,9];
+  let normalization_factor = 0;
   // Loop through each enemy stat object
   dice_range.forEach((def) => {
     let accData = { 'Defense\\Attack': def }; // Add the 'Enemy' as the first entry
@@ -860,10 +861,19 @@ function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max
 
     // Nested loops to go through attack types and combo steps
     dice_range.forEach( att => {
-        
-        // Use the accuracy function to calculate and assign the value to the accData object
-        accData[att] = 100* getProb(att, def, dice1Min, dice1Max, dice2Min, dice2Max, pref);
+        if (dice_boost & (att < 3) & (def < 3)){
 
+            accData[att] = 0;
+          
+        }
+        else{
+          accData[att] = 100* getProb(att, def, dice1Min, dice1Max, dice2Min, dice2Max, pref);
+       
+        }
+        // Use the accuracy function to calculate and assign the value to the accData object
+      if (dice_boost){
+          normalization_factor += accData[att];
+        }
 
         // console.log(`${att},${def}: ${accData[att]}`);
     });
@@ -871,6 +881,32 @@ function generate_dice_matrix(dice1Min = 1, dice1Max = 6, dice2Min = 1, dice2Max
     // Add the accData to accArray
     accArray.push(accData);
   });
+
+  // console.log(accArray);
+
+
+  if (dice_boost){
+    // accArray.forEach(row => {
+    //   console.log(row);
+    //   console.log(typeof(row));
+    //   console.log(row[1]);
+    //   for (const property in row){
+    //     console.log(property);
+    //     row[property] * 100 / normalization_factor;
+    //   }
+    // })
+
+    for (const [index, row] of accArray.entries()){
+      for (const [index_2, element] of accArray.entries()){
+        console.log(index,index_2);
+        accArray[index][index_2] *= 100 ;
+        accArray[index][index_2]/= normalization_factor;
+      }
+    }
+
+  }
+
+  // console.log(normalization_factor);
 
   return accArray;
 }
@@ -901,7 +937,7 @@ function processDataDice(data, headerOrder=false, precision=1) {
   });
   // Add an extra header for the row sum
   let th = document.createElement('th');
-  th.textContent = 'Row Sum';
+  th.textContent = 'Row Sum (Prob Def Roll)';
   headerRow.appendChild(th);
 
   thead.appendChild(headerRow);
@@ -909,7 +945,7 @@ function processDataDice(data, headerOrder=false, precision=1) {
 
   // Generate table body and calculate sums, skipping the first column for summation
   let tbody = document.createElement('tbody');
-  let columnSums = ['Column Sums'].concat(new Array(headers.length - 1).fill(0));
+  let columnSums = ['Column Sums (Prob Atk Roll)'].concat(new Array(headers.length - 1).fill(0));
   data.forEach(row => {
       let tr = document.createElement('tr');
       let rowSum = 0;

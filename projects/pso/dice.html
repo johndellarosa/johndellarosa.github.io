@@ -245,7 +245,12 @@ thead tr th {
                 <input type="number" id="maxNumber2" name="maxNumber" min="1" max="9" value="6" onchange="validateRangeMaxButton('maxNumber2','minNumber2')">
 
             </form>
-
+            <br>
+            <div class="input-group">
+            <label for="dice-boost-box">Dice Boost:</label>
+            <input type="checkbox" id="dice-boost-box" >
+            </div>
+            <br>
             <br>
             <div class="input-group">
             <label for="auto-update-box">Auto-update:</label>
@@ -311,9 +316,12 @@ thead tr th {
 
             const mode = parseInt(document.getElementById('mode-select').value);
 
+            const dice_boost = document.getElementById('dice-boost-box').checked;
+
+
             let hitmatrix=0;
 
-            hitmatrix = generate_dice_matrix(userDice1Min, userDice1Max, userDice2Min, userDice2Max, mode);
+            hitmatrix = generate_dice_matrix(userDice1Min, userDice1Max, userDice2Min, userDice2Max, mode,dice_boost);
 
             // if(mode == 'Solo'){
 
