@@ -263,11 +263,12 @@ input[type=checkbox] {
                     // console.log(`clipped level: ${clippedLevel}`);
                     // console.log(typeof(clippedLevel));
                     const new_val = Math.floor(clippedLevel / parseInt(row['Min'])) - 1;
-                    console.log(`new_val for ${row['Name']}`);
-                    console.log(new_val);
+                    //console.log(new_val);
+                    //console.log(`new_val for ${row['Name']}`);
+                    //console.log(new_val);
                     const new_key = clamp(new_val,0,14);
-                    console.log(typeof(new_key));
-                    console.log(new_key);
+                    //console.log(typeof(new_key));
+                    //console.log(new_key);
                     techLevelDistributions[row['Name']] = { [new_key]: 1 };
                 } else if (row['Type'] === "2") {
                     const minLevel = Math.max(row['Min'] - 1, 0);
