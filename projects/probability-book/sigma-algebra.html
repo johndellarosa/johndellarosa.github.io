@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Monte Carlo Method</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/monte-carlo"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Sigma-Algebra">
+                <h1>Sigma Algebra</h1>
+                <h2>Introduction to Sigma Algebras</h2>
+                
+                <h3>Definition</h3>
+                Let \(\mathcal{X}\) be a set of elements \(\left\{x_1,\dots,x_n\right\}\). Let \(\mathcal{F}\) be a sigma algebra on \(\mathcal{X}\). 
+                Then \(\mathcal{F}\) is a collection of subsets of X that satisfies the following properties: 
+
+
+                <ol>
+                    <li>Closed under complement</li>
+                    <li>Closed under countable unions</li>
+                </ol>
+
+                We will go further into each of these criteria.
+
+                For brevity of examples, we will give a value to n. Let \(\mathcal{X}\) be the set \(\left\{x_1, x_2\right\}\). 
+                Our sigma algebra for the example shall be 
+                $$\mathcal{G}=\{\emptyset,\{x_1\},\{x_2\}, \{x_1, x_2\}\}$$
+
+                <h3>Closed Under Complement</h3>
+
+                Since a sigma algebra is closed, then that means for a subset \(A\in \mathcal{F}\), then \(X\setminus A \in \mathcal{F}\).
+                <br>
+                For our example, we can see that for \(\left\{x_1, x_2\right\}\),
+
+                $$\{x_1\}\in \mathcal{G} \rightarrow \{x_1, x_2\}\setminus \{x_1\}=\{x_2\}\in \mathcal{G}$$
+                
+                <h3>Closed Under Countable Unions</h3>
+
+
+
+                Sometimes you will see closed under countable intersection listed in the definition of a sigma-algebra. This is true, but it can be proven using De Morgan's laws that the two listed properties imply closure under countable intersection.
+
+
+                <h3>Examples of Sigma Algebras</h3>
+                Let \(\mathcal{X}\) be the set \(\{x_1, x_2, x_3\}\).
+
+                It is important to note that there is not just one possible sigma algebra on this set. The following are some possible examples:
+                <ol>
+                    <li>\(\mathcal{F}_1 = \left\{ \emptyset, \{x_1, x_2, x_3\} \right\}\)
+                    </li><li>\(\mathcal{F}_2 = \left\{ \emptyset, \{x_1\}, \{x_1, x_2, x_3\}, \{x_2, x_3\} \right\}\)                </li>
+                    <li>\(\mathcal{F}_3 = \left\{ \emptyset, \{x_1\}, \{x_2\}, \{x_3\}, \{x_1, x_2\}, \{x_1, x_3\}, \{x_2, x_3\}, \{x_1, x_2, x_3\} \right\}\)
+                    </li>
+                </ol>
+
+                This last example has a special name: <b>Power Set</b>.
+
+
+                As an exercise, come up with another possible sigma algebra on \(\mathcal{X}\).<br>
+                As another exercise, verify that each of the above examples satisfies the criteria for being a sigma algebra on \(\mathcal{X}\).
+
+                <h3>Power Set</h3>
+                The Power Set of X is the set of all possible subsets. Written out for our recurring example:
+
+                $$\mathcal{P}(\{x_1, x_2, x_3\}) = \left\{ \emptyset, \{x_1\}, \{x_2\}, \{x_3\}, \{x_1, x_2\}, \{x_1, x_3\}, \{x_2, x_3\}, \{x_1, x_2, x_3\} \right\}$$
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Sigma Algebra Practice Problems</h2>
+                    <ol>
+                        <li>Write out \(\mathcal{P}(\{x_1, x_2\})\).</li>
+                        <li>Write out \(\mathcal{P}(\{x_1, x_2, x_3, x_4\})\).</li>
+                        <li>\(\text{Given the set } X = \{a, b, c\}, \text{ list all subsets that must be included in a sigma algebra } \mathcal{F} \text{ if } \{a\} \in \mathcal{F}.\)</li>
+                        <li>\(\text{Let } X = \{x_1, x_2, x_3\} \text{ and consider the collection of sets:}\)<br>
+                            \(\mathcal{F} = \left\{ \emptyset, \{x_1\}, \{x_2, x_3\}, \{x_1, x_2, x_3\} \right\}.\)<br>
+                            \(\text{Prove whether or not } \mathcal{F} \text{ is a sigma algebra on } X.\)</li>
+                    
+                        <li>\(\text{Let } X = \{1, 2, 3, 4\} \text{ and consider the set } A = \{1, 2\}.\)<br>                          
+                            \( \text{Find the smallest sigma algebra } \mathcal{F} \text{ on } X \text{ that contains the set } A.\)</li>
+                        <li>
+                            \(\text{Let } X = \{x_1, x_2, x_3, x_4\} \text{ and suppose that } \mathcal{F} \text{ is a sigma algebra containing the sets } \{x_1, x_2\} \text{ and } \{x_3\}.\)                           
+                            \(\text{List all the sets that must belong to } \mathcal{F}.\)
+                        </li>
+                        
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
