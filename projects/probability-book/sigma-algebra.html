@@ -4,14 +4,14 @@
 
         <meta charset="UTF-8">
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-2C44LTKBE1');
-</script>
+</script> -->
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/monte-carlo"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/sigma-algebra"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -52,7 +52,7 @@
             <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
         
         </div>
-        <h2><a href= "table-of-contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+        <h2><a href= "table-of-contents.html">Probability Textbook (Work in Progress)</a></h2>
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
@@ -60,6 +60,10 @@
                 <h1>Sigma Algebra</h1>
                 <h2>Introduction to Sigma Algebras</h2>
                 
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                </ol>
                 <h3>Definition</h3>
                 Let \(\mathcal{X}\) be a set of elements \(\left\{x_1,\dots,x_n\right\}\). Let \(\mathcal{F}\) be a sigma algebra on \(\mathcal{X}\). 
                 Then \(\mathcal{F}\) is a collection of subsets of X that satisfies the following properties: 
@@ -80,13 +84,35 @@
 
                 Since a sigma algebra is closed, then that means for a subset \(A\in \mathcal{F}\), then \(X\setminus A \in \mathcal{F}\).
                 <br>
+                <h4>Example</h4>
                 For our example, we can see that for \(\left\{x_1, x_2\right\}\),
 
-                $$\{x_1\}\in \mathcal{G} \rightarrow \{x_1, x_2\}\setminus \{x_1\}=\{x_2\}\in \mathcal{G}$$
+                $$\{x_1\}\in \mathcal{G} \implies \{x_1, x_2\}\setminus \{x_1\}=\{x_2\}\in \mathcal{G}$$
                 
                 <h3>Closed Under Countable Unions</h3>
+                Let A be a set that is formed from the union of elements of \(\mathcal{F}\), then \(A\in\mathcal{F}\).
+                One distinction is that A need <b>not</b> be formed through a <b>finite</b> number of unions, just  <b>countable</b> unions.
+<br>
+                Written more formally:<br>
 
+                Let \( X \) be a non-empty set, and let \( \mathcal{F} \) be a sigma algebra on \( X \). We say that \( \mathcal{F} \) is closed under countable unions if for any sequence of sets \( A_1, A_2, A_3, \dots \in \mathcal{F} \), the union of these sets is also in \( \mathcal{F} \). 
+                In math notation:
+                <br>
+                $$A_1, A_2, A_3, \dots \in \mathcal{F},$$
+                then:
+                $$\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$$
 
+                <h4>Example</h4>
+                Let \(\mathcal{G}\) be a sigma algebra on the set \(\{x_1, x_2, x_3\}\)
+
+                If the elements \(\{x_1\},\{x_2\},\{x_3\}\) are in \(\mathcal{G}\), then that implies that all the following:
+                <ol>
+                    <li>\(\{x_1,x_2\}\in\mathcal{G}\)</li>
+                    <li>\(\{x_1,x_3\}\in\mathcal{G}\)</li>
+                    <li>\(\{x_2,x_3\}\in\mathcal{G}\)</li>
+                    <li>\(\{x_1,x_2,x_3\}\in\mathcal{G}\)</li>
+                </ol>
+                <h3>Other Properties</h3>
 
                 Sometimes you will see closed under countable intersection listed in the definition of a sigma-algebra. This is true, but it can be proven using De Morgan's laws that the two listed properties imply closure under countable intersection.
 
@@ -113,6 +139,15 @@
 
                 $$\mathcal{P}(\{x_1, x_2, x_3\}) = \left\{ \emptyset, \{x_1\}, \{x_2\}, \{x_3\}, \{x_1, x_2\}, \{x_1, x_3\}, \{x_2, x_3\}, \{x_1, x_2, x_3\} \right\}$$
 
+                If X is countably infinite, then Cantor's Theorem states that the \(\mathcal{P}\{X\}\) is <b>uncountably</b> infinite.
+
+
+                <h3>Borel Sigma Algebra on the Reals</h3>
+                Let X be \(\mathcal{R}\), then the Borel Sigma Algebra on the Reals, \(\mathcal{B}(\mathcal{R})\), 
+                is the collection of all sets that can be formed from countable union, countable intersection, and complement of open intervals on \(\mathcal{R}\).
+
+                <br>
+                \(\mathcal{B}(\mathcal{R})\) also contains closed intervals and half-open intervals
 
                 </div>
 
@@ -139,7 +174,12 @@
                             \(\text{Let } X = \{x_1, x_2, x_3, x_4\} \text{ and suppose that } \mathcal{F} \text{ is a sigma algebra containing the sets } \{x_1, x_2\} \text{ and } \{x_3\}.\)                           
                             \(\text{List all the sets that must belong to } \mathcal{F}.\)
                         </li>
-                        
+                        <li>
+                            \(\text{Let } X = \mathbb{N} \text{ (the set of natural numbers), and consider the collection of sets:}\)<br>
+                            \(\mathcal{F} = \left\{ A \subseteq \mathbb{N} \mid A \text{ is finite, or } A^c \text{ the complement of } A \text{ in } \mathbb{N}) \text{ is finite} \right\}.\)<br>
+                            \(\text{Prove that } \mathcal{F} \text{ is closed under countable unions, that is, if } A_1, A_2, A_3, \dots \in \mathcal{F},\)<br>
+                            \(\text{then } \bigcup_{n=1}^{\infty} A_n \in \mathcal{F}.\)
+                        </li>
                         </ol>
     
     
