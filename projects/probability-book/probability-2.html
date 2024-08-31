@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Measures</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/measure"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Probability Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Measures">
+                <h1>Probability Part II</h1>
+                <h2>More on Probability</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                
+                </ol>
+                <h3>Definition</h3>
+                A measure can be thought of as a function that assigns a number to a set. <br>
+
+                More formally, let \(\mathcal{X}\) be a set and \(\mathcal{F}\) be a sigma algebra on \(\mathcal{X}\), then a measure, \(\mu\) on 
+                \((\mathcal{X},\mathcal{F})\) is a function \(\mu\rightarrow [0,\infty]\) with the following properties:
+
+                <ol>
+                    <li>Non-negativity: For \(A\in \mathcal{F}, \mu(A)\geq 0.\)</li>
+                    <li>\(\mu(\emptyset)=0\)</li>
+                    <li>Sigma-additivity: if \(\{A_n\}\) is a countable collection of disjoint sets in \mathcal{F} (i.e., \(A_i \cap A_j=\emptyset\) for \(i\neq j\), then<br>
+                        \(\mu\left( \bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty} \mu(A_n).\)
+                    </li>
+                </ol>
+
+                <h3>Other Common Distribution Attributes</h3>
+                <h4>Quantile Function</h4>
+                Recall the CDF is
+                $$F_X(x)=P(X\leq x)$$
+                This tells us what fraction of the time, we will see a value less than x.
+                <br>
+
+               But what if we want the opposite case: for a given percentage of the time, what would we expect the result to be under? 
+            
+               $$Q(p)=\inf \{x\in \mathbb{R}:p\leq F(x)\}$$
+
+                <h4>Moment (Raw)</h4>
+                The \(n^{th}\) (raw) moment, \(m_n\) is given by
+                $$m_n=\mathbb{E}[X^n]$$
+
+                We can extend this definition by talking about the moment about a value c as:
+
+                $$m(n,c)=\mathbb{E}[(X-c)^n]$$
+                For the special case where c is the mean of X, we give this a special name, the <b>central moment</b>.
+
+                <h4>Central Moment</h4>
+                We will denote the \(n^{th}\) central moment as \(\mu_n\)
+
+                $$\mu_n=\mathbb{E}[(X-E[X])^n]=\mathbb{E}[(X-\mu_1)^n]$$
+                For n=2, you may recognize this formula as the variance:
+                $$\mu_2=\mathbb{E}[(X-E[X])^2]=\sigma^2$$
+
+                <h4>Standardized Moment</h4>
+                Further building on the concept of the central moment is the standardized moment, which is a scaled version of the central moment. 
+                The \(n^{th}\) standardized moment \(\tilde{\mu}_n\) is given by:
+
+                $$\tilde{\mu}_n=\mathbb{E}[\left(\frac{X-\mu}{\sigma}\right)^n]$$
+                where \(\mu\) is the first central moment (mean) and \(\sigma\) is the standard deviation (square root of the variance).
+
+                The standardized moments are where the common definitions of skewness and kurtosis come from. They are defined as \(\tilde{\mu}_3\) and \(\tilde{\mu}_4\) respectively.
+
+               <h4>Moment-Generating Function (MGF)</h4>
+                Before, we talked about getting the <a href="https://johndellarosa.github.io/projects/biophysics-book/probability">expected value</a> of a function of a random variable.
+
+                We will now define the MGF as a specific case of such:
+
+                $$M_X(t)\equiv \mathbb{E}[e^{tX}]$$
+                For a discrete random variable, this is calculated as:
+                $$M_X(t)=\sum_{i=0}^{\infty}e^{tx_i}p(x_i)$$
+                For a continuous random variable, this is calculated as:
+                $$M_X(t)=\int_{-\infty}^{\infty}e^{tx}f_X(x)dx$$
+                Note that this is not a function of x, but rather of a new variable t, as we are integrated over the support of X. 
+                While this may seem like a strange choice, it ends up having useful properties.
+
+                <br>
+                Let us define the \(n^{th}\) (non-central) moment \(m_n\) as
+                $$m_n\equiv \mathbb{E}[X^n]$$
+
+                We can obtain \(m_n\) by differentiating the MGF n times and then evaluating it at t=0:
+
+                $$m_n=\frac{d^n M_X}{dt^n}\rvert_{t=0}$$
+                Hence the name Moment Generating Function. Note: this may not exist for all distributions. However, there is a closely related version which is, at the price of imaginary numbers and slightly more complicated calculations.
+
+                <h4>Characteristic Function</h4>
+                The characteristic function is defined similarly to the MGF:
+
+                $$\varphi_X(t)\equiv \mathbb{E}[e^{itX}]$$
+                Note however, the inclusion of i.<br>
+
+                This can also be used to generate moments of a distribution (provided they exist):
+
+                $$\frac{d^n \varphi_X}{dt^n}\rvert_{t=0}=i^km_n$$
+
+                One example of a distribution that possesses a CF but not an MGF is the Cauchy distribution:
+                $$f(x;x_0,\gamma)=\frac{1}{\pi \gamma \left[1+\left(\frac{x-x_0}{\gamma}\right)^2\right]}$$
+                You cannot use the CF to generate the moments for the Cauchy distribution, as they are undefined, but the Characteristic Function does exist for it. There are uses of the Characteristic Function beyond generating moments, which is why this is important that it exists, even for difficult distributions.
+
+                <h4>Cumulants and the Cumulant Generating Function</h4>
+                An alternative the moments are the cumulants. These are derived similarly to that of moments from the MGF. In fact, the cumulant-generating function is just the log of the MGF.
+
+                $$K(t)=\log (\mathbb{E}[e^{tx}])$$
+                To get the cumulants, we take differentiate K(t) and evaluate it at 0, just like with the MGF.
+
+                $$\kappa_n=K^{(n)}(0)$$
+
+                <h4>Entropy</h4>
+                Continuing with the trend of looking at expectations of distribution, the entropy, H, is given by
+
+                $$H(X)=\mathbb{E}[-\log p(x)]$$
+                where p(x) is the PMF or PDF of X.
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Measure Practice Problems</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

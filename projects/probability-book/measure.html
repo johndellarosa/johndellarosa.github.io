@@ -114,18 +114,32 @@
                 $$\mu(B_n) \leq \mu(A_n) \quad \text{for each } n$$
 
                 $$\sum_{n=1}^{\infty} \mu(B_n) \leq \sum_{n=1}^{\infty} \mu(A_n)$$
-                $$\sum_{n=1}^{\infty} \mu(B_n) = \mu\left(\bigcup_{n=1}^{\infty} A_n\right)$$
+                $$\mu\left(\bigcup_{n=1}^{\infty} A_n\right)=\mu\left(\bigcup_{n=1}^{\infty} B_n\right) = \leq \sum_{n=1}^{\infty} \mu(A_n)$$
 
                 $$\mu\left(\bigcup_{n=1}^{\infty} A_n\right) \leq \sum_{n=1}^{\infty} \mu(A_n)$$
 
-
+                <h4>Completeness</h4>
+                If A is a set of measure zero and \(B\subseteq A\), then \(\mu(B)=0\).
 
                 <h3>Examples of Measures</h3>
                 <h4>Lebesgue Measure</h4>
                 The Lebesgue measure is the analogue of length. 
 
-                Let \(\lambda\) be the Lebesgue measure on \(\mathcal{B}(\mathcal{R})\). 
+                Let \(\lambda\) be the Lebesgue measure on \(\mathcal{B}(\mathbb{R})\). 
                 Then \(\lambda((a,b))=b-a\)
+
+                <h4>Probability Measure</h4>
+                A measure, \(\mathbb{P}\), on set X with sigma algebra \(\mathcal{F}\), if \(\mathbb{P}(X)=1\).
+
+
+                <h4>Counting Measure</h4>
+                Let X be a set and \(\mathcal{P}(X)\) be its power set.
+                Let \(\mu_\text{count}\) be the counting measure on that sigma algebra.
+
+                
+
+                $$\mu_{\text{count}}(A)=\text{ the number of elements in A}$$
+                for \(A\subseteq X\).
 
 
                 </div>
@@ -142,7 +156,9 @@
 
                     <ol>
                         <li>Explain why the Counting Measure satisfies the criterium for a measure.</li>
-
+                        <li>Let X be the set of outcomes of rolling a fair die once. Let \(\mathcal{F}=\mathcal{P}(X)\). Let \(\mathbb{P}\) be the probability measure on X and \(\mathcal{F}\). 
+                            Let \(A_1\) be the rolling a 3. Let \(A_2\) be rolling an odd number. Verbally explain monotonicity and sub-additivity as they relate to this example. 
+                        </li>
                     </ol>
     
     
