@@ -12,7 +12,7 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script> -->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
             <title>Extreme Value Theory</title>
@@ -31,11 +31,79 @@
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
         <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/set-theory"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
-<!-- 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+        
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            #controls {
+                margin-bottom: 20px;
+                width: 100%; /* Adjust according to your preference */
+            }
+            #myChart {
+                max-width: 800px;
+                max-height: 500px;
+                width: 100%; /* Responsive width */
+                height: 400px; /* Adjust height as needed */
+            }
+            #statistics {
+                margin-top: 20px;
+            }
+            .slider-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .slider-container label {
+                width: 200px;
+                margin-right: 10px;
+            }
+            .slider-container input[type=range]{
+                width: 300px;
+            }
+            slider-container input[type=number] {
+                width: 200px;
+                
+            }
+            .slider-container span {
+                margin-left: 10px;
+            }
+            #process-btn {
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+    }
+    /* input[type=number]:focus {
+    border: 3px solid #555;
+    } */
+
+    #process-btn {
+        cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+    }
+
+    #process-btn:hover {
+        background-color: #0056b3; /* Darkens the button when hovered */
+    }
+        </style>
+
+        <script>
+            // Initialize Chart.js chart variable
+            //let myChart; // Declare the chart variable globally
+        </script>
+        <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       
 
         <script src="../../math.js" type="text/javascript"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.0/math.min.js"></script>
 
     </head>
     <body>
@@ -121,6 +189,65 @@
 
                 <h5>Interpretation</h5>
                 What does this imply? Well, if x corresponds to a low quantile, then F(x) gets raised to the n-1 power, which greatly shrinks the probability. This intuitively means that as the sample size is larger, the probability that the max of that sample is a small number is very small. 
+                
+                <h3>Simulation</h3>
+                <script src="./evt-funcs.js"></script>
+
+                <div id="controls">
+                    <div class="slider-container">
+                        <label for="sampleSize">Sample Size (n): </label>
+                        <input type="range" id="sampleSize" min="1" max="100" value="10" oninput="onParameterChange();">
+                        <span id="sampleSizeValue">10</span>
+                    </div>
+                    <div class="slider-container">
+                        <label for="numSimulations">Number of Simulations: </label>
+                        <input type="range" id="numSimulations" min="10" max="5000" value="1000" step="10" oninput="onParameterChange();">
+                        <span id="numSimulationsValue">1000</span>
+                    </div>
+                    <div class="slider-container">
+                        <label for="numBins">Number of Bins: </label>
+                        <input type="range" id="numBins" min="5" max="200" value="30" oninput="onParameterChange();">
+                        <span id="numBinsValue">30</span>
+                    </div>
+                    <div class="slider-container">
+                        <label for="xMin">X-Axis Min: </label>
+                        <input type="number" id="xMin" value="auto" placeholder="auto" oninput="onParameterChange();">
+                    </div>
+                    <div class="slider-container">
+                        <label for="xMax">X-Axis Max: </label>
+                        <input type="number" id="xMax" value="auto" placeholder="auto" oninput="onParameterChange();">
+                    </div>
+                    <div class="slider-container">                    <label for="distribution">Distribution: </label>
+                        <select id="distribution" onchange="updateDistributionParameters();">
+                            <option value="normal">Normal</option>
+                            <option value="exponential">Exponential</option>
+                            <option value="uniform">Uniform</option>
+    
+                        </select></div>
+                        <div class="slider-container">                     <div id="distributionParameters"></div>    </div>
+                        <div class="slider-container"><button id="process-btn" onclick="runSimulation()">Run Simulation</button></div>
+                    <div>
+                        <input type="checkbox" id="autoUpdate" checked>
+                        <label for="autoUpdate">Auto Update on Parameter Change</label>
+                    </div>
+            
+                    
+                </div>
+                <canvas id="myChart"></canvas>
+            
+                <div id="statistics">
+                    <h2>Summary Statistics</h2>
+                    <p id="mean_">Mean: </p>
+                    <p id="median">Median: </p>
+                    <p id="variance">Variance: </p>
+                    <p id="stdDev_">Standard Deviation: </p>
+                </div>
+                <script>
+                    // runSimulation()
+                </script>
+            
+
+
 
                 <h4>Distribution of the Minimum</h4>
                 By symmetry, the distribution of the minimum is composed similarly. The thing of note is that we are now concerned with probabilities that the others are <b>greater</b> than \(X_{(1)}\). Thus, we switch out F(x) for 1-F(x):
