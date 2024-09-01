@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Extreme Value Theory</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/set-theory"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Probability Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Set-Theory">
+                <h1>Extreme Value Theory</h1>
+                <h2>Introduction to Extreme Value Theory</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                </ol>
+                
+                <h3>What is Extreme Value Theory?</h3>
+                Extreme value theory (EVT) deals with understanding the behavior of tail events. One example is understanding the maximum from repeated sampling from a distribution.                
+                <h2>Introduction to Order Statistics</h2>
+                Previously, we've been dealing with statistics such as the mean. Order statistics provide a way to analyze the behavior of the extremes (minimum and maximum) as well as the general properties of distributions and their sample representations.
+
+                <h4>Example</h4>
+                Let \(x_1, x_2,\dots, x_n\) be a sample of n i.i.d random variables drawn from a distribution X. 
+                The order statistics of this sample are defined as the sorted values of the sample from smallest to largest:
+                $$x_{(1)}\leq x_{(2)}\leq \dots \leq x_{(n)}$$
+                Here:
+                <ul>
+                    <li>\(x_{(1)}\) is the minimum of the sample</li>
+                    <li>\(x_{(n)}\) is the maximum of the sample</li>
+                    <li>\(x_{(k)}\) is the k-th order statistic; i.e., the \(k^{th}\) smallest value in the sample</li>
+                </ul>
+
+                <h3>Median</h3>
+
+                The median is another common descriptor for a sample or distribution. We can think of it in the context of order statistics given what we learned above.
+
+                <h4>Odd</h4>
+                If n is odd, the median is the \((\frac{n+1}{2})\)-th order statistic
+                <h4>Even</h4>
+                If n is even, the median is defined as the arithmetic mean of the two middle-most order statistics, since there is not a single middle:
+
+                $$\text{Median}=\frac{x_{(\frac{n}{2})}+x_{(\frac{n}{2}+1)}}{2}$$
+
+                <h3>Distribution of Order Statistics</h3>
+                One nice thing about deriving the distribution of various order statistics is that they can be described well in plain English.
+
+                <h4>Distribution of the Maximum</h4>
+                Let us have a fixed number of draws in our sample, n, from a distribution \(F_X\). 
+                We will denote the elements in our sample as \(X_{(k)}\) for the k-th order statistic. 
+                The probability that all n samples do not exceed a certain number is simply given by
+                $$P(M_n\leq x)=P(X_1\leq x, X_2\leq x, \dots, X_n\leq x)=[F(x)]^n$$
+                But what is the shape of this distribution? It can be gotten through variable substitution and simple use of the power rule from calculus, but let's intuitively derive it. 
+
+                <br><br>
+                The probability that \(X_{(n)}=x\) is not as simple as the probability of getting x when sampling for a given element like when we use our PMF or PDF. Instead we have to consider the relationship as well with what it implies for the other elements of the sample. 
+                We must consider the probability of getting \(X_i=x\) for some \(i\in\{1,2,\dots,n\}\) and for it to be the maximum, \(X_{j}\leq x \forall j\neq i\).
+
+                <br><br>
+                Since there are n possible draws to get \(X_i=x\), it makes sense to have n in there. 
+                <br>
+                The probability that for another draw in the series to not exceed that is \(P(X_j\leq x)=F(x)\). We must have this occur n-1 times, so we raise this to the n-1 power. 
+
+                Finally, the probability of a given draw in the sample equalling x is \(P(X_i=x)=f(x)\).
+
+                <br>
+                Thus, we finally get the PDF of \(X_{(n)}\) as:
+
+                $$f_{X_{(n)}}(x)=n\left[F(x)\right]^{n-1}f(x)$$
+
+                <h5>Interpretation</h5>
+                What does this imply? Well, if x corresponds to a low quantile, then F(x) gets raised to the n-1 power, which greatly shrinks the probability. This intuitively means that as the sample size is larger, the probability that the max of that sample is a small number is very small. 
+
+                <h4>Distribution of the Minimum</h4>
+                By symmetry, the distribution of the minimum is composed similarly. The thing of note is that we are now concerned with probabilities that the others are <b>greater</b> than \(X_{(1)}\). Thus, we switch out F(x) for 1-F(x):
+
+                $$f_{X_{(1)}}(x)=n\left[1-F(x)\right]^{n-1}f(x)$$
+
+                <h4>Distribution of the Median</h4>
+                Through similar arguments and use of the multinomial/binomial formula, we can get the PDF of the median. For brevity, let n=2m+1 and that we do just the odd case. The pdf for \(X_{(m+1)}\) is given by:
+
+                $$f_{X_{(m+1)}}(x)=\frac{(2m+1)!}{m!m!}\left[F(x)\right]^m\left[1-F(x)\right]^mf(x)$$
+
+
+                <h2>Extreme Value Distributions</h2>
+                <h3>Generalized Extreme Value Distribution</h3>
+                The GEV distribution has 3 parameters: \(\mu, \beta, \xi\) and has a CDF given by:
+
+                $$F(x;\mu, \beta, \xi)=\exp(-(1+\xi\frac{x-\mu}{\beta})^{-1/\xi});\quad1+\xi\frac{x-\mu}{\beta}>0$$
+                where \(\mu\) is the location parameter, \(\beta>0\) is the scale parameter, and \(\xi\) is the shape parameter. 
+                The GEV distribution family is broken down into 3 categories based on whether \(\xi\) is positive, negative, or zero.
+
+
+
+
+                <h3>Three Categories</h3>
+                <h4>Gumbel Distribution (\(\xi = 0\))</h4>
+                The Gumbel distribution is used to describe the extreme value distribution for the exponential family of distributions (e.g.; Normal, Exponential). 
+
+                $$F(x)=\exp(-e^{-(x-\mu)/\beta}),\quad x\in\mathbb{R}$$
+                where \(\mu\) is the location parameter and \(\beta>0\) is the scale parameter.
+                <h4>Frechet Distribution (\(\xi \gt 0\))</h4>
+                The Frechet distribution models the maximum of heavy-tail distributions. 
+                $$F(x)=\begin{cases}
+                0, & x \leq \mu \\
+                \exp\left(-(\frac{x-\mu}{\beta})^{-\alpha}\right), & x\gt\mu
+                \end{cases}$$
+                where \(\alpha>0\) is the shape parameter, \(\mu\) is the location parameter, and \(\beta\gt 0\) is the scale parameter. 
+
+                <h4>Weibull Distribution (\(\xi \lt 0\))</h4>
+                $$F(x)=\begin{cases}
+                \exp\left(-(-\frac{x-\mu}{\beta})^{\alpha}\right), & x\lt\mu\\
+                1, & x \geq \mu                 
+                \end{cases}$$
+                where \(\alpha>0\) is the shape parameter, \(\mu\) is the location parameter, and \(\beta\gt 0\) is the scale parameter. 
+
+                <h2>Extreme Value Theorem</h2>
+                Also known as the Fisher-Tippett-Gnedenko Theorem to not be confused with the EVT from introductory Calculus. 
+                The EVT describes the convergence of the distribution of normalized maxima to the GEV distribution. 
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Extreme Value Theory Practice Problems</h2>
+                    <ol>
+                        <li>Give the generic CDF for the distribution of the minimum of a sample of n from a distribution with density f(x)</li>
+                        <li>Similar to our formulas for the PDF of the order statistics, derive the distribution of the n-1'th order statistic for a generic distribution.</li>
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
