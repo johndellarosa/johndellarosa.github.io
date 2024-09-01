@@ -175,7 +175,7 @@
                 We will denote the elements in our sample as \(X_{(k)}\) for the k-th order statistic. 
                 The probability that all n samples do not exceed a certain number is simply given by
                 $$P(M_n\leq x)=P(X_1\leq x, X_2\leq x, \dots, X_n\leq x)=[F(x)]^n$$
-                But what is the shape of this distribution? It can be gotten through variable substitution and simple use of the power rule from calculus, but let's intuitively derive it. 
+                But what is the shape of this distribution? It can be gotten through variable substitution and simple use of the power/chain rule from calculus, but let's intuitively derive it. 
 
                 <br><br>
                 The probability that \(X_{(n)}=x\) is not as simple as the probability of getting x when sampling for a given element like when we use our PMF or PDF. Instead we have to consider the relationship as well with what it implies for the other elements of the sample. 
@@ -212,7 +212,7 @@
                     </div>
                     <div class="slider-container">
                         <label for="numBins">Number of Bins: </label>
-                        <input type="range" id="numBins" min="5" max="200" value="30" oninput="onParameterChange();">
+                        <input type="range" id="numBins" min="5" max="500" value="30" oninput="onParameterChange();">
                         <span id="numBinsValue">30</span>
                     </div>
                     <div class="slider-container">
@@ -266,7 +266,8 @@
 
                 $$f_{X_{(m+1)}}(x)=\frac{(2m+1)!}{m!m!}\left[F(x)\right]^m\left[1-F(x)\right]^mf(x)$$
 
-
+                Does this result make sense? Well, we can group \([F(x)(1-F(x))]\). If we are around the median, \(F(x)\approx 0.5\), which yields \(F(x)(1-F(X))\approx0.25\) which is the maximum of the form \(f(y)=y(1-y)\) on [0,1]; away from the median, this goes below 0.25, and at the extremes, either F(x) or 1-F(x) goes to 0. 
+                Consequently, this maximmizes \([F(x)(1-F(X))]^m\) for \(m\geq 1\), which decays to 0 at least as fast as you go away from the median. Thus, the formula seems reasonable.
                 <h2>Extreme Value Distributions</h2>
                 <h3>Generalized Extreme Value Distribution</h3>
                 The GEV distribution has 3 parameters: \(\mu, \beta, \xi\) and has a CDF given by:
