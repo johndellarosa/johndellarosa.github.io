@@ -48,6 +48,8 @@
                 max-height: 500px;
                 width: 100%; /* Responsive width */
                 height: 400px; /* Adjust height as needed */
+                display: block; /* Block display to fill the width */
+                margin: 0 auto; /* Auto margins to horizontally center */
             }
             #statistics {
                 margin-top: 20px;
@@ -92,6 +94,10 @@
     #process-btn:hover {
         background-color: #0056b3; /* Darkens the button when hovered */
     }
+
+    input[type=checkbox] {
+    transform: scale(1.5);
+}
         </style>
 
         <script>
@@ -226,9 +232,10 @@
                         </select></div>
                         <div class="slider-container">                     <div id="distributionParameters"></div>    </div>
                         <div class="slider-container"><button id="process-btn" onclick="runSimulation()">Run Simulation</button></div>
-                    <div>
-                        <input type="checkbox" id="autoUpdate" checked>
+                    <div class="slider-container">
                         <label for="autoUpdate">Auto Update on Parameter Change</label>
+                        <input type="checkbox" id="autoUpdate" checked>
+                        
                     </div>
             
                     
