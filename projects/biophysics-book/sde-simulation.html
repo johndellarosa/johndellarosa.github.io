@@ -190,7 +190,13 @@
                         <option value="meanReversion">Mean Reversion</option>
                     </select>
                     <input type="number" id="driftCoeff" placeholder="Drift Coefficient" step="0.01" value="0">
-
+                    <div id="meanReversionFields" style="display: none;">
+                        <label for="longTermMean">Long Term Mean:</label>
+                        <input type="number" id="longTermMean" name="longTermMean" value="0">
+                      
+                        <label for="meanReversionRate">Mean Reversion Rate:</label>
+                        <input type="number" id="meanReversionRate" name="meanReversionRate" value="0">
+                      </div>
                     <label for="volatilityForm">Volatility Function:</label>
                     <select id="volatilityForm">
                         <option value="1">Constant (Basic Brownian Motion)</option>
@@ -202,13 +208,7 @@
 
                     <label for="initialX">Initial Value of x:</label>
                     <input type="number" id="initialX" placeholder="Initial Value" step="0.01" value="0">
-                    <div id="meanReversionFields" style="display: none;">
-                        <label for="longTermMean">Long Term Mean:</label>
-                        <input type="number" id="longTermMean" name="longTermMean" value="0">
-                      
-                        <label for="meanReversionRate">Mean Reversion Rate:</label>
-                        <input type="number" id="meanReversionRate" name="meanReversionRate" value="0">
-                      </div>
+                    
                     <label for="timeIncrement">Time Increment (dt):</label>
                     <input type="number" id="timeIncrement" name="timeIncrement" value="0.01" step="0.001" min="0.0001">
                     
@@ -316,7 +316,7 @@
     <h2>Tips for Usage</h2>
     <ul>
         <li><strong>Experiment with Parameters:</strong> Try different combinations of drift and volatility functions to see how they affect the path of the Brownian motion.</li>
-        <li><strong>Visualize Changes:</strong> Use the sliders or input fields to adjust parameters and observe changes in real-time.</li>
+        <!-- <li><strong>Visualize Changes:</strong> Use the sliders or input fields to adjust parameters and observe changes in real-time.</li> -->
         <li><strong>Export Data:</strong> Export the data to analyze the Brownian motion path using other tools or for documentation purposes.</li>
     </ul>
 

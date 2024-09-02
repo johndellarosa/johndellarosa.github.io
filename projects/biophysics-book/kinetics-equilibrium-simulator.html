@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+
+            <title>Kinetics and Equilibrium Simulation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Kinetics, Equilibrium, Simulator">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Kinetics and Equilibrium Chemistry simulator.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/kinetics-equilibrium-simulator"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style>
+
+/* Basic form styling */
+
+form {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    gap: 8px;
+}
+/* Style form elements */
+label {
+    font-weight: bold;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="button"], button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="button"]:hover, button:hover {
+    background-color: #0056b3;
+}
+
+input[type="button"]:disabled, button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Style adjustments for improved layout */
+form {
+    grid-template-columns: 1fr 1fr;
+}
+
+input[type="number"] {
+    max-width: 200px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    
+                margin: 0 auto; /* Auto margins to horizontally center */
+}
+
+/* Canvas container styling */
+#reactionChart {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px auto;
+}
+
+
+#dataDisplay, #chartContainer, #controls {
+    width: 100%;
+    margin: 10px 0; /* Adds vertical spacing between sections */
+    text-align: center; /* Centers the text inside the divs */
+}
+
+#modelStats {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333; /* Adjust color based on your theme */
+}
+
+/* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .data-point-button {
+        padding: 8px; /* Larger touch targets */
+    }
+
+
+    input[type="number"], input[type="button"], button {
+        font-size: 14px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    input[type="number"] {
+        max-width: 100%;
+    }
+}
+
+#updateButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  #updateButton:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="SDE-sim">
+                <h1>Kinetics and Equilibrium Simulator</h1>
+
+                <!-- <div class="container"> -->
+
+                    <form id="reactionForm">
+                        <div class="form-group">
+                        <label for="initialA" title="Initial concentration of reactant A. Affects the starting amount of A in the reaction.">Initial Concentration of A:</label>
+                        <input type="number" id="initialA" name="initialA" step="any" value="1.0"><br>
+                         </div><div class="form-group">
+                        <label for="initialB" title="Initial concentration of reactant B. Affects the starting amount of B in the reaction.">Initial Concentration of B:</label>
+                        <input type="number" id="initialB" name="initialB" step="any" value="1.0"><br>
+                    </div><div class="form-group">
+                        <label for="initialC" title="Initial concentration of product C. This can be zero if the product starts with no concentration.">Initial Concentration of C:</label>
+                        <input type="number" id="initialC" name="initialC" step="any" value="0.0"><br>
+                    </div><div class="form-group">
+                        <label for="initialD" title="Initial concentration of product D. This can be zero if the product starts with no concentration.">Initial Concentration of D:</label>
+                        <input type="number" id="initialD" name="initialD" step="any" value="0.0"><br>
+                    </div><div class="form-group">
+                        <label for="kf" title="Forward rate constant (kf). Determines the rate of the reaction in the forward direction. Larger values increase the rate of formation of products.">Forward Rate Constant (kf):</label>
+                        <input type="number" id="kf" name="kf" step="any" value="1.0"><br>
+                    </div><div class="form-group">
+                        <label for="kr" title="Reverse rate constant (kr). Determines the rate of the reaction in the reverse direction. Larger values increase the rate of decomposition of products into reactants.">Reverse Rate Constant (kr):</label>
+                        <input type="number" id="kr" name="kr" step="any" value="0.5"><br>
+                    </div><div class="form-group">
+                        <label for="a" title="Stoichiometric coefficient for reactant A. The number of moles of A involved in the reaction.">Stoichiometric Coefficient for A:</label>
+                        <input type="number" id="a" name="a" value="1"><br>
+                    </div><div class="form-group">
+                        <label for="b" title="Stoichiometric coefficient for reactant B. The number of moles of B involved in the reaction.">Stoichiometric Coefficient for B:</label>
+                        <input type="number" id="b" name="b" value="1"><br>
+                    </div><div class="form-group">
+                        <label for="c" title="Stoichiometric coefficient for product C. The number of moles of C produced in the reaction.">Stoichiometric Coefficient for C:</label>
+                        <input type="number" id="c" name="c" value="1"><br>
+                    </div><div class="form-group">
+                        <label for="d" title="Stoichiometric coefficient for product D. The number of moles of D produced in the reaction.">Stoichiometric Coefficient for D:</label>
+                        <input type="number" id="d" name="d" value="1"><br>
+                    </div><div class="form-group">
+                        <label for="dt" title="Time step (dt) for the numerical simulation. Smaller values give more accurate results but require more computation time.">Time Step (dt):</label>
+                        <input type="number" id="dt" name="dt" step="any" value="0.1"><br>
+                    </div><div class="form-group">
+                        <label for="endTime" title="End time for the simulation. Determines how long the simulation will run.">End Time:</label>
+                        <input type="number" id="endTime" name="endTime" step="any" value="10"><br>
+                </div>
+                        <button type="button" onclick="runSimulation()">Run Simulation</button>
+                        <button type="button" onclick="resetForm()">Reset</button>
+                        <button type="button" onclick="saveChart()">Save Chart</button>
+                    </form>
+                    
+                
+                    <canvas id="reactionChart" width="600" height="400"></canvas>
+                
+                <!-- </div> -->
+
+
+                
+
+            </div>
+
+
+
+             
+
+
+
+            
+                <!-- <div id="Exercises">
+                    <h2>Brownian Motion Simulation Practice Problems</h2>
+                    <ol>
+                        
+                    </ol> -->
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+
+
+            </script>
+                <script>
+                    function runSimulation() {
+                        // Get user inputs
+                        const initialA = parseFloat(document.getElementById('initialA').value);
+                        const initialB = parseFloat(document.getElementById('initialB').value);
+                        const initialC = parseFloat(document.getElementById('initialC').value);
+                        const initialD = parseFloat(document.getElementById('initialD').value);
+                        const kf = parseFloat(document.getElementById('kf').value);
+                        const kr = parseFloat(document.getElementById('kr').value);
+                        const a = parseInt(document.getElementById('a').value);
+                        const b = parseInt(document.getElementById('b').value);
+                        const c = parseInt(document.getElementById('c').value);
+                        const d = parseInt(document.getElementById('d').value);
+                        const dt = parseFloat(document.getElementById('dt').value);
+                        const endTime = parseFloat(document.getElementById('endTime').value);
+
+                        // Run simulation
+                        const results = simulateReaction([initialA, initialB, initialC, initialD], kf, kr, a, b, c, d, dt, endTime);
+
+                        // Update chart
+                        updateChart(results);
+                    }
+
+                    let reactionChart; // Variable to hold the Chart.js instance
+
+                    function updateChart(results) {
+    // console.log(results); // Log results for debugging
+
+    const ctx = document.getElementById('reactionChart').getContext('2d');
+    
+    if (reactionChart) {
+        reactionChart.destroy();
+    }
+
+    const times = results.map(r => parseFloat(r[0]).toFixed(2));
+    const concentrationsA = results.map(r => r[1]);
+    const concentrationsB = results.map(r => r[2]);
+    const concentrationsC = results.map(r => r[3]);
+    const concentrationsD = results.map(r => r[4]);
+    // console.log(times);
+    reactionChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: times,
+            datasets: [{
+                label: 'Concentration A',
+                data: concentrationsA,
+                borderColor: 'blue',
+                fill: false
+            }, {
+                label: 'Concentration B',
+                data: concentrationsB,
+                borderColor: 'red',
+                fill: false
+            }, {
+                label: 'Concentration C',
+                data: concentrationsC,
+                borderColor: 'green',
+                fill: false
+            }, {
+                label: 'Concentration D',
+                data: concentrationsD,
+                borderColor: 'purple',
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Concentration'
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+                    function resetForm() {
+                    document.getElementById('parametersForm').reset();
+                }
+
+                function saveChart() {
+                    const link = document.createElement('a');
+                    link.href = document.getElementById('reactionChart').toDataURL();
+                    link.download = 'reaction_chart.png';
+                    link.click();
+                }
+                </script>
+                    <script src="./kinetics-sim-funcs.js">
+
+
+
+                    </script>
+
+                    <script>
+
+                    </script>
+
+</body>
+</html>
