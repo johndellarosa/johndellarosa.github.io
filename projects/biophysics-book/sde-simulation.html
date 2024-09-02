@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+
+            <title>SDE Simulation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/sde-simulation"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style>
+    .data-point {
+    cursor: pointer;
+    color: blue;
+    margin-right: 5px;
+}
+
+.data-point:hover {
+    text-decoration: underline;
+}
+
+#bounds-button, #clearDataButton, #addDataButton {
+    cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+}
+
+.data-point-button {
+    cursor: pointer;
+    margin: 5px;
+    background-color: #4CAF50; /* Green background */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px; /* Rounded corners for better aesthetics */
+    box-shadow: 0 4px #999;
+}
+
+.data-point-button:hover {
+    background-color: #45a049; /* Darker shade of green */
+}
+
+.data-point-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px); /* Slight push effect on click */
+}
+#likelihoodChart {
+                max-width: 800px;
+                max-height: 500px;
+                min-height:75px;
+                /* min-width: 150px; */
+                width: 100%; /* Responsive width */
+                height: 400px; /* Adjust height as needed */
+                display: block; /* Block display to fill the width */
+                margin: 0 auto; /* Auto margins to horizontally center */
+            }
+
+            #intervalsSlider {
+    width: 200px; /* Adjust width as needed */
+    margin: 5px;
+}
+
+#intervalsDisplay {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    
+                margin: 0 auto; /* Auto margins to horizontally center */
+}
+
+#dataDisplay, #chartContainer, #controls {
+    width: 100%;
+    margin: 10px 0; /* Adds vertical spacing between sections */
+    text-align: center; /* Centers the text inside the divs */
+}
+
+#modelStats {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333; /* Adjust color based on your theme */
+}
+
+/* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .data-point-button {
+        padding: 8px; /* Larger touch targets */
+    }
+    input[type="number"], input[type="range"] {
+        width: 100%; /* Full width inputs for easier access */
+    }
+}
+
+#updateButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  #updateButton:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="SDE-sim">
+                <h1>Stochastic Differential Equation Simulator</h1>
+
+                <div class="container">
+
+                    <label for="driftForm">Drift Function:</label>
+                    <select id="driftForm">
+                        <option value="1">Constant (Basic Brownian Motion)</option>
+                        <option value="x">Proportional to x</option>
+                        <option value="1/x">Proportional to 1/x</option>
+                        <option value="sqrt">Square Root x</option>
+                        <option value="meanReversion">Mean Reversion</option>
+                    </select>
+                    <input type="number" id="driftCoeff" placeholder="Drift Coefficient" step="0.01" value="0">
+
+                    <label for="volatilityForm">Volatility Function:</label>
+                    <select id="volatilityForm">
+                        <option value="1">Constant (Basic Brownian Motion)</option>
+                        <option value="x">Proportional to x</option>
+                        <option value="1/x">Proportional to 1/x</option>
+                        <option value="sqrt">Square Root x</option>
+                    </select>
+                    <input type="number" id="volatilityCoeff" placeholder="Volatility Coefficient" step="0.01" value="1">
+
+                    <label for="initialX">Initial Value of x:</label>
+                    <input type="number" id="initialX" placeholder="Initial Value" step="0.01" value="0">
+                    <label for="longTermMean">Long-Term Mean:</label>
+                    <input type="number" id="longTermMean" placeholder="Long-Term Mean" step="0.01" value="0">
+                  
+                    <label for="meanReversionRate">Mean Reversion Rate:</label>
+                    <input type="number" id="meanReversionRate" placeholder="Mean Reversion Rate" step="0.01" value="0">
+                  
+                    <button id="updateButton">Update Chart</button>
+                    <canvas id="brownianChart" width="600" height="400"></canvas>
+                
+                    <button id="saveButton">Save Chart</button>
+                    <script>
+                      document.getElementById('saveButton').addEventListener('click', () => {
+                        const url = chart.toBase64Image();
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'brownian_motion.png';
+                        link.click();
+                      });
+                    </script>
+                
+                </div>
+
+            </div>
+
+
+
+             
+
+
+
+            
+                <div id="Exercises">
+                    <h2>Brownian Motion Simulation Practice Problems</h2>
+                    <ol>
+                        
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+
+
+            </script>
+                    <script src="./brownian-sim-funcs.js"></script>
+
+</body>
+</html>
