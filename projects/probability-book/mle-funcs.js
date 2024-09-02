@@ -41,7 +41,7 @@ function initializeChart() {
     });
 }
 
-let currentDistribution = 'exponential';
+let currentDistribution = 'poisson';
 
 function updateDistributionType() {
     currentDistribution = document.getElementById('distributionSelect').value;
