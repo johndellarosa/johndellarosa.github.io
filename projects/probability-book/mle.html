@@ -171,6 +171,8 @@
                 <h3>Recommended Prerequesites</h3>
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/statistics">Statistics</a></li>
+                    <li><a href="probability-2.html">Probability II</a></li>
                 </ol>
                 
                 <h3>What is MLE?</h3>
@@ -191,8 +193,9 @@
                 <div class="container">
                 <label for="distributionSelect">Distribution:</label>
                 <select id="distributionSelect" onchange="updateDistributionType();">
-                    <option value="exponential">Exponential</option>
                     <option value="poisson">Poisson</option>
+                    <option value="exponential">Exponential</option>
+
                 </select>
                 <div id="chartContainer">
                     <canvas id="likelihoodChart"></canvas>
