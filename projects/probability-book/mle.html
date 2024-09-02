@@ -111,7 +111,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%; /* Adjust based on preference */
+    width: 100%; /* Adjust based on preference */
     max-width: 900px; /* Adjust based on preference */
     
                 margin: 0 auto; /* Auto margins to horizontally center */
@@ -129,7 +129,19 @@
     color: #333; /* Adjust color based on your theme */
 }
 
-
+/* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .data-point-button {
+        padding: 8px; /* Larger touch targets */
+    }
+    input[type="number"], input[type="range"] {
+        width: 100%; /* Full width inputs for easier access */
+    }
+}
 </style>
 
 
@@ -154,14 +166,26 @@
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Set-Theory">
                 <h1>Maximum Likelihood Estimation (MLE)</h1>
-                <h2>Introduction to Set Theory</h2>
+                <h2>Introduction to Maximum Likelihood Estimation</h2>
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
                 </ol>
                 
-                <h2>Simulation</h2>
+                <h3>What is MLE?</h3>
+                Maximum Likelihood Estimation (MLE) is a widely-used method for estimating the parameters of a statistical model. It is based on the principle of finding parameter values that maximize the likelihood function, which measures how likely it is that a given set of parameters would produce the observed data. You can think of likelihood function as the product of the PDF/PMF for each data point for a given set of parameters. While typically we think of data values as being the axis, but now it is the parameters. 
+
+                <h3>Likelihood Function</h3>
+                Given a statistical model with a probability density function (pdf) or probability mass function (pmf) \(f(x|\theta)\), where \(x\) represents the observed data and \(\theta\) denotes the parameters of the model. 
+                The likelihood function is defined as 
+                $$L(\theta|x)=f(x|\theta)$$
+                For a sample \(x_1,x_2,\dots,x_n\)drawn from this distribution, the likelihood function for the entire sample is:
+                $$L(\theta|x_1,x_2,\dots,x_n)=\prod_{i=1}^{n}f(x_i|\theta)$$
+                The likelihood function measures how probable the observed data is for different values of \(\theta\).
+
+
+                <h3>Likelihood Function Interactive Chart</h3>
 
 
                 <div class="container">
@@ -202,6 +226,21 @@
                 </div>
             </div>
                 </div>
+
+                <h3>Log-Likelihood Function</h3>
+                The likelihood function can be very complex to handle due to its multiplicative nature, especially when dealing with large samples. To simplify calculations, we often use the log-likelihood function \(l(\theta|x)\), which is the natural logarithm of the likelihood function:
+                $$\ell(\theta \mid x) = \log L(\theta \mid x) = \log \left( \prod_{i=1}^{n} f(x_i \mid \theta) \right) = \sum_{i=1}^{n} \log f(x_i \mid \theta)$$
+                Maximizing the log-likelihood function is equivalent to maximizing the likelihood function, but it simplifies the computations and is less prone to numerical issues.
+                <h3>Estimating Parameters</h3>
+                To find the Maximum Likelihood Estimates (MLEs) of the parameters \(\theta\) we solve the optimization problem:
+                $$\hat{\theta} = \arg\max_{\theta} \ell(\theta \mid x)$$
+                This involves taking the derivative of the log-likelihood function with respect to the parameters and setting it to zero:
+                $$\frac{\partial \ell(\theta \mid x)}{\partial \theta} = 0$$
+            
+                <h3>Properties of MLE</h3>
+                <ol>
+                    <li>Consistency: As the sample size n approaches infinity, the MLE converges to the true parameter values with probability 1.</li>
+                </ol>
             </div>
 
 

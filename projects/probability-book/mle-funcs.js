@@ -116,6 +116,8 @@ function updateChart() {
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false, // Ensures the chart sizes dynamically
                 scales: {
                     x: {
                         title: {
