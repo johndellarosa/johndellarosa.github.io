@@ -15,21 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
       return data;
     }
   
-    function createChart(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX) {
+    function createChart(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX, dt) {
       if (chart) {
         chart.destroy();
       }
-      const data = generateBrownianMotion(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX, 1000);
+      const lineColor = document.getElementById('lineColor').value;
+      const data = generateBrownianMotion(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX, 1000, dt);
       chart = new Chart(ctx, {
         type: 'line',
         data: {
           datasets: [{
             label: 'Brownian Motion Path',
             data: data,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 2,
+            borderColor: lineColor,
+            borderWidth: 1,
             fill: false,
-            pointRadius: 2 
+            pointRadius: 1 
           }]
         },
         options: {
@@ -74,12 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const initialX = parseFloat(document.getElementById('initialX').value) || 0;
       const longTermMean = parseFloat(document.getElementById('longTermMean').value) || 0;
       const meanReversionRate = parseFloat(document.getElementById('meanReversionRate').value) || 0;
-  
+      const dt = parseFloat(document.getElementById('timeIncrement').value) || 0.01;
+
       const driftFunc = getFunction(driftForm, driftCoeff);
       const driftParams = driftForm === 'meanReversion' ? [longTermMean, meanReversionRate] : [];
       const volatilityFunc = getFunction(volatilityForm);
   
-      createChart(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX);
+      createChart(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX, dt);
     }
   
     function getFunction(form, coeff = 1) {
@@ -100,9 +102,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     // Attach event listener to the button
-    document.getElementById('updateButton').addEventListener('click', updateChart);
+    // document.getElementById('updateButton').addEventListener('click', updateChart);
   
-    // Initialize chart with default values
+    // Function to toggle mean reversion fields
+    function toggleMeanReversionFields() {
+        const driftForm = document.getElementById('driftForm').value;
+        const meanReversionFields = document.getElementById('meanReversionFields');
+        if (driftForm === 'meanReversion') {
+        meanReversionFields.style.display = 'block';
+        } else {
+        meanReversionFields.style.display = 'none';
+        }
+    }
+  // Attach event listener to the driftForm select element
+  document.getElementById('driftForm').addEventListener('change', toggleMeanReversionFields);
+
+    document.getElementById('updateButton').addEventListener('click', updateChart);
+
+    // Save chart as an image
+    document.getElementById('saveButton').addEventListener('click', () => {
+        if (chart) {
+            const url = chart.toBase64Image();
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'brownian_motion.png';
+            link.click();
+        } else {
+            alert('No chart available to save.');
+        }
+        });
+
+
+
+            // Initialize chart with default values
     updateChart();
   });
-  

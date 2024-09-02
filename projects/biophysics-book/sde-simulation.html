@@ -202,27 +202,130 @@
 
                     <label for="initialX">Initial Value of x:</label>
                     <input type="number" id="initialX" placeholder="Initial Value" step="0.01" value="0">
-                    <label for="longTermMean">Long-Term Mean:</label>
-                    <input type="number" id="longTermMean" placeholder="Long-Term Mean" step="0.01" value="0">
-                  
-                    <label for="meanReversionRate">Mean Reversion Rate:</label>
-                    <input type="number" id="meanReversionRate" placeholder="Mean Reversion Rate" step="0.01" value="0">
-                  
+                    <div id="meanReversionFields" style="display: none;">
+                        <label for="longTermMean">Long Term Mean:</label>
+                        <input type="number" id="longTermMean" name="longTermMean" value="0">
+                      
+                        <label for="meanReversionRate">Mean Reversion Rate:</label>
+                        <input type="number" id="meanReversionRate" name="meanReversionRate" value="0">
+                      </div>
+                    <label for="timeIncrement">Time Increment (dt):</label>
+                    <input type="number" id="timeIncrement" name="timeIncrement" value="0.01" step="0.001" min="0.0001">
+                    
                     <button id="updateButton">Update Chart</button>
                     <canvas id="brownianChart" width="600" height="400"></canvas>
-                
+                    <label for="lineColor">Line Color:</label>
+<input type="color" id="lineColor" name="lineColor" value="#4bc0c0">
+                    <button id="resetButton">Reset</button>
+                    <script>
+                    document.getElementById('resetButton').addEventListener('click', () => {
+                        document.getElementById('driftForm').value = 'none';
+                        document.getElementById('volatilityForm').value = 'none';
+                        document.getElementById('driftCoeff').value = 0;
+                        document.getElementById('volatilityCoeff').value = 1;
+                        document.getElementById('initialX').value = 0;
+                        document.getElementById('longTermMean').value = 0;
+                        document.getElementById('meanReversionRate').value = 0;
+                        updateChart();
+                    });
+                    </script>
                     <button id="saveButton">Save Chart</button>
                     <script>
-                      document.getElementById('saveButton').addEventListener('click', () => {
-                        const url = chart.toBase64Image();
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = 'brownian_motion.png';
-                        link.click();
-                      });
+                    //   document.getElementById('saveButton').addEventListener('click', () => {
+                    //     const url = chart.toBase64Image();
+                    //     const link = document.createElement('a');
+                    //     link.href = url;
+                    //     link.download = 'brownian_motion.png';
+                    //     link.click();
+                    //   });
                     </script>
+                <button id="exportButton">Export Data</button>
+                <script>
+                  document.getElementById('exportButton').addEventListener('click', () => {
+                    if (chart) {
+                      const data = chart.data.datasets[0].data;
+                      let csvContent = "data:text/csv;charset=utf-8," 
+                        + "Time,Position\n"
+                        + data.map(e => `${e.x},${e.y}`).join("\n");
+                
+                      const encodedUri = encodeURI(csvContent);
+                      const link = document.createElement('a');
+                      link.setAttribute('href', encodedUri);
+                      link.setAttribute('download', 'brownian_motion_data.csv');
+                      link.click();
+                    } else {
+                      alert('No chart data available to export.');
+                    }
+                  });
+                </script>
                 
                 </div>
+
+
+                <h2>Tool Overview</h2>
+    <p>The Stochastic Differential Equation Simulator Tool generates and visualizes paths of a Brownian motion process. You can adjust parameters such as drift, volatility, and time increment to see how they affect the simulation.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Drift Form:</strong> Defines the drift function, which affects the overall trend of the Brownian motion.
+            <ul>
+                <li><strong>Constant:</strong> Arithmetic Brownian Motion</li>
+                <li><strong>Proportional to x:</strong> Drift is proportional to the current position (<code>x</code>).</li>
+                <li><strong>Proportional to 1/x:</strong> Drift is proportional to the inverse of the current position (<code>1/x</code>).</li>
+                <li><strong>Mean Reversion:</strong> Drift pulls the process towards a long-term mean with a specified mean reversion rate.</li>
+            </ul>
+        </li>
+        <li><strong>Volatility Form:</strong> Defines the volatility function, which affects the variability of the Brownian motion.
+            <ul>
+                <li><strong>Constant:</strong> Standard Brownian motion with constant volatility.</li>
+                <li><strong>Proportional to x:</strong> Volatility is proportional to the current position (<code>x</code>).</li>
+                <li><strong>Proportional to 1/x:</strong> Volatility is proportional to the inverse of the current position (<code>1/x</code>).</li>
+            </ul>
+        </li>
+        <li><strong>Drift Coefficient:</strong> A scalar coefficient that multiplies the drift function. Adjusting this value changes the strength of the drift.</li>
+        <li><strong>Volatility Coefficient:</strong> A scalar coefficient that multiplies the volatility function. Adjusting this value changes the intensity of the volatility.</li>
+        <li><strong>Initial Position (x0):</strong> The starting value of the Brownian motion path.</li>
+        <li><strong>Time Increment (dt):</strong> The time step used in the simulation. Smaller values of <code>dt</code> provide a more accurate simulation but require more computation.</li>
+        <li><strong>Long Term Mean:</strong> (Available only for Mean Reversion drift) The long-term mean to which the process reverts.</li>
+        <li><strong>Mean Reversion Rate:</strong> (Available only for Mean Reversion drift) The rate at which the process reverts to the long-term mean.</li>
+    </ul>
+
+    <h2>Interactive Elements</h2>
+    <ul>
+        <li><strong>Drift Form Dropdown:</strong> Select the type of drift function to use. If "Mean Reversion" is selected, additional fields for long-term mean and mean reversion rate will appear.</li>
+        <li><strong>Volatility Form Dropdown:</strong> Select the type of volatility function to use.</li>
+        <li><strong>Drift Coefficient Input:</strong> Enter a scalar value to adjust the drift strength.</li>
+        <li><strong>Volatility Coefficient Input:</strong> Enter a scalar value to adjust the volatility strength.</li>
+        <li><strong>Initial Position Input:</strong> Enter the starting value for the Brownian motion path.</li>
+        <li><strong>Time Increment Input:</strong> Set the time increment (<code>dt</code>) for the simulation.</li>
+        <li><strong>Long Term Mean Input:</strong> Enter the long-term mean (only visible if "Mean Reversion" is selected).</li>
+        <li><strong>Mean Reversion Rate Input:</strong> Enter the mean reversion rate (only visible if "Mean Reversion" is selected).</li>
+        <li><strong>Update Button:</strong> Click to generate a new simulation based on the current parameters.</li>
+        <li><strong>Save Button:</strong> Save the current chart as an image file (<code>.png</code> format).</li>
+        <li><strong>Export Button:</strong> Export the simulation data to a CSV file for further analysis.</li>
+    </ul>
+
+    <h2>Understanding the Chart</h2>
+    <ul>
+        <li><strong>X-Axis:</strong> Represents time.</li>
+        <li><strong>Y-Axis:</strong> Represents the position of the Brownian motion at each time step.</li>
+        <li><strong>Line Color:</strong> Adjusted using the color picker.</li>
+        <li><strong>Points:</strong> Represent the position of the Brownian motion at discrete time steps.</li>
+    </ul>
+
+    <h2>Tips for Usage</h2>
+    <ul>
+        <li><strong>Experiment with Parameters:</strong> Try different combinations of drift and volatility functions to see how they affect the path of the Brownian motion.</li>
+        <li><strong>Visualize Changes:</strong> Use the sliders or input fields to adjust parameters and observe changes in real-time.</li>
+        <li><strong>Export Data:</strong> Export the data to analyze the Brownian motion path using other tools or for documentation purposes.</li>
+    </ul>
+
+    <h2>Troubleshooting</h2>
+    <ul>
+        <li><strong>No Chart Displayed:</strong> Ensure all required fields are filled and valid. Check for JavaScript errors in the browser console.</li>
+        <li><strong>Incorrect Chart Data:</strong> Verify that the parameters and functions are correctly set and that there are no typos or logical errors.</li>
+    </ul>
+
 
             </div>
 
@@ -260,7 +363,15 @@
 
 
             </script>
-                    <script src="./brownian-sim-funcs.js"></script>
+                    <script src="./brownian-sim-funcs.js">
+
+
+
+                    </script>
+
+                    <script>
+
+                    </script>
 
 </body>
 </html>
