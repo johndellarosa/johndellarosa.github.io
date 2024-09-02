@@ -12,10 +12,10 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script> -->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
         
-            <title>Set Theory</title>
+            <title>Set Theory Interface</title>
     
         <!-- Meta tags -->
         
@@ -29,13 +29,45 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/set-theory"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/set-gui"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       
 
         <script src="../../math.js" type="text/javascript"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<style>
+    .set-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.set-button:hover {
+    background-color: #0056b3;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    
+                margin: 0 auto; /* Auto margins to horizontally center */
+}
+</style>
 
     </head>
     <body>
@@ -65,13 +97,44 @@
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
                 </ol>
                 
-                <h3>Closed Set</h3>
 
-                <h3>Open Set</h3>
-
-
-
+                <div class="container">
+                <div id="setsInput">
+                    <input type="text" id="newSetName" placeholder="Enter new set name" />
+                    <button onclick="createSet()">Add Set</button>
+                </div>
+            
+                <div id="operations">
+                    <select id="setSelect1">
+                        <option value="" disabled selected>Select a set</option>
+                        <!-- Options added dynamically -->
+                    </select>
+                    <select id="operationSelect">
+                        <option value="" disabled selected>Select an operation</option>
+                        <option value="union">Union</option>
+                        <option value="intersection">Intersection</option>
+                        <option value="complement">Complement</option>
+                        <option value="symmetricDifference">Symmetric Difference</option>
+                        <option value="cartesianProduct">Cartesian Product</option>
+                        <option value="powerSet">Power Set</option>
+                    </select>
+                    <select id="setSelect2">
+                        <option value="" disabled selected>Select a set</option>
+                        <!-- Options added dynamically -->
+                    </select>
+                    <button onclick="performOperation()">Perform Operation</button>
+                </div>
+            
+                <div id="sigmaAlgebra">
+                    <h3>Generated Sets:</h3>
+                    <div id="sigmaList"></div> 
+                </div>
                 
+      
+                
+
+            </div>
+
                 </div>
 
 
@@ -105,6 +168,9 @@
                 }
             });
             } 
+
+            
             </script>
+                    <script src="./set-operations.js"></script>
 </body>
 </html>
