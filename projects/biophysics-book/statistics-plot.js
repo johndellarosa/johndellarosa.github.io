@@ -76,6 +76,17 @@ function updateRegressionLine() {
         { x: Math.max(...data.map(pt => pt.x)), y: results.slope * Math.max(...data.map(pt => pt.x)) + results.intercept }
     ];
     regressionChart.update();
+
+        // Calculate residuals and update the residual plot
+        const residuals = data.map(pt => ({
+            x: pt.x * results.slope + results.intercept,
+            y: pt.y - (pt.x * results.slope + results.intercept)
+        }));
+    
+        if (residualChart) {
+            residualChart.data.datasets[0].data = residuals;
+            residualChart.update();
+        }
 }
 
 function performOLS(data) {
@@ -109,3 +120,37 @@ function updateRegressionInfo(slope, intercept, rSquared) {
 
 
 
+let residualChart;
+
+function setupResidualChart() {
+    const ctx = document.getElementById('residualChart').getContext('2d');
+    residualChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Residuals',
+                data: [],
+                backgroundColor: 'rgba(255, 99, 132, 1)'
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Predicted Value'
+                    }
+                },
+                y: {
+                    type: 'linear',
+                    title: {
+                        display: true,
+                        text: 'Residuals'
+                    }
+                }
+            }
+        }
+    });
+}
