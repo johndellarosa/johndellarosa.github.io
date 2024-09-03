@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+
+            <title>Markov Chain Simulation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/sde-simulation"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style>
+    
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    
+                margin: 0 auto; /* Auto margins to horizontally center */
+}
+
+
+/* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .data-point-button {
+        padding: 8px; /* Larger touch targets */
+    }
+    input[type="number"], input[type="range"] {
+        width: 100%; /* Full width inputs for easier access */
+    }
+}
+
+</style>
+
+<style>
+         #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #matrixEditor, #simulationControls {
+            margin: 20px;
+        }
+        #matrixInputs {
+            display: grid;
+            gap: 5px;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            margin-top: 20px;
+        }
+        #matrixInputs input {
+            width: 60px;
+            text-align: center;
+        }
+        #markovCanvas {
+            border: 1px solid black;
+        }
+        .state-label {
+            text-align: center;
+            font-weight: bold;
+        }
+        #tickLength, #matrixSize {
+            width: 60px;
+        }
+        .matrix-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .matrix-labels {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .matrix-row {
+            display: flex;
+        }
+        .matrix-row > span {
+            margin-right: 5px;
+        }
+        .matrix-header {
+            margin-bottom: 10px;
+        }
+
+        .state-count {
+            font-size: 12px;
+            color: #666;
+        }
+</style>
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Biophysical Chemistry Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="SDE-sim">
+                <h1>Markov Chain Simulator</h1>
+
+                <div id="container">
+        <div id="matrixEditor">
+            <h3>Transition Matrix</h3>
+            <label for="matrixSize">Matrix Size:</label>
+            <input type="number" id="matrixSize" min="2" max="10" value="3">
+
+            <div class="matrix-container">
+                <div class="matrix-header">
+                    <div class="matrix-labels">
+                        <span></span> <!-- Empty cell at top-left -->
+                        <div id="topLabels"></div>
+                    </div>
+                </div>
+                <div id="matrixInputs">
+                    <!-- Matrix inputs will be populated here -->
+                </div>
+            </div>
+
+            <button onclick="normalizeMatrix()">Normalize Matrix</button>
+        </div>
+
+        <div id="simulationControls">
+            <label for="tickLength">Tick Length (ms):</label>
+            <input type="number" id="tickLength" min="10" value="100">
+
+            <button onclick="runSimulation()">Start Simulation</button>
+            <button onclick="stopSimulation()">Stop Simulation</button>
+            <button onclick="reset()">Reset</button>
+        </div>
+
+        <div id="plot">
+            <canvas id="markovCanvas" width="600" height="600"></canvas>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+
+
+             
+
+
+
+            
+                <!-- <div id="Exercises">
+                    <h2>Brownian Motion Simulation Practice Problems</h2>
+                    <ol>
+                        
+                    </ol>
+    
+    
+                </div> -->
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+
+
+            </script>
+                   
+
+
+                   <script src="./transition-diagram.js">
+                    </script>
+
+                    <script>
+
+                    </script>
+
+</body>
+</html>
