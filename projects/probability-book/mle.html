@@ -232,9 +232,9 @@
                 </div>
 
                 <h3>Log-Likelihood Function</h3>
-                The likelihood function can be very complex to handle due to its multiplicative nature, especially when dealing with large samples. To simplify calculations, we often use the log-likelihood function \(l(\theta|x)\), which is the natural logarithm of the likelihood function:
+                The likelihood function can be unwiedly due to its multiplicative nature, especially when dealing with large samples. To simplify calculations, we often use the log-likelihood function \(l(\theta|x)\), which is the natural logarithm of the likelihood function:
                 $$\ell(\theta \mid x) = \log L(\theta \mid x) = \log \left( \prod_{i=1}^{n} f(x_i \mid \theta) \right) = \sum_{i=1}^{n} \log f(x_i \mid \theta)$$
-                Maximizing the log-likelihood function is equivalent to maximizing the likelihood function, but it simplifies the computations and is less prone to numerical issues.
+                Maximizing the log-likelihood function is equivalent to maximizing the likelihood function as the log is a strictly increasing function, but it simplifies the computations and is less prone to numerical issues.
                 <h3>Estimating Parameters</h3>
                 To find the Maximum Likelihood Estimates (MLEs) of the parameters \(\theta\) we solve the optimization problem:
                 $$\hat{\theta} = \arg\max_{\theta} \ell(\theta \mid x)$$
