@@ -213,6 +213,10 @@
                     <input type="number" id="timeIncrement" name="timeIncrement" value="0.01" step="0.001" min="0.0001">
                     
                     <button id="updateButton">Update Chart</button>
+                    <div id="sde-display">
+                        <h2>Current SDE:</h2>
+                        <p id="sde-equation">dX_t = 1 dt + 1 dW_t</p>
+                    </div>
                     <canvas id="brownianChart" width="600" height="400"></canvas>
                     <label for="lineColor">Line Color:</label>
 <input type="color" id="lineColor" name="lineColor" value="#4bc0c0">
@@ -370,6 +374,80 @@
                     </script>
 
                     <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const driftFormSelect = document.getElementById('driftForm');
+    const volatilityFormSelect = document.getElementById('volatilityForm');
+    const driftCoefficientInput = document.getElementById('driftCoeff');
+    const volatilityCoefficientInput = document.getElementById('volatilityCoeff');
+    const longTermMeanInput = document.getElementById('longTermMean');
+    const meanReversionRateInput = document.getElementById('meanReversionRate');
+    const sdeEquation = document.getElementById('sde-equation');
+    const meanReversionOptions = document.getElementById('meanReversionFields');
+
+    function updateSDE() {
+        const driftForm = driftFormSelect.value;
+        const volatilityForm = volatilityFormSelect.value;
+        const driftCoeff = driftCoefficientInput.value;
+        const volatilityCoeff = volatilityCoefficientInput.value;
+        const longTermMean = longTermMeanInput.value;
+        const meanReversionRate = meanReversionRateInput.value;
+
+        let driftFunction = '';
+        let volatilityFunction = '';
+
+        switch (driftForm) {
+            case '1':
+                driftFunction = `${driftCoeff}`;
+                break;
+            case 'x':
+                driftFunction = `${driftCoeff}X_t`;
+                break;
+            case '1/x':
+                driftFunction = `\\frac{${driftCoeff}}{X_t}`;
+                break;
+            case 'sqrt':
+                driftFunction = `${driftCoeff}\\sqrt{X_t}`;
+                break;
+            case 'meanReversion':
+                driftFunction = `${meanReversionRate}(${longTermMean} - X_t)`;
+                break;
+        }
+
+        switch (volatilityForm) {
+            case '1':
+                volatilityFunction = `${volatilityCoeff}`;
+                break;
+            case 'x':
+                volatilityFunction = `${volatilityCoeff}X_t`;
+                break;
+            case '1/x':
+                volatilityFunction = `\\frac{${volatilityCoeff}}{X_t}`;
+                break;
+            case 'sqrt':
+                volatilityFunction = `${volatilityCoeff}\\sqrt{X_t}`;
+                break;
+        }
+
+        const sdeText = `dX_t = ${driftFunction} \\, dt + ${volatilityFunction} \\, dW_t`;
+        sdeEquation.innerHTML = `\\(${sdeText}\\)`;
+        // MathJax.Hub.Queue(["Typeset", MathJax.Hub, sdeEquation]);
+
+        MathJax.typesetPromise([sdeEquation]).catch(function(err) {
+            console.error('MathJax typeset error:', err);
+        });
+    }
+
+    // Add event listeners to update SDE when any input changes
+    driftFormSelect.addEventListener('change', updateSDE);
+    volatilityFormSelect.addEventListener('change', updateSDE);
+    driftCoefficientInput.addEventListener('input', updateSDE);
+    volatilityCoefficientInput.addEventListener('input', updateSDE);
+    longTermMeanInput.addEventListener('input', updateSDE);
+    meanReversionRateInput.addEventListener('input', updateSDE);
+
+    // Initially update SDE
+    updateSDE();
+});
 
                     </script>
 
