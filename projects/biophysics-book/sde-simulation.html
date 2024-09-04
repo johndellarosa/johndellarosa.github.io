@@ -154,6 +154,19 @@
   #updateButton:hover {
     background-color: #0056b3;
   }
+
+  #button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Adjust gap between buttons if needed */
+    margin-top: 20px; /* Space above the button container */
+}
+
+#button-container button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
 </style>
 
 
@@ -211,56 +224,31 @@
                     
                     <label for="timeIncrement">Time Increment (dt):</label>
                     <input type="number" id="timeIncrement" name="timeIncrement" value="0.01" step="0.001" min="0.0001">
-                    
+                    <div>
+                        <label for="num-paths">Number of Paths:</label>
+                        <input type="number" id="num-paths" value="1" step="1" min="1">
+                    </div>
+                    <div id="color-picker-container" style="display: none;">
+                        <h3>Select Path Colors</h3>
+                        <div id="color-picker-list"></div>
+                    </div>
+                    <!-- <button id="generate-paths-btn">Generate Paths</button> -->
                     <button id="updateButton">Update Chart</button>
                     <div id="sde-display">
                         <h2>Current SDE:</h2>
                         <p id="sde-equation">dX_t = 1 dt + 1 dW_t</p>
                     </div>
                     <canvas id="brownianChart" width="600" height="400"></canvas>
-                    <label for="lineColor">Line Color:</label>
-<input type="color" id="lineColor" name="lineColor" value="#4bc0c0">
+                    <!-- <label for="lineColor">Line Color:</label> -->
+                    <!-- <input type="color" id="lineColor" name="lineColor" value="#4bc0c0"> -->
+                    <div id="button-container">
                     <button id="resetButton">Reset</button>
-                    <script>
-                    document.getElementById('resetButton').addEventListener('click', () => {
-                        document.getElementById('driftForm').value = 'none';
-                        document.getElementById('volatilityForm').value = 'none';
-                        document.getElementById('driftCoeff').value = 0;
-                        document.getElementById('volatilityCoeff').value = 1;
-                        document.getElementById('initialX').value = 0;
-                        document.getElementById('longTermMean').value = 0;
-                        document.getElementById('meanReversionRate').value = 0;
-                        updateChart();
-                    });
-                    </script>
+
                     <button id="saveButton">Save Chart</button>
-                    <script>
-                    //   document.getElementById('saveButton').addEventListener('click', () => {
-                    //     const url = chart.toBase64Image();
-                    //     const link = document.createElement('a');
-                    //     link.href = url;
-                    //     link.download = 'brownian_motion.png';
-                    //     link.click();
-                    //   });
-                    </script>
                 <button id="exportButton">Export Data</button>
+            </div>
                 <script>
-                  document.getElementById('exportButton').addEventListener('click', () => {
-                    if (chart) {
-                      const data = chart.data.datasets[0].data;
-                      let csvContent = "data:text/csv;charset=utf-8," 
-                        + "Time,Position\n"
-                        + data.map(e => `${e.x},${e.y}`).join("\n");
-                
-                      const encodedUri = encodeURI(csvContent);
-                      const link = document.createElement('a');
-                      link.setAttribute('href', encodedUri);
-                      link.setAttribute('download', 'brownian_motion_data.csv');
-                      link.click();
-                    } else {
-                      alert('No chart data available to export.');
-                    }
-                  });
+
                 </script>
                 
                 </div>
@@ -376,78 +364,26 @@
                     <script>
                         
 document.addEventListener('DOMContentLoaded', () => {
-    const driftFormSelect = document.getElementById('driftForm');
-    const volatilityFormSelect = document.getElementById('volatilityForm');
-    const driftCoefficientInput = document.getElementById('driftCoeff');
-    const volatilityCoefficientInput = document.getElementById('volatilityCoeff');
-    const longTermMeanInput = document.getElementById('longTermMean');
-    const meanReversionRateInput = document.getElementById('meanReversionRate');
-    const sdeEquation = document.getElementById('sde-equation');
-    const meanReversionOptions = document.getElementById('meanReversionFields');
 
-    function updateSDE() {
-        const driftForm = driftFormSelect.value;
-        const volatilityForm = volatilityFormSelect.value;
-        const driftCoeff = driftCoefficientInput.value;
-        const volatilityCoeff = volatilityCoefficientInput.value;
-        const longTermMean = longTermMeanInput.value;
-        const meanReversionRate = meanReversionRateInput.value;
 
-        let driftFunction = '';
-        let volatilityFunction = '';
+    
 
-        switch (driftForm) {
-            case '1':
-                driftFunction = `${driftCoeff}`;
-                break;
-            case 'x':
-                driftFunction = `${driftCoeff}X_t`;
-                break;
-            case '1/x':
-                driftFunction = `\\frac{${driftCoeff}}{X_t}`;
-                break;
-            case 'sqrt':
-                driftFunction = `${driftCoeff}\\sqrt{X_t}`;
-                break;
-            case 'meanReversion':
-                driftFunction = `${meanReversionRate}(${longTermMean} - X_t)`;
-                break;
-        }
 
-        switch (volatilityForm) {
-            case '1':
-                volatilityFunction = `${volatilityCoeff}`;
-                break;
-            case 'x':
-                volatilityFunction = `${volatilityCoeff}X_t`;
-                break;
-            case '1/x':
-                volatilityFunction = `\\frac{${volatilityCoeff}}{X_t}`;
-                break;
-            case 'sqrt':
-                volatilityFunction = `${volatilityCoeff}\\sqrt{X_t}`;
-                break;
-        }
 
-        const sdeText = `dX_t = ${driftFunction} \\, dt + ${volatilityFunction} \\, dW_t`;
-        sdeEquation.innerHTML = `\\(${sdeText}\\)`;
-        // MathJax.Hub.Queue(["Typeset", MathJax.Hub, sdeEquation]);
 
-        MathJax.typesetPromise([sdeEquation]).catch(function(err) {
-            console.error('MathJax typeset error:', err);
-        });
-    }
 
-    // Add event listeners to update SDE when any input changes
-    driftFormSelect.addEventListener('change', updateSDE);
-    volatilityFormSelect.addEventListener('change', updateSDE);
-    driftCoefficientInput.addEventListener('input', updateSDE);
-    volatilityCoefficientInput.addEventListener('input', updateSDE);
-    longTermMeanInput.addEventListener('input', updateSDE);
-    meanReversionRateInput.addEventListener('input', updateSDE);
+    // addPathBtn.addEventListener('click', () => {
+    //     const numPaths = parseInt(numPathsInput.value);
+    //     const pathColor = pathColorInput.value;
+    //     generatePaths(numPaths, pathColor);
+    // });
 
-    // Initially update SDE
-    updateSDE();
+    
+
+    
+
+    // Wait for MathJax to be available
+
 });
 
                     </script>
