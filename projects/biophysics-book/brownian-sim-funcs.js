@@ -484,6 +484,58 @@ function getRandomColor() {
     updateChart();
 });
 
+document.getElementById('basic-brownian-btn').addEventListener('click', () => {
+  setProcessType('basic-brownian');
+});
+
+document.getElementById('gbm-btn').addEventListener('click', () => {
+  setProcessType('gbm');
+});
+
+document.getElementById('bessel-btn').addEventListener('click', () => {
+  setProcessType('bessel');
+});
+
+function setProcessType(type) {
+  const driftFormSelect = document.getElementById('driftForm');
+  const volatilityFormSelect = document.getElementById('volatilityForm');
+  const meanReversionRateInput = document.getElementById('meanReversionRate');
+  const longTermMeanInput = document.getElementById('longTermMean');
+  const initialX = document.getElementById('initialX');
+  const driftCoeff = document.getElementById('driftCoeff')
+  const volatilityCoeff = document.getElementById('volatilityCoeff')
+      
+  switch (type) {
+      case 'basic-brownian':
+          driftFormSelect.value = '1';
+          volatilityFormSelect.value = '1';
+          meanReversionRateInput.value = '';
+          longTermMeanInput.value = '';
+          initialX.value = '0';
+          driftCoeff.value = '0';
+          volatilityCoeff.value = '1';
+          break;
+      case 'gbm':
+          driftFormSelect.value = 'x';
+          volatilityFormSelect.value = 'x';
+          meanReversionRateInput.value = '';
+          longTermMeanInput.value = '';
+          initialX.value = '1';
+          driftCoeff.value = '0.1';
+          volatilityCoeff.value = '0.1';
+          break;
+      case 'bessel':
+          driftFormSelect.value = '1/x';
+          volatilityFormSelect.value = '1';
+          meanReversionRateInput.value = ''; // Example value for Bessel
+          longTermMeanInput.value = '';
+          initialX.value = '1';
+          driftCoeff.value = '0.5';
+          volatilityCoeff.value = '1';
+          break;
+  }
+}
+
 document.getElementById('exportButton').addEventListener('click', () => {
   if (chart) {
     const data = chart.data.datasets[0].data;
