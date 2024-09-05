@@ -202,26 +202,26 @@
                 <div id="controls">
                     <div class="slider-container">
                         <label for="sampleSize">Sample Size (n): </label>
-                        <input type="range" id="sampleSize" min="1" max="100" value="10" oninput="onParameterChange();">
+                        <input type="range" id="sampleSize" min="1" max="100" value="10" oninput="onParameterChange();" inputmode="numeric">
                         <span id="sampleSizeValue">10</span>
                     </div>
                     <div class="slider-container">
                         <label for="numSimulations">Number of Simulations: </label>
-                        <input type="range" id="numSimulations" min="10" max="5000" value="1000" step="10" oninput="onParameterChange();">
+                        <input type="range" id="numSimulations" min="10" max="5000" value="1000" step="10" oninput="onParameterChange();" inputmode="numeric">
                         <span id="numSimulationsValue">1000</span>
                     </div>
                     <div class="slider-container">
                         <label for="numBins">Number of Bins: </label>
-                        <input type="range" id="numBins" min="5" max="500" value="30" oninput="onParameterChange();">
+                        <input type="range" id="numBins" min="5" max="500" value="30" oninput="onParameterChange();" inputmode="numeric">
                         <span id="numBinsValue">30</span>
                     </div>
                     <div class="slider-container">
                         <label for="xMin">X-Axis Min: </label>
-                        <input type="number" id="xMin" value="auto" placeholder="auto" oninput="onParameterChange();">
+                        <input type="number" id="xMin" value="auto" placeholder="auto" oninput="onParameterChange();" inputmode="decimal">
                     </div>
                     <div class="slider-container">
                         <label for="xMax">X-Axis Max: </label>
-                        <input type="number" id="xMax" value="auto" placeholder="auto" oninput="onParameterChange();">
+                        <input type="number" id="xMax" value="auto" placeholder="auto" oninput="onParameterChange();" inputmode="decimal">
                     </div>
                     <div class="slider-container">                    <label for="distribution">Distribution: </label>
                         <select id="distribution" onchange="updateDistributionParameters();">

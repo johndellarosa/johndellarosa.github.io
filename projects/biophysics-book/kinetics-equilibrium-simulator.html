@@ -201,39 +201,39 @@ input[type="number"] {
                     <form id="reactionForm">
                         <div class="form-group">
                         <label for="initialA" title="Initial concentration of reactant A. Affects the starting amount of A in the reaction.">Initial Concentration of A:</label>
-                        <input type="number" id="initialA" name="initialA" step="any" value="1.0"><br>
+                        <input type="number" id="initialA" name="initialA" step="any" value="1.0" inputmode="decimal"><br>
                          </div><div class="form-group">
                         <label for="initialB" title="Initial concentration of reactant B. Affects the starting amount of B in the reaction.">Initial Concentration of B:</label>
-                        <input type="number" id="initialB" name="initialB" step="any" value="1.0"><br>
+                        <input type="number" id="initialB" name="initialB" step="any" value="1.0" inputmode="decimal"><br>
                     </div><div class="form-group">
                         <label for="initialC" title="Initial concentration of product C. This can be zero if the product starts with no concentration.">Initial Concentration of C:</label>
-                        <input type="number" id="initialC" name="initialC" step="any" value="0.0"><br>
+                        <input type="number" id="initialC" name="initialC" step="any" value="0.0" inputmode="decimal"><br>
                     </div><div class="form-group">
                         <label for="initialD" title="Initial concentration of product D. This can be zero if the product starts with no concentration.">Initial Concentration of D:</label>
-                        <input type="number" id="initialD" name="initialD" step="any" value="0.0"><br>
+                        <input type="number" id="initialD" name="initialD" step="any" value="0.0" inputmode="decimal"><br>
                     </div><div class="form-group">
                         <label for="kf" title="Forward rate constant (kf). Determines the rate of the reaction in the forward direction. Larger values increase the rate of formation of products.">Forward Rate Constant (kf):</label>
-                        <input type="number" id="kf" name="kf" step="any" value="1.0"><br>
+                        <input type="number" id="kf" name="kf" step="any" value="1.0" inputmode="decimal"><br>
                     </div><div class="form-group">
                         <label for="kr" title="Reverse rate constant (kr). Determines the rate of the reaction in the reverse direction. Larger values increase the rate of decomposition of products into reactants.">Reverse Rate Constant (kr):</label>
-                        <input type="number" id="kr" name="kr" step="any" value="0.5"><br>
+                        <input type="number" id="kr" name="kr" step="any" value="0.5" inputmode="decimal"><br>
                     </div><div class="form-group">
                         <label for="a" title="Stoichiometric coefficient for reactant A. The number of moles of A involved in the reaction.">Stoichiometric Coefficient for A:</label>
-                        <input type="number" id="a" name="a" value="1"><br>
+                        <input type="number" id="a" name="a" value="1" inputmode="numeric"><br>
                     </div><div class="form-group">
                         <label for="b" title="Stoichiometric coefficient for reactant B. The number of moles of B involved in the reaction.">Stoichiometric Coefficient for B:</label>
-                        <input type="number" id="b" name="b" value="1"><br>
+                        <input type="number" id="b" name="b" value="1" inputmode="numeric"><br>
                     </div><div class="form-group">
                         <label for="c" title="Stoichiometric coefficient for product C. The number of moles of C produced in the reaction.">Stoichiometric Coefficient for C:</label>
-                        <input type="number" id="c" name="c" value="1"><br>
+                        <input type="number" id="c" name="c" value="1" inputmode="numeric"><br>
                     </div><div class="form-group">
                         <label for="d" title="Stoichiometric coefficient for product D. The number of moles of D produced in the reaction.">Stoichiometric Coefficient for D:</label>
-                        <input type="number" id="d" name="d" value="1"><br>
+                        <input type="number" id="d" name="d" value="1" inputmode="numeric"><br>
                     </div><div class="form-group">
                         <label for="dt" title="Time step (dt) for the numerical simulation. Smaller values give more accurate results but require more computation time.">Time Step (dt):</label>
-                        <input type="number" id="dt" name="dt" step="any" value="0.1"><br>
+                        <input type="number" id="dt" name="dt" step="any" value="0.1" inputmode="decimal"><br>
                     </div><div class="form-group">
-                        <label for="endTime" title="End time for the simulation. Determines how long the simulation will run.">End Time:</label>
+                        <label for="endTime" title="End time for the simulation. Determines how long the simulation will run." inputmode="decimal">End Time:</label>
                         <input type="number" id="endTime" name="endTime" step="any" value="10"><br>
                 </div>
                         <button type="button" onclick="runSimulation()">Run Simulation</button>
