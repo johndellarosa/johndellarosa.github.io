@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
           borderColor: color,
           fill: false,
           borderWidth: 1,
-          pointRadius: 2
+          pointRadius: 1
       });
       }
 
