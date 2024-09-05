@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
           label: `Path ${i + 1}`,
           data: data,
           borderColor: color,
+          borderWidth: 1,
           fill: false,
           borderWidth: 1,
           pointRadius: 1
