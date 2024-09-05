@@ -4,14 +4,14 @@
 
         <meta charset="UTF-8">
 <!-- Google tag (gtag.js) -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-2C44LTKBE1');
-</script> -->
+</script>
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
 
             <title>SDE Simulation</title>
@@ -259,6 +259,26 @@ input[type=number]::-webkit-inner-spin-button {
                     <button id="saveButton">Save Chart</button>
                 <button id="exportButton">Export Data</button>
             </div>
+
+            <div>
+                <label for="chart-title">Chart Title:</label>
+                <input type="text" id="chart-title" placeholder="Enter chart title">
+            </div>
+            
+            <div>
+                <label for="line-width">Line Width:</label>
+                <input type="number" id="line-width" min="1" max="10" value="1">
+            </div>
+            
+            <div>
+                <label for="point-radius">Point Radius:</label>
+                <input type="number" id="point-radius" min="1" max="10" value="2">
+            </div>
+            
+            <!-- <div>
+                <label for="background-color">Background Color:</label>
+                <input type="color" id="background-color" value="#ffffff">
+            </div> -->
                 <script>
 
                 </script>

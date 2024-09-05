@@ -164,6 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
       //     pathColors[i] = colorPicker.value;
       // }
       // Generate paths
+      const chartTitle = document.getElementById('chart-title').value;
+      const lineWidth = parseInt(document.getElementById('line-width').value);
+      const pointRadius = parseInt(document.getElementById('point-radius').value);
+      // const backgroundColor = document.getElementById('background-color').value;
+  
       const pathColors = [];
       const datasets = [];
       for (let i = 0; i < numPaths; i++) {
@@ -178,10 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
           label: `Path ${i + 1}`,
           data: data,
           borderColor: color,
-          borderWidth: 1,
+
           fill: false,
-          borderWidth: 1,
-          pointRadius: 1
+          borderWidth: lineWidth,
+          pointRadius: pointRadius
       });
       }
 
@@ -260,7 +265,11 @@ document.addEventListener('DOMContentLoaded', () => {
               tooltip: {
                   mode: 'index',
                   intersect: false
-              }
+              },
+              title: {
+                display: true,
+                text: chartTitle
+            }
           },
           scales: {
               x: {
@@ -277,7 +286,12 @@ document.addEventListener('DOMContentLoaded', () => {
                       text: 'X_t'
                   }
               }
-          }
+          },
+          elements: {
+            // line: {
+            //     backgroundColor: 'rgba(0,0,0,0)',
+            // }
+        }
       },
       plugins: {
               tooltip: {
