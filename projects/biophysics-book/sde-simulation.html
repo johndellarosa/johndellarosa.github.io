@@ -189,6 +189,7 @@ input[type=number]::-webkit-inner-spin-button {
 
     overflow: auto; 
     /* min-width: 30%; */
+    min-height: 200px;
 }
 
 
@@ -239,6 +240,10 @@ input[type=number]::-webkit-inner-spin-button {
     }
 
     #chart-container {
+        height: 60vh; /* Ensure chart has enough height on mobile */
+    }
+
+    #chart-container {
         grid-row: 2;
     }
 
@@ -252,6 +257,8 @@ input[type=number]::-webkit-inner-spin-button {
         font-size: 12px;
         padding: 8px;
     }
+
+
 
     input[type="number"], select {
         font-size: 12px;
