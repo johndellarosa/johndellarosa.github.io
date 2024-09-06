@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+
     const ctx = document.getElementById('brownianChart').getContext('2d');
     let chart;
     const driftFormSelect = document.getElementById('driftForm');
