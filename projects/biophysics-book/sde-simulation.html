@@ -196,6 +196,43 @@ input[type=number]::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
 }
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+    #container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto auto;
+        gap: 10px;
+    }
+
+    #sidebar-left, #sidebar-right {
+        grid-column: 1;
+        width: 100%;
+    }
+
+    #sidebar-left {
+        order: 1;
+    }
+
+    #chart-container {
+        grid-row: 2;
+    }
+
+    #sidebar-right {
+        order: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    button {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    input[type="number"], select {
+        font-size: 12px;
+    }
+}
 </style>
 
 
