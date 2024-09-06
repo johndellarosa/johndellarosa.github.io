@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
   
     function createChart(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX, dt) {
-      if (chart) {
-        chart.destroy();
+      if (window.chart) {
+        window.chart.destroy();
       }
       // const lineColor = document.getElementById('lineColor').value;
       // const data = generateBrownianMotion(driftFunc, driftParams, volatilityFunc, volatilityCoeff, initialX, 1000, dt);
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       }
 
-      console.log(datasets);
+      //console.log(datasets);
       // chart = new Chart(ctx, {
       //   type: 'line',
       //   data: {
@@ -250,17 +250,18 @@ document.addEventListener('DOMContentLoaded', () => {
     //     }
     // });
 
-    chart = new Chart(ctx, {
+    window.chart = new Chart(ctx, {
       type: 'line',
       data: {
           datasets: datasets
       },
       options: {
           responsive: true,
+          maintainAspectRatio: true,
           plugins: {
               legend: {
                   display: true,
-                  position: 'top'
+                  position: 'right'
               },
               tooltip: {
                   mode: 'index',
@@ -449,8 +450,8 @@ function getRandomColor() {
 
     // Save chart as an image
     document.getElementById('saveButton').addEventListener('click', () => {
-        if (chart) {
-            const url = chart.toBase64Image();
+        if (window.chart) {
+            const url = window.chart.toBase64Image();
             const link = document.createElement('a');
             link.href = url;
             link.download = 'brownian_motion.png';
@@ -537,7 +538,7 @@ function setProcessType(type) {
 }
 
 document.getElementById('exportButton').addEventListener('click', () => {
-  if (chart) {
+  if (window.chart) {
     const data = chart.data.datasets[0].data;
     let csvContent = "data:text/csv;charset=utf-8," 
       + "Time,Position\n"
@@ -552,11 +553,137 @@ document.getElementById('exportButton').addEventListener('click', () => {
     alert('No chart data available to export.');
   }
 });
+
+
+
+// brownian-sim-funcs.js
+
+// Function to open the modal and show the chart
+const openModal = () => {
+  const modal = document.getElementById('chartModal');
+  const modalChartCanvas = document.getElementById('modalChart');
+  const modalChartCtx = modalChartCanvas.getContext('2d');
+  
+  //console.log('Modal open function called');
+  //console.log('Current chart:', window.chart);
+  //console.log('Current chart data:', window.chart ? window.chart.data : 'No chart data available');
+  
+  // Check if window.chart is defined and has data
+  if (window.chart && window.chart.data) {
+    // Destroy previous chart instance in modal if it exists
+    if (window.modalChart && window.modalChart.destroy) {
+        window.modalChart.destroy();
+    }
+      
+      // Ensure modalChartCanvas is visible
+      modalChartCanvas.style.display = 'block';
+
+        // Extract labels from the data if missing
+        const labels = [];
+        window.chart.data.datasets.forEach(dataset => {
+            dataset.data.forEach(point => {
+                if (point.x !== undefined && !labels.includes(point.x)) {
+                    labels.push(point.x);
+                }
+            });
+        });
+        labels.sort((a, b) => a - b); // Sort labels numerically if needed
+
+        // Prepare modal data
+        const modalData = {
+            labels: labels,
+            datasets: window.chart.data.datasets.map(dataset => ({
+                label: dataset.label,
+                data: dataset.data,
+                borderColor: dataset.borderColor,
+                backgroundColor: dataset.backgroundColor,
+                fill: dataset.fill,
+                borderWidth:dataset.borderWidth,
+                pointRadius:dataset.pointRadius,
+                // data: data,
+                // borderColor: color,
+      
+                // fill: false,
+                // borderWidth: lineWidth,
+                // pointRadius: pointRadius
+                // Add any other properties needed
+            })),
+        };
+      window.modalChart = new Chart(modalChartCtx, {
+          type: 'line',
+          // data: window.chart.data, // Use the same data as the original chart
+        //   data: {
+        //     datasets: window.chart.data.datasets
+        // },
+        data: modalData,
+          options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                  legend: {
+                      display: true,
+                      position: 'top',
+                  },
+                  tooltip: {
+                      callbacks: {
+                        label: function(context) {
+                          return `Time: ${context.raw.x}, Position: ${context.raw.y}`;
+                        },
+                      },
+                  },
+              },
+              scales: {
+                  x: {
+                      title: {
+                          display: true,
+                          text: 'Time',
+                      },
+                  },
+                  y: {
+                      title: {
+                          display: true,
+                          text: 'Value',
+                      },
+                  },
+              },
+          },
+      });
+
+      console.log('Modal chart initialized successfully');
+  } else {
+      console.error('No chart data found. Ensure the main chart is properly initialized.');
+  }
+  
+  modal.style.display = 'block'; // Show the modal
+};
+
+// Attach the openModal function to chart click event
+document.getElementById('brownianChart').addEventListener('click', openModal);
+
+
+// Function to close the modal
+const closeModal = () => {
+  console.log('Modal close function called');
+  document.getElementById('chartModal').style.display = 'none';
+};
+
+// Event listeners for modal functionality
+document.querySelector('.close').addEventListener('click', closeModal);
+window.addEventListener('click', (event) => {
+  if (event.target === document.getElementById('chartModal')) {
+      closeModal();
+  }
+});
+
+// Attach the openModal function to chart click event
+document.getElementById('brownianChart').addEventListener('click', openModal);
+
+
   });
 
   function exportData() {
-    if (chart) {
-        const datasets = chart.data.datasets;
+    if (window.chart) {
+        const datasets = window.chart.data.datasets;
         const csv = datasets.map(dataset => {
             const header = 'Time,X_t';
             const rows = dataset.data.map(point => `${point.x},${point.y}`);
