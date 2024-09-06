@@ -264,6 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   position: 'right'
               },
               tooltip: {
+                enabled: !isMobile, // Disable tooltips on mobile devices
+                        
                   mode: 'index',
                   intersect: false
               },
