@@ -234,7 +234,14 @@ input[type=number]::-webkit-inner-spin-button {
     #sidebar-left, #sidebar-right {
         grid-column: 1;
         width: 100%;
+        max-width: none;
+        
     }
+
+#chart-container canvas {
+    width: 100%;
+    height: auto;
+}
 
     #sidebar-left {
         order: 1;
