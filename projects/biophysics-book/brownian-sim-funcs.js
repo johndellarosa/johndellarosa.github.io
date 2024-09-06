@@ -296,6 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       plugins: {
               tooltip: {
+                enabled: !isMobile, // Disable tooltips on mobile devices
+                        
                 callbacks: {
                   label: function(context) {
                     return `Time: ${context.raw.x}, Position: ${context.raw.y}`;
