@@ -521,8 +521,8 @@ function setProcessType(type) {
           meanReversionRateInput.value = '';
           longTermMeanInput.value = '';
           initialX.value = '1';
-          driftCoeff.value = '0.1';
-          volatilityCoeff.value = '0.1';
+          driftCoeff.value = '0.02';
+          volatilityCoeff.value = '0.15';
           break;
       case 'bessel':
           driftFormSelect.value = '1/x';

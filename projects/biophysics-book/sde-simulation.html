@@ -47,6 +47,16 @@
     margin-right: 5px;
 }
 
+button, input[type="number"], select {
+    margin: 5px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+input[type="number"], input[type="text"] {
+    width: 80%;
+}
+
 .data-point:hover {
     text-decoration: underline;
 }
@@ -69,45 +79,7 @@ select, input[type="range"],input[type="number"] {
         border-radius: 5px; /* Rounds the corners of the input and button */
 }
 
-.data-point-button {
-    cursor: pointer;
-    margin: 5px;
-    background-color: #4CAF50; /* Green background */
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px; /* Rounded corners for better aesthetics */
-    box-shadow: 0 4px #999;
-}
 
-.data-point-button:hover {
-    background-color: #45a049; /* Darker shade of green */
-}
-
-.data-point-button:active {
-    background-color: #3e8e41;
-    box-shadow: 0 2px #666;
-    transform: translateY(2px); /* Slight push effect on click */
-}
-#likelihoodChart {
-                max-width: 800px;
-                max-height: 500px;
-                min-height:75px;
-                /* min-width: 150px; */
-                width: 100%; /* Responsive width */
-                height: 400px; /* Adjust height as needed */
-                display: block; /* Block display to fill the width */
-                margin: 0 auto; /* Auto margins to horizontally center */
-            }
-
-            #intervalsSlider {
-    width: 200px; /* Adjust width as needed */
-    margin: 5px;
-}
 
 #intervalsDisplay {
     font-size: 16px;
@@ -122,6 +94,15 @@ select, input[type="range"],input[type="number"] {
     max-width: 900px; /* Adjust based on preference */
     
                 margin: 0 auto; /* Auto margins to horizontally center */
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 200px auto 200px;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    width: 80vw;
+    height: 80vh;
 }
 
 #dataDisplay, #chartContainer, #controls {
@@ -185,6 +166,35 @@ input[type=number]::-webkit-inner-spin-button {
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
+    
+}
+
+#sidebar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#sidebar-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.section {
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    align-items: center;
+    justify-content: center;
 }
 </style>
 
@@ -210,9 +220,21 @@ input[type=number]::-webkit-inner-spin-button {
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="SDE-sim">
                 <h1>Stochastic Differential Equation Simulator</h1>
+                <div id="button-container">
+                    <button id="resetButton">Reset</button>
 
-                <div class="container">
-
+                    <button id="saveButton">Save Chart</button>
+                <button id="exportButton">Export Data</button>
+            </div>
+            <br>
+            <div id="button-container">
+                <button id="basic-brownian-btn">Basic Brownian Motion</button>
+                <button id="gbm-btn">Geometric Brownian Motion</button>
+                <button id="bessel-btn">Bessel Process</button>
+            </div><br>
+                <div id="container">
+                    <div id="sidebar-left">
+                        <div class="section">
                     <label for="driftForm">Drift Function:</label>
                     <select id="driftForm">
                         <option value="1">Constant</option>
@@ -240,51 +262,53 @@ input[type=number]::-webkit-inner-spin-button {
 
                     <label for="initialX">Initial Value of x:</label>
                     <input type="number" id="initialX" placeholder="Initial Value" step="0.01" value="0" inputmode="decimal">
-                    
+                    <button id="updateButton">Update Chart</button>
+                </div>
+                </div>
+
+                    <!-- <button id="generate-paths-btn">Generate Paths</button> -->
+
+
+                    <div id="chart-container">
+                        <div id="sde-display">
+                            <h2>Current SDE:</h2>
+                            <p id="sde-equation">dX_t = 1 dt + 1 dW_t</p>
+                        </div>
+                        <canvas id="brownianChart" width="600" height="400"></canvas>
+                    <!-- <label for="lineColor">Line Color:</label> -->
+                    <!-- <input type="color" id="lineColor" name="lineColor" value="#4bc0c0"> -->
+                    </div>
+                    <div id="sidebar-right">
+                        <div class="section">
+                            <div>
+                                <label for="chart-title">Chart Title:</label>
+                                <input type="text" id="chart-title" placeholder="Enter chart title">
+                            </div>
+                            
+                            <div>
+                                <label for="line-width">Line Width:</label>
+                                <input type="number" id="line-width" min="1" max="10" value="1">
+                            </div>
+                            
+                            <div>
+                                <label for="point-radius">Point Radius:</label>
+                                <input type="number" id="point-radius" min="1" max="10" value="1">
+                            </div>
                     <label for="timeIncrement">Time Increment (dt):</label>
                     <input type="number" id="timeIncrement" name="timeIncrement" value="0.01" step="0.001" min="0.0001" inputmode="decimal">
                     
                         <label for="num-paths">Number of Paths:</label>
                         <input type="number" id="num-paths" value="1" step="1" min="1" inputmode="numeric">
                     
-                    <div id="color-picker-container" style="display: none;">
-                        <h3>Select Path Colors</h3>
-                        <div id="color-picker-list"></div>
+                        <div id="color-picker-container" style="display: none;">
+                            <h3>Select Path Colors</h3>
+                            <div id="color-picker-list"></div>
+                        </div>
                     </div>
-                    <!-- <button id="generate-paths-btn">Generate Paths</button> -->
-                    <button id="updateButton">Update Chart</button>
-                    <div id="sde-display">
-                        <h2>Current SDE:</h2>
-                        <p id="sde-equation">dX_t = 1 dt + 1 dW_t</p>
                     </div>
-                    <canvas id="brownianChart" width="600" height="400"></canvas>
-                    <!-- <label for="lineColor">Line Color:</label> -->
-                    <!-- <input type="color" id="lineColor" name="lineColor" value="#4bc0c0"> -->
-                    <div id="button-container">
-                    <button id="resetButton">Reset</button>
+            </div>
+                   
 
-                    <button id="saveButton">Save Chart</button>
-                <button id="exportButton">Export Data</button>
-            </div>
-            <div id="preset-buttons">
-                <button id="basic-brownian-btn">Basic Brownian Motion</button>
-                <button id="gbm-btn">Geometric Brownian Motion</button>
-                <button id="bessel-btn">Bessel Process</button>
-            </div>
-            <div>
-                <label for="chart-title">Chart Title:</label>
-                <input type="text" id="chart-title" placeholder="Enter chart title">
-            </div>
-            
-            <div>
-                <label for="line-width">Line Width:</label>
-                <input type="number" id="line-width" min="1" max="10" value="1">
-            </div>
-            
-            <div>
-                <label for="point-radius">Point Radius:</label>
-                <input type="number" id="point-radius" min="1" max="10" value="1">
-            </div>
             
             <!-- <div>
                 <label for="background-color">Background Color:</label>
