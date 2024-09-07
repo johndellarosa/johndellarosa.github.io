@@ -132,6 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
         datasets: datasets
       },
       options: {
+        responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+              legend: {
+                  display: true,
+                  position: 'right'
+              }},
         scales: {
           x: {
             title: {

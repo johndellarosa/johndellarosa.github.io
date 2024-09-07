@@ -45,7 +45,8 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 1800px;
+  width:100%;
   margin: 50px auto;
   padding: 20px;
   background-color: white;
@@ -66,6 +67,8 @@ body {
 .input-group {
   width: 100%;
   margin-bottom: 20px;
+  max-width: 500px;
+  margin: 0% auto;
 }
 
 .input-group label {
@@ -81,6 +84,7 @@ body {
   margin-bottom: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+
 }
 
 button {
@@ -92,6 +96,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
 }
 
 button:hover {
@@ -104,7 +109,7 @@ input, select {
 
 #chart {
   max-width: 100%;
-  height: 400px;
+  height: 600px;
 }
 
 .output-section {
@@ -119,6 +124,20 @@ h2 {
 
 h1 {
   text-align: center;
+}
+
+/* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .data-point-button {
+        padding: 8px; /* Larger touch targets */
+    }
+    input[type="number"], input[type="range"] {
+        width: 100%; /* Full width inputs for easier access */
+    }
 }
 
 </style>
@@ -201,31 +220,39 @@ h1 {
                     <h1>Method of Moments Estimator</h1>
                 
                     <div class="input-section">
-                      <label for="data">Enter Data Points (comma-separated):</label>
-                      <input type="text" id="data" placeholder="e.g., 1, 2, 3, 4, 5" />
-                
-                      <label for="distribution">Select Distribution:</label>
-                      <select id="distribution" multiple>
-                        <option value="normal">Normal (μ, σ²)</option>
-                        <option value="exponential">Exponential (λ)</option>
-                        <option value="gamma">Gamma (α, β)</option>
-                        <option value="beta">Beta (α, β)</option>
-                        <option value="uniform">Uniform (a, b)</option>
-                      </select>
-                
-
-                      <label for="minRange">Min Range:</label>
-                      <input type="number" id="minRange" placeholder="Min value for histogram" />
-                
-                      <label for="maxRange">Max Range:</label>
-                      <input type="number" id="maxRange" placeholder="Max value for histogram" />
-                
-                      <label for="numBins">Number of Bins:</label>
-                      <input type="number" id="numBins" placeholder="Number of histogram bins" value="10" />
-                
-
-                      <button id="estimate-button" >Estimate Parameters</button>
-                    </div>
+                        <div class="input-group">
+                          <label for="data">Enter Data Points (comma-separated):</label>
+                          <input type="text" id="data" placeholder="e.g., 1, 2, 3, 4, 5" />
+                        </div>
+                  
+                        <div class="input-group">
+                          <label for="distribution">Select Distributions:</label>
+                          <select id="distribution" multiple>
+                            <option value="normal">Normal (μ, σ²)</option>
+                            <option value="exponential">Exponential (λ)</option>
+                            <option value="gamma">Gamma (α, β)</option>
+                            <option value="beta">Beta (α, β)</option>
+                            <option value="uniform">Uniform (a, b)</option>
+                          </select>
+                        </div>
+                  
+                        <div class="input-group">
+                          <label for="minRange">Min Range:</label>
+                          <input type="number" id="minRange" placeholder="Min value for histogram" />
+                        </div>
+                  
+                        <div class="input-group">
+                          <label for="maxRange">Max Range:</label>
+                          <input type="number" id="maxRange" placeholder="Max value for histogram" />
+                        </div>
+                  
+                        <div class="input-group">
+                          <label for="numBins">Number of Bins:</label>
+                          <input type="number" id="numBins" placeholder="Number of histogram bins" value="10" />
+                        </div>
+                  
+                        <button onclick="performMoM()">Compare Distributions</button>
+                      </div>
                 
                     <div class="output-section" id="outputSection">
                         <h2>Estimated Parameters</h2>
