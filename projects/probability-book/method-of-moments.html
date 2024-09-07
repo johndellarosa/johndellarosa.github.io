@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Measures</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Monte Carlo, numerical method">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Monte Carlo method and its application in biology.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/measure"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Probability Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Measures">
+                <h1>Measures</h1>
+                <h2>Introduction to Measures</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="probability-2.html">Probability 2</a></li>
+                
+                </ol>
+                <h3>Definition</h3>
+                The Method of Moments is a technique used to estimate the parameters of a probability distribution by equating sample moments to the corresponding population moments. 
+                It serves as a less common alternative to MLE, which can often be simpler. 
+
+                <h3>Sample Moments</h3>
+                Given a set of data \(X_1, X_2, \dots, X_n\), the sample moments are empirical counterparts of population moments. The k-th sample moment is defined as:
+                $$m'_{k}=\frac{1}{n}\sum_{i=1}^{n}X_{i}^k$$
+
+                Similarly, the k-th sample central moment is given by:
+                $$m_{k}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}-\bar{X})^k$$
+                where \(\bar{X}\) is the sample mean. 
+
+                <h3>Performing the Method of Moments</h3>
+                The idea behind the Method of Moments is to estimate the parameters of a probability distribution by matching the first few sample moments with their corresponding population moments. Suppose a distribution is characterized by a set of parameters \(\theta_1,\theta_2,\dots,\theta_k\). To estimate these parameters:
+
+                <ol>
+                    <li>Compute the first k sample moments \(m'_1,m'_2,\dots,m'_k\)</li>
+                    <li>Equate the sample moments to the corresponding population moments expressed as functions of \(\theta_1,\theta_2,\dots,\theta_k\)</li>
+                    <li>Solve the resulting system of equations to find estimates of the parameters.</li>
+                </ol>
+
+                <h4>Example</h4>
+                The probability density of the gamma distribution is given by:
+
+                $$f(x;\alpha,\beta)=\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^\alpha\Gamma(\alpha)}\quad\text{for }x>0$$
+                where \(\alpha\) is the shape parameter and \(\beta\) is the scale parameter.
+
+                The population moments of the gamma distribution are:
+                $$\mu'_1=\alpha\beta$$
+                $$\mu'_2=\alpha(\alpha-1)\beta^2$$
+
+                To estimate \(\alpha\) and \(\beta\) using the Method of Moments, we equate the first two sample moments to the corresponding population moments:
+
+                $$m'_1=\alpha\beta$$
+                $$m'_2=\alpha(\alpha-1)\beta^2$$
+                Solving for \(\beta\) using the first equation:
+
+                $$\beta=\frac{m'_1}{\alpha}$$
+                And substitute into the second equation:
+                $$m'_2=\alpha(\alpha+1)\left(\frac{m'_1}{\alpha}\right)^2$$
+
+                Simplify and solve for \(\alpha\), then use the solution to find \(\beta\).
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Measure Practice Problems</h2>
+
+                    <ol>
+                        <li>Explain why the Counting Measure satisfies the criterium for a measure.</li>
+                        <li>Let X be the set of outcomes of rolling a fair die once. Let \(\mathcal{F}=\mathcal{P}(X)\). Let \(\mathbb{P}\) be the probability measure on X and \(\mathcal{F}\). 
+                            Let \(A_1\) be the rolling a 3. Let \(A_2\) be rolling an odd number. Verbally explain monotonicity and sub-additivity as they relate to this example. 
+                        </li>
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

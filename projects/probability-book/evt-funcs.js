@@ -77,7 +77,7 @@ function calculateStatistics(data) {
     document.getElementById('median').innerText = `Median: ${median.toFixed(2)}`;
     document.getElementById('variance').innerText = `Variance: ${variance.toFixed(2)}`;
     document.getElementById('stdDev_').innerText = `Standard Deviation: ${stdDev.toFixed(2)}`;
-    console.log("Mean:", mean_, "Median:", median, "Variance:", variance, "Standard Deviation:", stdDev);
+    // console.log("Mean:", mean_, "Median:", median, "Variance:", variance, "Standard Deviation:", stdDev);
     return { mean_, median, variance, stdDev };
 }
 
@@ -172,7 +172,7 @@ function generateSample(size, distribution) {
                 break;
         }
     }
-    console.log("Sample data:", sample);
+    // console.log("Sample data:", sample);
     return sample;
 }
 
