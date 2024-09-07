@@ -64,11 +64,25 @@ body {
   align-items: center;
 }
 
-.input-group {
+.input-group, #dataPointsList {
   width: 100%;
   margin-bottom: 20px;
   max-width: 500px;
   margin: 0% auto;
+  align-items: center;
+}
+
+#dataPointsList button {
+    padding:15px;
+    margin: 5px;
+    background-color: #6CB4EE;
+    border-radius: 10px;
+}
+
+#dataPointsList button:hover{
+
+  background-color: #6699CC
+
 }
 
 .input-group label {
@@ -220,11 +234,23 @@ h1 {
                     <h1>Method of Moments Estimator</h1>
                 
                     <div class="input-section">
-                        <div class="input-group">
+                        <!-- <div class="input-group">
                           <label for="data">Enter Data Points (comma-separated):</label>
                           <input type="text" id="data" placeholder="e.g., 1, 2, 3, 4, 5" />
+                        </div> -->
+                        <div class="input-group">
+                            <label for="dataPoint">Enter Data Point:</label>
+                            <input type="numeric" id="dataPoint" placeholder="Enter a number" inputmode="decimal"/>
                         </div>
-                  
+                            <button id="addDataButton" >Add Data Point</button>
+                          
+                          <div class="input-group"></div>
+                          <!-- <div class="input-group"> -->
+                            <label>Data Points:</label>
+                            <div id="dataPointsList">None</div>
+                          <!-- </div> -->
+                        
+                          <button id="clearDataButton">Clear Data Points</button>
                         <div class="input-group">
                           <label for="distribution">Select Distributions:</label>
                           <select id="distribution" multiple>
@@ -251,7 +277,7 @@ h1 {
                           <input type="number" id="numBins" placeholder="Number of histogram bins" value="10" />
                         </div>
                   
-                        <button onclick="performMoM()">Compare Distributions</button>
+                        <button id="estimate-button" >Compare Distributions</button>
                       </div>
                 
                     <div class="output-section" id="outputSection">

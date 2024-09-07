@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
   let chartInstance;
-  
+  let dataPoints = [];
   
   function calculateSampleMoments(data) {
     const n = data.length;
@@ -158,25 +158,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function performMoM() {
-    const dataInput = document.getElementById("data").value;
+    // const dataInput = document.getElementById("data").value;
     const selectedDistributions = Array.from(document.getElementById("distribution").selectedOptions).map(option => option.value);
     let minRange = parseFloat(document.getElementById("minRange").value);
     let maxRange = parseFloat(document.getElementById("maxRange").value);
     const numBins = parseInt(document.getElementById("numBins").value);
+
+
   
-    const data = dataInput.split(",").map(val => parseFloat(val.trim()));
+    // const data = dataInput.split(",").map(val => parseFloat(val.trim()));
   
-    if (data.some(isNaN) || isNaN(numBins)) {
-      alert("Please enter valid numbers.");
+    // if (data.some(isNaN) || isNaN(numBins)) {
+    //   alert("Please enter valid numbers.");
+    //   return;
+    // }
+    if (dataPoints.length === 0 || isNaN(numBins)) {
+      alert("Please enter some data points and a valid number of bins.");
       return;
-    }
-  
+  }
     // Default to sample min and max if fields are empty
     if (isNaN(minRange)) {
-      minRange = Math.min(...data);
+      minRange = Math.min(...dataPoints);
     }
     if (isNaN(maxRange)) {
-      maxRange = Math.max(...data);
+      maxRange = Math.max(...dataPoints);
     }
   
     let paramsList = [];
@@ -186,23 +191,23 @@ document.addEventListener('DOMContentLoaded', () => {
       let result, params;
       switch (distribution) {
         case "normal":
-          result = estimateNormal(data);
+          result = estimateNormal(dataPoints);
           params = { mean: result.mean, variance: result.variance };
           break;
         case "exponential":
-          result = estimateExponential(data);
+          result = estimateExponential(dataPoints);
           params = { lambda: result.lambda };
           break;
         case "gamma":
-          result = estimateGamma(data);
+          result = estimateGamma(dataPoints);
           params = { alpha: result.alpha, beta: result.beta };
           break;
         case "beta":
-          result = estimateBeta(data);
+          result = estimateBeta(dataPoints);
           params = { alpha: result.alpha, beta: result.beta };
           break;
         case "uniform":
-          result = estimateUniform(data);
+          result = estimateUniform(dataPoints);
           params = { a: result.a, b: result.b };
           break;
         default:
@@ -217,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("outputSection").style.display = "block";
     document.getElementById("outputLabel").textContent = resultText;
   
-    plotDataAndDistribution(data, selectedDistributions, paramsList, minRange, maxRange, numBins);
+    plotDataAndDistribution(dataPoints, selectedDistributions, paramsList, minRange, maxRange, numBins);
   }
 
   // Gamma function approximation for Gamma distribution PDF
@@ -250,8 +255,71 @@ document.addEventListener('DOMContentLoaded', () => {
 function betaFunc(alpha, beta) {
   return gammaFunc(alpha) * gammaFunc(beta) / gammaFunc(alpha + beta);
 }
-    
+
+
+function addDataPoint() {
+  const dataPointValue = document.getElementById('dataPoint').value.trim();
+  const dataPoint = parseFloat(dataPointValue);
+
+  console.log("Adding data point:", dataPointValue); // Debug output
+
+  if (!isNaN(dataPoint)) {
+      dataPoints.push(dataPoint);
+      updateDataDisplay();
+      updateChart();
+      document.getElementById('dataPoint').value = ''; // Clear the input field after processing
+  } else {
+      console.error("Invalid data point entered:", dataPointValue); // Debug output
+      alert("Please enter a valid number for the data point.");
+  }
+}
+
+function updateDataDisplay() {
+  const dataPointsList = document.getElementById('dataPointsList');
+  dataPointsList.innerHTML = '';  // Clear existing content
+
+  if (dataPoints.length > 0) {
+      dataPoints.forEach((point, index) => {
+          const pointButton = document.createElement('button');
+          pointButton.textContent = point;
+          pointButton.className = 'data-point-button'; // Class for styling
+          pointButton.title = 'Click to remove this data point';
+          pointButton.onclick = function() { removeDataPoint(index); }; // Attach event to remove data point
+          dataPointsList.appendChild(pointButton);
+      });
+  } else {
+      dataPointsList.textContent = 'None';
+  }
+}
+
+function removeDataPoint(index) {
+  dataPoints.splice(index, 1); // Remove the data point at the given index
+  updateDataDisplay(); // Refresh the data display
+  updateChart(); // Update the chart to reflect the new set of data points
+}
+
+function updateChart() {
+  // Use dataPoints array instead of the whole data input from before
+  if (dataPoints.length > 0) {
+      performMoM(); // Perform MoM calculation and update the chart
+  } else {
+      if (chartInstance) chartInstance.destroy(); // Destroy the chart if no data points
+  }
+}
+
+function clearDataPoints() {
+  dataPoints = []; // Clear the data array
+  updateDataDisplay(); // Update the display to show no data points
+  updateChart(); // Re-draw the chart with no data points
+}
+
+updateDataDisplay(); // Initially show no data
+document.getElementById('addDataButton').onclick = addDataPoint; // Attach event handler for adding data
+document.getElementById('clearDataButton').onclick = clearDataPoints; // Attach event handler for clearing data
   document.getElementById('estimate-button').addEventListener('click', performMoM);
 
+
+
+  
   });
 
