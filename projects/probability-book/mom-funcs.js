@@ -65,78 +65,71 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  function plotDataAndDistribution(data, distribution, params, minRange, maxRange, numBins) {
-    // Compute histogram range and bin width
+  function plotDataAndDistribution(data, selectedDistributions, paramsList, minRange, maxRange, numBins) {
     const binWidth = (maxRange - minRange) / numBins;
     const bins = Array(numBins).fill(0);
-
+  
     data.forEach(value => {
       if (value >= minRange && value <= maxRange) {
         const binIndex = Math.min(Math.floor((value - minRange) / binWidth), numBins - 1);
         bins[binIndex]++;
       }
     });
-
-    // Compute the empirical histogram
+  
     const histogramX = Array.from({ length: numBins }, (_, i) => minRange + i * binWidth + binWidth / 2);
-    const histogramY = bins.map(count => count / (data.length * binWidth)); // Normalize by bin width and sample size
-
-    // Compute the estimated PDF for the selected distribution
-    let estimatedY = [];
-    if (distribution === "normal") {
-      const { mean, variance } = params;
-      estimatedY = histogramX.map(x => {
-        const pdfValue = (1 / Math.sqrt(2 * Math.PI * variance)) * Math.exp(-((x - mean) ** 2) / (2 * variance));
-        return pdfValue;
+    const histogramY = bins.map(count => count / (data.length * binWidth)); // Normalize by bin width
+  
+    // Collect datasets for each selected distribution
+    const datasets = [{
+      label: 'Empirical Histogram',
+      data: histogramY,
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1,
+      type: 'bar',
+    }];
+  
+    selectedDistributions.forEach((distribution, i) => {
+      let estimatedY = [];
+      const params = paramsList[i];
+  
+      if (distribution === "normal") {
+        const { mean, variance } = params;
+        estimatedY = histogramX.map(x => (1 / Math.sqrt(2 * Math.PI * variance)) * Math.exp(-((x - mean) ** 2) / (2 * variance)));
+      } else if (distribution === "exponential") {
+        const { lambda } = params;
+        estimatedY = histogramX.map(x => lambda * Math.exp(-lambda * x));
+      } else if (distribution === "gamma") {
+        const { alpha, beta } = params;
+        estimatedY = histogramX.map(x => (Math.pow(x, alpha - 1) * Math.exp(-x / beta)) / (Math.pow(beta, alpha) * gammaFunc(alpha)));
+      } else if (distribution === "beta") {
+        const { alpha, beta } = params;
+        estimatedY = histogramX.map(x => Math.pow(x, alpha - 1) * Math.pow(1 - x, beta - 1) / betaFunc(alpha, beta));
+      } else if (distribution === "uniform") {
+        const { a, b } = params;
+        estimatedY = histogramX.map(x => (x >= a && x <= b) ? 1 / (b - a) : 0);
+      }
+  
+      datasets.push({
+        label: `${distribution.charAt(0).toUpperCase() + distribution.slice(1)} PDF`, // Fixed legend label
+        data: estimatedY,
+        type: 'line',
+        borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+        fill: false,
+        tension: 0.4
       });
-    } else if (distribution === "exponential") {
-      const { lambda } = params;
-      estimatedY = histogramX.map(x => {
-        const pdfValue = lambda * Math.exp(-lambda * x);
-        return pdfValue;
-      });
-    } else if (distribution === "gamma") {
-      const { alpha, beta } = params;
-      estimatedY = histogramX.map(x => {
-        const pdfValue = (Math.pow(x, alpha - 1) * Math.exp(-x / beta)) / (Math.pow(beta, alpha) * gammaFunc(alpha));
-        return pdfValue;
-      });
-    }
-    else if (distribution === "beta") {
-      const { alpha, beta } = params;
-      estimatedY = histogramX.map(x => Math.pow(x, alpha - 1) * Math.pow(1 - x, beta - 1) / betaFunc(alpha, beta));
-    } else if (distribution === "uniform") {
-      const { a, b } = params;
-      estimatedY = histogramX.map(x => (x >= a && x <= b) ? 1 / (b - a) : 0);
-    }
-
-    // Plot the empirical histogram and theoretical PDF
+    });
+  
     if (chartInstance) {
       chartInstance.destroy();
     }
-
+  
     const ctx = document.getElementById('chart').getContext('2d');
     chartInstance = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: histogramX,
-        datasets: [
-          {
-            label: 'Empirical Histogram',
-            data: histogramY,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Estimated PDF',
-            data: estimatedY,
-            type: 'line',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            fill: false,
-            tension: 0.4
-          }
-        ]
+        datasets: datasets
       },
       options: {
         scales: {
@@ -156,16 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
+  
   function performMoM() {
     const dataInput = document.getElementById("data").value;
-    const distribution = document.getElementById("distribution").value;
-    const minRange = parseFloat(document.getElementById("minRange").value);
-    const maxRange = parseFloat(document.getElementById("maxRange").value);
+    const selectedDistributions = Array.from(document.getElementById("distribution").selectedOptions).map(option => option.value);
+    let minRange = parseFloat(document.getElementById("minRange").value);
+    let maxRange = parseFloat(document.getElementById("maxRange").value);
     const numBins = parseInt(document.getElementById("numBins").value);
-
+  
     const data = dataInput.split(",").map(val => parseFloat(val.trim()));
-
+  
     if (data.some(isNaN) || isNaN(numBins)) {
       alert("Please enter valid numbers.");
       return;
@@ -178,22 +171,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isNaN(maxRange)) {
       maxRange = Math.max(...data);
     }
-
-    let result, params;
-    switch (distribution) {
-      case "normal":
-        result = estimateNormal(data);
-        params = { mean: result.mean, variance: result.variance };
-        break;
-      case "exponential":
-        result = estimateExponential(data);
-        params = { lambda: result.lambda };
-        break;
-      case "gamma":
-        result = estimateGamma(data);
-        params = { alpha: result.alpha, beta: result.beta };
-        break;
-      case "beta":
+  
+    let paramsList = [];
+    let resultText = '';
+  
+    selectedDistributions.forEach(distribution => {
+      let result, params;
+      switch (distribution) {
+        case "normal":
+          result = estimateNormal(data);
+          params = { mean: result.mean, variance: result.variance };
+          break;
+        case "exponential":
+          result = estimateExponential(data);
+          params = { lambda: result.lambda };
+          break;
+        case "gamma":
+          result = estimateGamma(data);
+          params = { alpha: result.alpha, beta: result.beta };
+          break;
+        case "beta":
           result = estimateBeta(data);
           params = { alpha: result.alpha, beta: result.beta };
           break;
@@ -201,15 +198,19 @@ document.addEventListener('DOMContentLoaded', () => {
           result = estimateUniform(data);
           params = { a: result.a, b: result.b };
           break;
-      default:
-        alert("Unknown distribution.");
-        return;
-    }
-
+        default:
+          alert("Unknown distribution.");
+          return;
+      }
+      paramsList.push(params);
+      resultText += `${distribution.charAt(0).toUpperCase() + distribution.slice(1)}: ${result.parameters};\n`;
+ 
+    });
+  
     document.getElementById("outputSection").style.display = "block";
-    document.getElementById("outputLabel").textContent = result.parameters;
-
-    plotDataAndDistribution(data, distribution, params, minRange, maxRange, numBins);
+    document.getElementById("outputLabel").textContent = resultText;
+  
+    plotDataAndDistribution(data, selectedDistributions, paramsList, minRange, maxRange, numBins);
   }
 
   // Gamma function approximation for Gamma distribution PDF
