@@ -57,19 +57,56 @@
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Set-Theory">
-                <h1>Set Theory</h1>
-                <h2>Introduction to Set Theory</h2>
+                <h1>Marginal Likelihood</h1>
+                <h2>Introduction to </h2>
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
                 </ol>
                 
-                <h3>Closed Set</h3>
+                <h3>Introduction</h3>
+                In the previous chapters, we explored compound distributions. In a compound distribution, one distribution controls the parameters of another, leading to a multi-layered structure. 
+                As we extend this understanding, marginal likelihood provides a framework for evaluating how well these models (and others) explain observed data, accounting for all possible values of the parameters. By integrating over the unknown parameters, marginal likelihood gives us a comprehensive measure of the model's fit to the data, offering insights that can guide model selection and decision-making. 
 
-                <h3>Open Set</h3>
+                <h3>Recap on Marginalization in Context of Previous Chapters</h3>
+
+                <h4>Mixture Distributions</h4>
+
+                In a mixture distribution, the observed data is generated from one of several component distributions. The components are chosen according to a set of probabilities (weights). For example, in a Gaussian Mixture Model (GMM) with K components:
+
+                $$X\sim \sum_{k=1}^{K}\pi_{k}\mathcal{N}(X|\mu_k,\sigma_k^2)$$
+
+                Here, each component, \(\mathcal{N}(X|\mu_k,\sigma_k^2)\), is a Gaussian distribution, and \(\pi_k\) are the mixture weights (summing to 1). The marginal distribution of X is the weighted sum of the component densities, integrating over the latent variable (which component generated the data). 
 
 
+                <h4>Compound Distributions</h4>
+                For example, in a Gamma-Poisson compound distribution, the rate parameter \(\lambda\) of a Poisson distribution is drawn from a Gamma distribution: 
+
+                $$\lambda\sim \text{Gamma}(\alpha,\beta),\quad X|\lambda\sim\text{Poisson}(\lambda)$$
+
+                The marginal distribution of \(X\) is found by integrating out the intermediate parameter \(\lambda\):
+
+                $$p(X=x)=\int_{0}^{\infty}p(X=x|\lambda)p(\lambda)d\lambda$$
+                The integration removes the dependence on the unknown/random parameter \(\lambda\), yielding the marginal distribution of X.
+
+
+
+                <h3>Bridging to Marginal Likelihood</h3>
+                In both compound and mixture distributions, marginalization plays a crucial role: we integrate over hidden or latent variables (such as the parameters in compound distributions or the component assignments in mixture models) to find the overall probability of the observed data. This exact idea underpins marginal likelihood.
+
+                The marginal likelihood of a model is the probability of the observed data D given the model, integrating out the unknown parameters \(\theta\):
+
+                $$p(D|M)=\int_{\theta}p(D|\theta,M)p(\theta,M)d\theta$$
+                where:
+                <ul>
+                    <li>\(p(D|\theta,M)\) is the likelihood of the data given parameters \(\theta\)</li>
+                    <li>\(p(\theta|M)\) is the prior distribution over the parameters</li>
+                    <li>M is the model</li>
+                </ul>
+                This integral is precisely what we encountered in compound distributions: marginalizing over \(\theta\), an nknown parameter, which itself follows a prior distribution. In essence, marginal likelihood is an application of the same principle: we integrate out the uncertainty in the parameters to assess how well the model explains the data on average across all parameter configurations. 
+
+                
 
                 
                 </div>
