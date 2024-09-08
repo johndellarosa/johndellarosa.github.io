@@ -173,8 +173,38 @@ document.addEventListener('DOMContentLoaded', () => {
         // Plot the compound distribution
         plotCompoundDistribution(compoundSamples);
         window.generatedData = compoundSamples;
+
+            // Calculate and display summary statistics
+        const stats = calculateStatistics(compoundSamples);
+        document.getElementById('meanStat').textContent = stats.mean.toFixed(4);
+        document.getElementById('varianceStat').textContent = stats.variance.toFixed(4);
+        document.getElementById('stdDevStat').textContent = stats.stdDev.toFixed(4);
+        document.getElementById('minStat').textContent = stats.min.toFixed(4);
+        document.getElementById('maxStat').textContent = stats.max.toFixed(4);
+        document.getElementById('skewnessStat').textContent = stats.skewness.toFixed(4);
+        document.getElementById('kurtosisStat').textContent = stats.kurtosis.toFixed(4);
+
     }
     
+    // Function to calculate summary statistics, including skewness and kurtosis
+    function calculateStatistics(data) {
+        const n = data.length;
+        const mean = data.reduce((a, b) => a + b, 0) / n;
+        const variance = data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / n;
+        const stdDev = Math.sqrt(variance);
+        const min = Math.min(...data);
+        const max = Math.max(...data);
+
+        // Skewness calculation
+        const skewness = data.reduce((a, b) => a + Math.pow((b - mean) / stdDev, 3), 0) / n;
+
+        // Kurtosis calculation (subtract 3 for excess kurtosis)
+        const kurtosis = data.reduce((a, b) => a + Math.pow((b - mean) / stdDev, 4), 0) / n;
+
+        return { mean, variance, stdDev, min, max, skewness, kurtosis };
+    }
+
+
     // Sampling functions for distributions
     function gammaSample(shape, rate) {
         let sum = 0;

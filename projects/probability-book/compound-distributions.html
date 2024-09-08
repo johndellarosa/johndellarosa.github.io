@@ -120,9 +120,10 @@
                 margin-bottom:10px;
             }
             
-            #chart {
+            #compoundChart {
               max-width: 100%;
-              height: 600px;
+              /* height: 600px; */
+              /* max-height: 1000px; */
             }
             
             .output-section {
@@ -283,6 +284,16 @@
                         <label for="numSimulations"><strong>Number of Simulations:</strong></label>
                         <input type="number" id="numSimulations" value="1000" min="1">
                     </div>
+                    <div id="summaryStats">
+                        <h3>Summary Statistics</h3>
+                        <p><strong>Mean:</strong> <span id="meanStat"></span></p>
+                        <p><strong>Variance:</strong> <span id="varianceStat"></span></p>
+                        <p><strong>Standard Deviation:</strong> <span id="stdDevStat"></span></p>
+                        <p><strong>Min:</strong> <span id="minStat"></span></p>
+                        <p><strong>Max:</strong> <span id="maxStat"></span></p>
+                        <p><strong>Skewness:</strong> <span id="skewnessStat"></span></p>
+                        <p><strong>Kurtosis:</strong> <span id="kurtosisStat"></span></p>
+                    </div>
                     
                     <button id="export-data">Export Data</button>
                 </div>
@@ -301,6 +312,9 @@
             <li><strong>Gamma:</strong> Produces positive values. Used for rates or scales. Support: (0, ∞)</li>
             <li><strong>Normal:</strong> Produces both positive and negative values. Support: (-∞, ∞)</li>
             <li><strong>Uniform:</strong> Produces values within a user-specified range. Support: [min, max]</li>
+            <li><strong>Beta:</strong> Produces values between 0 and 1. Support: (0, 1)</li>
+            <li><strong>Chi-Squared:</strong> Produces positive values. Support: (0, ∞)</li>
+
         </ul>
     </p>
     <p>
@@ -309,7 +323,8 @@
             <li><strong>Gamma:</strong> Enter the shape (k) and rate (θ).</li>
             <li><strong>Normal:</strong> Enter the mean (μ) and variance (σ²).</li>
             <li><strong>Uniform:</strong> Enter the minimum and maximum values.</li>
-            
+            <li><strong>Beta:</strong> Enter alpha (α) and beta (β).</li>
+            <li><strong>Chi-Squared:</strong> Enter degrees of freedom (k).</li>
         </ul>
         After selecting the primary distribution, the <strong>support</strong> of that distribution will be shown, which indicates the range of possible output values.
     </p>
@@ -321,6 +336,9 @@
             <li><strong>Poisson:</strong> Uses the primary output as the rate (λ). Support: λ must be > 0.</li>
             <li><strong>Exponential:</strong> Uses the primary output as the rate (λ). Support: λ must be > 0.</li>
             <li><strong>Normal:</strong> Uses the primary output as the variance. Support: Variance must be > 0.</li>
+            <li><strong>Binomial:</strong> Uses the primary output as the probability (p), with user input for the number of trials (n). Support: p must be between 0 and 1.</li>
+            <li><strong>Geometric:</strong> Uses the primary output as the probability (p). Support: p must be between 0 and 1.</li>
+       
         </ul>
         When a secondary distribution is selected, any specific requirements for that distribution will be displayed. <strong>It is very important that the output (support) of the first distribution matches the input (valid parameter range) of the second distribution.</strong> 
     </p>
@@ -333,6 +351,24 @@
     <h4>Example Use Case</h4>
     <p>
         Suppose you choose a <strong>Gamma</strong> distribution as the primary with a shape (k) of 2 and a rate (θ) of 2. The tool will generate positive values for λ. If you then choose a <strong>Poisson</strong> distribution as the secondary, the tool will use the λ values generated from the Gamma distribution to produce Poisson samples. You can then visualize the resulting compound distribution.
+    </p>
+
+    <h4>Step 5: View Summary Statistics</h4>
+    <p>
+        After the distribution is generated, you can view <strong>summary statistics</strong> such as:
+        <ul>
+            <li><strong>Mean:</strong> The average of the generated values.</li>
+            <li><strong>Variance:</strong> A measure of the variability in the data.</li>
+            <li><strong>Standard Deviation:</strong> The square root of the variance.</li>
+            <li><strong>Min and Max:</strong> The minimum and maximum values in the generated sample.</li>
+            <li><strong>Skewness:</strong> A measure of the asymmetry of the distribution.</li>
+            <li><strong>Kurtosis:</strong> A measure of the "tailedness" of the distribution (excess kurtosis, where normal distribution kurtosis = 0).</li>
+        </ul>
+    </p>
+
+    <h4>Step 6: Export the Data</h4>
+    <p>
+        You can export the generated data as a CSV file using the <strong>Export Data</strong> button. This allows you to save the sample for further analysis or reporting.
     </p>
                 </div>
 
