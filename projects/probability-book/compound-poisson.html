@@ -16,13 +16,13 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Compound Distributions</title>
+            <title>Compound Poisson Distributions</title>
     
         <!-- Meta tags -->
         
         <meta name="keywords" content="Compound distribution">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to compound distributions.">
+        <meta name="description" content="Introduction to compound Poisson distributions.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -30,7 +30,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/compound-distributions"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/compound-poisson"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -174,8 +174,8 @@
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Set-Theory">
-                <h1>Compound Distributions</h1>
-                <h2>Introduction to Compound Distributions</h2>
+                <h1>Compound Poisson Distributions</h1>
+                <h2>Introduction to Compound Poisson Distributions</h2>
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
@@ -188,53 +188,9 @@
                 
                 <h3>Definition</h3>
 
-                In probability and statistics, a compound distribution arises when one random variable is dependent on another. This is often the case when there is an underlying variability in the parameters of a distribution. 
-                For example, if we model the number of insurance claims using a Poisson distribution, but the rate of claims (the parameter\(\lambda\)) is itself a random variable, we have a compound Poisson distribution. 
-                This is an extension of the idea of conditional distributions. Now, the conditional distributed is conditioned on a random variable. 
-                
+
                 <br>
 
-
-
-                <h3>An Aside: Common Conditional Probability Rules</h3>
-
-                <h4>Law of Total Probability</h4>
-
-                $$P(A)=\sum_{n}P(A|B_n)P(B_n)$$
-
-                $$P(A)=\int_{-\infty}^{\infty}P(A|X=x)dF_X(x)$$
-
-                $$=\int_{-\infty}^{\infty}P(A|X=x)f_{X}(x)dx$$
-
-                <h4>Law of iterated expectations</h4>
-
-                A useful formula is the law of iterated expectations which relates the unconditional expectation to the conditional expectations. 
-                This is essentially an extention of the Law of Total Probability, which becomes apparent if you write out the expectations explicitly. 
-
-
-                $$\mathbb{E}[X]=\mathbb{E}[\mathbb{E}[X|Y]]$$
-
-                <h4>Law of Total Variance</h4>
-
-                $$\text{Var}(X)=\mathbb{E}[\text{Var}(X|Y)]+\text{Var}(\mathbb{E}[X|Y])$$
-
-                
-
-                <h3>Returning to Defining Compound Distributions</h3>
-
-
-                A compound distribution is a probability distribution of a random variable \(X\) where the distribution of \(X\) depends on another random variable \(Y\). 
-                This can be expressed as
-
-                $$X|Y=z\sim f_{X|Y}(x|y)$$
-                where \(X\) has a conditional distribution \(f_X(x|y)\), and \(Y\) follows a marginal distribution \(g_Y(y)\).
-                <br><br>
-                The unconditional (or marginal) distribution of \(X\) is found by integrating over the distribution of Y:
-
-                $$f_{X}(x)=\int_{-\infty}^{\infty}f_{X|Y}(x|y)g_{Y}(y)dy$$
-
-                The distribution of \(X\) is "compounded" by the randomness of Y.
-                This should hopefully look similar to the Law of Total Probability, as it is the same, just restated in probability distribution notation for P(A). 
 
 
 
@@ -242,30 +198,29 @@
 
 
                 <div class="container">
-                    <h2>Compound Distribution Generator</h2>
+                    <h2>Compound Poisson Distribution Generator</h2>
             
-                    <!-- Primary Distribution Selection -->
+                    <!-- Discrete Distribution Selection -->
                     <div class="input-group">
-                        <h3>Primary Distribution (for parameter generation)</h3>
-                        <label for="primaryType">Select Primary Distribution:</label>
-                        <select id="primaryType" >
-                            <option value="gamma">Gamma</option>
-                            <option value="normal">Normal</option>
-                            <option value="uniform">Uniform</option>
+                        <h3>Discrete Distribution</h3>
+                        <label for="discreteType">Select Discrete Distribution:</label>
+                        <select id="discreteType">
+                            <option value="poisson">Poisson</option>
+                            <option value="binomial">Binomial</option>
                         </select>
-                        <div id="primaryParams">
-                            <!-- Parameters for primary distribution will go here -->
+                        <div id="discreteParams">
+                            <!-- Parameters for discrete distribution will go here -->
                         </div>
                     </div>
-
+            
                     <!-- Secondary Distribution Selection -->
                     <div class="input-group">
-                        <h3>Secondary Distribution (used with generated parameter)</h3>
+                        <h3>Secondary Distribution</h3>
                         <label for="secondaryType">Select Secondary Distribution:</label>
-                        <select id="secondaryType">
-                            <option value="poisson">Poisson</option>
-                            <option value="exponential">Exponential</option>
+                        <select id="secondaryType" >
                             <option value="normal">Normal</option>
+                            <option value="exponential">Exponential</option>
+                            <option value="uniform">Uniform</option>
                         </select>
                         <div id="secondaryParams">
                             <!-- Parameters for secondary distribution will go here -->
@@ -290,7 +245,7 @@
     
                 </div>
         </div>
-        <script src="./compound-funcs.js"></script>
+        <script src="./compound-poisson-funcs.js"></script>
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;
