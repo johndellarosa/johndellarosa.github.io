@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('primaryType').addEventListener('change', updatePrimaryParams);
     document.getElementById('secondaryType').addEventListener('change', updateSecondaryParams);
     document.getElementById('generate-button').addEventListener('click', generateCompoundDistribution);
+    document.getElementById('export-data').addEventListener('click', exportData);
 
 
     function updatePrimaryParams() {
@@ -38,6 +39,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Support:</strong> [min, max] (User-specified range)</p>
             `;
         }
+        else if (primaryType === 'beta') {
+            primaryParams.innerHTML = `
+                <label for="betaAlpha">Alpha (α):</label>
+                <input type="number" id="betaAlpha" value="2">
+                <label for="betaBeta">Beta (β):</label>
+                <input type="number" id="betaBeta" value="2">
+                <p><strong>Support:</strong> (0, 1) (All outputs will be between 0 and 1)</p>
+            `;
+        } else if (primaryType === 'chiSquared') {
+            primaryParams.innerHTML = `
+                <label for="chiDF">Degrees of Freedom (k):</label>
+                <input type="number" id="chiDF" value="2">
+                <p><strong>Support:</strong> (0, ∞) (All outputs will be positive)</p>
+            `;
+        }
     }
     
     function updateSecondaryParams() {
@@ -51,11 +67,27 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (secondaryType === 'exponential') {
             secondaryParams.innerHTML = `<p>Using rate (λ) from the primary distribution. <br> <strong>Note:</strong> Rate must be > 0.</p>`;
         } else if (secondaryType === 'normal') {
-            secondaryParams.innerHTML = `<p>Using variance from the primary distribution. <br> <strong>Note:</strong> Variance must be > 0.</p>`;
+
+            secondaryParams.innerHTML = `
+            <label for="normalMean">Mean (μ):</label>
+            <input type="number" id="normalMean" value="0">
+            <p>Using variance from the primary distribution. <br> <strong>Note:</strong> Variance must be > 0.</p>
+        `;
+        } else if (secondaryType === 'binomial') {
+            secondaryParams.innerHTML = `
+            <label for="binomialN">n (number of trials):</label>
+            <input type="number" id="binomialN" value="10">
+            <p>Using probability (p) from the primary distribution. <br> <strong>Note:</strong> p must be between 0 and 1.</p>
+        `;
+            
+        } else if (secondaryType === 'geometric') {
+            secondaryParams.innerHTML = `<p>Using probability (p) from the primary distribution. <br> <strong>Note:</strong> p must be between 0 and 1.</p>`;
         }
     }
     
     function generateCompoundDistribution() {
+        const numSimulations = parseInt(document.getElementById('numSimulations').value); // Get user input for number of simulations
+   
         const primaryType = document.getElementById('primaryType').value;
         const secondaryType = document.getElementById('secondaryType').value;
     
@@ -69,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Gamma distribution parameters must be positive.");
                 return;
             }
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < numSimulations; i++) {
                 primarySamples.push(gammaSample(shape, rate));
             }
         } else if (primaryType === 'normal') {
@@ -79,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Variance must be positive for Normal distribution.");
                 return;
             }
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < numSimulations; i++) {
                 primarySamples.push(normalSample(mean, Math.sqrt(variance)));
             }
         } else if (primaryType === 'uniform') {
@@ -89,10 +121,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Min must be less than Max for Uniform distribution.");
                 return;
             }
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < numSimulations; i++) {
                 primarySamples.push(uniformSample(min, max));
             }
+            
+        }   else if (primaryType === 'beta') {
+            const alpha = parseFloat(document.getElementById('betaAlpha').value);
+            const beta = parseFloat(document.getElementById('betaBeta').value);
+            for (let i = 0; i < numSimulations; i++) {
+                primarySamples.push(betaSample(alpha, beta));
+            }
+        } else if (primaryType === 'chiSquared') {
+            const df = parseFloat(document.getElementById('chiDF').value);
+            for (let i = 0; i < numSimulations; i++) {
+                primarySamples.push(chiSquaredSample(df));
+            }
         }
+
     
         // Generate the compound distribution samples based on the secondary distribution
         let compoundSamples = [];
@@ -114,12 +159,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert("Variance must be positive for Normal distribution.");
                     return;
                 }
-                compoundSamples.push(normalSample(0, Math.sqrt(param))); // Mean is 0, variance from primary
+                const mean = parseFloat(document.getElementById('normalMean').value); // Get user input for mean
+                compoundSamples.push(normalSample(mean, Math.sqrt(param))); // Mean from user, variance from primary
+            } else if (secondaryType === 'binomial') {
+                const n = parseInt(document.getElementById('binomialN').value); // Get user input for n
+                compoundSamples.push(binomialSample(n, param)); // n from user, p from primary
+      
+            } else if (secondaryType === 'geometric') {
+                compoundSamples.push(geometricSample(param)); // p from primary
             }
         });
     
         // Plot the compound distribution
         plotCompoundDistribution(compoundSamples);
+        window.generatedData = compoundSamples;
     }
     
     // Sampling functions for distributions
@@ -155,6 +208,28 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function exponentialSample(lambda) {
         return -Math.log(1 - Math.random()) / lambda;
+    }
+
+    function betaSample(alpha, beta) {
+        const x = gammaSample(alpha, 1);
+        const y = gammaSample(beta, 1);
+        return x / (x + y); // Beta sample is X / (X + Y) where X ~ Gamma(alpha, 1), Y ~ Gamma(beta, 1)
+    }
+    
+    function chiSquaredSample(df) {
+        return gammaSample(df / 2, 2); // Chi-squared is a special case of Gamma(df / 2, 2)
+    }
+    
+    function binomialSample(n, p) {
+        let successes = 0;
+        for (let i = 0; i < n; i++) {
+            if (Math.random() < p) successes++;
+        }
+        return successes;
+    }
+    
+    function geometricSample(p) {
+        return Math.ceil(Math.log(1 - Math.random()) / Math.log(1 - p));
     }
     
     // Function to plot the compound distribution using Chart.js
@@ -216,6 +291,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const labels = Array(bins).fill().map((_, i) => (min + i * binWidth).toFixed(2));
         return { labels, values: histogram };
     }
+
+    // Function to export the generated data as a CSV file
+function exportData() {
+    const data = window.generatedData;
+    if (!data || data.length === 0) {
+        alert('No data to export. Please generate the distribution first.');
+        return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,Sample\n";
+    data.forEach(sample => {
+        csvContent += sample + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'compound_distribution_data.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 updatePrimaryParams();
 updateSecondaryParams();
 });
