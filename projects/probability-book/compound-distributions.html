@@ -183,7 +183,7 @@
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
                     <li><a href="probability-2.html">Probability 2</a></li>
                     <li><a href="./mle.html">Maximum Likelihood Estimation</a></li>
-
+                    <li><a href="./mixture-distributions.html">Mixture Distributions</a></li>
 
                 </ol>
                 
@@ -259,6 +259,7 @@
                         <div id="primaryParams">
                             <!-- Parameters for primary distribution will go here -->
                         </div>
+                        <p id="primaryPdfLatex"></p>
                     </div>
 
                     <!-- Secondary Distribution Selection -->
@@ -275,6 +276,7 @@
                         <div id="secondaryParams">
                             <!-- Parameters for secondary distribution will go here -->
                         </div>
+                        <p id="secondaryPdfLatex"></p>
                     </div>
             
                     <button id="generate-button" >Generate Compound Distribution</button>
@@ -283,6 +285,24 @@
                     <div class="input-group">
                         <label for="numSimulations"><strong>Number of Simulations:</strong></label>
                         <input type="number" id="numSimulations" value="1000" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="numBins"><strong>Number of Bins:</strong></label>
+                        <input type="number" id="numBins" value="50" min="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="xMin"><strong>X-axis Min:</strong></label>
+                        <input type="number" id="xMin" placeholder="Auto">
+                        <label for="xMax"><strong>X-axis Max:</strong></label>
+                        <input type="number" id="xMax" placeholder="Auto">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="yMin"><strong>Y-axis Min:</strong></label>
+                        <input type="number" id="yMin" placeholder="Auto">
+                        <label for="yMax"><strong>Y-axis Max:</strong></label>
+                        <input type="number" id="yMax" placeholder="Auto">
                     </div>
                     <div id="summaryStats">
                         <h3>Summary Statistics</h3>
