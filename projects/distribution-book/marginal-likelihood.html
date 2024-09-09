@@ -107,8 +107,41 @@
                 This integral is precisely what we encountered in compound distributions: marginalizing over \(\theta\), an nknown parameter, which itself follows a prior distribution. In essence, marginal likelihood is an application of the same principle: we integrate out the uncertainty in the parameters to assess how well the model explains the data on average across all parameter configurations. 
 
 
+                <h2>Regularization</h2>
 
-                
+                <h3>Basic</h3>
+                In frequentist statistics, regularization is a technique used to prevent models from overfitting the data by adding a penalty for complexity. This penalty is applied in various forms, such as:
+
+                <ul>
+                    <li>LASSO (L1 regularization): Adds a penalty proportional to the absolute value of the model parameters</li>
+                    <li>Ridge (L2 regularization): Adds a penalty proportional to the square of the model parameters</li>
+                </ul>
+
+                The ridge objective function to be minimized for OLS is given by:
+
+                $$\sum_{i}^{n}(y_i-x_i^T\beta)^2+\lambda\sum_{j=1}^{p}\beta_j^2$$
+                where \(\beta\) is the vector of model coefficients and \(\lambda\) is the regularization parameter controlling the strength of the penalty. 
+                <h3>Bayesian</h3>
+
+                From a Bayesian point of view, regularization arises naturally through the prior distribution on the parameters. Regularization can be interpreted as placing a prior belief on the parameters, which encodes our preference for simpler models or smaller parameter values. 
+
+                <h4>Ridge</h4>
+                In Ridge regression, the quadratic penalty discourages large coefficients by assigning an increasingly steep penalty. In Bayesian terms, this is equivalent to placing a Gaussian prior on the regression coefficients \(\beta\), with mean zero and variance \(\sigma^2\). 
+                $$p(\beta_j|\sigma^2)\sim \mathcal{N}(0,\sigma^2)$$
+
+                The regularization strength, \(\lambda\), corresponds to this variance as follows:
+
+                $$\lambda=\frac{1}{\sigma^2}$$
+
+                <h4>LASSO</h4>
+                Similarly, LASSO adds a penalty proportional to the absolute value of the coefficients, corresponding to a Laplace prior on the parameters: 
+
+                $$p(\beta_j|\lambda)\sim\frac{1}{2\lambda}\exp\left(-\frac{|\beta_j|}{\lambda}\right)$$
+
+
+
+
+
                 </div>
 
 

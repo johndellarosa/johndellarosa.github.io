@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Estimators</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Statistical estimators">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to estimators in statistics, bias, consistency">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/estimators"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Set-Theory">
+                <h1>Estimators</h1>
+                <h2>Introduction to Estimators</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                </ol>
+                
+                <h3>Introduction</h3>
+                An estimator is a function or rule that takes a sample of data and produces an estimate of some population parameter. 
+                
+                <br><br>
+                Let \(\theta\) be a parameter of interest (e.g., the population mean, variance, or proportion), and let 
+                (\X_1,X_2,\dots,X_n\) be a random sample from a population. An estimator \(\hat{\theta}\) is a function of the sample:
+                $$\hat{theta}=\hat{\theta}(X_1,X_2,\dots,X_n)$$
+                The estimate \(\hat{\theta}\) is a specific value obtained by applying the estimator to a given data set
+
+                <h4>Example</h4>
+                The sample mean, \(\bar{X}\), is an estimator for the population mean \(\mu\):
+                $$\bar{X}=\frac{1}{n}\sum_{i=1}^{n}X_i$$
+                
+                <h3>Bias</h3>
+                
+                The bias of an estimator measures how far the expectedvalue of the estimator is from the true parameter value. 
+                $$\text{Bias}(\hat{\theta})=\mathbb{E}[\hat{\theta}]-\theta$$
+                <ul>
+                    <li>If \(\mathbb{E}[\hat{\theta}]=\theta\), the estimator is said to be unbiased.</li>
+                    <li>If \(\mathbb{E}[\hat{\theta}]\neq\theta\), the estimator is biased</li>
+                </ul>
+
+                <h4>Example</h4>
+                The sample variance \(S^2\) is an unbiased estimator for the population variance \(\sigma^2\). 
+                However, the biased sample variance estimator \(\hat{\sigma}^2\):
+                $$\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^{n}(X_i-\bar{X})^2$$
+
+                has bias \(\frac{n-1}{n}\sigma^2\), making it a biased estimator of the population variance. 
+
+                <h4>Variance of an Estimator</h4>
+                The variance of an estimator measures the expected deviation of the estimator from its expected value. The variance of \(\hat{\theta}^2\) is given by:
+                $$\text{Var}(\hat{\theta})=\mathbb{E}[(\hat{\theta}-\mathbb{E}[\hat{\theta}])^2]$$
+
+                <h4>Bias-Variance Trade-off</h4>
+                The mean squared error of an estimator can be broken down into the two previously mentioned quantities:
+
+                $$\text{MSE}(\hat{\theta})=\mathbb{E}[(\hat{\theta}-\theta)^2]=\text{Var}(\hat{\theta})+[\text{Bias}(\hat{\theta})]^2$$
+
+                <h3>Consistency</h3>
+                Formally stated, consistency is that the probability that the bias deviates from the true parameter by a given amount goes to 0 as the sample sizes goes to infinity:
+
+                $$\lim_{n\rightarrow\infty}P(|\hat{\theta}-\theta|>\varepsilon)=0$$
+
+                The previously mentioned biased sample variance estimator is consistent. 
+
+                
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Marginal Likelihood Practice Problems</h2>
+                    <ol>
+                        
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
