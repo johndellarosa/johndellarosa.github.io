@@ -15,13 +15,13 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Estimators</title>
+            <title>Copulas</title>
     
         <!-- Meta tags -->
         
-        <meta name="keywords" content="Statistical estimators">
+        <meta name="keywords" content="Copula, Probability Integral Transform">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to estimators in statistics, bias, consistency">
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/estimators"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -56,64 +56,61 @@
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
-            <div id="Set-Theory">
-                <h1>Estimators</h1>
-                <h2>Introduction to Estimators</h2>
+            <div id="Measures">
+                <h1>Copula</h1>
+                <h2>Introduction to Copulas</h2>
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+               
                 </ol>
-                
-                <h3>Introduction</h3>
-                An estimator is a function or rule that takes a sample of data and produces an estimate of some population parameter. 
-                
-                <br><br>
-                Let \(\theta\) be a parameter of interest (e.g., the population mean, variance, or proportion), and let 
-                \(X_1,X_2,\dots,X_n\) be a random sample from a population. An estimator \(\hat{\theta}\) is a function of the sample:
-                $$\hat{\theta}=\hat{\theta}(X_1,X_2,\dots,X_n)$$
-                The estimate \(\hat{\theta}\) is a specific value obtained by applying the estimator to a given data set
+               
+                <h3>Multivariate Normal</h3>
+
+                A random vector \(X=(X_1,X_2,\dots,X_n)\) is said to follow a multivariate normal distribution with mean \(\mu\) and covariance matrix \(\Sigma\) if its joint probability density function is given by:
+
+                $$f(\vec{x})=\frac{1}{(w\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(-\frac{1}{2}(x-\mu)^{T}\sigma^{-1}(x-\mu)\right)$$
+                where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\mu\) is the mean vector, and \(\Sigma\) is the covariancem atrix. 
 
                 <h4>Example</h4>
-                The sample mean, \(\bar{X}\), is an estimator for the population mean \(\mu\):
-                $$\bar{X}=\frac{1}{n}\sum_{i=1}^{n}X_i$$
-                
-                <h3>Bias</h3>
-                
-                The bias of an estimator measures how far the expectedvalue of the estimator is from the true parameter value. 
-                $$\text{Bias}(\hat{\theta})=\mathbb{E}[\hat{\theta}]-\theta$$
-                <ul>
-                    <li>If \(\mathbb{E}[\hat{\theta}]=\theta\), the estimator is said to be unbiased.</li>
-                    <li>If \(\mathbb{E}[\hat{\theta}]\neq\theta\), the estimator is biased</li>
-                </ul>
+                The joint PDF for a bivariate normal distribution of \(X_1, X_2\) is:
 
-                <h4>Example</h4>
-                The sample variance \(S^2\) is an unbiased estimator for the population variance \(\sigma^2\). 
-                However, the biased sample variance estimator \(\hat{\sigma}^2\):
-                $$\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^{n}(X_i-\bar{X})^2$$
+                $$f(x_1,x_2)=\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\left(\frac{1}{2(1-\rho^2)}\left[\frac{(x_1-\mu_1)^2}{\sigma_1^2}+\frac{(x_2-\mu_2)^2}{\sigma_2^2}-2\rho\frac{(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}\right]\right)$$
 
-                has bias \(\frac{n-1}{n}\sigma^2\), making it a biased estimator of the population variance. 
 
-                <h4>Variance of an Estimator</h4>
-                The variance of an estimator measures the expected deviation of the estimator from its expected value. The variance of \(\hat{\theta}^2\) is given by:
-                $$\text{Var}(\hat{\theta})=\mathbb{E}[(\hat{\theta}-\mathbb{E}[\hat{\theta}])^2]$$
+                <h3>Probability Integral Transform</h3>
 
-                <h4>Bias-Variance Trade-off</h4>
-                The mean squared error of an estimator can be broken down into the two previously mentioned quantities:
+                As a brief aside from multivariate distributions, there is the Probability Integral Transform. 
 
-                $$\text{MSE}(\hat{\theta})=\mathbb{E}[(\hat{\theta}-\theta)^2]=\text{Var}(\hat{\theta})+[\text{Bias}(\hat{\theta})]^2$$
+                <h4>Definition</h4>
+                Let \(X\) be a continuous random variable with CDF \(F_X(x)\). The Probability Integral Transform states that the random variable U, given by:
 
-                <h3>Consistency</h3>
-                Formally stated, consistency is that the probability that the bias deviates from the true parameter by a given amount goes to 0 as the sample sizes goes to infinity:
+                $$U=F_X(X)$$
+                is distributed uniformly over the interval [0,1]; i.e., $$U\sim\mathcal{U}(0,1).
 
-                $$\lim_{n\rightarrow\infty}P(|\hat{\theta}-\theta|>\varepsilon)=0$$
+                <h4>Multivariate Probability Integral Transform</h4>
+                Let \(X=(X_1,X_2,\dots,X_n)\) be a random vector with continuous marginal CDFs \(F_i(x)=P(X_i\lt x)\). 
 
-                The previously mentioned biased sample variance estimator is consistent. 
+                By performing the PIT on each element, we get a random vector where each element has U(0,1) marginals:
+                $$(U_1,U_2,\dots,U_n)=(F_1(X_1),F_2(X_2),\dots,F_n(X_n))$$
+
+                <h3>Copula</h3>
+                Continuing with our random vector \(U\), we define a copula function as:
+
+                $$C(u_1,u_2,\dots,u_n)=P(U_1\leq u_1, U_2\leq u_2,\dots, U_n\leq u_n)$$
+
+
+                <h3>Gaussian Copula</h3>
+                We previously covered how to generated correlated Gaussian variables. We can combine this with our multivariate Probability Integral Transform to get dependent uniforms. 
+
+                A corollary to the probability integral transform that we've seen with the quantile function is that given  a variable in the interval (0,1), we can transform it a random variable distributed from a given distribution by applying the inverse CDF. 
 
                 
-                <h2>Sufficient Statistics</h2>
 
-                
+
+
 
                 </div>
 
@@ -125,10 +122,11 @@
 
 
                 <div id="Exercises">
-                    <h2>Marginal Likelihood Practice Problems</h2>
+                    <h2>Measure Practice Problems</h2>
+
                     <ol>
-                        
-                        </ol>
+
+                    </ol>
     
     
                 </div>
