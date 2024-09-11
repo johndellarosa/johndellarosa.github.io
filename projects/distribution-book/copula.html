@@ -72,12 +72,19 @@
                 A random vector \(X=(X_1,X_2,\dots,X_n)\) is said to follow a multivariate normal distribution with mean \(\mu\) and covariance matrix \(\Sigma\) if its joint probability density function is given by:
 
                 $$f(\vec{x})=\frac{1}{(w\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(-\frac{1}{2}(x-\mu)^{T}\sigma^{-1}(x-\mu)\right)$$
-                where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\mu\) is the mean vector, and \(\Sigma\) is the covariancem atrix. 
+                where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\mu\) is the mean vector, and \(\Sigma\) is the covariance matrix. 
 
                 <h4>Example</h4>
                 The joint PDF for a bivariate normal distribution of \(X_1, X_2\) is:
 
                 $$f(x_1,x_2)=\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\left(\frac{1}{2(1-\rho^2)}\left[\frac{(x_1-\mu_1)^2}{\sigma_1^2}+\frac{(x_2-\mu_2)^2}{\sigma_2^2}-2\rho\frac{(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}\right]\right)$$
+
+                <h3>Multivariate T-Distribution</h3>
+                A random vector \(X=(X_1,X_2,\dots,X_n)\) is said to follow a multivariate T distribution with degrees of freedom \(\nu\), mean \(\mu\) and scale matrix \(\Sigma\) if its joint probability density function is given by:
+
+                $$f(\vec{x})=\frac{\Gamma(\frac{\nu+n}{2})}{\Gamma(\frac{\nu}{2})(\nu\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(1+\frac{1}{\nu}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)^{-(\nu+n)/2}$$
+                where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\nu\) is the degrees of freedom, \(\mu\) is the mean vector, and \(\Sigma\) is the scale matrix. 
+
 
 
                 <h3>Probability Integral Transform</h3>
@@ -105,10 +112,25 @@
                 <h3>Gaussian Copula</h3>
                 We previously covered how to generated correlated Gaussian variables. We can combine this with our multivariate Probability Integral Transform to get dependent uniforms. 
 
+                <h4>Getting the Copula</h4>
                 A corollary to the probability integral transform that we've seen with the quantile function is that given  a variable in the interval (0,1), we can transform it a random variable distributed from a given distribution by applying the inverse CDF. 
+                For the Gaussian copula, we apply the normal quantile function to turn our uniform values into normally distributed. If there is a Gaussian copula, then we would see this result distributed as a correlated multivariate normal. 
 
-                
+                <!-- <figure>
+                    <img src="gaussian-copula.png" alt="Gaussian Copula at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+                    <figcaption>Gaussian Copula at Different Rho</figcaption>
+                </figure> -->
 
+                <h4>Sampling from the Copula</h4>
+                Sampling is going the reverse of above. We can generate correlated normals through a multivariate normal distribution. We then apply the marginal CDF to each element to get correlated quantiles. We then apply the quantile function of choice to each element to get them into having marginal distributions of whatever we would like. 
+
+                <h3>T-Copula</h3>
+                A similar copula can be performed with heavier tails using the multivariate T-distribution as we did for the Gaussian copula. 
+
+                <!-- <figure>
+                    <img src="t-copula.png" alt="T at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+                    <figcaption>T Copula at Different Rho</figcaption>
+                </figure> -->
 
 
 
