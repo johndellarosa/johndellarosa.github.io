@@ -116,10 +116,10 @@
                 A corollary to the probability integral transform that we've seen with the quantile function is that given  a variable in the interval (0,1), we can transform it a random variable distributed from a given distribution by applying the inverse CDF. 
                 For the Gaussian copula, we apply the normal quantile function to turn our uniform values into normally distributed. If there is a Gaussian copula, then we would see this result distributed as a correlated multivariate normal. 
 
-                <!-- <figure>
+                <figure>
                     <img src="gaussian-copula.png" alt="Gaussian Copula at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
                     <figcaption>Gaussian Copula at Different Rho</figcaption>
-                </figure> -->
+                </figure>
 
                 <h4>Sampling from the Copula</h4>
                 Sampling is going the reverse of above. We can generate correlated normals through a multivariate normal distribution. We then apply the marginal CDF to each element to get correlated quantiles. We then apply the quantile function of choice to each element to get them into having marginal distributions of whatever we would like. 
@@ -127,10 +127,10 @@
                 <h3>T-Copula</h3>
                 A similar copula can be performed with heavier tails using the multivariate T-distribution as we did for the Gaussian copula. 
 
-                <!-- <figure>
+                <figure>
                     <img src="t-copula.png" alt="T at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
                     <figcaption>T Copula at Different Rho</figcaption>
-                </figure> -->
+                </figure>
 
 
 
