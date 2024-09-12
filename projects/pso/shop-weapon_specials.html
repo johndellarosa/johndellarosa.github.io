@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <title>PSO Weapon Shop Special Probabilities</title>
+
+    <!-- Meta tags -->
+    
+    <meta name="keywords" content="PSO, Phantasy Star Online, weapon shop, special, probability">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="Phantasy Star Online weapon shop special probabilities">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/shop-weapon-specials">     
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="./pso-functions.js"></script>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif; /* Use a nice font */
+    }
+
+    .center-container {
+        text-align: center; /* Center-aligns the content */
+        margin-top: 30px; /* Adds some space at the top */
+    }
+
+    #user-input, #process-btn,#playerLevel {
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+    }
+
+    #process-btn {
+        cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+    }
+
+    #process-btn:hover {
+        background-color: #0056b3; /* Darkens the button when hovered */
+    }
+
+    #data-table {
+        margin-top: 20px; /* Adds some space between the button and the table */
+        text-align: left; /* Aligns the table content to the left */
+        width: 100%; /* Makes the table take up the full width */
+    }
+
+    table {
+        width: 95%; /* Set the width of the table to be 95% of its container */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapses the borders of the table */
+    }
+
+    thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* Adds a border to table headers and cells */
+        text-align: center; /* Centers header text */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    th {
+        background-color: #e0e0e0; /* Sets a background color for headers */
+        text-align: center; /* Centers header text */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+    .input-container {
+            margin: 0 auto; /* Centers the container */
+            width: fit-content; /* Ensures the container only takes up as much width as needed */
+            padding: 10px; /* Adds some padding around the container */
+        }
+
+        label {
+            margin-right: 10px; /* Adds some space between the label and the input field */
+        }
+
+        th, td {
+    min-width: 25px;
+}
+
+#data-table {
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+
+
+}
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
+
+</style>
+
+</head>
+<body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="https://johndellarosa.github.io/index.html">Home</a>|
+        <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+        <!-- <a href="./index.html#education">Education</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#skills">Skills</a> -->
+        |
+        <a href="https://johndellarosa.github.io/biography.html">About</a>|
+        <a href="https://johndellarosa.github.io/projects.html"><u>Projects</u></a>|
+        <a href="https://johndellarosa.github.io/miscellaneous.html">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div> 
+
+    
+
+<h1>Phantasy Star Online Weapon Shop Weapon Special Data</h1>
+<h3><a href="./../pso">Return to Menu</a></h3>
+<p>
+    The first row refers to the selection mode, with explanations below. Cell values are quoted in terms of weights for that special assignment mode, which can be thought of as the probability for a given item in the shop. The probabilities seem to not vary by difficulty according to parsed data.
+
+</p>
+
+<ul>
+    <li>Mode 0: No special</li>
+    <li>Mode 1: Lower star specials only?</li>
+    <li>Mode 2: Allows for higher stars?</li>
+</ul>
+
+<div class="center-container">
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-nrix{text-align:center;vertical-align:middle}
+        @media screen and (max-width: 767px) {.tg {width: auto !important;}.tg col {width: auto !important;}.tg-wrap {overflow-x: auto;-webkit-overflow-scrolling: touch;margin: auto 0px;}}</style>
+        <div class="tg-wrap"><table class="tg"><thead>
+          <tr>
+            <th class="tg-nrix"></th>
+            <th class="tg-nrix">0</th>
+            <th class="tg-nrix">1</th>
+            <th class="tg-nrix">2</th>
+          </tr></thead>
+        <tbody>
+          <tr>
+            <td class="tg-nrix">1-10</td>
+            <td class="tg-nrix">85</td>
+            <td class="tg-nrix">15</td>
+            <td class="tg-nrix">0</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">11-17</td>
+            <td class="tg-nrix">70</td>
+            <td class="tg-nrix">30</td>
+            <td class="tg-nrix">0</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">18-25</td>
+            <td class="tg-nrix">50</td>
+            <td class="tg-nrix">50</td>
+            <td class="tg-nrix">0</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">26-35</td>
+            <td class="tg-nrix">20</td>
+            <td class="tg-nrix">80</td>
+            <td class="tg-nrix">0</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">36-45</td>
+            <td class="tg-nrix">20</td>
+            <td class="tg-nrix">60</td>
+            <td class="tg-nrix">20</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">46-60</td>
+            <td class="tg-nrix">20</td>
+            <td class="tg-nrix">40</td>
+            <td class="tg-nrix">40</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">61-75</td>
+            <td class="tg-nrix">10</td>
+            <td class="tg-nrix">30</td>
+            <td class="tg-nrix">60</td>
+          </tr>
+          <tr>
+            <td class="tg-nrix">76-200</td>
+            <td class="tg-nrix">10</td>
+            <td class="tg-nrix">10</td>
+            <td class="tg-nrix">80</td>
+          </tr>
+        </tbody></table></div>
+</div>
+
+
+
+
+    <div class="bottom" style="text-align: center;">
+        <h3><a href="./../pso.html">PSO Modules</a> </h3>         
+
+    </div>
+
+    <h3>References</h3>
+    <p style="text-align: center;">
+
+        Data and formula taken from <a href="https://github.com/fuzziqersoftware/newserv/tree/master" rel="external">Newserv</a>
+    
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
+</body>
+</html>
