@@ -19,9 +19,9 @@
     
         <!-- Meta tags -->
         
-        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="keywords" content="Multivariate distribution">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        <meta name="description" content="Introduction to multivariate distributions, elliptical distributions.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/multivariate-intro"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -76,15 +76,37 @@
                 <h4>Covariance</h4>
                 The Covariance matrix of X is given by a similar equation as the variance for a univariate case:
                 $$\text{Var}[X]=\mathbb{E}[(X-\mathbb{E}[X])]\mathbb{E}[(X-\mathbb{E}[X])]^T$$
+                In applied fields, the estimation of the covariance matrix is a difficult and important thing. 
 
+
+
+                <h5>Correlation Matrix</h5>
+                This can be interpreted in terms of correlations by normalizing the elements by dividing by \(\sigma_i\sigma_j\). The diagonals of the correlation matrix will be 1; the off-diagonal terms will be between -1 and 1 inclusive.
+                <h4>Cross-Covariance Matrix</h4>
+                The cross-covariance matrix is a generalization of the covariance matrix, where you can have two different vectors:
+
+                $$K_{XY}=\mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])^T]$$
 
                 <h3>Multivariate Normal</h3>
 
                 A random vector \(X=(X_1,X_2,\dots,X_n)\) is said to follow a multivariate normal distribution with mean \(\mu\) and covariance matrix \(\Sigma\) if its joint probability density function is given by:
 
-                $$f(\vec{x})=\frac{1}{(w\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(-\frac{1}{2}(x-\mu)^{T}\sigma^{-1}(x-\mu)\right)$$
+                $$f(\vec{x})=\frac{1}{(2\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(-\frac{1}{2}(x-\mu)^{T}\sigma^{-1}(x-\mu)\right)$$
                 where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\mu\) is the mean vector, and \(\Sigma\) is the covariance matrix. 
 
+                <h4>Covariance Matrix Requirements</h4>
+                For the univariate case, the variance had to be positive. For the multivariate case, \(\Sigma\) must be <b>positive semi-definite</b>. 
+
+
+                <h5>Positive Semi-Definite</h5>
+                An \(n \times n\) symmetric real matrix M is positive semi-definite if for for all \(\vec{x}\in\mathbb{R}^n\), \(\vec{x}^TM\vec{x}\geq 0\).
+<br><br>
+Below are some characteristics of positive semi-definite matrices:
+
+<ul>
+    <li>All its eigenvalues are non-negative</li>
+    <li></li>
+</ul>
                 <h4>Example</h4>
                 The joint PDF for a bivariate normal distribution of \(X_1, X_2\) is:
 
@@ -96,54 +118,17 @@
                 $$f(\vec{x})=\frac{\Gamma(\frac{\nu+n}{2})}{\Gamma(\frac{\nu}{2})(\nu\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(1+\frac{1}{\nu}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)^{-(\nu+n)/2}$$
                 where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\nu\) is the degrees of freedom, \(\mu\) is the mean vector, and \(\Sigma\) is the scale matrix. 
 
-
-
-                <h3>Probability Integral Transform</h3>
-
-                As a brief aside from multivariate distributions, there is the Probability Integral Transform. 
-
-                <h4>Definition</h4>
-                Let \(X\) be a continuous random variable with CDF \(F_X(x)\). The Probability Integral Transform states that the random variable U, given by:
-
-                $$U=F_X(X)$$
-                is distributed uniformly over the interval [0,1]; i.e., $$U\sim\mathcal{U}(0,1).
-
-                <h4>Multivariate Probability Integral Transform</h4>
-                Let \(X=(X_1,X_2,\dots,X_n)\) be a random vector with continuous marginal CDFs \(F_i(x)=P(X_i\lt x)\). 
-
-                By performing the PIT on each element, we get a random vector where each element has U(0,1) marginals:
-                $$(U_1,U_2,\dots,U_n)=(F_1(X_1),F_2(X_2),\dots,F_n(X_n))$$
-
-                <h3>Copula</h3>
-                Continuing with our random vector \(U\), we define a copula function as:
-
-                $$C(u_1,u_2,\dots,u_n)=P(U_1\leq u_1, U_2\leq u_2,\dots, U_n\leq u_n)$$
-
-
-                <h3>Gaussian Copula</h3>
-                We previously covered how to generated correlated Gaussian variables. We can combine this with our multivariate Probability Integral Transform to get dependent uniforms. 
-
-                <h4>Getting the Copula</h4>
-                A corollary to the probability integral transform that we've seen with the quantile function is that given  a variable in the interval (0,1), we can transform it a random variable distributed from a given distribution by applying the inverse CDF. 
-                For the Gaussian copula, we apply the normal quantile function to turn our uniform values into normally distributed. If there is a Gaussian copula, then we would see this result distributed as a correlated multivariate normal. 
+                <h3>Elliptical Distribution</h3>
+                The multvariate normal and t distributions are part of a family called <strong>Elliptical Distributions</strong>. If one were to draw contour plots for density, they would see episoid lines. 
+                Other members of the family include Laplace and logistic distributions.
 
                 <figure>
-                    <img src="gaussian-copula.png" alt="Gaussian Copula at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
-                    <figcaption>Gaussian Copula at Different Rho</figcaption>
-                </figure>
-
-                <h4>Sampling from the Copula</h4>
-                Sampling is going the reverse of above. We can generate correlated normals through a multivariate normal distribution. We then apply the marginal CDF to each element to get correlated quantiles. We then apply the quantile function of choice to each element to get them into having marginal distributions of whatever we would like. 
-
-                <h3>T-Copula</h3>
-                A similar copula can be performed with heavier tails using the multivariate T-distribution as we did for the Gaussian copula. 
-
-                <figure>
-                    <img src="t-copula.png" alt="T at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
-                    <figcaption>T Copula at Different Rho</figcaption>
+                    <img src="elliptical-distribution.png" alt="Elliptical Distributions" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+                    <figcaption>Elliptical Distributions</figcaption>
                 </figure>
 
 
+                
 
                 </div>
 

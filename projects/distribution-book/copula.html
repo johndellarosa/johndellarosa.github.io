@@ -64,28 +64,9 @@
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
                     <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
                
                 </ol>
-               
-                <h3>Multivariate Normal</h3>
-
-                A random vector \(X=(X_1,X_2,\dots,X_n)\) is said to follow a multivariate normal distribution with mean \(\mu\) and covariance matrix \(\Sigma\) if its joint probability density function is given by:
-
-                $$f(\vec{x})=\frac{1}{(w\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(-\frac{1}{2}(x-\mu)^{T}\sigma^{-1}(x-\mu)\right)$$
-                where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\mu\) is the mean vector, and \(\Sigma\) is the covariance matrix. 
-
-                <h4>Example</h4>
-                The joint PDF for a bivariate normal distribution of \(X_1, X_2\) is:
-
-                $$f(x_1,x_2)=\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\left(\frac{1}{2(1-\rho^2)}\left[\frac{(x_1-\mu_1)^2}{\sigma_1^2}+\frac{(x_2-\mu_2)^2}{\sigma_2^2}-2\rho\frac{(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}\right]\right)$$
-
-                <h3>Multivariate T-Distribution</h3>
-                A random vector \(X=(X_1,X_2,\dots,X_n)\) is said to follow a multivariate T distribution with degrees of freedom \(\nu\), mean \(\mu\) and scale matrix \(\Sigma\) if its joint probability density function is given by:
-
-                $$f(\vec{x})=\frac{\Gamma(\frac{\nu+n}{2})}{\Gamma(\frac{\nu}{2})(\nu\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}\exp\left(1+\frac{1}{\nu}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)^{-(\nu+n)/2}$$
-                where \(\vec{x}=(x_1,x_2,\dots,x_n)\), \(\nu\) is the degrees of freedom, \(\mu\) is the mean vector, and \(\Sigma\) is the scale matrix. 
-
-
 
                 <h3>Probability Integral Transform</h3>
 
@@ -95,7 +76,7 @@
                 Let \(X\) be a continuous random variable with CDF \(F_X(x)\). The Probability Integral Transform states that the random variable U, given by:
 
                 $$U=F_X(X)$$
-                is distributed uniformly over the interval [0,1]; i.e., $$U\sim\mathcal{U}(0,1).
+                is distributed uniformly over the interval [0,1]; i.e., \(U\sim\mathcal{U}(0,1)\).
 
                 <h4>Multivariate Probability Integral Transform</h4>
                 Let \(X=(X_1,X_2,\dots,X_n)\) be a random vector with continuous marginal CDFs \(F_i(x)=P(X_i\lt x)\). 
