@@ -88,11 +88,15 @@ button {
             input, select {
                 margin-bottom:10px;
             }
-
+    #plot {
+        width: 100%;  /* Let the chart take full width */
+        height: auto;  /* Adjust height accordingly */
+    }
 /* Smaller screens (e.g., smartphones) */
 @media (max-width: 600px) {
     .container {
         width: 100%;
+        max-width: 100%;  /* Ensures the container fits the screen */
         padding: 10px;
     }
     .data-point-button {
@@ -101,7 +105,22 @@ button {
     input[type="number"], input[type="range"] {
         width: 100%; /* Full width inputs for easier access */
     }
+
+    #plot {
+            width: 100%;  /* Full width for mobile */
+        }
 }
+
+@media (max-width: 768px) {
+        #plot {
+            width: 100%;  /* Full width for mobile */
+        }
+
+        #confusionMatrix {
+            font-size: 14px;  /* Adjust font size for mobile readability */
+        }
+    }
+
 #button-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -140,9 +159,9 @@ button {
                         <p id="logistic-equation"></p>
                         <p id="probability-equation"></p>
                     </div>
-
+                    <div id="plotContainer">
                     <div id="plot"></div>
-                    
+                    </div>
                     <div id="data-entry">
                     <h3>Manual Data Input</h3>
                     <label for="feature1">Feature 1:</label>
