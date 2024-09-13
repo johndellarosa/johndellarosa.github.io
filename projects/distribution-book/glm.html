@@ -104,7 +104,7 @@
                 Those terms will be explained shortly. 
 
 
-                <h2>Exponential Distribution Family</h2>
+                <h3>Exponential Distribution Family</h3>
                 
                 The name "exponential" comes from be ability to write its members' PMF or PDF as an exponential: 
 
@@ -113,7 +113,7 @@
                 where y is the outcome, \(\theta\) is something called the natural parameter, \(\phi\) is the dispersion parameter, and \(b(\theta)\) and \(c(y,\phi)\) are functions that are specific to the member distribution. The natural parameter will tend to be what we interpret y as. 
 
 
-                <h3>Link Functions</h3>
+                <h2>Link Functions</h2>
                 In Generalized Linear Models (GLMs), the relationship between the linear predictor and the expected value of the response variable is mediated through a link function. 
 
                 <br>
@@ -121,14 +121,14 @@
 
                 $$g(\mathbb{E}[Y|X])=X\beta$$
 
-                <h4>Canonical Link Function</h4>
+                <h3>Canonical Link Function</h3>
                 Each distribution in the exponential family has a canonical link function, which is derived from the natural parameter of the distribution. The canonical link function often leads to simpler and more efficient parameter estimation, though non-canonical links may be used if they better suit the context of the data.
 
-                <h5>Normal Distribution</h5>
+                <h4>Normal Distribution</h4>
                 For a normally distributed response variable, the canonical link function is the identity link. That is, the expected value of the response is modeled directly as:
                 $$g(\mathbb{E}[Y|X])=\mathbb{E}[Y|X]=X\beta$$
 
-                <h5>Binomial Distribution</h5>
+                <h4>Binomial Distribution</h4>
                 For binary or binomially distributed data, the canonical link function is the logit  function. This function transforms probabilities, which are constrained to lie between 0 and 1, to the entire real line: 
 
                 $$g(\mathbb{E}[Y|X])=\log\left(\frac{\mathbb{E}[Y|X]}{n-\mathbb{E}[Y|X]}\right)=X\beta$$
@@ -139,15 +139,22 @@
 
                 $$\mathbb{E}[Y|X]=\frac{n}{1+e^{-X\beta}}$$
 
+                One thing to note is that n must be a fixed value for this framework. Exponential distributions have a support that is independent of parameter choice, which would be violated if we allowed n to vary. 
 
-
-                <h5>Poisson Distribution</h5>
+                <h4>Poisson Distribution</h4>
                 For count data, typically modeled by a Poisson distribution, the canonical link is the logarithmic function, which ensures that the expected value remains non-negative: 
                 $$g(\mathbb{E}[Y|X])=\log(\mathbb{E}[Y|X])=X\beta$$
                 The inverse link (mean) function is the exponential, so the expected value of the response is given by:
 
                 $$\mathbb{E}[Y|X]=e^{X\beta}$$
-                <h5>Gamma Distribution</h5>
+
+                <h5>Alternatives to Poisson</h5>
+                In practice, Poisson can have limitations when we want to model count data. Common issues are that the variance is forced to be equal to the mean in Poisson as well as not being able to accomodate zero-inflated processes. <br><br>
+
+                Negative Binomial Regression can be used when the variance is greater than the mean. An additional parameter which corresponds to overdispersion is estimated. This is a common enough method that is warrants specific mention. Other Poisson altneratives are zero-inflated models, such as Zero-inflated Poisson. 
+                
+
+                <h4>Gamma Distribution</h4>
 
                 For positively skewed continuous data, the inverse link is commonly used:
 
@@ -157,9 +164,30 @@
 
                 $$\mathbb{E}[Y|X]=\frac{1}{X\beta}$$
 
-                <h4>Non-Canonical Link Functions</h4>
-                In some cases, non-canonical link functions may be more appropriate for modeling a particular dataset. While canonical links are derived naturally from the distribution's form, non-canonical links provide additional flexibility, particularly when interpretability of the model is a concern. 
-                </div>
+                <h3>Non-Canonical Link Functions</h3>
+                While canonical link functions arise naturally from the form of the exponential family distribution and often lead to simpler estimation procedures, there are many situations where non-canonical link functions may be preferred. These alternative link functions provide additional flexibility in modeling the relationship between the predictors and the response, particularly when the canonical link may not yield a model that is intuitive or interpretable for a given application.
+
+                <h4>Why Use Non-Canonical Link Functions?</h4>
+                
+                Non-canonical link functions are chosen for several reasons:
+
+                <ol>
+                    <li>Interpretability: In some contexts, the canonical link may not produce coefficients that are easily interpretable. For instance, in binary regression models, the canonical logit link models the log-odds, but a probit or complementary log-log link may provide more natural interpretations based on the data's structure.</li>
+                    <li>Alternative Distributions of Error: Non-canonical links can arise naturally when the errors in the model deviate from the assumptions of the exponential family distribution or when a different functional form better captures the underlying data relationships.</li>
+                    <li>Improving Fit: When a canonical link fails to adequately capture the relationship between the response and predictors, a non-canonical link may improve model fit by providing a closer alignment to the underlying data-generating process.</li>
+
+
+                </ol>
+
+                <h4>Examples</h4>
+                Outside of mixing and matching the above mentioned ones, here are some others that are sometimes used:
+
+
+
+            <h3></h3>
+
+                
+            </div>
 
 
 
@@ -176,6 +204,15 @@
                     </ol>
     
     
+                </div>
+
+                <div id="Suggested-Reading">
+                    <h2>Further Reading</h2>
+                    <ul>
+                        <li>Generalized Linear Models by McCullagh, Nelder</li>
+                        <li>Foundations of Linear and Generalized Linear Models by Agresti</li>
+                    </ul>
+
                 </div>
         </div>
         <script>
