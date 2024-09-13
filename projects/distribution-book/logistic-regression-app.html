@@ -39,6 +39,80 @@
 
         <script src="../../math.js" type="text/javascript"></script> -->
 
+<style>
+    .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    
+                margin: 0 auto; /* Auto margins to horizontally center */
+}
+
+#dataDisplay, #chartContainer, #controls {
+    width: 100%;
+    margin: 10px 0; /* Adds vertical spacing between sections */
+    text-align: center; /* Centers the text inside the divs */
+}
+
+#modelStats {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333; /* Adjust color based on your theme */
+}
+
+select{
+    margin: 0 auto;
+    
+    margin: 5px;
+    padding: 8px 12px;
+}
+
+button {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+            }
+            
+            button:hover {
+                background-color: #0056b3;
+            }
+            
+            input, select {
+                margin-bottom:10px;
+            }
+
+/* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .data-point-button {
+        padding: 8px; /* Larger touch targets */
+    }
+    input[type="number"], input[type="range"] {
+        width: 100%; /* Full width inputs for easier access */
+    }
+}
+#button-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* Adjust gap between buttons if needed */
+    margin-top: 20px; /* Space above the button container */
+    max-width: 500px;
+    margin: 0 auto;
+    
+}
+</style>
+
     </head>
     <body>
         <div class="navbar">
@@ -61,27 +135,48 @@
             <div id="Measures">
                 <h1>Generalized Linear Models (GLM)</h1>
                 <div class="container">
+                    <div id="equations" style="margin-top: 20px;">
+                        <h3>Logistic Regression Equations</h3>
+                        <p id="logistic-equation"></p>
+                        <p id="probability-equation"></p>
+                    </div>
+
                     <div id="plot"></div>
+                    
+                    <div id="data-entry">
                     <h3>Manual Data Input</h3>
                     <label for="feature1">Feature 1:</label>
-                    <input type="number" id="feature1" step="0.1" placeholder="Enter Feature 1"><br>
+                    <input type="number" id="feature1" step="0.1" placeholder="Enter Feature 1" inputmode="decimal"><br>
                     <label for="feature2">Feature 2:</label>
-                    <input type="number" id="feature2" step="0.1" placeholder="Enter Feature 2"><br>
+                    <input type="number" id="feature2" step="0.1" placeholder="Enter Feature 2" inputmode="decimal"><br>
                     <label for="manualLabel">Label:</label>
                     <select id="manualLabel">
                         <option value="0">0</option>
                         <option value="1">1</option>
-                    </select><br>
+                    </select>
+                </div>
+                <div id="button-container">
                     <button onclick="addManualPoint()">Add Point</button>
                     <button onclick="clearPoints()">Clear Points</button>
                     <button onclick="fitModel()">Fit Model</button> 
+                    <button onclick="autogeneratePoints()">Autogenerate Points</button>
+                    </div>
+                    <label for="thresholdSlider">Threshold: </label>
+                    <input type="range" id="thresholdSlider" min="0" max="1" step="0.01" value="0.5" onchange="updateThreshold()">
+                    <span id="thresholdValue">0.5</span>
+                    <div id="confusionMatrix">
+                        <table>
+                            <tr><th></th><th>Predicted 0</th><th>Predicted 1</th></tr>
+                            <tr><th>Actual 0</th><td id="tn">0</td><td id="fp">0</td></tr>
+                            <tr><th>Actual 1</th><td id="fn">0</td><td id="tp">0</td></tr>
+                        </table>
+
+                    </div>
+                    <div id="rocPlot" style="width:600px;height:400px;"></div>
+                    <button onclick="calculateROC()">Generate ROC Curve</button>
                 </div>
 
-                <div id="equations" style="margin-top: 20px;">
-                    <h3>Logistic Regression Equations</h3>
-                    <p id="logistic-equation"></p>
-                    <p id="probability-equation"></p>
-                </div>
+                
             </div>
 
 
@@ -91,24 +186,117 @@
 
 
 
-                <div id="Exercises">
-                    <h2>Measure Practice Problems</h2>
+                <div id="Explanation">
+                    <h2>Logistic Regression Visualization Tool: User Manual</h2>
 
-                    <ol>
+<h3>Overview:</h3>
+<p>This tool allows you to explore logistic regression by:</p>
+<ol>
+    <li>Adding data points manually or via random generation.</li>
+    <li>Visualizing how the logistic regression model fits the data.</li>
+    <li>Adjusting the decision threshold dynamically.</li>
+    <li>Observing real-time updates to the decision boundary, heatmap, and confusion matrix.</li>
+</ol>
 
-                    </ol>
+<h3>Features:</h3>
+
+<h4>1. Manual Data Input:</h4>
+<ul>
+    <li>You can manually input points with two features and assign them a label (0 or 1).</li>
+    <li>The points will be plotted in the scatter plot, and their true label will be displayed with the corresponding color:</li>
+    <ul>
+        <li><strong>Red</strong> for \( y = 1 \).</li>
+        <li><strong>Blue</strong> for \( y = 0 \).</li>
+    </ul>
+</ul>
+
+<h4>2. Autogenerate Random Points:</h4>
+<ul>
+    <li>Clicking the "Autogenerate Points" button will generate 50 random points clustered around different centers for each label.</li>
+    <li>Each cluster’s center is chosen randomly within the range [-3, 3], and the points have a wide spread to make the dataset more interesting.</li>
+</ul>
+
+<h4>3. Logistic Regression Fitting:</h4>
+<ul>
+    <li>The logistic regression model is automatically fitted when you input or generate data points.</li>
+    <li>The heatmap behind the scatter plot visualizes the probability of a point being classified as \( y = 1 \).</li>
+    <li>The decision boundary is shown, dividing the regions where the model predicts \( y = 1 \) and \( y = 0 \).</li>
+</ul>
+
+<h4>4. Adjusting the Threshold:</h4>
+<ul>
+    <li>A slider is provided to adjust the decision threshold. The default threshold is 0.5, but you can adjust it to explore how different thresholds affect the predictions.</li>
+    <li>The scatter plot will update dynamically:</li>
+    <ul>
+        <li><strong>Circles</strong> represent correct predictions (true positive or true negative).</li>
+        <li><strong>X’s</strong> represent incorrect predictions (false positive or false negative).</li>
+    </ul>
+</ul>
+
+<h4>5. Confusion Matrix:</h4>
+<ul>
+    <li>The confusion matrix, displayed below the plot, updates dynamically as you adjust the threshold.</li>
+    <li>It shows:</li>
+    <ul>
+        <li><strong>True Positives (TP)</strong>: Correctly predicted \( y = 1 \).</li>
+        <li><strong>False Positives (FP)</strong>: Predicted \( y = 1 \) but the true label is \( y = 0 \).</li>
+        <li><strong>True Negatives (TN)</strong>: Correctly predicted \( y = 0 \).</li>
+        <li><strong>False Negatives (FN)</strong>: Predicted \( y = 0 \) but the true label is \( y = 1 \).</li>
+    </ul>
+</ul>
+
+<h3>How to Use:</h3>
+
+<h4>1. Manual Data Entry:</h4>
+<ul>
+    <li>Input your desired values for <strong>Feature 1</strong> and <strong>Feature 2</strong> in the text boxes.</li>
+    <li>Choose a <strong>Label</strong> (either 0 or 1) from the dropdown menu.</li>
+    <li>Click the <strong>Add Point</strong> button to plot the point.</li>
+</ul>
+
+<h4>2. Autogenerate Random Points:</h4>
+<ul>
+    <li>To quickly generate a dataset, click the <strong>Autogenerate Points</strong> button.</li>
+    <li>This will generate 50 random points, divided into two clusters with different labels.</li>
+</ul>
+
+<h4>3. Adjust the Threshold:</h4>
+<ul>
+    <li>Use the <strong>Threshold Slider</strong> to adjust the decision threshold dynamically.</li>
+    <li>As you move the slider, observe the following changes:</li>
+    <ul>
+        <li>The points will update to circles (correct predictions) and X’s (incorrect predictions).</li>
+        <li>The <strong>Confusion Matrix</strong> will update in real time, showing how the number of true positives, false positives, true negatives, and false negatives changes as you adjust the threshold.</li>
+    </ul>
+</ul>
+
+<h4>4. Confusion Matrix:</h4>
+<ul>
+    <li>The confusion matrix is displayed under the plot.</li>
+    <li>It updates automatically as you change the threshold, showing the classification performance of the logistic regression model based on the current threshold.</li>
+</ul>
+
+<h3>Example Workflow:</h3>
+<ol>
+    <li><strong>Input Points Manually</strong>: Enter points with Feature 1 = 2, Feature 2 = 3, Label = 1, and add them to the plot. Repeat for other points.</li>
+    <!-- <li><strong>Autogenerate Points</strong>: Click <strong>Autogenerate Points</strong> to automatically generate a dataset of 50 points.</li> -->
+    <li><strong>Adjust the Threshold</strong>: Use the <strong>slider</strong> to adjust the threshold and see how it affects predictions and the confusion matrix.</li>
+    <li><strong>Analyze the Confusion Matrix</strong>: Observe how the model’s accuracy and classification performance (True Positives, False Positives, etc.) change with the threshold.</li>
+</ol>
+
+<h3>Technical Notes:</h3>
+<ul>
+    <li>The logistic regression model is fitted using gradient descent and updated in real-time based on the data you input or generate.</li>
+    <li>The heatmap visualizes the probability of a point being classified as \( y = 1 \), with a custom <strong>faded color map</strong> to make it easier to distinguish the scatter points from the background.</li>
+    <li>The points are color-coded based on their true labels, and the shapes (circle or X) indicate whether they were correctly classified.</li>
+</ul>
+
+
     
     
                 </div>
 
-                <div id="Suggested-Reading">
-                    <h2>Further Reading</h2>
-                    <ul>
-                        <li>Generalized Linear Models by McCullagh, Nelder</li>
-                        <li>Foundations of Linear and Generalized Linear Models by Agresti</li>
-                    </ul>
 
-                </div>
         </div>
         <script>
             var coll = document.getElementsByClassName("collapsible");
