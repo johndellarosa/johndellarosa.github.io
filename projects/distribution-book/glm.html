@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Generalized Linear Models</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="GLM, Generalized Linear Models">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Generalized Linear Models (GLMs). ">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Measures">
+                <h1>Generalized Linear Models (GLM)</h1>
+                <h2>Introduction to GLMs</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./../biophysics-book/statistics">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+
+                <h3>Ordinary Least Squares</h3>
+                Recall Linear regression (OLS) which is the basic statistical technique for predicting a variable as a function of others:
+
+                $$y=\beta_0+\beta_1\times x_1+\beta_2\times x_2+\dots+\beta_n\times x_n=X\beta$$
+
+                Linear regression is a fundamental tool in statistical modeling, widely used to describe the relationship between a continuous response variable and one or more predictors. However, the assumptions underlying linear regression—such as normally distributed residuals and a constant variance—are often too restrictive when applied to many types of data encountered in practice. For instance, when modeling binary outcomes, count data, or proportions, linear regression may provide inadequate or misleading results. 
+                Basic linear regression is unable to constrain the range which may be desirable when predicting probabilities for example.
+
+                <br><br>
+                <h3>Extending to GLMs</h3>
+                Generalized Linear Models (GLMs) extend the linear regression framework to accommodate a broader range of data types. Specifically, GLMs allow the response variable to follow a distribution from the exponential family, such as the binomial, Poisson, or gamma distribution. In addition, they introduce a link function, which establishes a relationship between the linear predictor and the expected value of the response variable, ensuring that the model adheres to the constraints of the distribution (e.g., ensuring that probabilities remain between 0 and 1 for binary data). 
+                
+                <h3>OLS as a GLM</h3>
+                Linear regression, in its standard form, is a special case of a GLM where the response variable is assumed to follow a normal distribution, the identity link function is used, and the variance is constant. 
+
+                In ordinary least squares regression, the response variable \(Y\) is assumed to be normally distributed with mean \(\mu\) and error terms with constant variance \(\sigma^2\):
+
+                $$Y=X\beta + \varepsilon,\quad \epsilon\sim \mathcal{N}(0,\sigma^2)$$
+
+                To interpret linear regression in the context of a GLM, we can view it through the lens of the exponential family of distributions. As discussed earlier, the normal distribution is a member of the exponential family, with the probability density function: 
+
+                $$f(y;\mu,sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y-\mu)^2}{2\sigma^2}\right)$$
+
+                In the GLM formulation, we aim to model the mean of the response variable, \(\mu=\mathbb{E}[Y]\), as a linear function of the predictors. 
+                For normally distributed data, the <strong>identity link function</strong> is used:
+
+                $$g(\mathbb{E}[Y])=\mathbb{E}[Y]=X\beta$$
+
+                This link function simply implies that the mean of the response variable is directly modeled as a linear function of the predictors. The normal GLM, therefore, takes the form:
+
+                $$Y\sim \mathcal{N}(X\beta, \sigma^2)$$
+
+                This is equivalent to the standard OLS model, but now seen within the broader GLM framework. In this case, the dispersion parameter\(\phi\) corresponds to the variance \(\sigma^2\), and the canonical link function is the identity function. 
+                Those terms will be explained shortly. 
+
+
+                <h2>Exponential Distribution Family</h2>
+                
+                The name "exponential" comes from be ability to write its members' PMF or PDF as an exponential: 
+
+                $$f(y; \theta, \phi)=\exp\left(\frac{y\theta - b(\theta)}{\phi}+c(y,\phi)\right)$$
+
+                where y is the outcome, \(\theta\) is something called the natural parameter, \(\phi\) is the dispersion parameter, and \(b(\theta)\) and \(c(y,\phi)\) are functions that are specific to the member distribution. The natural parameter will tend to be what we interpret y as. 
+
+
+                <h3>Link Functions</h3>
+                In Generalized Linear Models (GLMs), the relationship between the linear predictor and the expected value of the response variable is mediated through a link function. 
+
+                <br>
+                Formally, the link function \(g(\cdot)\) establishes the following relationship:
+
+                $$g(\mathcal{E}[Y])=X\beta$$
+
+                <h4>Canonical Link Function</h4>
+                Each distribution in the exponential family has a canonical link function, which is derived from the natural parameter of the distribution. The canonical link function often leads to simpler and more efficient parameter estimation, though non-canonical links may be used if they better suit the context of the data.
+
+                <h5>Normal Distribution</h5>
+                For a normally distributed response variable, the canonical link function is the identity link. That is, the expected value of the response is modeled directly as:
+                $$g(\mathbb{E}[Y])=\mathbb{E}[Y]=X\beta$$
+
+                <h5>Binomial Distribution</h5>
+                For binary or binomially distributed data, the canonical link function is the logit  function. This function transforms probabilities, which are constrained to lie between 0 and 1, to the entire real line: 
+
+                $$g(\mathbb{E}[Y])=\log\left(\frac{\mathbb{E}[Y]}{n-\mathbb{E}[Y]}\right)=X\beta$$
+
+                When n=1, this is a Bernoulli regression, more commonly known as <strong>Logistic Regression</strong> and the link function is the log odds. 
+
+                To solve for \(\mathbb{E}[Y]\), the logistic function is used:
+
+                $$\mathbb{E}[Y]=\frac{1}{1+e^{-X\beta}}$$
+
+
+                <h5>Poisson Distribution</h5>
+
+                <h5>Gamma Distribution</h5>
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Measure Practice Problems</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
