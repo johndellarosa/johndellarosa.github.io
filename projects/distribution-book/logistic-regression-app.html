@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script> -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+
+   
+            <title>Generalized Linear Models</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="GLM, Generalized Linear Models">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Generalized Linear Models (GLMs). ">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Measures">
+                <h1>Generalized Linear Models (GLM)</h1>
+                <div class="container">
+                    <div id="plot"></div>
+                    <h3>Manual Data Input</h3>
+                    <label for="feature1">Feature 1:</label>
+                    <input type="number" id="feature1" step="0.1" placeholder="Enter Feature 1"><br>
+                    <label for="feature2">Feature 2:</label>
+                    <input type="number" id="feature2" step="0.1" placeholder="Enter Feature 2"><br>
+                    <label for="manualLabel">Label:</label>
+                    <select id="manualLabel">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                    </select><br>
+                    <button onclick="addManualPoint()">Add Point</button>
+                    <button onclick="clearPoints()">Clear Points</button>
+                    <button onclick="fitModel()">Fit Model</button> 
+                </div>
+
+                <div id="equations" style="margin-top: 20px;">
+                    <h3>Logistic Regression Equations</h3>
+                    <p id="logistic-equation"></p>
+                    <p id="probability-equation"></p>
+                </div>
+            </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Measure Practice Problems</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+
+                <div id="Suggested-Reading">
+                    <h2>Further Reading</h2>
+                    <ul>
+                        <li>Generalized Linear Models by McCullagh, Nelder</li>
+                        <li>Foundations of Linear and Generalized Linear Models by Agresti</li>
+                    </ul>
+
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+            <script src="logistic-funcs.js"></script>
+</body>
+</html>

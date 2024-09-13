@@ -129,6 +129,9 @@
                 $$g(\mathbb{E}[Y|X])=\mathbb{E}[Y|X]=X\beta$$
 
                 <h4>Binomial Distribution</h4>
+                <h5><a href="./logistic-regression-app.html">Also see logistic regression visualizer</a></h5>
+
+
                 For binary or binomially distributed data, the canonical link function is the logit  function. This function transforms probabilities, which are constrained to lie between 0 and 1, to the entire real line: 
 
                 $$g(\mathbb{E}[Y|X])=\log\left(\frac{\mathbb{E}[Y|X]}{n-\mathbb{E}[Y|X]}\right)=X\beta$$
@@ -151,8 +154,8 @@
                 <h5>Alternatives to Poisson</h5>
                 In practice, Poisson can have limitations when we want to model count data. Common issues are that the variance is forced to be equal to the mean in Poisson as well as not being able to accomodate zero-inflated processes. <br><br>
 
-                Negative Binomial Regression can be used when the variance is greater than the mean. An additional parameter which corresponds to overdispersion is estimated. This is a common enough method that is warrants specific mention. Other Poisson altneratives are zero-inflated models, such as Zero-inflated Poisson. 
-                
+                Negative Binomial Regression can be used when the variance is greater than the mean. An additional parameter which corresponds to overdispersion is estimated. This is a common enough method that it warrants specific mention. Other Poisson altneratives are zero-inflated models, such as Zero-inflated Poisson. 
+
 
                 <h4>Gamma Distribution</h4>
 
