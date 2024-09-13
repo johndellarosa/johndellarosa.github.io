@@ -94,7 +94,7 @@
                 In the GLM formulation, we aim to model the mean of the response variable, \(\mu=\mathbb{E}[Y]\), as a linear function of the predictors. 
                 For normally distributed data, the <strong>identity link function</strong> is used:
 
-                $$g(\mathbb{E}[Y])=\mathbb{E}[Y]=X\beta$$
+                $$g(\mathbb{E}[Y])=\mathbb{E}[Y|X]=X\beta$$
 
                 This link function simply implies that the mean of the response variable is directly modeled as a linear function of the predictors. The normal GLM, therefore, takes the form:
 
@@ -119,31 +119,46 @@
                 <br>
                 Formally, the link function \(g(\cdot)\) establishes the following relationship:
 
-                $$g(\mathcal{E}[Y])=X\beta$$
+                $$g(\mathbb{E}[Y|X])=X\beta$$
 
                 <h4>Canonical Link Function</h4>
                 Each distribution in the exponential family has a canonical link function, which is derived from the natural parameter of the distribution. The canonical link function often leads to simpler and more efficient parameter estimation, though non-canonical links may be used if they better suit the context of the data.
 
                 <h5>Normal Distribution</h5>
                 For a normally distributed response variable, the canonical link function is the identity link. That is, the expected value of the response is modeled directly as:
-                $$g(\mathbb{E}[Y])=\mathbb{E}[Y]=X\beta$$
+                $$g(\mathbb{E}[Y|X])=\mathbb{E}[Y|X]=X\beta$$
 
                 <h5>Binomial Distribution</h5>
                 For binary or binomially distributed data, the canonical link function is the logit  function. This function transforms probabilities, which are constrained to lie between 0 and 1, to the entire real line: 
 
-                $$g(\mathbb{E}[Y])=\log\left(\frac{\mathbb{E}[Y]}{n-\mathbb{E}[Y]}\right)=X\beta$$
+                $$g(\mathbb{E}[Y|X])=\log\left(\frac{\mathbb{E}[Y|X]}{n-\mathbb{E}[Y|X]}\right)=X\beta$$
 
                 When n=1, this is a Bernoulli regression, more commonly known as <strong>Logistic Regression</strong> and the link function is the log odds. 
 
-                To solve for \(\mathbb{E}[Y]\), the logistic function is used:
+                To solve for \(\mathbb{E}[Y|X]\), the logistic function is used:
 
-                $$\mathbb{E}[Y]=\frac{1}{1+e^{-X\beta}}$$
+                $$\mathbb{E}[Y|X]=\frac{n}{1+e^{-X\beta}}$$
+
 
 
                 <h5>Poisson Distribution</h5>
+                For count data, typically modeled by a Poisson distribution, the canonical link is the logarithmic function, which ensures that the expected value remains non-negative: 
+                $$g(\mathbb{E}[Y|X])=\log(\mathbb{E}[Y|X])=X\beta$$
+                The inverse link (mean) function is the exponential, so the expected value of the response is given by:
 
+                $$\mathbb{E}[Y|X]=e^{X\beta}$$
                 <h5>Gamma Distribution</h5>
 
+                For positively skewed continuous data, the inverse link is commonly used:
+
+                $$g(\mathbb{E}[Y|X])=\frac{1}{\mathbb{E}[Y|X]}=X\beta$$
+
+                Thus, the mean is given by:
+
+                $$\mathbb{E}[Y|X]=\frac{1}{X\beta}$$
+
+                <h4>Non-Canonical Link Functions</h4>
+                In some cases, non-canonical link functions may be more appropriate for modeling a particular dataset. While canonical links are derived naturally from the distribution's form, non-canonical links provide additional flexibility, particularly when interpretability of the model is a concern. 
                 </div>
 
 
