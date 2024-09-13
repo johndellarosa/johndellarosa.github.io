@@ -188,7 +188,8 @@ const layout = {
     title: 'Interactive Logistic Regression Plot',
     xaxis: { range: [-10, 10], title: 'Feature 1' },
     yaxis: { range: [-10, 10], title: 'Feature 2' },
-    showlegend: false
+    showlegend: false,
+    responsive: true,
 };
 
 
@@ -396,7 +397,8 @@ function calculateROC() {
         title: 'ROC Curve',
         xaxis: { title: 'False Positive Rate (FPR)', range: [0, 1] },
         yaxis: { title: 'True Positive Rate (TPR)', range: [0, 1] },
-        showlegend: true
+        showlegend: true,
+        responsive: true,
     });
 }
 
