@@ -153,6 +153,12 @@ function generateHeatmap() {
         }
     };
 
+    if (window.innerWidth < 500) {
+        console.log(window.innerWidth);
+        heatmapData.colorbar.thickness = 5;  // Further reduce colorbar on mobile
+        heatmapData.colorbar.orientation = 'h';
+    }
+
     const scatterData = {
         x: pointsX,
         y: pointsY,
