@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('discreteType').addEventListener('change', updateDiscreteParams);
     document.getElementById('secondaryType').addEventListener('change', updateSecondaryParams);
     document.getElementById('generate-button').addEventListener('click', generateCompoundDistribution);
+    document.getElementById('export-data').addEventListener('click', exportData);
 
 
 // Function to update the discrete distribution parameters
@@ -96,6 +97,20 @@ function generateCompoundDistribution() {
 
     // Plot the compound distribution
     plotCompoundDistribution(compoundSamples);
+
+    window.generatedData = compoundSamples;
+    // updateDistributionFormulas();
+        // Calculate and display summary statistics
+    const stats = calculateStatistics(compoundSamples);
+    document.getElementById('meanStat').textContent = stats.mean.toFixed(4);
+    document.getElementById('varianceStat').textContent = stats.variance.toFixed(4);
+    document.getElementById('stdDevStat').textContent = stats.stdDev.toFixed(4);
+    document.getElementById('minStat').textContent = stats.min.toFixed(4);
+    document.getElementById('maxStat').textContent = stats.max.toFixed(4);
+    document.getElementById('skewnessStat').textContent = stats.skewness.toFixed(4);
+    document.getElementById('kurtosisStat').textContent = stats.kurtosis.toFixed(4);
+
+
 }
 
 // Sampling functions for discrete and secondary distributions
@@ -173,6 +188,48 @@ function plotCompoundDistribution(data) {
             }
         }
     });
+}
+
+    // Function to calculate summary statistics, including skewness and kurtosis
+    function calculateStatistics(data) {
+        const n = data.length;
+        const mean = data.reduce((a, b) => a + b, 0) / n;
+        const variance = data.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / n;
+        const stdDev = Math.sqrt(variance);
+        const min = Math.min(...data);
+        const max = Math.max(...data);
+
+        // Skewness calculation
+        const skewness = data.reduce((a, b) => a + Math.pow((b - mean) / stdDev, 3), 0) / n;
+
+        // Kurtosis calculation (subtract 3 for excess kurtosis)
+        const kurtosis = data.reduce((a, b) => a + Math.pow((b - mean) / stdDev, 4), 0) / n;
+        // console.log("Generated Data:", data);
+        // console.log("NumBins:", numBins, "xMin:", xMin, "xMax:", xMax, "yMin:", yMin, "yMax:", yMax);
+        
+        return { mean, variance, stdDev, min, max, skewness, kurtosis };
+    }
+
+        // Function to export the generated data as a CSV file
+function exportData() {
+    const data = window.generatedData;
+    if (!data || data.length === 0) {
+        alert('No data to export. Please generate the distribution first.');
+        return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,Sample\n";
+    data.forEach(sample => {
+        csvContent += sample + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'compound_poisson_data.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 // Function to create histogram data from samples
