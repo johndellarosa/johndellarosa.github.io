@@ -60,7 +60,7 @@ function fitLogisticRegression() {
 // Function to update the equations and display them with LaTeX
 function updateEquations() {
     const logisticEquation = `z = ${beta0.toFixed(2)} + ${beta1.toFixed(2)} x_1 + ${beta2.toFixed(2)} x_2`;
-    const probabilityEquation = `P(y=1 | x_1, x_2) = \\frac{1}{1 + e^{-(${beta0.toFixed(2)} + ${beta1.toFixed(2)} x_1 + ${beta2.toFixed(2)} x_2)}}`;
+    const probabilityEquation = `P(y=1 | x_1, x_2) = \\frac{1}{1 + \\exp\\left(-(${beta0.toFixed(2)} + ${beta1.toFixed(2)} x_1 + ${beta2.toFixed(2)} x_2)\\right)}`;
 
     // Update the equation containers
     document.getElementById('logistic-equation').textContent = `\\[ ${logisticEquation} \\]`;

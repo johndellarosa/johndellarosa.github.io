@@ -64,10 +64,60 @@
 
 select{
     margin: 0 auto;
-    
+    width: 50%;
     margin: 5px;
     padding: 8px 12px;
 }
+
+input[type="range"]{
+        width:50%;
+    }
+
+    /* Container for the confusion matrix */
+    #confusionMatrix {
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 100%;  /* Full width */
+        max-width: 300px;  /* Limit width for readability */
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #f9f9f9;  /* Light background */
+    }
+
+    /* Style for the table cells */
+    #confusionMatrix table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #confusionMatrix th, #confusionMatrix td {
+        border: 2px solid #ddd;  /* Add border to each cell */
+        padding: 10px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    /* Style for the headers */
+    #confusionMatrix th {
+        background-color: grey;  /* Green header background */
+        color: white;  /* White text in headers */
+    }
+
+    /* Alternate row background color for readability */
+    #confusionMatrix tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Style for row and column labels to match plot colors */
+    #confusionMatrix th.predicted-0, #confusionMatrix th.actual-0 {
+        background-color: #7CB9E8;  /* Blue for label 0 */
+        color: white;  /* White text */
+    }
+
+    #confusionMatrix th.predicted-1, #confusionMatrix th.actual-1 {
+        background-color: #fd5c63;  /* Red for label 1 */
+        color: white;  /* White text */
+    }
 
 button {
     display: inline-block;
@@ -102,9 +152,14 @@ button {
     .data-point-button {
         padding: 8px; /* Larger touch targets */
     }
-    input[type="number"], input[type="range"] {
+    input[type="number"], select {
         width: 100%; /* Full width inputs for easier access */
     }
+    input[type="range"]{
+        width:80%;
+    }
+
+
 
     #plot {
             width: 100%;  /* Full width for mobile */
@@ -118,6 +173,18 @@ button {
 
         #confusionMatrix {
             font-size: 14px;  /* Adjust font size for mobile readability */
+        }
+
+        input[type="number"],  select {
+        width: 100%; /* Full width inputs for easier access */
+    }
+
+    input[type="range"]{
+        width:80%;
+    }
+
+    #confusionMatrix {
+            font-size: 14px;  /* Slightly smaller font for mobile */
         }
     }
 
@@ -170,8 +237,8 @@ button {
                     <input type="number" id="feature2" step="0.1" placeholder="Enter Feature 2" inputmode="decimal"><br>
                     <label for="manualLabel">Label:</label>
                     <select id="manualLabel">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
+                        <option value="0">0 (Blue)</option>
+                        <option value="1">1 (Red)</option>
                     </select>
                 </div>
                 <div id="button-container">
@@ -185,9 +252,21 @@ button {
                     <span id="thresholdValue">0.5</span>
                     <div id="confusionMatrix">
                         <table>
-                            <tr><th></th><th>Predicted 0</th><th>Predicted 1</th></tr>
-                            <tr><th>Actual 0</th><td id="tn">0</td><td id="fp">0</td></tr>
-                            <tr><th>Actual 1</th><td id="fn">0</td><td id="tp">0</td></tr>
+                            <tr>
+                                <th></th>
+                                <th class="predicted-0">Predicted 0</th>
+                                <th class="predicted-1">Predicted 1</th>
+                            </tr>
+                            <tr>
+                                <th class="actual-0">Actual 0</th>
+                                <td id="tn">0</td>
+                                <td id="fp">0</td>
+                            </tr>
+                            <tr>
+                                <th class="actual-1">Actual 1</th>
+                                <td id="fn">0</td>
+                                <td id="tp">0</td>
+                            </tr>
                         </table>
 
                     </div>
