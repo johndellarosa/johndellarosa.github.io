@@ -53,12 +53,15 @@
 #plotContainer, #rocplotContainer {
         width: 100%;  /* Full width of the parent container */
         max-width: 100%;  /* Ensure the plot doesn't exceed the container */
-        
+        /* max-height: 00px; */
+        max-height: 900px;
         margin: 0 auto;  /* Center the plot on the screen */
     }
 
     #plot {
         max-width: 100%;
+        /* max-height: 900px; */
+        /* max-height: 600px; */
         width: 100%;  /* Make sure the plot takes full width of the container */
         height: auto;  /* Let the height adjust automatically */
     }
@@ -293,6 +296,7 @@ button {
                         <p><strong>Precision:</strong> <span id="precision">0%</span></p>
                         <p><strong>Recall:</strong> <span id="recall">0%</span></p>
                         <p><strong>F1-Score:</strong> <span id="f1score">0</span></p>
+                        <p><strong>AUC:</strong> <span id="auc">0</span></p> 
                     </div>
                 
                 </div>
@@ -334,7 +338,7 @@ button {
 <h4>2. Autogenerate Random Points:</h4>
 <ul>
     <li>Clicking the "Autogenerate Points" button will generate 50 random points clustered around different centers for each label.</li>
-    <li>Each cluster’s center is chosen randomly within the range [-3, 3], and the points have a wide spread to make the dataset more interesting.</li>
+    <li>Each cluster's center is chosen randomly within the range [-3, 3], and the points have a wide spread to make the dataset more interesting.</li>
 </ul>
 
 <h4>3. Logistic Regression Fitting:</h4>

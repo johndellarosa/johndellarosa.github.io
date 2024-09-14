@@ -193,7 +193,14 @@ const layout = {
     yaxis: { range: [-10, 10], title: 'Feature 2' },
     showlegend: false,
     responsive: true,
+    dragmode: 'pan',  // Disable zooming on click
     autosize: true,
+    margin: {
+        t: 40,  // Reduce top margin (space for title)
+        l: 50,  // Left margin
+        r: 10,  // Right margin
+        b: 40   // Bottom margin
+    }
 };
 
 
@@ -237,8 +244,8 @@ function addManualPoint() {
         alert("Please enter valid values for both features.");
     }
 
-    generateHeatmap();
-    updateEquations();  // Call to update equations after fitting
+    fitLogisticRegression();
+    // updateEquations();  // Call to update equations after fitting
     calculateROC();
 
 }
@@ -321,6 +328,7 @@ function updateThreshold() {
     // Arrays to store marker symbols (correct vs incorrect predictions) and colors (true labels)
     const markerSymbols = [];  // Circle for correct, X for incorrect
     const markerColors = [];  // Keep true label color (red for y=1, blue for y=0)
+    const markerLineWidths = [];  // To adjust outline widths
 
     let tp = 0, fp = 0, tn = 0, fn = 0;  // Initialize confusion matrix counters
 
@@ -334,6 +342,9 @@ function updateThreshold() {
 
         // Keep the color based on the true label
         markerColors.push(labels[i] === 1 ? 'red' : 'blue');
+
+
+
 
         // Update confusion matrix counts
         if (predictedLabel === 1 && labels[i] === 1) {
@@ -352,7 +363,7 @@ function updateThreshold() {
         'marker.symbol': [markerSymbols],  // Circle or X based on correctness
         'marker.color': [markerColors],  // Keep true label color
         'marker.size': [10],  // Adjust size for visibility
-        'marker.line.width': [1]  // Keep a light outline for visibility
+        'marker.line.width': [1],  // Glow for misclassified points
     });
 
     // Update the confusion matrix display
@@ -431,7 +442,7 @@ function updateConfusionMatrix(tp, fp, tn, fn) {
     document.getElementById('fp').textContent = fp;
     document.getElementById('tn').textContent = tn;
     document.getElementById('fn').textContent = fn;
-
+    const auc = calculateAUC();
         // Calculate Accuracy
         const total = tp + fp + tn + fn;
         const accuracy = ((tp + tn) / total) * 100;
@@ -450,9 +461,52 @@ function updateConfusionMatrix(tp, fp, tn, fn) {
         document.getElementById('precision').textContent = precision.toFixed(2);
         document.getElementById('recall').textContent = recall.toFixed(2);
         document.getElementById('f1score').textContent = f1score.toFixed(2);
+        document.getElementById('auc').textContent = auc.toFixed(2);  // Display AUC
+    }
+
+function calculateAUC() {
+    const thresholds = Array.from({ length: 101 }, (_, i) => i / 100);  // Thresholds from 0 to 1
+    const tpr = [];  // True positive rate
+    const fpr = [];  // False positive rate
+
+    for (let threshold of thresholds) {
+        let tp = 0, fp = 0, tn = 0, fn = 0;
+
+        for (let i = 0; i < pointsX.length; i++) {
+            let z = beta0 + beta1 * pointsX[i] + beta2 * pointsY[i];
+            let predictedLabel = sigmoid(z) >= threshold ? 1 : 0;
+
+            if (predictedLabel === 1 && labels[i] === 1) tp++;
+            if (predictedLabel === 1 && labels[i] === 0) fp++;
+            if (predictedLabel === 0 && labels[i] === 0) tn++;
+            if (predictedLabel === 0 && labels[i] === 1) fn++;
+        }
+
+        // Calculate TPR and FPR for the current threshold
+        const tprValue = tp / (tp + fn);  // True Positive Rate
+        const fprValue = fp / (fp + tn);  // False Positive Rate
+
+        tpr.push(tprValue);
+        fpr.push(fprValue);
+    }
+
+    // Sort FPR and TPR in ascending order based on FPR
+    let sorted = fpr.map((fprVal, index) => [fprVal, tpr[index]]);
+    sorted.sort((a, b) => a[0] - b[0]);  // Sort by FPR
+
+    // Extract sorted FPR and TPR values
+    const sortedFPR = sorted.map(item => item[0]);
+    const sortedTPR = sorted.map(item => item[1]);
+
+    // Use trapezoidal rule to calculate AUC
+    let auc = 0;
+    for (let i = 1; i < sortedFPR.length; i++) {
+        auc += (sortedFPR[i] - sortedFPR[i - 1]) * (sortedTPR[i] + sortedTPR[i - 1]) / 2;
+    }
+
+    return auc;  // Return the calculated AUC
 }
-
-
+    
 
 function autogeneratePoints() {
     const numPoints = 30;  // Total number of points to generate
@@ -520,18 +574,96 @@ window.addEventListener('resize', () => {
 
 });
 
-// Function to handle plot clicks and add points
-document.getElementById('plot').on('plotly_click', function(data){
-    let xVal = data.points[0].x;
-    let yVal = data.points[0].y;
-    let labelVal = parseInt(document.getElementById('label').value);
+document.getElementById('plot').addEventListener('contextmenu', (event) => event.preventDefault());
 
-    // Add the new point
-    pointsX.push(xVal);
-    pointsY.push(yVal);
-    labels.push(labelVal);
+// Function to convert pixel coordinates to data coordinates
+function convertPixelToDataCoords(event, plotElement) {
+    const rect = plotElement.getBoundingClientRect();
+    const xPixel = event.clientX - rect.left;
+    const yPixel = event.clientY - rect.top;
 
-    // Update the plot with the new points
+    const xAxis = plotElement._fullLayout.xaxis;
+    const yAxis = plotElement._fullLayout.yaxis;
+
+    const xData = xAxis.p2l(xPixel);  // p2l: pixels to linear data
+    const yData = yAxis.p2l(yPixel);
+
+    return { xData, yData };
+}
+
+// Helper function to check if a click is inside the plotting area
+function isInPlotArea(xPixel, yPixel, plotElement) {
+    const layout = plotElement._fullLayout;
+    const xAxis = layout.xaxis;
+    const yAxis = layout.yaxis;
+
+    // Get the pixel boundaries of the plotting area
+    const xStart = xAxis._offset;
+    const xEnd = xStart + xAxis._length;
+    const yStart = yAxis._offset;
+    const yEnd = yStart + yAxis._length;
+
+    // Check if the click is within the plotting area boundaries
+    return (xPixel >= xStart && xPixel <= xEnd && yPixel >= yStart && yPixel <= yEnd);
+}
+
+// Function to convert pixel coordinates to data coordinates
+function convertPixelToDataCoords(event, plotElement) {
+    const layout = plotElement._fullLayout;
+    const xAxis = layout.xaxis;
+    const yAxis = layout.yaxis;
+
+    // Use event.layerX and event.layerY to get layer-specific coordinates
+    const xPixel = event.layerX;
+    const yPixel = event.layerY;
+
+    // Convert pixel to data coordinates
+    const xData = xAxis.p2l(xPixel);  // Convert x pixels to data
+    const yData = yAxis.p2l(yPixel);  // Convert y pixels to data
+
+    return { xData, yData };
+}
+
+// Handle left-click to add label 0 (blue)
+document.getElementById('plot').addEventListener('click', function(event) {
+    
+    const plotElement = document.getElementById('plot');
+
+    // Convert pixel coordinates to data coordinates using layerX/layerY
+    const coords = convertPixelToDataCoords(event, plotElement);
+    const x = coords.xData;
+    const y = coords.yData;
+
+    // Add the point with label 0 (left-click = blue)
+    pointsX.push(x);
+    pointsY.push(y);
+    labels.push(0);  // Label 0 for left-click
+
+    // Update the plot
     updatePlot();
 });
+
+// Handle right-click to add label 1 (red)
+document.getElementById('plot').addEventListener('contextmenu', function(event) {
+    event.preventDefault();  // Prevent default right-click context menu
+
+    const plotElement = document.getElementById('plot');
+
+    // Convert pixel coordinates to data coordinates using layerX/layerY
+    const coords = convertPixelToDataCoords(event, plotElement);
+    const x = coords.xData;
+    const y = coords.yData;
+
+    // Add the point with label 1 (right-click = red)
+    pointsX.push(x);
+    pointsY.push(y);
+    labels.push(1);  // Label 1 for right-click
+
+    // Update the plot
+    updatePlot();
+    // fitLogisticRegression();
+});
+
+
+
 });
