@@ -59,7 +59,7 @@ function fitLogisticRegression() {
 
 // Function to update the equations and display them with LaTeX
 function updateEquations() {
-    const logisticEquation = `z = ${beta0.toFixed(2)} + ${beta1.toFixed(2)} x_1 + ${beta2.toFixed(2)} x_2`;
+    const logisticEquation = `z = \\log(\\frac{p}{1-p}) = ${beta0.toFixed(2)} + ${beta1.toFixed(2)} x_1 + ${beta2.toFixed(2)} x_2`;
     const probabilityEquation = `P(y=1 | x_1, x_2) = \\frac{1}{1 + \\exp\\left(-(${beta0.toFixed(2)} + ${beta1.toFixed(2)} x_1 + ${beta2.toFixed(2)} x_2)\\right)}`;
 
     // Update the equation containers
@@ -154,22 +154,19 @@ function generateHeatmap() {
         type: 'scatter',
         marker: {
             color: labels,
-            colorscale: [[0, 'blue'], [1, 'red']],
+            colorscale: [[0, '#007FFF'], [1, '#E62020']],
             size: 10,
-            showscale: false
+            showscale:false,
+            line: {
+                width:2,
+                color:labels,
+                colorscale: [[0, '#0039a6'], [1, '#8B0000']]
+            }
         }
     };
 
     // Update the plot with the new heatmap and scatter points
-    Plotly.newPlot('plot', [heatmapData, scatterData], {
-        title: 'Logistic Regression Heatmap',
-        xaxis: { range: [-10, 10], title: 'Feature 1' },
-        yaxis: { range: [-10, 10], title: 'Feature 2' },
-        showlegend: false,
-        autosize: true,  // Ensure autosize is enabled for responsiveness
-    responsive: true,  // Enable responsiveness
-        width: document.getElementById('plotContainer').clientWidth  // Restrict width to the container
-    });
+    Plotly.newPlot('plot', [heatmapData, scatterData], layout);
 }
 
 
@@ -188,7 +185,7 @@ const plotData = {
 };
 
 const layout = {
-    title: 'Interactive Logistic Regression Plot',
+    // title: 'Interactive Logistic Regression Plot',
     xaxis: { range: [-10, 10], title: 'Feature 1' },
     yaxis: { range: [-10, 10], title: 'Feature 2' },
     showlegend: false,
@@ -200,7 +197,9 @@ const layout = {
         l: 50,  // Left margin
         r: 10,  // Right margin
         b: 40   // Bottom margin
-    }
+    },
+    scrollZoom:false,
+    displayModeBar: false
 };
 
 
@@ -211,10 +210,12 @@ function updatePlot() {
         y: [pointsY],
         marker: {
             color: labels,
-            colorscale: [[0, 'blue'], [1, 'red']],
+            colorscale: [[0, '#007FFF'], [1, '#E62020']],
             size: 10,
             line: {
-                width:2
+                width:2,
+                color:labels,
+                colorscale: [[0, '#0039a6'], [1, '#8B0000']]
             }
         }
     });
@@ -340,8 +341,8 @@ function updateThreshold() {
         // Set marker symbol: 'circle' for correct prediction, 'x' for incorrect
         markerSymbols.push(predictedLabel === labels[i] ? 'circle' : 'x');
 
-        // Keep the color based on the true label
-        markerColors.push(labels[i] === 1 ? 'red' : 'blue');
+        // // Keep the color based on the true label
+        // markerColors.push(labels[i] === 1 ? 'red' : 'blue');
 
 
 
@@ -361,9 +362,9 @@ function updateThreshold() {
     // Update the scatter plot with new marker symbols and colors
     Plotly.restyle('plot', {
         'marker.symbol': [markerSymbols],  // Circle or X based on correctness
-        'marker.color': [markerColors],  // Keep true label color
+        // 'marker.color': [markerColors],  // Keep true label color
         'marker.size': [10],  // Adjust size for visibility
-        'marker.line.width': [1],  // Glow for misclassified points
+        // 'marker.line.width': [1],  // Glow for misclassified points
     });
 
     // Update the confusion matrix display
@@ -458,10 +459,10 @@ function updateConfusionMatrix(tp, fp, tn, fn) {
     
         // Update the accuracy metrics in the UI
         document.getElementById('accuracy').textContent = accuracy.toFixed(2) + '%';
-        document.getElementById('precision').textContent = precision.toFixed(2);
-        document.getElementById('recall').textContent = recall.toFixed(2);
-        document.getElementById('f1score').textContent = f1score.toFixed(2);
-        document.getElementById('auc').textContent = auc.toFixed(2);  // Display AUC
+        document.getElementById('precision').textContent = precision.toFixed(3);
+        document.getElementById('recall').textContent = recall.toFixed(3);
+        document.getElementById('f1score').textContent = f1score.toFixed(3);
+        document.getElementById('auc').textContent = auc.toFixed(3);  // Display AUC
     }
 
 function calculateAUC() {
