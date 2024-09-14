@@ -165,7 +165,10 @@ function generateHeatmap() {
         title: 'Logistic Regression Heatmap',
         xaxis: { range: [-10, 10], title: 'Feature 1' },
         yaxis: { range: [-10, 10], title: 'Feature 2' },
-        showlegend: false
+        showlegend: false,
+        autosize: true,  // Ensure autosize is enabled for responsiveness
+    responsive: true,  // Enable responsiveness
+        width: document.getElementById('plotContainer').clientWidth  // Restrict width to the container
     });
 }
 
@@ -190,6 +193,7 @@ const layout = {
     yaxis: { range: [-10, 10], title: 'Feature 2' },
     showlegend: false,
     responsive: true,
+    autosize: true,
 };
 
 
@@ -399,6 +403,8 @@ function calculateROC() {
         yaxis: { title: 'True Positive Rate (TPR)', range: [0, 1] },
         showlegend: true,
         responsive: true,
+        autosize: true,
+        width: document.getElementById('rocplotContainer').clientWidth  // Restrict width to the container
     });
 }
 
@@ -505,6 +511,13 @@ document.getElementById('plot').on('plotly_click', function(data){
 
     // Update the plot with the new points
     updatePlot();
+});
+// Force Plotly to resize when the window is resized
+window.addEventListener('resize', () => {
+    Plotly.Plots.resize(document.getElementById('plot'));
+    Plotly.Plots.resize(document.getElementById('rocPlot'));
+
+
 });
 
 // Function to handle plot clicks and add points

@@ -44,11 +44,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; /* Adjust based on preference */
-    max-width: 900px; /* Adjust based on preference */
+    width: 95%; /* Adjust based on preference */
+    max-width: 1200px; /* Adjust based on preference */
     
-                margin: 0 auto; /* Auto margins to horizontally center */
+                margin: 5px auto; /* Auto margins to horizontally center */
 }
+
+#plotContainer, #rocplotContainer {
+        width: 100%;  /* Full width of the parent container */
+        max-width: 100%;  /* Ensure the plot doesn't exceed the container */
+        
+        margin: 0 auto;  /* Center the plot on the screen */
+    }
+
+    #plot {
+        max-width: 100%;
+        width: 100%;  /* Make sure the plot takes full width of the container */
+        height: auto;  /* Let the height adjust automatically */
+    }
 
 #dataDisplay, #chartContainer, #controls {
     width: 100%;
@@ -270,7 +283,9 @@ button {
                         </table>
 
                     </div>
-                    <div id="rocPlot" style="width:600px;height:400px;"></div>
+                    <div id="rocplotContainer">
+                    <div id="rocPlot"></div>
+                     </div>
                     <button onclick="calculateROC()">Generate ROC Curve</button>
                     <div id="metricsSection">
                         <h3>Model Metrics</h3>
