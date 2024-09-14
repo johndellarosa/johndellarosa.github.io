@@ -2,6 +2,8 @@
 let pointsX = [];
 let pointsY = [];
 let labels = [];
+const isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+
 // Learning rate and number of iterations for gradient descent
 const learningRate = 0.01;
 const numIterations = 1000;
@@ -144,7 +146,11 @@ function generateHeatmap() {
         z: zGrid,
         type: 'heatmap',
         colorscale: fadedRdBu,
-        showscale: true
+        showscale: true,
+        colorbar: {
+            thickness: isMobile? 10:5,  // Reduce the thickness of the colorbar
+            orientation: isMobile? 'h':'v',  // Change orientation to horizontal if needed
+        }
     };
 
     const scatterData = {
