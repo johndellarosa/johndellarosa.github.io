@@ -425,6 +425,25 @@ function updateConfusionMatrix(tp, fp, tn, fn) {
     document.getElementById('fp').textContent = fp;
     document.getElementById('tn').textContent = tn;
     document.getElementById('fn').textContent = fn;
+
+        // Calculate Accuracy
+        const total = tp + fp + tn + fn;
+        const accuracy = ((tp + tn) / total) * 100;
+    
+        // Calculate Precision (avoid division by zero)
+        const precision = (tp + fp) > 0 ? tp / (tp + fp) : 0;
+    
+        // Calculate Recall (Sensitivity) (avoid division by zero)
+        const recall = (tp + fn) > 0 ? tp / (tp + fn) : 0;
+    
+        // Calculate F1-Score (harmonic mean of precision and recall)
+        const f1score = (precision + recall) > 0 ? 2 * (precision * recall) / (precision + recall) : 0;
+    
+        // Update the accuracy metrics in the UI
+        document.getElementById('accuracy').textContent = accuracy.toFixed(2) + '%';
+        document.getElementById('precision').textContent = precision.toFixed(2);
+        document.getElementById('recall').textContent = recall.toFixed(2);
+        document.getElementById('f1score').textContent = f1score.toFixed(2);
 }
 
 
