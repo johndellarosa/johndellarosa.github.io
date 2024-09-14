@@ -148,7 +148,7 @@ function generateHeatmap() {
         colorscale: fadedRdBu,
         showscale: true,
         colorbar: {
-            thickness: isMobile? 10:5,  // Reduce the thickness of the colorbar
+            thickness: isMobile? 5:10,  // Reduce the thickness of the colorbar
             orientation: isMobile? 'h':'v',  // Change orientation to horizontal if needed
         }
     };
