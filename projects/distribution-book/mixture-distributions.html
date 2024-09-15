@@ -84,6 +84,16 @@
             
             }
 
+            code {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            display: block;
+            white-space: pre-wrap; /* Ensure code wraps correctly */
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
             #mixtureChart {
               max-width: 900px;
               /* width:100%; */
@@ -258,6 +268,76 @@
                 </div>
             
 
+                <h3>Sampling from a Mixture Distribution</h3>
+
+                Sampling from a mixture distribution is relatively simple, provided the component distributions are easy to sample from. 
+                <h4>Steps</h4>
+                <h5>Step 1: Select a Component Based on Weights</h5>
+                Select a Component Based on Weights: The first step is to randomly select one of the component distributions according to their weights. This step uses the weights as probabilities, so if a component has a larger weight, it is more likely to be selected.
+
+                You can think of this step as performing a weighted coin flip or drawing from a categorical distribution where each category corresponds to one of the component distributions.
+                <br><br>
+                Example:
+                <ul>
+                  <li>Assume you have two components: a normal distribution \(N(\mu_1,\sigma_1^2)\) with weight 0.7 and an exponential distribution \(\text{Exp}(\lambda_2)\) with weight 0.3.</li>
+                  <li>Generate a random number u from the uniform distribution U(0,1). If \(u\leq 0.7\), select the normal distribution. Else, select the exponential distribution</li>
+                </ul>
+
+                <h5>Step 2: Sample from the Selected Component</h5>
+                After selecting a component distribution, the next step is to generate a sample from the chosen distribution.
+
+                <br>
+                Example:
+                <ul>
+                  <li>If you selected the normal distribution in the previous step, sample a value from \(N(\mu_1,\sigma_1^2)\)</li>
+                  <li>If you selected the exponential distribution, sample a value from \(\text{Exp}(\lambda_2)\).</li>
+                </ul>
+
+
+                <h4>Pseudocode</h4>
+                Here is pseudocode for sampling from a mixture distribution:
+                
+                <pre><code>
+                  Input:
+                  - List of component distributions: D1, D2, ..., Dk
+                    (Each D represents a different distribution, like normal, exponential, or uniform. These are the components of the mixture.)
+                  
+                  - List of corresponding weights: w1, w2, ..., wk
+                    (The weights determine how likely each component is to be selected. They must sum to 1 so that they form a valid probability distribution.)
+                
+                Output:
+                  - Sampled value from the mixture distribution
+                    (This is the final value sampled from one of the component distributions, determined by the weights.)
+                
+                1. Generate a random number u from U(0, 1)
+                   (Generate a uniform random number between 0 and 1. This number will be used to select a component distribution based on the weights. The value of `u` will help simulate the probability of selecting each component.)
+                
+                2. Use the weights to determine which component distribution to sample from:
+                   - Set cumulative_weight = 0
+                     (This is an accumulator that will store the running sum of weights. It helps track when the random number `u` falls into a range corresponding to a specific component.)
+                   
+                   - For each component i from 1 to k:
+                     (Iterate through each of the k component distributions.)
+                     
+                     a. cumulative_weight += wi
+                        (Add the weight of the current component `wi` to the cumulative total. This step accumulates the probability mass for each component.)
+                
+                     b. If u <= cumulative_weight:
+                        (Check if the random number `u` falls within the cumulative probability range for the current component.)
+                        
+                        - Select component Di
+                          (If the condition is met, the current component `Di` is selected for sampling, since the random number `u` fell within its weight range.)
+                
+                        - Break the loop
+                          (Exit the loop once a component is selected, as there's no need to check the remaining components.)
+                
+                3. Sample a value from the selected component distribution
+                   (After a component is selected, sample a value from that specific distribution. Each distribution has its own sampling method, such as using the Box-Muller transform for a normal distribution, or inverse transform sampling for an exponential distribution.)
+                
+                4. Return the sampled value
+                   (The function ends by returning the value sampled from the selected component distribution, which represents the final sample from the mixture distribution.)
+                
+                </code></pre>
 
 
 
@@ -274,8 +354,55 @@
                 <div id="Exercises">
                     <h2>Mixture Distribution Practice Problems</h2>
                     <ol>
-                        
+                      <li>Write code in your preferred language which samples from a mixture distribution that is N(0,1) with weight 0.3 and N(4,2) with weight 0.7.</li> 
+                      <li>
+                        <strong>Sampling from a Normal-Exponential Mixture Distribution</strong>
+                        <p>
+                            Consider a mixture distribution with two components:
+                            <ul>
+                                <li>A normal distribution \( N(0, 1) \) with weight \( 0.6 \)</li>
+                                <li>An exponential distribution with rate parameter \( \lambda = 2 \) and weight \( 0.4 \)</li>
+                            </ul>
+                        </p>
+                        <ol type="a">
+                            <li>Write the probability density function (PDF) of the mixture distribution.</li>
+                            <li>If you were to generate a sample from this mixture distribution, what is the probability that the sample is drawn from the normal distribution?</li>
+                            <li>Write a pseudocode algorithm to generate a sample from this mixture distribution.</li>
                         </ol>
+
+                    </li>
+
+                    <li>
+                      <strong>Mixture of Uniform Distributions</strong>
+                      <p>You are given a mixture of two uniform distributions:</p>
+                      <ul>
+                          <li>\( U(0, 1) \) with weight \( 0.3 \)</li>
+                          <li>\( U(2, 4) \) with weight \( 0.7 \)</li>
+                      </ul>
+                      <ol type="a">
+                          <li>Compute the probability that a randomly sampled value from the mixture is less than 1.</li>
+                          <li>Find the cumulative distribution function (CDF) of the mixture distribution.</li>
+                          <li>Write a Python function that samples from this mixture distribution.</li>
+                      </ol>
+                      
+                  </li>
+
+                  <li>
+                    <strong>Mixture of Three Normal Distributions</strong>
+                    <p>Consider a mixture of three normal distributions with the following parameters:</p>
+                    <ul>
+                        <li>\( N(-1, 0.5^2) \) with weight \( 0.2 \)</li>
+                        <li>\( N(2, 1^2) \) with weight \( 0.5 \)</li>
+                        <li>\( N(4, 0.25^2) \) with weight \( 0.3 \)</li>
+                    </ul>
+                    <ol type="a">
+                        <li>Derive the expected value \( E[X] \) of the mixture distribution.</li>
+                        <li>Derive the variance \( \text{Var}(X) \) of the mixture distribution.</li>
+                        <li>Describe the steps to sample from this mixture distribution.</li>
+                    </ol>
+                    
+                </li>
+                    </ol>
     
     
                 </div>

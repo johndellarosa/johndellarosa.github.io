@@ -78,6 +78,7 @@
 
                 <h2>Metrics</h2>
                 <h3>Spearman Correlation</h3>
+                Spearman correlation assesses how well the relationship between two variables can be described using a monotonic function.
                 $$\rho=1-\frac{6\sum_{i=1}^n(R_X(i)-R_Y(i))^2}{n(n^2-1)}$$
 
                 <h3>Kendall's Tau</h3>
@@ -100,7 +101,11 @@
 
 
                 <h3>Mutual Information</h3>
+                Unlike Kendall's Tau and Spearman's Rho, which assess specific types of dependence (such as monotonic or rank-based), MI captures all forms of dependence, including non-linear and complex relationships.
+
                 $$I(X,Y)=\int\int p_{XY}(x,y)\log\left(\frac{p_{XY}(x,y)}{p_X(x)p_Y(y)}\right)dxdy$$
+                where \(p_{XY}(x,y)\) is the joint probability density function of X and Y; \(p_X(x)\) and \(p_Y(y)\) are the marginal densities of X and Y, respectively. 
+
 
 
 
