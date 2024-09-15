@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Kernel Density Estimation</title>
+    
+        <!-- Meta tags -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/kde"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <style>
+            body {
+              font-family: Arial, sans-serif;
+              /* background-color: #f5f5f5; */
+            }
+            
+            .container {
+              max-width: 1800px;
+              width:100%;
+              margin: 50px auto;
+              padding: 20px;
+              background-color: white;
+              border-radius: 8px;
+              box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            
+            .input-section, .output-section {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            
+            .input-group, #dataPointsList {
+              width: 100%;
+              margin-bottom: 20px;
+              max-width: 500px;
+              margin: 0% auto;
+              align-items: center;
+            }
+            
+            #dataPointsList button {
+                padding:15px;
+                margin: 5px;
+                background-color: #6CB4EE;
+                border-radius: 10px;
+            }
+            
+            #dataPointsList button:hover{
+            
+              background-color: #6699CC
+            
+            }
+            
+            .input-group label {
+              display: block;
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
+            
+            .input-group input, .input-group select {
+              width: 100%;
+              padding: 8px;
+              font-size: 14px;
+              margin-bottom: 5px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            
+            }
+            
+            button {
+              padding: 10px 20px;
+              font-size: 16px;
+              background-color: #28a745;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+            
+            }
+            
+            button:hover {
+              background-color: #218838;
+            }
+            
+            input, select {
+                margin-bottom:10px;
+            }
+            
+            #chart {
+              max-width: 100%;
+              height: 600px;
+            }
+            
+            .output-section {
+              display: none;
+              width: 100%;
+              text-align: center;
+            }
+            
+            h2 {
+              margin-bottom: 20px;
+            }
+            
+            h1 {
+              text-align: center;
+            }
+            
+            /* Smaller screens (e.g., smartphones) */
+            @media (max-width: 600px) {
+                .container {
+                    width: 100%;
+                    padding: 10px;
+                }
+                .data-point-button {
+                    padding: 8px; /* Larger touch targets */
+                }
+                input[type="number"], input[type="range"] {
+                    width: 95%; /* Full width inputs for easier access */
+                }
+            }
+            
+            </style>
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="kde">
+                <h1>Kernel Density Estimation</h1>
+                <h2>Introduction to KDE</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./mixture-distributions.html">Mixture Distributions</a></li>
+               
+                </ol>
+
+                <h3>Building on Prior Chapters</h3>
+                In a previous chapter, we used mixture distributions to model a probability density function as a weighted sum of parametric distributions (e.g., Gaussian components). KDE is similar in that it also represents the density as a sum, but here, the sum is over non-parametric kernel functions centered at each data point. While mixture models assign each data point to a specific component, KDE essentially "spreads" each data point over the entire space using a kernel.
+<br><br>
+                In mixture models, the distribution is a weighted combination of fixed components, whereas in KDE, the components are the kernels themselves, determined solely by the data.
+
+                <br><br>
+
+                Kernel Density Estimation (KDE) can be viewed as a smooth, continuous generalization of the histogram. Instead of counting data points in fixed bins, KDE places a smooth kernel function at each data point and sums these functions to produce a smooth approximation of the probability density function.
+                
+                <h3>The Equation</h3>
+
+                The kernel density estimate for a sample of n data points \(x_1, x_2, \dots, x_n\) is defined as:
+
+                $$\hat{f}_h(x)=\frac{1}{n}\sum_{i=1}^nK_h(x-x_i)$$
+                where
+                <ul>
+                    <li>\(\hat{f}_h(x)\) is the estimated density at point x</li>
+                    <li>\(K_h(\cdot)\) is a kernel function with a bandwidth h that controls the spread or "smoothness" of the kernel.</li>
+                    <li>\(x_i\) are the observed data points.</li>
+                </ul>
+
+                <h3>Kernel functions</h3>
+
+                The kernel function \(K_h(\cdot)\) is a symmetric, non-negative function that integrates to 1. It determines the shape of the contribution that each data point makes to the overall density estimate. 
+
+                <h4>Gaussian Kernel</h4>
+                The Gaussian kernel is given by:
+                $$K_h(x)=\frac{1}{\sqrt{2\pi h^2}}\exp\left(-\frac{x^2}{2h^2}\right)$$
+
+
+                <h4>Uniform kernel</h4>
+                $$K_h(x)=\frac{1}{2h}\quad\text{for }|x|\leq h$$
+                
+                <h4>The Bandwidth Parameter h</h4>
+                The bandwidth \(h\) 
+                
+                
+                
+                
+                <!-- <figure>
+                    <img src="t-copula.png" alt="T at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+                    <figcaption>T Copula at Different Rho</figcaption>
+                </figure> -->
+
+
+
+                </div>
+
+
+
+                <div class="container">
+                    <h2>Interactive Kernel Density Estimate (KDE)</h2>
+                    
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="bandwidth">Bandwidth (h):</label>
+                            <input type="number" id="bandwidth" step="0.1" value="1.0">
+                        </div>
+            
+                        <div class="input-group">
+                            <label for="data-points">Data Points (comma-separated):</label>
+                            <input type="text" id="data-points" value="1, 2, 2.5, 3, 4.5, 5, 6.5, 7, 8">
+                        </div>
+
+
+                        <div class="input-group">
+                            <label for="kernel">Select Kernel:</label>
+                            <select id="kernel">
+                                <option value="gaussian">Gaussian</option>
+                                <option value="epanechnikov">Epanechnikov</option>
+                                <option value="uniform">Uniform</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="x-min">X-Axis Min:</label>
+                            <input type="number" id="x-min" value="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="x-max">X-Axis Max:</label>
+                            <input type="number" id="x-max" value="10">
+                        </div>
+            
+                        <!-- <div class="input-group"> -->
+                            <button  id="estimate-button" onclick="generateKDE()">Generate KDE</button>
+                        <!-- </div> -->
+                    </div>
+            
+                    <canvas id="kdeChart"></canvas>
+
+                    <div class="input-group">
+                        <label for="file-upload">Upload CSV or Text File:</label>
+                        <input type="file" id="file-upload" accept=".csv, .txt">
+                    </div>
+                </div>
+
+
+
+
+                <div id="Exercises">
+                    <h2>Copula Practice Problems</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+
+<script src="./kde-funcs.js"></script>
+</body>
+</html>
