@@ -233,7 +233,7 @@
                 </ol>
 
                 <h3>Building on Prior Chapters</h3>
-                In a previous chapter, we used mixture distributions to model a probability density function as a weighted sum of parametric distributions (e.g., Gaussian components). KDE is similar in that it also represents the density as a sum, but here, the sum is over non-parametric kernel functions centered at each data point. While mixture models assign each data point to a specific component, KDE essentially "spreads" each data point over the entire space using a kernel.
+                In a previous chapter, we used mixture distributions to model a probability density function as a weighted sum of parametric distributions (e.g., Gaussian components). KDE is similar in that it also represents the density as a sum, but here, the sum is over non-parametric kernel functions centered at each data point. While mixture models assign each data point to a specific component, KDE essentially "spreads" each data point over the entire space using a kernel with equal weighting.
 <br><br>
                 In mixture models, the distribution is a weighted combination of fixed components, whereas in KDE, the components are the kernels themselves, determined solely by the data.
 
@@ -266,11 +266,26 @@
                 $$K_h(x)=\frac{1}{2h}\quad\text{for }|x|\leq h$$
                 
                 <h4>The Bandwidth Parameter h</h4>
-                The bandwidth \(h\) 
+                The bandwidth \(h\) is a crucial parameter in KDE as it controls the spread of the kernel around each data point. A small bandwidth produces a highly detailed estimate that may overfit the data, while a large bandwidth results in an oversmoothed estimate that may fail to capture important features of the distribution. 
+
                 
-                
-                
-                
+                <h3>Contrasting with Regular Mixture Distributions</h3>
+                As mentioned, mixture distributions and KDE share a conceptual similarity, both combining multiple components to approximate the overall density. However, there are key differences: 
+                <ul>
+                    <li>Flexibility: KDE is entirely non-parametric, meaning it does not rely on a predefined number of components or assumptions about the shape of the distribution. Mixture models require specifying the number of components and typically assume each component follows a specific distribution (e.g., Gaussian).</li>
+                    <li>Smoothness: KDE produces smooth density estimates by construction, whereas mixture distributions can sometimes lead to multimodal or piecewise estimates, depending on the number and type of components used.</li>
+                    <li>Data-Driven: KDE places a kernel at every data point, while in mixture models, the parameters of the components are estimated from the data, and individual data points are assigned probabilistically to components.</li>
+                </ul>
+
+                <h3>Higher Dimensions</h3>
+                The KDE framework extends naturally to multivariate data. For a d-dimensional sample \(x_1,x_2,\dots,x_n\), the multivariate KDE is given by:
+
+                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}{n}K_h(\vec{x}-\vec{x}_i)$$
+
+                <h3>Issues</h3>
+                KDE can have problems near the boundaries of the support of the distribution. For example, if the true distribution is restricted to a finite range (e.g., non-negative values), the kernel functions may assign non-zero density outside this range, leading to a biased estimate. 
+
+
                 <!-- <figure>
                     <img src="t-copula.png" alt="T at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
                     <figcaption>T Copula at Different Rho</figcaption>
