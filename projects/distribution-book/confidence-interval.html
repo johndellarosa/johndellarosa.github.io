@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Confidence Intervals for Parameter Estimates</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Confidence Interval">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to confidence intervals for distribution parameter estimates.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/confidence-interval"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Confidence-Interval">
+                <h1>Confidence Intervals for Parameter Estimates</h1>
+                <h2>Introduction</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/statistics">Statistics</a></li>
+                    <li><a href="./mle.html">MLE</a></li>
+                    <li><a href="./method-of-moments.html">Method of Moments</a></li>
+                </ol>
+                
+                <h3>Introduction</h3>
+                In statistical inference, a single point estimate, such as the maximum likelihood estimate (MLE), provides a useful summary of a parameter's likely value. However, it does not provide information about the uncertainty associated with the estimate. Confidence intervals (CIs) offer a solution to this by giving a range of values that are likely to contain the true parameter with a specified level of confidence. 
+
+                <h4>General Definition</h4>
+
+                A confidence interval for parameter \(\theta\) is an interval \([L(X),U(X)]\) that is constructed from the data X, such that:
+
+                $$P(L(X)\leq \theta \leq U(X))=1-\alpha$$
+                where \(1-\alpha\) is the confidence level, commonly 95% (\(\alpha=0.05\)). This means that if we repeated the estimation process many times, approximately 95% of the intervals constructed from different samples would contain the true parameter value.  
+                
+                <h3>Wald Confidence Interval</h3>
+                The Wald Confidence Interval is one of the most widely used methods for constructing confidence intervals for parameter estimates. It is based on the assumption that, for large sample sizes, the sampling distribution of the estimator is approximately normal. This makes the Wald interval particularly useful in the context of maximum likelihood estimation and the method of moments, where such normality often holds due to the Central Limit Theorem. 
+
+                <br><br>
+                Suppose we have an estimator \(\hat{\theta}\) for a parameter \(\theta\), and we are interested in constructing a confidence interval for \(\theta\) based on the distribution of \(\hat{\theta}\). <br>
+                For large samples, under regularity conditions, the estimator \(\hat{\theta}\) is approximately normally distributed:
+
+                $$\hat{\theta}\sim N(\theta,\frac{\sigma^2}{n})$$
+                where \(\hat{\theta}\) is the point estimate of \(\theta\) from the data, \(\sigma^2\) is the variance of the estimator, and n is the sample size. 
+
+                Since the estimator is (assumed to be) normally distributed, it is easy to construct confidence intervals based on common z-score numbers. 
+                <br>
+                By the CLT:
+                $$P(-z_{\alpha/2}\leq \frac{\hat{\theta}-\theta}{SE(\hat{\theta})}\leq z_{\alpha/2})=1-\alpha$$
+                <br><br>
+
+                Thus, the \((1-\alpha)\times 100%\) Wald confidence interval is given by:
+
+                $$\hat{\theta}\pm z_{\alpha/2}\cdot SE(\hat{\theta})$$
+                <h4>Assumptions</h4>
+                <h5>Large Sample Size</h5>
+                The Wald interval relies on the Central Limit Theorem for the estimator to have a normal distribution. 
+
+                <h5>Estimator is Unbiased or Asymptotically Unbiased</h5>
+
+                <h5>Finite and Non-Zero Variance</h5>
+                
+
+                <h3>Likelihood Ratio Confidence Interval</h3>
+                <h4>Introduction to Likelihood Ratio Confidence Interval</h4>
+
+
+
+                Recall the log-likelihood function 
+                $$\ell(\theta;X)=\log L(\theta;X)$$
+
+                For a given parameter \(\Theta\), the likliehood ratio test compares the likelihood of the parameter estimate \(\hat{\theta}\) with the likelihood of some other value \(\theta\). The likelihood ratio statistic is defined as:
+
+                $$\lambda(\theta)=\frac{L(\hat{\theta};X)}{L(\theta;X)}$$
+
+                Taking the logarithm of this ratio gives the log-likelihood ratio statistic:
+
+                $$\Lambda(\theta)=2(\ell(\hat{\theta};X)-\ell(\theta;X))$$
+
+                There is a factor of 2 included, which may be unclear where it comes from. The log-likelihood ratio statistic is actually derived through a longer process. This involves a Taylor expansion, leading to a squared difference term with a coefficient of 0.5. This derivation shows that 
+                $$\Lambda(\theta)\sim\chi_1^2$$
+
+                The likelihood ratio confidence interval for a given confidence level \(1-\alpha\) is the set of \(\theta\) whose log likelihood statistic is within the critical value of the chi-square distribution with 1 degree of freedom at confidence level \(1-\alpha\). 
+
+                $$\left\{\theta:2(\ell(\hat{\theta})-\ell(\theta))\leq \chi_{1-\alpha,1}^2\right\}$$
+
+                <h4>Use of Likelihood Ratio Confidence Intervals</h4>
+                <h5>Advantages</h5>
+                There is no normality assumption, the intervals can be asymmetric about the estimate
+
+                <h5>Disadvantages</h5>
+                The computation of the interval is more difficult than that of Wald. This also requires some assumptions about the likelihood function, such as differentiability. 
+
+
+                <h4></h4>
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Confidence Interval Practice Problems</h2>
+                    <ol>
+                        
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

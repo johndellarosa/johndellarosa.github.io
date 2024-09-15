@@ -261,8 +261,8 @@
 
                 <h2>Summary</h2>
                 <h3>Comparison</h3>
-                Note the difference in that the probability of getting a 0 is just \(\pi\). The hurdle model essentially adjusts the weights of the original PMF to have 0 more often. 
-                This is contrasted by zero-inflated which is implemented through a mixture distribution framework. 
+                Note the difference in that the probability of getting a 0 is just \(\pi\). The hurdle model essentially directly adjusts the weights of the original PMF to have 0 more often by settng the frequency to \(\pi\) then scaling the PMF of the non-zero support. 
+                This is contrasted by zero-inflated which is implemented through a mixture distribution framework and has the notion of different kinds of zeroes. 
                 <br><br>
                 The choice between zero-inflated models and hurdle models depends on the underlying data and context. In general: 
                 <ul>
