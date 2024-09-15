@@ -116,16 +116,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     
         // Generate the mixture distribution
-        const mixtureData = generateMixtureData(components);
+        // const mixtureData = generateMixtureData(components);
+            // Generate the mixture distribution and component distributions
+         const { mixtureData, componentData } = generateMixtureData(components);
     
         // Plot the mixture distribution
-        plotMixture(mixtureData, xMin, xMax, yMin, yMax);
+        // plotMixture(mixtureData, xMin, xMax, yMin, yMax);
+            // Plot the mixture distribution and components
+    plotMixture(mixtureData, componentData, xMin, xMax, yMin, yMax);
     }
     
     // Generate mixture data from the component inputs
     function generateMixtureData(components) {
         const xValues = [];
         const yValues = [];
+        const componentYValues = components.map(() => []); 
         const numPoints = 100;
     
         for (let i = 0; i <= numPoints; i++) {
@@ -134,20 +139,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
             // Mixture distribution calculation
             let mixtureY = 0;
-            components.forEach(component => {
+            components.forEach((component, index) => {
+                let componentY = 0;
                 if (component.distType === 'normal') {
-                    mixtureY += component.weight * gaussianPDF(x, component.mean, Math.sqrt(component.variance));
+                    componentY = component.weight * gaussianPDF(x, component.mean, Math.sqrt(component.variance));
                 } else if (component.distType === 'exponential') {
-                    mixtureY += component.weight * exponentialPDF(x, component.rate);
+                    componentY = component.weight * exponentialPDF(x, component.rate);
                 } else if (component.distType === 'uniform') {
-                    mixtureY += component.weight * uniformPDF(x, component.min, component.max);
+                    componentY = component.weight * uniformPDF(x, component.min, component.max);
                 }
+                mixtureY += componentY;
+                componentYValues[index].push(componentY);  // Store the individual component Y-values
             });
-    
+            
             yValues.push(mixtureY);
         }
     
-        return { xValues, yValues };
+        // return { xValues, yValues };
+        return { mixtureData: { xValues, yValues }, componentData: { xValues, componentYValues } };
     }
     
     // Gaussian PDF
@@ -167,48 +176,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Plot the mixture distribution using Chart.js
-    function plotMixture(data, xMin, xMax, yMin, yMax) {
+    function plotMixture(mixtureData, componentData, xMin, xMax, yMin, yMax) {
         const ctx = document.getElementById('mixtureChart').getContext('2d');
     
         // Check if mixtureChart already exists and is an instance of Chart, then destroy it
         if (window.mixtureChart instanceof Chart) {
             window.mixtureChart.destroy();
         }
-    
-        // Create a new Chart with custom bounds
-        window.mixtureChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: data.xValues,
-                datasets: [{
-                    label: 'Mixture Distribution',
-                    data: data.yValues,
-                    borderColor: 'blue',
-                    fill: false
-                }]
+
+            // Prepare datasets for each component
+        const componentDatasets = componentData.componentYValues.map((componentY, index) => ({
+            label: `Component ${index + 1}`,
+            data: componentY,
+            borderColor: `hsl(${index * 60}, 100%, 50%)`,  // Assign different colors
+            backgroundColor: `hsla(${index * 60}, 100%, 50%, 0.2)`,  // Set a transparent fill color with alpha
+       
+            borderDash: [5, 5],  // Dashed line for component distributions
+            fill: true,
+            pointRadius: 1
+        }));
+
+            // Add the mixture distribution dataset
+    const mixtureDataset = {
+        label: 'Mixture Distribution',
+        data: mixtureData.yValues,
+        borderColor: 'blue',
+        fill: false,
+        pointRadius: 1
+    };
+// Create a new Chart with custom bounds
+window.mixtureChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: mixtureData.xValues,
+        datasets: [mixtureDataset, ...componentDatasets]  // Include all component datasets
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                min: xMin,  // Use user-defined xMin
+                max: xMax,  // Use user-defined xMax
+                title: {
+                    display: true,
+                    text: 'x'
+                }
             },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        min: xMin,  // Use user-defined xMin
-                        max: xMax,  // Use user-defined xMax
-                        title: {
-                            display: true,
-                            text: 'x'
-                        }
-                    },
-                    y: {
-                        min: yMin,  // Use user-defined yMin
-                        max: yMax,  // Use user-defined yMax
-                        title: {
-                            display: true,
-                            text: 'PDF'
-                        }
-                    }
+            y: {
+                min: yMin,  // Use user-defined yMin
+                max: yMax,  // Use user-defined yMax
+                title: {
+                    display: true,
+                    text: 'PDF'
                 }
             }
-        });
+        }
+    }
+});
+    
+        // // Create a new Chart with custom bounds
+        // window.mixtureChart = new Chart(ctx, {
+        //     type: 'line',
+        //     data: {
+        //         labels: data.xValues,
+        //         datasets: [{
+        //             label: 'Mixture Distribution',
+        //             data: data.yValues,
+        //             borderColor: 'blue',
+        //             fill: false
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         scales: {
+        //             x: {
+        //                 min: xMin,  // Use user-defined xMin
+        //                 max: xMax,  // Use user-defined xMax
+        //                 title: {
+        //                     display: true,
+        //                     text: 'x'
+        //                 }
+        //             },
+        //             y: {
+        //                 min: yMin,  // Use user-defined yMin
+        //                 max: yMax,  // Use user-defined yMax
+        //                 title: {
+        //                     display: true,
+        //                     text: 'PDF'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
     }
     
     // Initialize the component inputs
