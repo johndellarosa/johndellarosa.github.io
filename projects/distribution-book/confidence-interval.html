@@ -78,7 +78,7 @@
                 $$P(L(X)\leq \theta \leq U(X))=1-\alpha$$
                 where \(1-\alpha\) is the confidence level, commonly 95% (\(\alpha=0.05\)). This means that if we repeated the estimation process many times, approximately 95% of the intervals constructed from different samples would contain the true parameter value.  
                 
-                <h3>Wald Confidence Interval</h3>
+                <h2>Wald Confidence Interval</h2>
                 The Wald Confidence Interval is one of the most widely used methods for constructing confidence intervals for parameter estimates. It is based on the assumption that, for large sample sizes, the sampling distribution of the estimator is approximately normal. This makes the Wald interval particularly useful in the context of maximum likelihood estimation and the method of moments, where such normality often holds due to the Central Limit Theorem. 
 
                 <br><br>
@@ -97,17 +97,17 @@
                 Thus, the \((1-\alpha)\times 100%\) Wald confidence interval is given by:
 
                 $$\hat{\theta}\pm z_{\alpha/2}\cdot SE(\hat{\theta})$$
-                <h4>Assumptions</h4>
-                <h5>Large Sample Size</h5>
+                <h3>Assumptions</h3>
+                <h4>Large Sample Size</h4>
                 The Wald interval relies on the Central Limit Theorem for the estimator to have a normal distribution. 
 
-                <h5>Estimator is Unbiased or Asymptotically Unbiased</h5>
+                <h4>Estimator is Unbiased or Asymptotically Unbiased</h4>
 
-                <h5>Finite and Non-Zero Variance</h5>
+                <h4>Finite and Non-Zero Variance</h4>
                 
 
-                <h3>Likelihood Ratio Confidence Interval</h3>
-                <h4>Introduction to Likelihood Ratio Confidence Interval</h4>
+                <h2>Likelihood Ratio Confidence Interval</h2>
+                <h3>Introduction to Likelihood Ratio Confidence Interval</h3>
 
 
 
@@ -129,18 +129,51 @@
 
                 $$\left\{\theta:2(\ell(\hat{\theta})-\ell(\theta))\leq \chi_{1-\alpha,1}^2\right\}$$
 
-                <h4>Use of Likelihood Ratio Confidence Intervals</h4>
-                <h5>Advantages</h5>
+                <h3>Use of Likelihood Ratio Confidence Intervals</h3>
+                <h4>Advantages</h4>
                 There is no normality assumption, the intervals can be asymmetric about the estimate
 
-                <h5>Disadvantages</h5>
+                <h4>Disadvantages</h4>
                 The computation of the interval is more difficult than that of Wald. This also requires some assumptions about the likelihood function, such as differentiability. 
 
+                
+                <h2>Score Confidence Intervals</h2>
+                Recall that the score function, \(U(\theta)\) is defined as the following:
 
-                <h4></h4>
+                $$U(\theta)=\frac{\partial \ell(\theta)}{\partial \theta}$$
+
+                Thus, at the maximum likelihood estimate, \(\theta=\hat{\theta}), the score function equals 0:
+
+                $$U(\hat{\theta})=0$$
+
+                Consequently, confidence intervals can also be derived from the score function. The score confidence interval is based on the distribution of the score function and uses the fact that the score function behaves asymptotically like a normal random variable under regularity conditions.
+
+                <h3>Estimation</h3>
+                The score confidence interval is derived by inverting a score test for hypothesis testing. This involves testing whether a specific parameter value \(\theta_0\) is plausible given the data, using the score function. The hypothesis test is:
+
+                $$H_0:\theta=\theta_0$$
+
+                The score test statistic is:
+
+                $$S(\theta_0)=\frac{U(\theta_0)}{\sqrt{I(\theta_0)}}
+
+                The score statistic is approximately distributed:
+
+                $$S(\theta_0)\sim N(0,1)$$
+
+                Since it is normally distributed, we can establish confidence intervals easily:
+
+                $$P\left(-z_{\alpha/2}\leq \frac{U(\theta_0)}{\sqrt{I(\theta_0)}}\leq z_{\alpha/2}\right)=1-\alpha$$
+
+                This gives us the equation:
+
+                $$U(\theta_0)\pm z_{\alpha/2}\cdot\sqrt{I(\theta_0)}=0$$
+
+                To get the interval, we must solve for the values of \(\theta_0\). Often this must be done numerically rather than analytically. One notable distribution for which it can be done analytically is the binomial distribution with a known n. 
 
 
-
+                <h3>Properties</h3>
+                The confidence interval can be asymmetric about the estimated value. 
                 </div>
 
 
@@ -153,7 +186,7 @@
                 <div id="Exercises">
                     <h2>Confidence Interval Practice Problems</h2>
                     <ol>
-                        
+                        <li>Derive the score confidence interval for p for a binomial distribution with an unknown parameter p and a known, generic parameter n.</li>
                         </ol>
     
     
