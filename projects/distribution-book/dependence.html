@@ -68,8 +68,43 @@
                
                 </ol>
 
+                <h2>General Types</h2>
+
+                <h3>Autocorrelation</h3>
+
+                <h3>Pairwise Independence</h3>
+
+                <h3>Conditional Dependence</h3>
+
+                <h2>Metrics</h2>
+                <h3>Spearman Correlation</h3>
+                $$\rho=1-\frac{6\sum_{i=1}^n(R_X(i)-R_Y(i))^2}{n(n^2-1)}$$
+
+                <h3>Kendall's Tau</h3>
+                Let \((X_1,Y_1),(X_2,Y_2),\dots,(X_n,Y_n)\) be a set of paired observations. This could be thought of as having been at the same time point, for example. 
+
+                Compare the pairs at two indices. Label the pair as:
+                <ul>
+                    <li>Concordant if \((X_i-X_j)(Y_i-Y_j)\gt0\)</li>
+                    <li>Discordant if \((X_i-X_j)(Y_i-Y_j)\lt0\)</li>
+                </ul>
+                In plain English, this means that if X is greater at time i than at time j, then Y is concordant if Y is greater at time i than it was at time j. 
+                If the two variables have the opposite relationship, it is discordant. 
+                <br><br>
+                Now, let us define the counts for each type of pair; i.e.:
+                $$C=\sum_{i}^{n-1}\sum_{j=i+1}^n 1_{(X_i-X_j)(Y_i-Y_j)\gt0}$$
+                $$D=\sum_{i}^{n-1}\sum_{j=i+1}^n 1_{(X_i-X_j)(Y_i-Y_j)\lt0}$$
+                Then we define Kendall's Tau as
+
+                $$\tau=\frac{C-D}{n \choose 2}$$
 
 
+                <h3>Mutual Information</h3>
+                $$I(X,Y)=\int\int p_{XY}(x,y)\log\left(\frac{p_{XY}(x,y)}{p_X(x)p_Y(y)}\right)dxdy$$
+
+
+
+                
 
                 </div>
 
