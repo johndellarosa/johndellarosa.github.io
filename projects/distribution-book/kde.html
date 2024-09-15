@@ -54,6 +54,16 @@
               flex-direction: column;
               align-items: center;
             }
+            #button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px; /* Adjust gap between buttons if needed */
+            margin-top: 20px; /* Space above the button container */
+            max-width: 500px;
+            margin: 0 auto;
+            
+        }
+
             
             .input-section, .output-section {
               width: 100%;
@@ -99,7 +109,7 @@
             
             }
             
-            button {
+            #add-button {
               padding: 10px 20px;
               font-size: 16px;
               background-color: #28a745;
@@ -111,8 +121,41 @@
             
             }
             
-            button:hover {
+            #add-button:hover {
               background-color: #218838;
+            }
+
+            #refresh-button {
+              padding: 10px 20px;
+              font-size: 16px;
+              background-color: #007FFF;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+            
+            }
+            
+            #refresh-button:hover {
+              background-color: #2a52be;
+            }
+
+            .kde-remove-button {
+              padding: 10px 20px;
+              margin-right: 15px;
+              font-size: 16px;
+              background-color: #ED2939;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+            
+            }
+            
+            .kde-remove-button:hover {
+              background-color: #C80815;
             }
             
             input, select {
@@ -240,12 +283,16 @@
                     <div class="input-section">
                         <div class="input-group">
                             <label for="bandwidth">Bandwidth (h):</label>
-                            <input type="number" id="bandwidth" step="0.1" value="1.0">
+                        <input type="number" id="bandwidth" step="0.1" value="1.0" min="0.0" inputmode="decimal">
+                        </div>
+                        <div id="button-container">
+                            <button id="add-button" onclick="addKDE()">Add KDE</button>
+                            <button id="refresh-button" onclick="refreshKDEWithManualData()">Refresh Data</button>
                         </div>
             
                         <div class="input-group">
                             <label for="data-points">Data Points (comma-separated):</label>
-                            <input type="text" id="data-points" value="1, 2, 2.5, 3, 4.5, 5, 6.5, 7, 8">
+                            <input type="text" id="data-points" value="1, 2, 2.5, 3, 4.5, 5, 6.5, 7, 8" inputmode="numeric">
                         </div>
 
 
@@ -260,20 +307,25 @@
 
                         <div class="input-group">
                             <label for="x-min">X-Axis Min:</label>
-                            <input type="number" id="x-min" value="0">
+                            <input type="number" id="x-min" value="0" inputmode="decimal">
                         </div>
                         <div class="input-group">
                             <label for="x-max">X-Axis Max:</label>
-                            <input type="number" id="x-max" value="10">
+                            <input type="number" id="x-max" value="10" inputmode="decimal">
                         </div>
             
                         <!-- <div class="input-group"> -->
-                            <button  id="estimate-button" onclick="generateKDE()">Generate KDE</button>
+                            <!-- <button  id="estimate-button" onclick="generateKDE()">Generate KDE</button> -->
                         <!-- </div> -->
                     </div>
             
                     <canvas id="kdeChart"></canvas>
-
+                    <div id="kdeList">
+                        <h3>Active KDEs</h3>
+                        <ul id="kdeListItems">
+                            <!-- KDE list items will appear here -->
+                        </ul>
+                    </div>
                     <div class="input-group">
                         <label for="file-upload">Upload CSV or Text File:</label>
                         <input type="file" id="file-upload" accept=".csv, .txt">

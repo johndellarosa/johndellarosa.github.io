@@ -1,3 +1,9 @@
+let kdeCounter = 0;  // To track unique KDEs
+let kdeDataSets = [];  // To store all KDE datasets
+let dataPointsDataset = null;  // To store the dataset for the data points
+
+
+
 // Function to compute the Gaussian Kernel
 function gaussianKernel(x, xi, h) {
     return (1 / (Math.sqrt(2 * Math.PI) * h)) * Math.exp(-0.5 * Math.pow((x - xi) / h, 2));
@@ -128,6 +134,201 @@ function generateKDE() {
     });
 }
 
+
+// Function to generate and add KDE to the chart
+function addKDE() {
+    let bandwidth = parseFloat(document.getElementById('bandwidth').value);
+    let data = document.getElementById('data-points').value.split(',').map(Number);
+    let kernelType = document.getElementById('kernel').value;
+    let xMin = parseFloat(document.getElementById('x-min').value);
+    let xMax = parseFloat(document.getElementById('x-max').value);
+
+    // Generate x values for KDE plot based on xMin and xMax range
+    let xRange = generateXRange(xMin, xMax, 200);
+    let kde = kernelDensityEstimate(data, bandwidth, xRange, kernelType);
+
+    // Generate random color for KDE line
+    const color = getRandomColor();
+
+    // Add a unique KDE dataset with a unique ID
+    let kdeId = `kde${kdeCounter++}`;  // Create unique ID for the KDE
+    kdeDataSets.push({
+        label: `KDE (h=${bandwidth}, ${kernelType})`,
+        data: xRange.map((x, i) => ({ x: x, y: kde[i] })),
+        borderColor: color,
+        fill: false,
+        tension: 0.1,
+        type: 'line',  // Ensure this dataset is treated as a line plot
+        id: kdeId,
+        pointRadius: .5
+    });
+
+    // Update the chart with the new dataset
+    updateChart();
+
+    // Add the KDE to the list below the chart
+    addKDEToList(kdeId, bandwidth, kernelType, color);
+}
+
+// Function to update the chart with the current KDE datasets and data points
+function updateChart() {
+    if (window.kdeChart instanceof Chart) {
+        window.kdeChart.destroy();  // Destroy the old chart to avoid reuse
+    }
+
+    // Create dataset for data points if not already created
+    if (!dataPointsDataset) {
+        let data = document.getElementById('data-points').value.split(',').map(Number);
+        dataPointsDataset = {
+            label: 'Data Points',
+            data: data.map(d => ({ x: d, y: 0 })),
+            type: 'scatter',
+            borderColor: 'red',
+            backgroundColor: 'red',
+            pointRadius: 5
+        };
+    }
+
+    // Create new chart with all datasets (including data points)
+    let ctx = document.getElementById('kdeChart').getContext('2d');
+    window.kdeChart = new Chart(ctx, {
+        type: 'scatter',  // Base type is scatter for data points
+        data: {
+            datasets: [dataPointsDataset, ...kdeDataSets]  // Add data points and all KDE datasets
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'X'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return value.toFixed(2);  // Round x-axis ticks
+                        }
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Density'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Function to add KDE info to the list below the chart (button and color selector)
+function addKDEToList(kdeId, bandwidth, kernelType, color) {
+    const kdeList = document.getElementById('kdeListItems');
+    const listItem = document.createElement('li');
+    
+    // Create a button to remove the KDE
+    const button = document.createElement('button');
+    button.textContent = `Remove KDE (h=${bandwidth}, ${kernelType})`;
+    button.classList.add('kde-remove-button');
+    button.addEventListener('click', function () {
+        removeKDE(kdeId);
+    });
+    
+    // Create a color input to change the color of the KDE
+    const colorInput = document.createElement('input');
+    colorInput.type = 'color';
+    colorInput.value = color;
+    colorInput.addEventListener('input', function () {
+        changeKDEColor(kdeId, colorInput.value);
+    });
+
+    // Append the button and color input to the list item
+    listItem.appendChild(button);
+    listItem.appendChild(colorInput);
+    listItem.setAttribute('data-id', kdeId);
+    kdeList.appendChild(listItem);
+}
+
+// Function to remove a KDE from the chart and the list
+function removeKDE(kdeId) {
+    // Remove from kdeDataSets
+    kdeDataSets = kdeDataSets.filter(dataset => dataset.id !== kdeId);
+
+    // Remove the corresponding list item
+    const kdeListItem = document.querySelector(`[data-id="${kdeId}"]`);
+    if (kdeListItem) {
+        kdeListItem.remove();
+    }
+
+    // Update the chart
+    updateChart();
+}
+
+// Function to change the color of a KDE on the chart
+function changeKDEColor(kdeId, newColor) {
+    const kde = kdeDataSets.find(dataset => dataset.id === kdeId);
+    if (kde) {
+        kde.borderColor = newColor;  // Change the line color
+        updateChart();  // Redraw the chart with the new color
+    }
+}
+
+// Helper function to generate random colors for the KDE lines
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// Function to update all existing KDEs with new data
+function updateAllKDEsWithNewData(newData) {
+    kdeDataSets.forEach(kde => {
+        const bandwidthMatch = kde.label.match(/h=([0-9.]+)/);  // Extract bandwidth from the label
+        const kernelMatch = kde.label.match(/\(([^,]+)\)$/);    // Extract kernel type from the label
+        const bandwidth = parseFloat(bandwidthMatch ? bandwidthMatch[1] : 1.0);
+        const kernelType = kernelMatch ? kernelMatch[1] : 'gaussian';
+
+        // Recalculate the KDE with the new data
+        const xMin = parseFloat(document.getElementById('x-min').value);
+        const xMax = parseFloat(document.getElementById('x-max').value);
+        const xRange = generateXRange(xMin, xMax, 200);
+        const updatedKDE = kernelDensityEstimate(newData, bandwidth, xRange, kernelType);
+
+        // Update the KDE dataset with new data
+        kde.data = xRange.map((x, i) => ({ x: x, y: updatedKDE[i] }));
+    });
+}
+
+// Function to refresh KDEs with manually entered data
+function refreshKDEWithManualData() {
+    // Read the manually entered data points
+    const manualData = document.getElementById('data-points').value
+        .split(',')
+        .map(Number)
+        .filter(num => !isNaN(num));  // Remove invalid entries
+
+    // Update the data points dataset
+    dataPointsDataset = {
+        label: 'Data Points',
+        data: manualData.map(d => ({ x: d, y: 0 })),
+        type: 'scatter',
+        borderColor: 'red',
+        backgroundColor: 'red',
+        pointRadius: 5
+    };
+
+    // Update all existing KDEs with the new data
+    updateAllKDEsWithNewData(manualData);
+
+    // Refresh the chart to show the updated data points and KDEs
+    updateChart();
+}
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     
@@ -150,11 +351,24 @@ document.getElementById('file-upload').addEventListener('change', function(event
         // Populate the data points input field with the uploaded data
         document.getElementById('data-points').value = uploadedData.join(', ');
 
-        // Optionally, generate the KDE immediately after upload
-        generateKDE();
+        // // Update the data points dataset
+        // dataPointsDataset = {
+        //     label: 'Data Points',
+        //     data: uploadedData.map(d => ({ x: d, y: 0 })),
+        //     type: 'scatter',
+        //     borderColor: 'red',
+        //     backgroundColor: 'red',
+        //     pointRadius: 5
+        // };
+
+        // // Update existing KDEs with the new data
+        // updateAllKDEsWithNewData(uploadedData);
+
+        // // Refresh the chart to show the updated data points
+        // updateChart();
+        refreshKDEWithManualData();
     };
 
     reader.readAsText(file);  // Read the file as text
 });
-
 });
