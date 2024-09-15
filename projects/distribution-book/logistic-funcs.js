@@ -425,7 +425,7 @@ function calculateROC() {
         title: 'ROC Curve',
         xaxis: { title: 'False Positive Rate (FPR)', range: [0, 1] },
         yaxis: { title: 'True Positive Rate (TPR)', range: [0, 1] },
-        showlegend: true,
+        showlegend: false,
         responsive: true,
         autosize: true,
         width: document.getElementById('rocplotContainer').clientWidth  // Restrict width to the container

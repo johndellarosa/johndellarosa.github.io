@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="zero-inflated-funcs.js"></script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Zero-Inflated and Hurdle Models</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/zero-inflated"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <style>
+            body {
+              font-family: Arial, sans-serif;
+              /* background-color: #f5f5f5; */
+            }
+            
+            .container {
+              max-width: 1800px;
+              width:100%;
+              margin: 50px auto;
+              padding: 20px;
+              background-color: white;
+              border-radius: 8px;
+              box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            
+            .input-section, .output-section {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            
+            .input-group, #dataPointsList {
+              width: 100%;
+              margin-bottom: 20px;
+              max-width: 500px;
+              margin: 0% auto;
+              align-items: center;
+            }
+            
+            #dataPointsList button {
+                padding:15px;
+                margin: 5px;
+                background-color: #6CB4EE;
+                border-radius: 10px;
+            }
+            
+            #dataPointsList button:hover{
+            
+              background-color: #6699CC
+            
+            }
+
+            #mixtureChart {
+              max-width: 900px;
+              /* width:100%; */
+            width: 80vw;
+            max-height: 50vh;
+              /* height: 20%; */
+              /* height: 600px; */
+              /* max-height: 1000px; */
+            }
+            
+            
+            .input-group label {
+              display: block;
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
+            
+            .input-group input, .input-group select {
+              width: 100%;
+              padding: 8px;
+              font-size: 14px;
+              margin-bottom: 5px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            
+            }
+            
+            button {
+              padding: 10px 20px;
+              font-size: 16px;
+              background-color: #28a745;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+            
+            }
+            
+            button:hover {
+              background-color: #218838;
+            }
+            
+            input, select {
+                margin-bottom:10px;
+            }
+            
+            #chart {
+              max-width: 100%;
+              height: 600px;
+            }
+            
+            .output-section {
+              display: none;
+              width: 100%;
+              text-align: center;
+            }
+            
+            h2 {
+              margin-bottom: 20px;
+            }
+            
+            h1 {
+              text-align: center;
+            }
+            
+            /* Smaller screens (e.g., smartphones) */
+            @media (max-width: 600px) {
+                .container {
+                    width: 100%;
+                    padding: 10px;
+                }
+                .data-point-button {
+                    padding: 8px; /* Larger touch targets */
+                }
+                input[type="number"], input[type="range"] {
+                    width: 95%; /* Full width inputs for easier access */
+                }
+            }
+            
+            </style>
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Zero-Inflated-Models">
+                <h1>Modeling Zero-Inflated Data</h1>
+                <h2>Zero-Inflated Data</h2>
+                Traditional count models, such as the Poisson or negative binomial regression, may fail to adequately handle this excess of zeros, resulting in poor model fit and biased parameter estimates. To address this issue, two popular extensions of count models are used: zero-inflated models and hurdle models. These models explicitly account for the overabundance of zeros and are particularly useful when zeros arise from different processes than the positive counts. 
+
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./mixture-distributions">Mixture Distributions</a></li>
+                    <li><a href="./compound-distributions.html">Compound Distributions</a></li>
+                    <li><a href="./glm.html">GLMs</a></li>
+                </ol>
+
+                <h2>Zero-Inflated Model</h2>
+                <h3>Explanation</h3>
+                Zero-inflated models are designed to handle count data that exhibits more zeros than would be expected under a standard Poisson or negative binomial distribution. In a zero-inflated model, the data is assumed to be generated by a two-part process: 
+                <ol>
+                    <li>One process generates structural zeros (i.e., zeros that cannot be attributed to the counting process).</li>
+                    <li>The other process generates both zeros and positive counts from a count distribution (Poisson or negative binomial).</li>
+                </ol>
+                The key idea is that there is a latent binary process determining whether an observation is a structural zero or comes from the count distribution. 
+
+                <h3>Zero-Inflated Poisson (ZIP)</h3>
+
+                The Zero-Inflated Poisson (ZIP) model is an extension of the Poisson regression model that allows for excess zeros. The ZIP model assumes that, with probability \(\pi\), the response variable takes a zero value (structural zero), and with probability \(1-\pi\), the response follows a Poisson distribution. 
+                
+                <br><br>
+                The PMF for the ZIP model is given by:
+
+                $$P_{\text{ZIP}}(k)= \begin{cases}
+                (1-\pi)\frac{\lambda^ke^{-\lambda}}{k!}, & k\geq 1\\
+                \pi+(1-\pi)e^{-\lambda}, & k=0
+
+                \end{cases}$$
+
+                <h4>Interpretation and Tying it Back</h4>
+                This is really something that we have already seen in the mixture distribution chapter. The ZIP is a mixture distribution where with weight \(\pi\), it follows the degenerate distribution \(P(Y=1)=1\) and with weight \(1-\pi\), it follows a standard Poisson distribution. 
+
+                Because both component distributions can produce zero, this leads to the above formula for P(Y=0). 
+
+                <h4>Zero-Inflated Negative Binomial Model</h4>
+                Similar to what we saw with GLMs, sometimes Poisson doesn't cut it when there's overdispersion, which leads to the choice of Negative Binomial regression over Poisson regression. The same logic applies for Zero-Inflated Models. 
+                $$P_{\text{ZINB}}(k)= \begin{cases}
+                (1-\pi)\frac{\Gamma(y+r)}{k!\Gamma(r)}\left(\frac{r}{r+m}\right)^r\left(\frac{m}{r+m}\right)^k, & k\geq 1\\
+                \pi+(1-\pi)\frac{1}{k!}\left(\frac{r}{r+m}\right)^r, & k=0
+
+                \end{cases}$$
+                where m is the mean of the negative binmomial distribution and r is the dispersion parameter. 
+
+
+
+                <h2>Hurdle Models</h2>
+
+                While zero-inflated models assume that zeros come from two different processes (structural zeros and sampling zeros), hurdle models take a different approach. Hurdle models also involve two stages, but they assume that once the hurdle (zero vs. positive counts) is crossed, the process generating the positive counts follows a truncated count distribution (typically Poisson or negative binomial). 
+
+                <br><br>
+                A hurdle model can be described in two parts:
+                <ol>
+                    <li>A binary process models whether the response is zero or positive. This part of the model typically uses a binomial or logistic regression.</li>
+                    <li>A truncated count distribution (e.g., truncated Poisson or truncated negative binomial) models the positive counts. The distribution is truncated at zero, meaning that it only generates positive counts.</li>
+
+
+                </ol>
+
+                <h3>Hurdle Poisson Model</h3>
+
+                $$P_{\text{HP}}(k)= \begin{cases}
+                (1-\pi)\frac{\lambda^ke^{-\lambda}}{(1-e^{-\lambda})k!}, & k\geq 1\\
+                \pi, & k=0
+
+                \end{cases}$$
+
+                <h2>Summary</h2>
+                <h3>Comparison</h3>
+                Note the difference in that the probability of getting a 0 is just \(\pi\). The hurdle model essentially adjusts the weights of the original PMF to have 0 more often. 
+                This is contrasted by zero-inflated which is implemented through a mixture distribution framework. 
+                <br><br>
+                The choice between zero-inflated models and hurdle models depends on the underlying data and context. In general: 
+                <ul>
+                    <li>If the data generating process is believed to involve two different sources of zeros (e.g., structural zeros and zeros from the count process), a zero-inflated model may be more appropriate.</li>
+                    <li>If the zeros arise from a single process and the positive counts are generated once a hurdle is crossed, a hurdle model may be more suitable.</li>
+                </ul>
+
+
+                </div>
+
+
+
+                <div class="container">
+                    <h2>Zero-Inflated Model Visualizer</h2>
+                    
+                    <div>
+                        <h3>Zero-Inflation</h3>
+                        <div class="input-field">
+                            <label>Zero-Inflation Probability (0-1):</label>
+                            <input type="range" id="zeroInflationProbSlider" min="0" max="1" step="0.01" value="0.2" oninput="document.getElementById('zeroInflationProbValue').innerText = this.value;">
+                            <span id="zeroInflationProbValue">0.2</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3>Distribution</h3>
+                        <div class="input-field">
+                            <label>Distribution:</label>
+                            <select id="distType">
+                                <option value="binomial">Binomial</option>
+                                <option value="negative_binomial">Negative Binomial</option>
+                                <option value="poisson">Poisson</option>
+                            </select>
+                        </div>
+                        <div id="parameters">
+                            <!-- Default: Binomial distribution inputs -->
+                            <label>Trials (n):</label>
+                            <input type="number" id="trials" value="10">
+                            <label>Probability (p):</label>
+                            <input type="number" id="probability" min="0" max="1" step="0.01" value="0.5">
+                        </div>
+                    </div>
+                    
+                        <!-- <div class="axis-settings">
+                            <div class="input-field">
+                                <label for="yMin">y Min:</label>
+                                <input type="number" id="yMin" value="0" inputmode="decimal">
+                            </div>
+                            <div class="input-field">
+                                <label for="yMax">y Max:</label>
+                                <input type="number" id="yMax" value="1" inputmode="decimal">
+                            </div>
+                        </div> -->
+
+
+                    <button id="generate-mixture">Generate Zero-Inflated Model</button>
+                    <div>
+                        <h3>Probability Mass Function (PMF)</h3>
+                        <p id="pmfFormula"></p>
+                    </div>
+                    <canvas id="mixtureChart" width="600" height="400"></canvas>
+                    <div class="input-group">
+
+                            <h3>Plot Settings</h3>
+                            <div class="input-field">
+                                <label>X-axis Min:</label>
+                                <input type="number" id="xMin" value="0">
+                                <label>X-axis Max:</label>
+                                <input type="number" id="xMax" value="20">
+                            </div>
+                  
+                    <!-- <div>
+                        <h3>Summary Statistics</h3>
+                        <p>Mean: <span id="meanValue"></span></p>
+                        <p>Variance: <span id="varianceValue"></span></p>
+                    </div> -->
+
+                </div>
+                </div>
+
+
+
+
+                <div id="Exercises">
+                    <h2>Zero-Inflated Data Modeling Exercises</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
