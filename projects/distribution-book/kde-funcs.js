@@ -21,6 +21,29 @@ function uniformKernel(x, xi, h) {
     return Math.abs(u) <= 1 ? 0.5 / h : 0;
 }
 
+// Function to compute the Triangular Kernel
+function triangularKernel(x, xi, h) {
+    let u = Math.abs((x - xi) / h);
+    return u <= 1 ? (1 - u) / h : 0;
+}
+
+// Function to compute the Biweight (Quartic) Kernel
+function biweightKernel(x, xi, h) {
+    let u = (x - xi) / h;
+    return Math.abs(u) <= 1 ? (15 / 16) * Math.pow(1 - u * u, 2) / h : 0;
+}
+
+// Function to compute the Cosine Kernel
+function cosineKernel(x, xi, h) {
+    let u = Math.abs((x - xi) / h);
+    return u <= 1 ? (Math.PI / 4) * Math.cos((Math.PI / 2) * u) / h : 0;
+}
+// Function to compute the Laplace Kernel
+function laplaceKernel(x, xi, h) {
+    let u = (x - xi) / h;
+    return (1 / (2 * h)) * Math.exp(-Math.abs(u));
+}
+
 // Kernel Density Estimation
 function kernelDensityEstimate(data, bandwidth, xRange, kernelType) {
     let kde = [];
@@ -43,8 +66,16 @@ function kernelFunction(x, xi, h, kernelType) {
             return epanechnikovKernel(x, xi, h);
         case 'uniform':
             return uniformKernel(x, xi, h);
+        case 'triangular':
+            return triangularKernel(x, xi, h);
+        case 'biweight':
+            return biweightKernel(x, xi, h);
+        case 'cosine':
+            return cosineKernel(x, xi, h);
+        case 'laplace': 
+            return laplaceKernel(x, xi, h);
         default:
-            return gaussianKernel(x, xi, h);
+            return gaussianKernel(x, xi, h);  // Default to Gaussian if unknown
     }
 }
 
@@ -283,24 +314,38 @@ function getRandomColor() {
     return color;
 }
 
-// Function to update all existing KDEs with new data
+// Function to update all existing KDEs with new data (removing parenthesis from kernel type)
 function updateAllKDEsWithNewData(newData) {
-    kdeDataSets.forEach(kde => {
-        const bandwidthMatch = kde.label.match(/h=([0-9.]+)/);  // Extract bandwidth from the label
-        const kernelMatch = kde.label.match(/\(([^,]+)\)$/);    // Extract kernel type from the label
-        const bandwidth = parseFloat(bandwidthMatch ? bandwidthMatch[1] : 1.0);
-        const kernelType = kernelMatch ? kernelMatch[1] : 'gaussian';
+    console.log("Updating all KDEs with new data:", newData);  // Log new data
 
-        // Recalculate the KDE with the new data
+    kdeDataSets.forEach(kde => {
+        // Extract the bandwidth from the label (e.g., "h=1.0, Uniform)")
+        const labelParts = kde.label.split(',');  // Split the label by the comma
+        const bandwidthMatch = labelParts[0].match(/h=([0-9.]+)/);  // Extract bandwidth from first part
+        const bandwidth = parseFloat(bandwidthMatch ? bandwidthMatch[1] : 1.0);
+        console.log(`Extracted bandwidth: ${bandwidth}`);  // Debug: log bandwidth
+
+        // Extract the kernel type from the second part and remove the closing parenthesis
+        const kernelType = labelParts[1].trim().replace(')', '').toLowerCase();  // Remove ')' and lowercase
+        console.log(`Extracted kernel type: ${kernelType}`);  // Debug: log kernel type
+
+        // Recalculate the KDE with the new data and correct kernel type
         const xMin = parseFloat(document.getElementById('x-min').value);
         const xMax = parseFloat(document.getElementById('x-max').value);
         const xRange = generateXRange(xMin, xMax, 200);
-        const updatedKDE = kernelDensityEstimate(newData, bandwidth, xRange, kernelType);
+        console.log(`xRange: ${xRange}`);  // Debug: log xRange
 
-        // Update the KDE dataset with new data
+        const updatedKDE = kernelDensityEstimate(newData, bandwidth, xRange, kernelType);
+        console.log(`Updated KDE values: ${updatedKDE}`);  // Debug: log updated KDE values
+
+        // Update the KDE dataset with the new data
         kde.data = xRange.map((x, i) => ({ x: x, y: updatedKDE[i] }));
     });
+
+    console.log("All KDEs updated successfully.");  // Debug: confirm updates
 }
+
+
 
 // Function to refresh KDEs with manually entered data
 function refreshKDEWithManualData() {

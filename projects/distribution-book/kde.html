@@ -322,6 +322,10 @@
                                 <option value="gaussian">Gaussian</option>
                                 <option value="epanechnikov">Epanechnikov</option>
                                 <option value="uniform">Uniform</option>
+                                <option value="triangular">Triangular</option>
+                                <option value="biweight">Biweight (Quartic)</option>
+                                <option value="cosine">Cosine</option>
+                                <option value="laplace">Laplace</option>
                             </select>
                         </div>
 
@@ -352,7 +356,82 @@
                     </div>
                 </div>
 
-
+                <div class="user-guide">
+                    <h2>User Guide: Interactive Kernel Density Estimate (KDE) Tool</h2>
+                    
+                    <p>Welcome to the Kernel Density Estimate (KDE) tool! This guide will help you understand how to use the tool to estimate the probability density function of a dataset using various kernel functions. The tool allows you to input data points, select different kernels, adjust the bandwidth, and visualize multiple KDE curves simultaneously.</p>
+                
+                    <h3>Step-by-Step Instructions</h3>
+                    
+                    <h4>1. Entering Data Points</h4>
+                    <p>To begin, enter a list of comma-separated data points into the "Data Points" input field. The data points should represent the sample from which you wish to estimate the density.</p>
+                    <ul>
+                        <li>Example: <code>1, 2, 2.5, 3, 4.5, 5, 6.5, 7, 8</code></li>
+                    </ul>
+                    <p>You can also upload a CSV or text file with comma-separated values by using the "Upload CSV or Text File" option.</p>
+                
+                    <h4>2. Selecting a Kernel Function</h4>
+                    <p>The tool supports several commonly used kernel functions for density estimation. You can choose the kernel type from the dropdown menu labeled "Select Kernel". Each kernel has different properties:</p>
+                    <ul>
+                        <li><strong>Gaussian:</strong> A smooth, bell-shaped kernel.</li>
+                        <li><strong>Epanechnikov:</strong> A parabolic kernel, optimal for minimizing mean integrated squared error.</li>
+                        <li><strong>Uniform:</strong> A flat kernel that assigns equal weight within a certain range.</li>
+                        <li><strong>Triangular:</strong> A linearly decreasing kernel.</li>
+                        <li><strong>Biweight (Quartic):</strong> A smoother polynomial kernel for a smooth estimate.</li>
+                        <li><strong>Cosine:</strong> A cosine-shaped kernel, good for periodic data.</li>
+                        <li><strong>Laplace:</strong> A smooth kernel with exponential decay, commonly used in robust statistics.</li>
+                    </ul>
+                
+                    <h4>3. Adjusting the Bandwidth (h)</h4>
+                    <p>The bandwidth controls the smoothness of the KDE curve. A larger bandwidth results in a smoother curve, while a smaller bandwidth captures more detail but may lead to overfitting. Enter the desired bandwidth value in the "Bandwidth" input field (default: 1.0).</p>
+                
+                    <h4>4. Adding Multiple KDE Curves</h4>
+                    <p>Once you have selected a kernel and adjusted the bandwidth, click the "Add KDE" button to generate and overlay the KDE curve on the chart. You can add multiple KDE curves with different bandwidths and kernel types. Each curve will be displayed with a unique color.</p>
+                    <p>To remove a KDE curve, click the corresponding button in the "Active KDEs" list below the chart. You can also change the color of a KDE curve using the color selector next to each item in the list.</p>
+                
+                    <h4>5. Adjusting the X-Axis Range</h4>
+                    <p>You can adjust the range of the x-axis by entering values for "X-Axis Min" and "X-Axis Max". This allows you to zoom in or out on specific regions of the data and KDE curves.</p>
+                
+                    <h4>6. Updating the Data</h4>
+                    <p>If you wish to modify the data points, either by manually typing them in or uploading a new file, you can click the "Refresh Data" button to update the KDE curves based on the new data. This will ensure that all KDEs correspond to the latest data points.</p>
+                
+                    <h3>Advanced Features</h3>
+                    
+                    <h4>1. Kernel-Specific Behavior</h4>
+                    <p>Each kernel function has its own characteristics. For example:</p>
+                    <ul>
+                        <li><strong>Gaussian Kernel:</strong> Best for smooth, global estimates.</li>
+                        <li><strong>Epanechnikov Kernel:</strong> Optimal for finite-range data and minimizes error.</li>
+                        <li><strong>Laplace Kernel:</strong> Ideal for data with heavy tails or outliers due to its exponential decay.</li>
+                    </ul>
+                
+                    <h4>2. Visualizing Data Points</h4>
+                    <p>The original data points are always plotted on the chart as red scatter points. This allows you to see how the KDE curves fit the data and how the smoothing effects of different kernels and bandwidths affect the estimate.</p>
+                
+                    <h4>3. Customizing KDE Curves</h4>
+                    <p>You can customize the KDE curves by adjusting their color using the color selector next to each curve in the "Active KDEs" list. This is especially useful when you have multiple KDE curves on the same chart.</p>
+                
+                    <h3>Frequently Asked Questions (FAQ)</h3>
+                
+                    <h4>1. How does the bandwidth affect the KDE?</h4>
+                    <p>The bandwidth controls how much smoothing is applied to the KDE. A smaller bandwidth captures more local detail, while a larger bandwidth results in a smoother, more global estimate.</p>
+                
+                    <h4>2. Can I visualize multiple KDEs at once?</h4>
+                    <p>Yes! You can add multiple KDE curves with different kernels and bandwidths. They will be overlaid on the same chart, and each KDE will be listed in the "Active KDEs" section where you can manage them.</p>
+                
+                    <h4>3. Can I change the color of the KDE curves?</h4>
+                    <p>Yes, each KDE in the "Active KDEs" section has a color picker that allows you to customize the color of that curve. This makes it easier to distinguish between multiple KDEs.</p>
+                
+                    <h4>4. What kernels are available in the tool?</h4>
+                    <p>The tool includes the following kernels: Gaussian, Epanechnikov, Uniform, Triangular, Biweight (Quartic), Cosine, and Laplace.</p>
+                
+                    <h4>5. How do I remove a KDE curve?</h4>
+                    <p>Click the "Remove KDE" button next to the corresponding KDE in the "Active KDEs" list to remove it from the chart.</p>
+                
+                    <h4>6. How do I upload a file?</h4>
+                    <p>Click the "Upload CSV or Text File" button and select a CSV or text file containing comma-separated data points. The file will be uploaded, and the data points will be displayed in the input field. The KDE curves will then update accordingly.</p>
+                </div>
+                
 
 
                 <div id="Exercises">
