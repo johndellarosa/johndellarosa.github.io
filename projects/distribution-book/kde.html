@@ -234,8 +234,6 @@
 
                 <h3>Building on Prior Chapters</h3>
                 In a previous chapter, we used mixture distributions to model a probability density function as a weighted sum of parametric distributions (e.g., Gaussian components). KDE is similar in that it also represents the density as a sum, but here, the sum is over non-parametric kernel functions centered at each data point. While mixture models assign each data point to a specific component, KDE essentially "spreads" each data point over the entire space using a kernel with equal weighting.
-<br><br>
-                In mixture models, the distribution is a weighted combination of fixed components, whereas in KDE, the components are the kernels themselves, determined solely by the data.
 
                 <br><br>
 
@@ -280,7 +278,7 @@
                 <h3>Higher Dimensions</h3>
                 The KDE framework extends naturally to multivariate data. For a d-dimensional sample \(x_1,x_2,\dots,x_n\), the multivariate KDE is given by:
 
-                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}{n}K_h(\vec{x}-\vec{x}_i)$$
+                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}^{n}K_h(\vec{x}-\vec{x}_i)$$
 
                 <h3>Issues</h3>
                 KDE can have problems near the boundaries of the support of the distribution. For example, if the true distribution is restricted to a finite range (e.g., non-negative values), the kernel functions may assign non-zero density outside this range, leading to a biased estimate. 
