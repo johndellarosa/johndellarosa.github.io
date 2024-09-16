@@ -127,7 +127,7 @@ function updateChart() {
                         ticks: {
                             // This callback is now correctly using lambda values
                             callback: function(value) {
-                                return parseFloat(value).toFixed(2); // Format ticks to two decimal places
+                                return parseFloat(value).toFixed(3); // Format ticks to two decimal places
                             }
                         }
                     },

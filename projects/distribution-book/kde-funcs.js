@@ -220,6 +220,10 @@ function updateChart() {
         };
     }
 
+        // Determine if legend should be displayed based on screen width
+        const showLegend = window.innerWidth > 600;  // Show legend only if screen width is greater than 600px
+
+
     // Create new chart with all datasets (including data points)
     let ctx = document.getElementById('kdeChart').getContext('2d');
     window.kdeChart = new Chart(ctx, {
@@ -229,6 +233,11 @@ function updateChart() {
         },
         options: {
             responsive: true,
+            plugins: {
+                legend: {
+                    display: showLegend  // Show or hide the legend based on screen width
+                }
+            },
             scales: {
                 x: {
                     title: {
@@ -237,7 +246,7 @@ function updateChart() {
                     },
                     ticks: {
                         callback: function(value) {
-                            return value.toFixed(2);  // Round x-axis ticks
+                            return value.toFixed(3);  // Round x-axis ticks
                         }
                     }
                 },

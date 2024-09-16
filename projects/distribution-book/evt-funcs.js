@@ -214,6 +214,11 @@ function plotHistogram(data, numBins) {
                     },
                     min: xMinValue,  // Set the x-axis minimum
                     max: xMaxValue,  // Set the x-axis maximum
+                    ticks: {
+                        callback: function(value) {
+                            return value.toFixed(3);  // Round x-axis ticks
+                        }
+                    }
                 },
                 y: {
                     title: {

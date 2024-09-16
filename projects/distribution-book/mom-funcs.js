@@ -144,7 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
             title: {
               display: true,
               text: 'Value'
-            }
+            },
+            ticks: {
+              callback: function(value) {
+                  return value.toFixed(3);  // Round x-axis ticks
+              }
+          }
           },
           y: {
             title: {
