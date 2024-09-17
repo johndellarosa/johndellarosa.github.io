@@ -190,9 +190,23 @@
 
 
                 </ol>
-                
-                <h3>Definition</h3>
 
+                <h3>Introduction</h3>
+                In previous chapters, we explored both mixture and compound distributions, which allow for modeling variability in the parameters or outcomes of random processes. Mixture distributions arise when data is generated from one of several possible distributions, with each distribution selected according to a mixing probability. Compound distributions, on the other hand, result from random variables whose parameters are themselves random, introducing an additional layer of complexity in describing stochastic processes.
+                <br><br>
+                A particularly important class of compound distributions, which we turn our focus to now, is the Compound Poisson distribution. This distribution is widely applicable in scenarios where the number of events occurring in a fixed period is uncertain and follows a Poisson distribution, and the outcome of each event is itself random.
+
+
+
+                <h3>Definition</h3>
+                Let \(N\) be a Poisson-distributed random variable with parameter \(\lambda\gt 0\), representing the number of events that occur in a fixed interval. 
+                Assume that each event generates a random variable \(X_i\) from some iid sequence \(\left\{X_i\right\}) with a common distribution function \(F_X(x)\) and mean \(\mu_X=\mathbb{E}[X]\). The Compound Poisson random variable S is defined as the sum of the N random variables: 
+
+                $$S=\sum_{i=1}^NX_i$$
+
+                If N=0, then we define S=0. The distribution of S is called a Compound Poisson distribution. 
+
+                
 
                 <br>
 

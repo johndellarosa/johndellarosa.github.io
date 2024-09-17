@@ -71,10 +71,35 @@
                 <h2>General Types</h2>
 
                 <h3>Autocorrelation</h3>
+                Autocorrelation measures the correlation of a time series with a lagged version of itself. 
+
+                <br><br>
+                Given a time series \(\left\{X_t\right\}\) where \(t=1,2,\dots,n\), the autocorrelation at lag k is defined as:
+
+                $$\rho(k)=\frac{\text{Cov}(X_t,X_{t-k})}{\text{Var}(X_t)}$$
+                utocorrelation is used in time series analysis to detect trends, seasonality, and repeating patterns. It plays a key role in models like AR (Auto-Regressive) models, where current values are modeled as linear functions of past values. 
+
+
+
+
 
                 <h3>Pairwise Independence</h3>
 
+                Pairwise Independence is a weaker condition of independence between random variables. Two variables are pairwise independent if knowing the outcome of one provides no information about the outcome of the other, but pairwise independence does not necessarily imply full independence across all variables. 
+
+                <br><br>
+                Random variables \(X_1,X_2,\dots,X_n\) are pairwise independent if for all \(i\neq j\):
+                $$P(X_i\cap X_j)=P(X_i)P(X_j)$$
+
+
+
                 <h3>Conditional Dependence</h3>
+                Conditional Independence refers to a situation where two random variables are independent, given the value of a third variable. Conditional independence is a key concept in Bayesian networks, graphical models, and statistical modeling, where it allows for simplified representations of complex dependencies.
+                <br><br>
+                Let \(X,Y,Z\) be random variables. X and Y are said to be conditionally independent given Z if:
+
+                $$P(X|Y,Z)=P(X|Z)$$
+
 
                 <h2>Metrics</h2>
                 <h3>Spearman Correlation</h3>
@@ -107,9 +132,24 @@
                 where \(p_{XY}(x,y)\) is the joint probability density function of X and Y; \(p_X(x)\) and \(p_Y(y)\) are the marginal densities of X and Y, respectively. 
 
 
+                <h3>Tail Dependence</h3>
 
+                Tail dependence refers to the behavior of extreme values in multivariate distributions. It captures the likelihood that extreme outcomes in one variable will be accompanied by extreme outcomes in another. 
 
-                
+                <br><br>
+
+                For two random variables \(X\) and \(Y\), the upper tail dependence coefficient \(\lambda_U\) is defined as the limit of the conditional probability that Y exceeds a high threshold, given that X also exceeds that threshold: 
+                $$\lambda_U=\lim_{u\rightarrow 1^-}P(Y\gt F_Y^{-1}(u)|X>F_X^{-1}(u))$$
+                where \(F_X\) and \(F_Y\) are the marginal cumulative functions of X and Y respectively, and \(F_X^{-1}(u)\) and \(F_Y^{-1}(u)\) are the quantiles corresponding to the probability level u.
+
+                <br><br>
+                Similarly, the lower tail dependence coefficient \(\lambda_L\) is defined as:
+
+                $$\lambda_L=\lim_{u\rightarrow 0^+}P(Y\leq F_Y^{-1}(u)|X\leq F_{X}^{-1}(u))$$
+
+                $$\lambda_U,\lambda_L\in [0,1]$$
+
+                A value of 0 indicates no tail dependence. A value of 1 implies perfect tail dependence. 
 
                 </div>
 
