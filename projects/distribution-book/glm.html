@@ -159,13 +159,17 @@
 
                 <h4>Gamma Distribution</h4>
 
-                For positively skewed continuous data, the inverse link is commonly used:
+                For positively skewed continuous data, the (negative) inverse link is commonly used:
 
                 $$g(\mathbb{E}[Y|X])=-\frac{1}{\mathbb{E}[Y|X]}=X\beta$$
 
                 Thus, the mean is given by:
 
                 $$\mathbb{E}[Y|X]=-\frac{1}{X\beta}$$
+                Note that a limitation of this link function is the possibility for calculating a negative mean, which is outside its support. 
+                <br>
+                Another thing to note is that some books will give the canonical link as the positive inverse rather than it having a negative sign. Ultimately, this would just lead to your coefficients all having opposite signs and the mean function would also not have a negative sign, so everything would essentially be the same. The author's choice for the negative convention is based on properties of the expotential family. It is inconsequential in the result so long as you're being consistent, but it's good to be aware of since both conventions are common, and you'll want to make sure you're being consistent, or else you'll get nonsense. 
+                Users of the negative convenetion will often call it the "negative inverse."
 
                 <h3>Non-Canonical Link Functions</h3>
                 While canonical link functions arise naturally from the form of the exponential family distribution and often lead to simpler estimation procedures, there are many situations where non-canonical link functions may be preferred. These alternative link functions provide additional flexibility in modeling the relationship between the predictors and the response, particularly when the canonical link may not yield a model that is intuitive or interpretable for a given application.
