@@ -91,14 +91,14 @@
 
                 $$f(y;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y-\mu)^2}{2\sigma^2}\right)$$
 
-                In the GLM formulation, we aim to model the mean of the response variable, \(\mu=\mathbb{E}[Y]\), as a linear function of the predictors. 
+                In the GLM formulation, we aim to model the mean of the response variable, \(\mu=\mathbb{E}[Y|X]\), as a linear function of the predictors. 
                 For normally distributed data, the <strong>identity link function</strong> is used:
 
-                $$g(\mathbb{E}[Y])=\mathbb{E}[Y|X]=X\beta$$
+                $$g(\mathbb{E}[Y|X])=\mathbb{E}[Y|X]=X\beta$$
 
                 This link function simply implies that the mean of the response variable is directly modeled as a linear function of the predictors. The normal GLM, therefore, takes the form:
 
-                $$Y\sim \mathcal{N}(X\beta, \sigma^2)$$
+                $$Y|X\sim \mathcal{N}(X\beta, \sigma^2)$$
 
                 This is equivalent to the standard OLS model when the error terms are normally distributed, but now seen within the broader GLM framework. In this case, the dispersion parameter \(\phi\) corresponds to the variance \(\sigma^2\), and the canonical link function is the identity function. 
                 Those terms will be explained shortly. 
