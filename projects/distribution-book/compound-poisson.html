@@ -210,8 +210,54 @@
 
                 <br>
 
+                <h3>Wald's Equation</h3>
+                A powerful and satisfying equation is Wald's equation/identity/lemma, which relates the expectation of a sum of iid variables where the number of summands is also a random variable which is independent from the summed variables. 
+
+                Let \(x_1,x_2,\dots,x_n\) be iid random variables. Let n be a random variable. If both have finite expectations, then 
+
+                $$\mathbb{E}[\sum_{i=1}^nx_i]=\mathbb{E}[N]\mathbb{E}[X]$$
+
+                <h3>Variance</h3>
+                $$\text{Var}(S)=\lambda(\sigma_X^2+\mu_X^2)$$
+                where \(\mu_X^2\) and \(\sigma_X^2\) are the mean and variance of indivdual event sizes respectively. 
+
+                <h3>Special Cases</h3>
+                
+                <h4>X is Expoentially Distributed</h4>
+                If \(X_i\) follow an exponential distribution with rate \(\theta\) then S follows a Gamma distribution with shape parameter \(\lambda\) and rate \(\theta\). 
+
+                <h4>X is a constant</h4>
+                If \(X_i=c\), then \(S\sim c\times N\).
 
 
+                <h3>Estimation of Parameters</h3>
+
+                For a Compound Poisson distribution, you now have the rate parameter from the Poisson distribution, as well as the parameter(s) for X. This can prove to make estimation tricky. 
+
+                
+                <h4>MLE</h4>
+                The likelihood function for a compound Poisson would be given by
+
+                $$L(\lambda,]theta;S_1,\dots,S_n\)=\prod_{i=1}^{n}P(S_i|\lambda, \theta)$$
+
+                where \(P(S_i|\lambda,\theta)\) is the probability mass function (or pdf if X is continuous) for the Compound Poisson distribution. 
+                <br><br>
+                In practice, this is difficult since there may be mutliple ways to get a given value of s. Compound Poisson PMFs or PDFs are often written as infinite sums
+
+                <h4>Method of Moments</h4>
+                Another parameter estimation method we talked about in a previous chapter is <a href="./method-of-moments.html">the method of moments</a>. 
+
+                The first two moments of the Compound Distribution are:
+
+                $$\mathbb{E}=\lambda\mu_X$$
+                $$\text{Var}(S)=\lambda(\sigma_X^2+\mu_X^2)$$
+
+                Given a sample \(S_1,S_2,\dots,S_n\) the sample mean \(\hat{\mu}_S\) and sample variance \(\hat{\sigma}_S^2\) can be calculated as:
+
+                $$\hat{\mu}_S=\frac{1}{n}\sum_{i=1}^nS_i$$
+                $$\hat{\sigma}_S^2=\frac{1}{n}\sum_{i=1}^n(S_i-\hat{\mu}_S)^2$$
+
+                
 
                 </div>
 
