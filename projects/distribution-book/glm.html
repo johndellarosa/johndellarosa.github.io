@@ -83,9 +83,9 @@
                 <h3>OLS as a GLM</h3>
                 Linear regression, in its standard form, is a special case of a GLM where the response variable is assumed to follow a normal distribution, the identity link function is used, and the variance is constant. 
 
-                In ordinary least squares regression, the response variable \(Y\) is assumed to be normally distributed with mean \(\mu\) and error terms with constant variance \(\sigma^2\):
+                In ordinary least squares regression, the response variable \(Y\) is assumed to be mean \(\mu\) and error terms with constant variance \(\sigma^2\):
 
-                $$Y=X\beta + \varepsilon,\quad \epsilon\sim \mathcal{N}(0,\sigma^2)$$
+                $$Y=X\beta + \varepsilon,\quad \mathbb{E}[Y|X]=\mu=X\beta, \quad \mathbb{E}[\epsilon^2|X]= \sigma^2$$
 
                 To interpret linear regression in the context of a GLM, we can view it through the lens of the exponential family of distributions. As discussed earlier, the normal distribution is a member of the exponential family, with the probability density function: 
 
@@ -100,7 +100,7 @@
 
                 $$Y\sim \mathcal{N}(X\beta, \sigma^2)$$
 
-                This is equivalent to the standard OLS model, but now seen within the broader GLM framework. In this case, the dispersion parameter\(\phi\) corresponds to the variance \(\sigma^2\), and the canonical link function is the identity function. 
+                This is equivalent to the standard OLS model when the error terms are normally distributed, but now seen within the broader GLM framework. In this case, the dispersion parameter \(\phi\) corresponds to the variance \(\sigma^2\), and the canonical link function is the identity function. 
                 Those terms will be explained shortly. 
 
 
