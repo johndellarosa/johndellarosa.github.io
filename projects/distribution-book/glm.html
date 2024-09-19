@@ -89,7 +89,7 @@
 
                 To interpret linear regression in the context of a GLM, we can view it through the lens of the exponential family of distributions. As discussed earlier, the normal distribution is a member of the exponential family, with the probability density function: 
 
-                $$f(y;\mu,sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y-\mu)^2}{2\sigma^2}\right)$$
+                $$f(y;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y-\mu)^2}{2\sigma^2}\right)$$
 
                 In the GLM formulation, we aim to model the mean of the response variable, \(\mu=\mathbb{E}[Y]\), as a linear function of the predictors. 
                 For normally distributed data, the <strong>identity link function</strong> is used:
@@ -161,11 +161,11 @@
 
                 For positively skewed continuous data, the inverse link is commonly used:
 
-                $$g(\mathbb{E}[Y|X])=\frac{1}{\mathbb{E}[Y|X]}=X\beta$$
+                $$g(\mathbb{E}[Y|X])=-\frac{1}{\mathbb{E}[Y|X]}=X\beta$$
 
                 Thus, the mean is given by:
 
-                $$\mathbb{E}[Y|X]=\frac{1}{X\beta}$$
+                $$\mathbb{E}[Y|X]=-\frac{1}{X\beta}$$
 
                 <h3>Non-Canonical Link Functions</h3>
                 While canonical link functions arise naturally from the form of the exponential family distribution and often lead to simpler estimation procedures, there are many situations where non-canonical link functions may be preferred. These alternative link functions provide additional flexibility in modeling the relationship between the predictors and the response, particularly when the canonical link may not yield a model that is intuitive or interpretable for a given application.
@@ -175,7 +175,7 @@
                 Non-canonical link functions are chosen for several reasons:
 
                 <ol>
-                    <li>Interpretability: In some contexts, the canonical link may not produce coefficients that are easily interpretable. For instance, in binary regression models, the canonical logit link models the log-odds, but a probit or complementary log-log link may provide more natural interpretations based on the data's structure.</li>
+                    <li>Interpretability: In some contexts, the canonical link may not produce coefficients that are easily interpretable. For instance, in binary regression models, the canonical logit link models the log-odds, but a probit or complementary log-log link may provide more natural interpretations based on the data's structure. The log link function is sometimes used for Gamma GLMs for similar reasons.</li>
                     <li>Alternative Distributions of Error: Non-canonical links can arise naturally when the errors in the model deviate from the assumptions of the exponential family distribution or when a different functional form better captures the underlying data relationships.</li>
                     <li>Improving Fit: When a canonical link fails to adequately capture the relationship between the response and predictors, a non-canonical link may improve model fit by providing a closer alignment to the underlying data-generating process.</li>
 
