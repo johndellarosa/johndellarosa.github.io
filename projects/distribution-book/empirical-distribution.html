@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Empirical Distribution Function</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Marginal Likelihood">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to marginal likelihood.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/empirical-distribution"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Marginal-Likelihood-Explanation">
+                <h1>Empirical Distribution Function (EDF)</h1>
+                <h2>Introduction to Empirical Distributions</h2>
+                
+                While we will talk more on ways to construct and model distributions for variables, we can no longer ignore the topic of statistical testing for goodness-of-fit since it is so important. 
+                This pairs with the non-parametric method of the empirical distribution function. This will serve as the most basic method for modeling a distribution. 
+
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                </ol>
+                
+                <h3>Introduction</h3>
+                The Empirical Distribution Function (EDF) is a non-parametric estimator used to approximate the cumulative distribution function (CDF) of a sample. It assigns probability to each observed value in a sample and serves as an essential tool for statistical inference when no assumptions about the underlying distribution are made. 
+
+                <h4>Definition</h4>
+
+                Given a sample \(\left\{X_1,X_2,\dots,X_n\right\}\), the EDF is defined as:
+
+                $$F_n(x)=\frac{1}{n}\sum_{i=1}^{n}1_{X_i\leq x}$$
+
+                In simple terms, the EDF for a value x is the fraction of the sample that is less than or equal to it. 
+                The EDF is a step function that increases by \(\frac{1}{n}\) at each observed data point. 
+                <br><br>
+                As \(n\rightarrow\infty\), the EDF converges to the true CDF of the population by the Glivenko-Cantelli theorem. Thus, the EDF is a consistent estimator for the CDF. 
+
+                <h3>Usage</h3>
+                One of the main usages of the EDF is performing goodness-of-fit tests, such as the Kolmogorov-Smirnov (KS) test, where the null hypothesis is that the sample comes from a specified distribution (or in the two-sample case, that two EDFs share a common distribution). 
+                The KS test essentially looks at the biggest absolute difference between the EDF and the distribution of the null hypothesis over the whole support. Formally, we write this as:
+
+                $$D_n=\sup_n\left|F_n(x)-F(x)\right|$$
+
+                For a sample, we wouldn't expect zero deviation from the theoretical distribution, but what does the deviation look like under the null hypothesis? 
+                Well, at the infimum of the null distribution's support (if it exists), we would expect the EDF would agree with the CDF that 
+                $$F_n(L)=F(L)=0$$
+                where L is the inf of the null distribution's support. If \(F_n(L)>0\) while \(F(L)=0\), that would mean that the support of the true distribution is not the same support as the null distribution, which is a big hint, as you would have been drawing impossible values. 
+                But this observation is more relevant for a test like the Anderson-Darling test, which focuses on tails and would be undefined in such a case. 
+
+
+                
+                By similar logic, let U be the supremum of the distribution if it exists. If \(F_n(U)\lt F(U)=1\), then the sample has values which are too high for the null support.
+
+                <br><br>
+                But let's think of samples where the null hypothesis is true and thus we don't worry about the above. 
+                The EDF and the CDF would both be 0 at L and 1 at U, meaning that the absolute difference is 0 for both locations. However, they can vary in the middle. This shape is known as a Brownian Bridge. 
+
+                A Brownian Bridge, \(B(t)\),  is a continuous-time stochastic process that starts at zero and returns to zero at the end of the interval, with some properties of a Brownian motion but conditioned to return to zero. 
+
+                The Brownian Bridge is defined over the interval [0,1] as:
+
+                $$B(t)=W(t)-tW(1)$$
+                where \(W(t)\) is standard Brownian motion. 
+                <br><br>
+                The KS test statistic is asymptotically distributed as the supremum of the absolute value of the Brownian Bridge. The KS test tends to be more sensitive to deviations around the median, but less so at the tails, since the supremum being at the tail would imply a very unlikely sample. 
+
+
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Empirical Distribution Function Practice Problems</h2>
+                    <ol>
+                        
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
