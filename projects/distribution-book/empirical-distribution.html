@@ -111,6 +111,40 @@
                 <br><br>
                 The KS test statistic is asymptotically distributed as the supremum of the absolute value of the Brownian Bridge. The KS test tends to be more sensitive to deviations around the median, but less so at the tails, since the supremum being at the tail would imply a very unlikely sample. 
 
+                <h3>Confidence Bands</h3>
+                Confidence Bands are analogous to confidence intervals but extend over an entire range of values rather than at a single point. 
+
+                Several methods exist to construct confidence bands for the EDF. The most prominent among them include the Dvoretzky-Kiefer-Wolfowitz (DKW) Inequality, Kolmogorov-Based Bands, and Bootstrap Methods. 
+
+                <h4>DKW Band</h4>
+                The DKW Inequality provides a non-asymptotic, uniform bound on the difference between the EDF and the true CDF. 
+
+                For any \(\varepsilon\gt 0\), the probability that the maximum deviation between \(F_n(x)\) and \(F(x)\) exceeds \(\varepsilon\) is bounded by:
+
+                $$P(\sup_x\left|F_n(x)-F(x)\right|\gt\varepsilon)\leq 2e^{-2n\varepsilon^2}$$
+
+                Thus, to get a \(1-\alpha\) confidence band:
+
+                Determine episilon:
+                $$2e^{-2n\varepsilon^2}=\alpha$$
+
+                $$\varepsilon=\sqrt{\frac{\log(2/\alpha)}{2n}}$$
+
+                $$F_n(x)-\varepsilon\leq F(x)\leq F_n(x)+\varepsilon\quad\forall x$$ 
+
+                <h4>KS Confidence Band</h4>
+                Since the KS statistic is asymptotically distributed like a Brownian Bridge, we can get a sense by how much things would deviate. 
+
+                $$D_n=\sup_x\left|F_n(x)-F(x)\right|$$
+
+                Calculate c based on the Brownian Bridge distribution to get the critical value for \(1-\alpha\). 
+                
+                $$\varepsilon=\frac{c}{\sqrt{n}}$$
+
+                $$F_n(x)-\varepsilon\leq F(x)\leq F_n(x)+\varepsilon\quad\forall x$$ 
+
+
+                
 
 
 
