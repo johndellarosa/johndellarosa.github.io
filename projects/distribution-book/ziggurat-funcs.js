@@ -6,7 +6,7 @@ let layers = 6;  // Default number of layers
 
 // Target distribution: Standard normal PDF
 function targetDistribution(x) {
-    return Math.exp(-0.5 * x * x);  // Standard normal distribution
+    return  Math.exp(-0.5 * x * x);  // Standard normal distribution
 }
 
 // Ziggurat layers data
@@ -66,7 +66,7 @@ function precomputeZigguratLayers(numLayers) {
     let maxVal = targetDistribution(0);  // Max value of the distribution at x = 0
     
     // const totalArea = maxVal / numLayers;  // The area that each layer should cover
-    const totalArea = 1/ numLayers;
+    const totalArea = 1/normalizationConstant/ numLayers;
 
     let x1 = 0;  // Starting width (for the first layer)
     let currX = x1;
@@ -121,6 +121,7 @@ function generateZigguratSample() {
         const tailSample = sampleFromTail();  // Sample from the tail using rejection sampling
         addSampleToPlot(tailSample, 0, true);  // Plot the sample
         acceptedSamples++;
+        console.log(tailSample);
     } else {
         // Otherwise, generate random sample within the Ziggurat layer
         const layer = zigguratLayers[layerIndex];
@@ -144,15 +145,25 @@ function generateZigguratSample() {
 function sampleFromTail() {
     let tailAccepted = false;
     let sample;
-
+    const maxTailSample = 10;  // Cap extreme values for safety
+    const scale = 2;  // Adjust this scaling factor to increase the tail's spread
+    
     while (!tailAccepted) {
         // Generate a sample from an exponential distribution for the tail
-        const proposalSample = -Math.log(Math.random());  // Exponential sample
+        const proposalSample = -Math.log(Math.random()) * scale;  // Scale exponential sample
+        
+        // Cap the sample to avoid extreme values
+        const boundedSample = Math.min(proposalSample, maxTailSample);
         
         // Rejection criterion: accept if below the normal distribution's tail
-        const acceptanceProb = Math.exp(-0.5 * proposalSample * proposalSample);  // PDF for normal distribution
+        const acceptanceProb = Math.exp(-0.5 * boundedSample * boundedSample);  // PDF for normal distribution
+
+        // Avoid numerical issues with tiny probabilities
         if (Math.random() < acceptanceProb) {
-            sample = proposalSample;
+            sample = boundedSample;
+            if (Math.random() < 0.5) {
+                sample *= -1;
+            }
             tailAccepted = true;
         }
     }
@@ -160,27 +171,201 @@ function sampleFromTail() {
     return sample;
 }
 
+// // Function to add sample to the plot
+// function addSampleToPlot(x, y, accepted) {
+//     const traceIndex = accepted ? 1 : 2;  // Trace 1 for accepted, 2 for rejected
+//     const update = {
+//         x: [[x]],  // Append x-coordinate
+//         y: [[y]]   // Always plot sample on y=0
+//     };
+//     Plotly.extendTraces('plot', update, [traceIndex]);
+// }
 
-// Function to add sample to plot (ensure it's added to the correct trace)
+// // Plot traces for Ziggurat layers and samples
+// let stepTrace = {
+//     x: [],
+//     y: [],
+//     type: 'scatter',
+//     mode: 'lines',
+//     fill: 'tozeroy',  // Fill under the line to give the step look
+//     line: { shape: 'hv', color: 'blue', width: 2 },  // Thicker outline
+//     marker: { size: 0 },  // No markers for the steps
+//     name: 'Ziggurat Layers'
+// };
+
+// let acceptedSampleTrace = {
+//     x: [],
+//     y: [],
+//     mode: 'markers',
+//     marker: { color: 'green', size: 8 },
+//     name: 'Accepted Samples'
+// };
+
+// let rejectedSampleTrace = {
+//     x: [],
+//     y: [],
+//     mode: 'markers',
+//     marker: { color: 'red', size: 8 },
+//     name: 'Rejected Samples'
+// };
+
+// // Plot layout
+// const layout = {
+//     title: 'Ziggurat Algorithm Step Plot',
+//     xaxis: { title: 'X', range: [-5, 5] },
+//     yaxis: { title: 'Y', range: [0, 1] }
+// };
+
+// // Create a trace for the standard normal distribution
+// const normalX = [];
+// const normalY = [];
+// const numPoints = 100;  // Number of points for the normal distribution
+
+// for (let i = 0; i <= numPoints; i++) {
+//     const xVal = (i / numPoints) * 20 - 10;  // Range from -10 to 10
+//     normalX.push(xVal);
+//     normalY.push(Math.exp(-0.5 * xVal * xVal));  // Standard normal PDF
+// }
+
+// const normalTrace = {
+//     x: normalX,
+//     y: normalY,
+//     type: 'scatter',
+//     mode: 'lines',
+//     line: { color: 'red', width: 2 },
+//     name: 'Standard Normal Distribution'
+// };
+
+// // Initial plot
+// Plotly.newPlot('plot', [normalTrace, stepTrace, acceptedSampleTrace, rejectedSampleTrace], layout);
+
+// // Store the samples separately in arrays to rebuild the plot when needed
+// let acceptedSamplesX = [];
+// let acceptedSamplesY = [];
+// let rejectedSamplesX = [];
+// let rejectedSamplesY = [];
+
+// // Function to update the Ziggurat layers
+// function updateZigguratLayers() {
+//     precomputeZigguratLayers(layers);
+
+//     acceptedSampleTrace.x = [];
+//     acceptedSampleTrace.y = [];
+//     rejectedSampleTrace.x = [];
+//     rejectedSampleTrace.y = [];
+
+//     const newX = [];
+//     const newY = [];
+
+//     zigguratLayers.forEach(layer => {
+//         const left = -layer.width;
+//         const right = layer.width;
+//         const height = layer.height;
+
+//         newX.push(left, right, right, left);  // Symmetrical layers
+//         newY.push(height, height, 0, 0);  // Heights for step shape
+//     });
+
+//     // Update the stepTrace for the Ziggurat layers
+//     stepTrace = {
+//         x: newX,
+//         y: newY,
+//         type: 'scatter',
+//         mode: 'lines',
+//         fill: 'tozeroy',  // Fill under step
+//         line: { shape: 'hv', color: 'blue', width: 2 },
+//         marker: { size: 0 },
+//         name: 'Ziggurat Layers'
+//     };
+
+//     Plotly.react('plot', [normalTrace, stepTrace, acceptedSampleTrace, rejectedSampleTrace], layout);
+// }
+
+// // Generate and plot multiple Ziggurat samples
+// function generateMultipleSamples() {
+//     for (let i = 0; i < 25; i++) {
+//         generateZigguratSample();
+//     }
+// }
+
+// Store the samples separately in arrays to rebuild the plot when needed
+let acceptedSamplesX = [];
+let acceptedSamplesY = [];
+let rejectedSamplesX = [];
+let rejectedSamplesY = [];
+// Store the accepted samples for statistics
+let acceptedSamples_list = [];
+
+// Plot traces for Ziggurat layers and samples
+const zigguratLayersIndex = 1;  // Index for Ziggurat layers trace
+const acceptedSamplesIndex = 2;  // Index for accepted samples trace
+const rejectedSamplesIndex = 3;  // Index for rejected samples trace
+// const normalIndex = 4;
+
+// Function to add sample to plot (no Ziggurat modification)
 function addSampleToPlot(x, y, accepted) {
-    const update = {
-        x: [[x]],  // Append x-coordinate
-        y: [[y]]   // Append y-coordinate
-    };
-    const traceIndex = accepted ? 1 : 2;  // Use the correct trace (1: accepted, 2: rejected)
-    Plotly.extendTraces('plot', update, [traceIndex]);  // Extend the sample trace, not Ziggurat layers
+    if (accepted) {
+        acceptedSamples_list.push(x);
+        acceptedSamplesX.push(x);
+        acceptedSamplesY.push(y);
+        Plotly.update('plot', {
+            x: [acceptedSamplesX],
+            y: [acceptedSamplesY]
+        }, {}, [acceptedSamplesIndex]);
+    } else {
+        rejectedSamplesX.push(x);
+        rejectedSamplesY.push(y);
+        Plotly.update('plot', {
+            x: [rejectedSamplesX],
+            y: [rejectedSamplesY]
+        }, {}, [rejectedSamplesIndex]);
+    }
+
+
+    // Only update statistics if we have accepted samples
+    if (acceptedSamples_list.length > 0) {
+        updateSampleStatistics();
+    }
 }
 
 
-// Plot traces for Ziggurat layers and samples
+
+const layout = {
+    // title: 'Ziggurat Algorithm Step Plot',
+    xaxis: { title: 'X', range: [-5, 5] },
+    yaxis: { title: 'Y', range: [0, 1] },
+    autosize: true,  // Allow automatic resizing
+    width: Math.min(window.innerWidth * 0.95,800),  // Set the width to 95% of the window width
+    legend: {
+        orientation: 'h',  // Horizontal legend
+        // x: 0.,  // Center horizontally
+        y: 1.5,  // Adjust legend position
+        font: {
+            size: 10  // Shrink the font size to prevent overlap
+        },
+        itemwidth: 30,  // Reduce item width to shrink the legend further
+    }
+};
+
+// Create a trace for the standard normal distribution
+const normalX = [];
+const normalY = [];
+const numPoints = 100;
+
+for (let i = 0; i <= numPoints; i++) {
+    const xVal = (i / numPoints) * 20 - 10;
+    normalX.push(xVal);
+    normalY.push(Math.exp(-0.5 * xVal * xVal));
+}
+
 let stepTrace = {
     x: [],
     y: [],
     type: 'scatter',
-    mode: 'lines+markers',
-    fill: 'tozeroy',  // Fill under the line to give the step look
-    line: { shape: 'hv', color: 'blue', width: 2 },  // Thicker outline
-    marker: { size: 0 },  // No markers for the steps
+    mode: 'lines',
+    fill: 'tozeroy',  
+    line: { shape: 'hv', color: 'rgba(0,0,0,0.1)', width: 1 },  
+    marker: { size: 0 },  
     name: 'Ziggurat Layers'
 };
 
@@ -188,38 +373,18 @@ let acceptedSampleTrace = {
     x: [],
     y: [],
     mode: 'markers',
-    marker: { color: 'green', size: 8 },
+    marker: { color: 'green', size: 3 },
     name: 'Accepted Samples'
 };
+
 let rejectedSampleTrace = {
     x: [],
     y: [],
     mode: 'markers',
-    marker: { color: 'red', size: 8 },
+    marker: { color: 'red', size: 3 },
     name: 'Rejected Samples'
 };
 
-// Plot layout
-const layout = {
-    title: 'Ziggurat Algorithm Step Plot',
-    xaxis: { title: 'X',
-        range:[-5,5],
-     },
-    yaxis: { title: 'Y' }
-};
-
-// Create a trace for the standard normal distribution
-const normalX = [];
-const normalY = [];
-const numPoints = 100;  // Number of points for the normal distribution
-
-for (let i = 0; i <= numPoints; i++) {
-    const xVal = (i / numPoints) * (10 * 2) - 10;  // Range from -x1 to x1
-    normalX.push(xVal);
-    normalY.push(Math.exp(-0.5 * xVal * xVal));  // Standard normal PDF
-}
-
-// Add the standard normal distribution trace
 const normalTrace = {
     x: normalX,
     y: normalY,
@@ -229,32 +394,32 @@ const normalTrace = {
     name: 'Standard Normal Distribution'
 };
 
-
 // Initial plot
-Plotly.newPlot('plot', [normalTrace,stepTrace, acceptedSampleTrace, rejectedSampleTrace], layout);
+// Ensure normal distribution is the first trace (index 0)
+Plotly.newPlot('plot', [normalTrace, stepTrace, acceptedSampleTrace, rejectedSampleTrace], layout);
 
-// Recompute the steps for the Ziggurat layers with proper filling and symmetry
+
+// Function to update the Ziggurat layers
 function updateZigguratLayers() {
     layers = parseInt(document.getElementById('layerInput').value);
     precomputeZigguratLayers(layers);
 
-    // Clear existing sample data when updating bins
-    acceptedSampleTrace.x = [];
-    acceptedSampleTrace.y = [];
-    rejectedSampleTrace.x = [];
-    rejectedSampleTrace.y = [];
+    // Clear existing sample data when updating layers
+    acceptedSamplesX = [];
+    acceptedSamplesY = [];
+    rejectedSamplesX = [];
+    rejectedSamplesY = [];
 
     const newX = [];
     const newY = [];
 
     zigguratLayers.forEach(layer => {
-        const left = -layer.width;  // Left side of the layer
-        const right = layer.width;  // Right side of the layer
+        const left = -layer.width;
+        const right = layer.width;
         const height = layer.height;
 
-        // Add step values for each layer
-        newX.push(left, right, right, left);  // Symmetrical layers, closed polygon
-        newY.push(height, height, 0, 0);  // Heights for each segment of the step, closing to 0
+        newX.push(left, right, right, left);  // Symmetrical layers
+        newY.push(height, height, 0, 0);  // Heights for step shape
     });
 
     stepTrace = {
@@ -262,22 +427,61 @@ function updateZigguratLayers() {
         y: newY,
         type: 'scatter',
         mode: 'lines',
-        fill: 'tozeroy',  // Proper vertical filling
-        line: { shape: 'hv', color: 'blue', width: 2 },  // Thicker line for outline
-        marker: { size: 0 },  // No markers on the steps
+        fill: 'tozeroy',
+        line: { shape: 'hv', color: 'rgba(0,0,255,0.05)', width: 1},
+        marker: { size: 0 },
         name: 'Ziggurat Layers'
     };
 
-    Plotly.react('plot', [normalTrace,stepTrace, acceptedSampleTrace, rejectedSampleTrace], layout);
+    Plotly.react('plot', [normalTrace, stepTrace, acceptedSampleTrace, rejectedSampleTrace], layout);
 }
 
+// Generate and plot multiple Ziggurat samples
 function generateMultipleSamples() {
     for (let i = 0; i < 25; i++) {
         generateZigguratSample();
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Function to calculate sample statistics
+function updateSampleStatistics() {
+    if (acceptedSamples_list.length === 0) return;  // Ensure there are samples
+    // Calculate the mean
+    const mean = acceptedSamples_list.reduce((acc, val) => acc + val, 0) / acceptedSamples_list.length;
 
+    // Calculate the variance
+    const variance = acceptedSamples_list.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / acceptedSamples_list.length;
+
+    // Standard deviation
+    const stdDev = Math.sqrt(variance);
+
+    // Min and Max
+    const min = Math.min(...acceptedSamples_list);
+    const max = Math.max(...acceptedSamples_list);
+
+    // Calculate the kurtosis
+    const kurtosis = acceptedSamples_list.reduce((acc, val) => acc + Math.pow((val - mean) / stdDev, 4), 0) / acceptedSamples_list.length;
+
+    // Update the statistics display
+    document.getElementById('sampleStats').innerHTML = `
+        <strong>Sample Statistics:</strong><br>
+        Mean: ${mean.toFixed(4)}<br>
+        Variance: ${variance.toFixed(4)}<br>
+        Standard Deviation: ${stdDev.toFixed(4)}<br>
+        Min: ${min.toFixed(4)}<br>
+        Max: ${max.toFixed(4)}<br>
+        Kurtosis: ${kurtosis.toFixed(4)}
+    `;
+}
+
+// Ensure plot resizes when the window size changes
+window.onresize = function() {
+    Plotly.relayout('plot', {
+        width: Math.min(window.innerWidth * 0.95,1000),
+    });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+layers = parseInt(document.getElementById('layerInput').value);
 updateZigguratLayers();  // Initialize layers
 });
