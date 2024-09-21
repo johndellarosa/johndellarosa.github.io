@@ -15,7 +15,7 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Distribution Sampling</title>
+            <title>Continuous Distribution Sampling</title>
     
         <!-- Meta tags -->
         
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/sampling-coninuous"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -71,7 +71,7 @@
                 If we have a distribution that we have fitted to data, we might want to sample from it, perhaps because we are doing some sort of Monte Carlo simulation. 
                 The goal is to generate random samples that follow a specified distribution. This chapter will be more on the applied-side, looking at algorithms for generating (pseudo) random variables from a given distribution. 
 
-                <h2>Discrete Distributions</h2>
+
 
                 <h2>Continuous Distributions</h2>
                 <h3>Inverse Transform Sampling</h3>
@@ -185,7 +185,7 @@
                 <ul>
                     <li>A random rectangle is chosen based on the precomputed areas. This random choice is efficient since the areas are equal.</li>
                     <li>Next, a random point is generated inside the chosen rectangle, with both x (horizontal) and y (vertical) coordinates being uniformly sampled.</li>
-                
+                    <li>If this layer is the base, there may be a special sampling method, especially if the support is not bounded, thus the rectangle width would be undefined. This can be the case with the normal distribution for example.</li>
                 </ul>
 
                 <h5>Acceptance Check</h5>
