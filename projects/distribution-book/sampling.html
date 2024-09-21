@@ -71,27 +71,30 @@
                 If we have a distribution that we have fitted to data, we might want to sample from it, perhaps because we are doing some sort of Monte Carlo simulation. 
                 The goal is to generate random samples that follow a specified distribution. This chapter will be more on the applied-side, looking at algorithms for generating (pseudo) random variables from a given distribution. 
 
-                <h2>Inverse Transform Sampling</h2>
+                <h2>Discrete Distributions</h2>
 
-                <h3>Introduction</h3>
+                <h2>Continuous Distributions</h2>
+                <h3>Inverse Transform Sampling</h3>
+
+                <h4>Introduction</h4>
                 The Inverse Transform Sampling method is a relatively simple and straightforward method for sampling from a continuous distribution. Recall in a <a href="./probability-2.html">previous chapter</a>, we learned about the quantile function, which takes a probability and maps it to a value x, such that \(F_X(x)=p\). We will not worry about the more general definition if you don't have strict monotonicity; instead just think about it conceptually. 
                 <br>
-                Now, there is a fact called the Probability Integral Transform; this states that for a distribution X, \(F(x)\sim\mathcal{U}(0,1)\). 
+                Now, there is a fact called the Probability Integral Transform; this states that for a distribution X, \(F(X)\sim\mathcal{U}(0,1)\). 
 
                 <br>
                 Combining these two facts gives some intuition for how the Inverse Transform Sampling method works. 
 
-                <h3>Algorithm</h3>
+                <h4>Algorithm</h4>
 
-                <h4>Step 1: Generate a Uniform Random Variable</h4>
+                <h5>Step 1: Generate a Uniform Random Variable</h5>
                 We will take it as a given that we possess the ability to sample from \(U\sim \mathcal{U}(0,1)\). This is a safe assumption which computers are able to do. As for how this occurs, that is beyond the scope of this book. 
 
-                <h4>Step 2: Apply the Inverse CDF</h4>
+                <h5>Step 2: Apply the Inverse CDF</h5>
                 If \(F_X(x)\) is the CDF of target distribution X, then \(X=F_{X}^{-1}(U)\) is a sample from the distribution of X. 
 
 
 
-                <h3>Example</h3>
+                <h4>Example</h4>
                 Let us consider an exponentially distributed variable X with rate parameter \(\lambda\), its CDF is given by:
 
                 $$F_{X}(x)=1-\exp\left(-\lambda x\right)$$
@@ -105,55 +108,57 @@
 
                 Thus, we can generate an exponentially distributed realization x by plugging in a U(0,1) realization p.
 
-                <h3>Advantages</h3>
+                <h4>Advantages</h4>
                 Inverse transform sampling is conceptually simple and works for any distribution with a known CDF. 
 
-                <h3>Disadvantages</h3>
+                <h4>Disadvantages</h4>
                 Most distributions don't have a closed form quantile function like the Exponential distribution. It is possible to still use inverse transform sampling in this case, but it involves computationally expensive numerical approximations. If the specified distribution has a closed form CDF, root-finding techniques can be employed to calculate the quantile. 
 
 
-                <h2>Rejection Sampling</h2>
-
-                <h3>Motivation</h3>
+                <h3>Rejection Sampling</h3>
+                Also see <a href="./rejection-sampling.html">interactive simulator</a>.
+                <h4>Motivation</h4>
                 In inverse transform sampling, we directly sample from a uniform distribution and use the inverse of the CDF to get samples from a target distribution. This works well when the CDF is known and easily invertible, which isn't always the case. 
 
 
-                <h3>Algorithm</h3>
+                <h4>Algorithm</h4>
 
-                <h4>Choice of Sampling Distribution</h4>
+                <h5>Choice of Sampling Distribution</h5>
                 Choose a distribution \(g(x)\) from which it is easy to sample and whose pdf dominates the target distribution \(f(x)\) when multiplied by a constant M. 
 
                 $$f(x)\leq Mg(x)\quad \forall x$$
+                This implies that the support of \(G\) must be a superset of F. This requirement makes sense because if certain values of F would not possible to be drawn, then you would not truly be sampling from F. 
+                <br><br>
 
                 We then draw a candidate sample \(x^{\star}\) from \(g(x)\)
 
-                <h4>Acceptance Ratio</h4>
+                <h5>Acceptance Ratio</h5>
 
-                Imagine you drew a vertical line at \(x^{\star}\) starting at y=0 all the way up to \(y=Mg(x)\). Now, pick a random point on that line, which we will call \(y=y^{\star}\). 
+                Imagine you drew a vertical line at \(x^{\star}\) starting at y=0 all the way up to \(y=Mg(x^\star)\). Now, pick a random point on that line, which we will call \(y=y^{\star}\). 
                 What is the probability that \(y^\star\leq f(x^\star)\)?
 
                 $$P(y^{\star} \leq f(x^\star))=P(U(0,Mg(x^\star))\leq f(x^\star))=\frac{f(x^\star)}{Mg(x^\star)}$$
 
                 Thus, we have our acceptance rate.
 
-                <h4>Accept or Reject</h4>
+                <h5>Accept or Reject</h5>
                 Now, generate a uniform random variable \(u\sim U(0,1)\). If \(u\leq \frac{f(x^\star)}{Mg(x^\star)}\), accept the sample; otherwise, reject it and draw another value of \(x^\star\) from \(g(x)\). As an easy example, if \(x^\star\) is outside of F's support, the acceptance rate is 0, and you would reject it, which is intuitive. 
-                
 
-                <h3>Advantages</h3>
+
+                <h4>Advantages</h4>
                 <ul>
                     <li>Simple to implement</li>
-                    <li>Doesn't require calculation of quantile function of CDF</li>
+                    <li>Doesn't require calculation of quantile function or CDF</li>
                 </ul>
 
-                <h3>Disadvantages</h3>
+                <h4>Disadvantages</h4>
                 <ul>
                     <li>Since the acceptance rate depends on the choice of distribution, if we have a mismatch of distributions, there can be low acceptance rates. This causes many cycles of the algorithm before a sample is generated. This can become very inefficient.</li>
                     
                 </ul>
 
 
-
+                
 
 
 
