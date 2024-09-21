@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Distribution Sampling</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Distribution-Sampling">
+                <h1>Distribution Sampling</h1>
+                <h2>Introduction to Distribution Sampling</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+
+                </ol>
+
+                <h3>Introduction</h3>
+                If we have a distribution that we have fitted to data, we might want to sample from it, perhaps because we are doing some sort of Monte Carlo simulation. 
+                The goal is to generate random samples that follow a specified distribution. This chapter will be more on the applied-side, looking at algorithms for generating (pseudo) random variables from a given distribution. 
+
+                <h2>Inverse Transform Sampling</h2>
+
+                <h3>Introduction</h3>
+                The Inverse Transform Sampling method is a relatively simple and straightforward method for sampling from a continuous distribution. Recall in a <a href="./probability-2.html">previous chapter</a>, we learned about the quantile function, which takes a probability and maps it to a value x, such that \(F_X(x)=p\). We will not worry about the more general definition if you don't have strict monotonicity; instead just think about it conceptually. 
+                <br>
+                Now, there is a fact called the Probability Integral Transform; this states that for a distribution X, \(F(x)\sim\mathcal{U}(0,1)\). 
+
+                <br>
+                Combining these two facts gives some intuition for how the Inverse Transform Sampling method works. 
+
+                <h3>Algorithm</h3>
+
+                <h4>Step 1: Generate a Uniform Random Variable</h4>
+                We will take it as a given that we possess the ability to sample from \(U\sim \mathcal{U}(0,1)\). This is a safe assumption which computers are able to do. As for how this occurs, that is beyond the scope of this book. 
+
+                <h4>Step 2: Apply the Inverse CDF</h4>
+                If \(F_X(x)\) is the CDF of target distribution X, then \(X=F_{X}^{-1}(U)\) is a sample from the distribution of X. 
+
+
+
+                <h3>Example</h3>
+                Let us consider an exponentially distributed variable X with rate parameter \(\lambda\), its CDF is given by:
+
+                $$F_{X}(x)=1-\exp\left(-\lambda x\right)$$
+
+
+
+                Through algebra, we can actually solve for the quantile function:
+                $$p=1-\exp\left(-\lambda x\right)$$
+
+                $$x=\frac{-\log(1-p)}{\lambda}$$
+
+                Thus, we can generate an exponentially distributed realization x by plugging in a U(0,1) realization p.
+
+                <h3>Advantages</h3>
+                Inverse transform sampling is conceptually simple and works for any distribution with a known CDF. 
+
+                <h3>Disadvantages</h3>
+                Most distributions don't have a closed form quantile function like the Exponential distribution. It is possible to still use inverse transform sampling in this case, but it involves computationally expensive numerical approximations. If the specified distribution has a closed form CDF, root-finding techniques can be employed to calculate the quantile. 
+
+
+                <h2>Rejection Sampling</h2>
+
+                <h3>Motivation</h3>
+                In inverse transform sampling, we directly sample from a uniform distribution and use the inverse of the CDF to get samples from a target distribution. This works well when the CDF is known and easily invertible, which isn't always the case. 
+
+
+                <h3>Algorithm</h3>
+
+                <h4>Choice of Sampling Distribution</h4>
+                Choose a distribution \(g(x)\) from which it is easy to sample and whose pdf dominates the target distribution \(f(x)\) when multiplied by a constant M. 
+
+                $$f(x)\leq Mg(x)\quad \forall x$$
+
+                We then draw a candidate sample \(x^{\star}\) from \(g(x)\)
+
+                <h4>Acceptance Ratio</h4>
+
+                Imagine you drew a vertical line at \(x^{\star}\) starting at y=0 all the way up to \(y=Mg(x)\). Now, pick a random point on that line, which we will call \(y=y^{\star}\). 
+                What is the probability that \(y^\star\leq f(x^\star)\)?
+
+                $$P(y^{\star} \leq f(x^\star))=P(U(0,Mg(x^\star))\leq f(x^\star))=\frac{f(x^\star)}{Mg(x^\star)}$$
+
+                Thus, we have our acceptance rate.
+
+                <h4>Accept or Reject</h4>
+                Now, generate a uniform random variable \(u\sim U(0,1)\). If \(u\leq \frac{f(x^\star)}{Mg(x^\star)}\), accept the sample; otherwise, reject it and draw another value of \(x^\star\) from \(g(x)\). As an easy example, if \(x^\star\) is outside of F's support, the acceptance rate is 0, and you would reject it, which is intuitive. 
+                
+
+                <h3>Advantages</h3>
+                <ul>
+                    <li>Simple to implement</li>
+                    <li>Doesn't require calculation of quantile function of CDF</li>
+                </ul>
+
+                <h3>Disadvantages</h3>
+                <ul>
+                    <li>Since the acceptance rate depends on the choice of distribution, if we have a mismatch of distributions, there can be low acceptance rates. This causes many cycles of the algorithm before a sample is generated. This can become very inefficient.</li>
+                    
+                </ul>
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Copula Practice Problems</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
