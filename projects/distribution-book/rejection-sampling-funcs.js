@@ -5,6 +5,9 @@ let alpha = 2;
     let acceptedSamples = 0;
     let numberOfBins = 10;  // Default number of bins
     let samples = [];
+    let sampleMarkerSize = window.innerWidth < 600 ? 2 : 5;  // Smaller size for mobile screens
+
+
 
     const targetDistribution = (x, alpha, beta) => (Math.pow(x, alpha - 1) * Math.pow(1 - x, beta - 1)) / betaFunction(alpha, beta);  // Beta distribution
     const proposalDistribution = (x) => 1;  // Uniform distribution
@@ -63,7 +66,7 @@ let alpha = 2;
                 backgroundColor: '#0000FF10'
             },
             { 
-                label: 'Proposal Distribution (Uniform scaled by value at mode)', 
+                label: 'Proposal Distribution (Uniform)', 
                 data: [], 
                 borderColor: 'orange', 
                 fill: false, 
@@ -75,13 +78,15 @@ let alpha = 2;
                 label: 'Accepted Samples', 
                 data: [], 
                 pointBackgroundColor: 'green', 
-                showLine: false 
+                showLine: false,
+                pointRadius: sampleMarkerSize,
             },
             { 
                 label: 'Rejected Samples', 
                 data: [], 
                 pointBackgroundColor: 'red', 
-                showLine: false 
+                showLine: false,
+                pointRadius: sampleMarkerSize,
             }
         ]
     };
