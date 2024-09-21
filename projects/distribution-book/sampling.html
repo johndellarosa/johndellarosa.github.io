@@ -157,15 +157,46 @@
                     
                 </ul>
 
+                <h3>Ziggurat Algorithm</h3>
 
+                <h4>Introduction</h4>
+                The Ziggurat algorithm is a type of rejection sampling that can be used for unimodal symmetric or monotonically decreasing pdfs. 
+                These assumptions about the target distribution allow it to be more efficients. 
+                It achieves high efficiency by dividing the probability density function (PDF) of the target distribution into horizontal layers or rectangles. Most samples are drawn directly from these rectangles, which speeds up the process. Only a small percentage of samples require further computation, significantly reducing the number of expensive evaluations (like computing exponentials or logarithms) compared to traditional methods like inverse transform or rejection sampling.
+
+
+
+                <br><br>
+                Examples of distributions it would be appropriate for are Gaussian and Expoential distributions. 
                 
 
+                <h4>Algorithm</h4>
 
+                <h5>Precompute Rectangles</h5>
+                <ul>
+                    <li>The target PDF (e.g., normal or exponential) is divided into a series of horizontal rectangles.</li>
+                    <li>Each rectangle is constructed to have an equal area, with the width and height determined by the distribution’s properties.</li>
+                    <li>Precompute values like the height, width, and cumulative areas of these rectangles. These values are stored for quick lookup during sampling.</li>
+                
+                </ul>
 
+                <h5>Sampling</h5>
+                <ul>
+                    <li>A random rectangle is chosen based on the precomputed areas. This random choice is efficient since the areas are equal.</li>
+                    <li>Next, a random point is generated inside the chosen rectangle, with both x (horizontal) and y (vertical) coordinates being uniformly sampled.</li>
+                
+                </ul>
 
+                <h5>Acceptance Check</h5>
+                <ul>
+                    <li>If the random point lies completely inside the rectangle and under the PDF curve, the sample is immediately accepted.</li>
+                    <li>If the point is in the uppermost rectangle, additional checks are required because this top rectangle exceeds the actual PDF curve in height. A more detailed evaluation of the PDF value is done to determine if the point is valid.</li>
+                </ul>
 
+                <h5>If Acceptance Fails</h5>
+                If the point fails the acceptance check (i.e., it lies outside the PDF curve in the uppermost rectangle), it is rejected, and the process repeats with another random point. Most points are accepted after one or two attempts, but even in cases of rejection, the algorithm is still faster than others like inverse transform sampling due to the minimal number of function evaluations required.
 
-
+                
                 </div>
 
 

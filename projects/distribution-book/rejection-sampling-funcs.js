@@ -5,7 +5,8 @@ let alpha = 2;
     let acceptedSamples = 0;
     let numberOfBins = 10;  // Default number of bins
     let samples = [];
-    let sampleMarkerSize = window.innerWidth < 600 ? 2 : 5;  // Smaller size for mobile screens
+    let sampleMarkerSize = window.innerWidth < 600 ? 1 : 3;  // Smaller size for mobile screens
+    let showLegend = window.innerWidth < 600 ? false : true;  // Smaller size for mobile screens
 
 
 
@@ -109,6 +110,11 @@ let alpha = 2;
         type: 'scatter',
         data: data,
         options: {
+            plugins: {
+                legend: {
+                    display: true,
+
+                }},
             scales: {
                 x: { type: 'linear', position: 'bottom', min: 0, max: maxRange },
                 y: { min: 0, max: 3 }  // Adjust for the scaled proposal distribution
@@ -121,6 +127,11 @@ let alpha = 2;
         type: 'bar',
         data: histogramData,
         options: {
+            plugins: {
+                legend: {
+                    display: showLegend,
+
+                }},
             scales: {
                 x: { title: { display: true, text: 'X values' } },
                 y: { beginAtZero: true, title: { display: true, text: 'Frequency' } }
