@@ -302,6 +302,7 @@
                 where \(\alpha>0\) is the shape parameter, \(\mu\) is the location parameter, and \(\beta\gt 0\) is the scale parameter. 
 
                 <h4>Weibull Distribution (\(\xi \lt 0\))</h4>
+                The Weibull distribution is used when there is a finite upper bound. 
                 $$F(x)=\begin{cases}
                 \exp\left(-(-\frac{x-\mu}{\beta})^{\alpha}\right), & x\lt\mu\\
                 1, & x \geq \mu                 
@@ -310,7 +311,31 @@
 
                 <h2>Extreme Value Theorem</h2>
                 Also known as the Fisher-Tippett-Gnedenko Theorem to not be confused with the EVT from introductory Calculus. 
-                The EVT describes the convergence of the distribution of normalized maxima to the GEV distribution. 
+                The EVT describes the asymptotic distribution of the maximum (or minimum) of a large sample of iid variables.
+
+
+                Let \(\left\{X_1,X_2,\dots,X_n\right\}\) be a sequence of iid random variables with CDF \(F_X(x)\). What is the behavior of the maximum of the sequence?
+
+                $$M_n=\max(X_1,X_2,\dots,X_n\)$$
+
+                How does \(M_n\) behave as n grows large? Does there exist a limiting distribution for the appropriately normalized maximum \(M_n\).  
+                Do there exist constants \(a_n\gt 0\) and \(b_n\in\mathbb{R}\) such that:
+
+                $$\lim_{n\rightarrow \infty}P(\frac{M_n-b_n}{a_n}\leq z)=G(x)$$
+
+                where \(G(z)\) is a non-degenerate distribution function.
+
+                <h3>Statement of the Theorem</h3>
+                The EVT states that, for a wide class of underlying distributions, the limiting distribution of the normalized maximum of a sequence of iid random variable converges to one of three possible GEV: 
+                <ul>
+                    <li>Gumbel for distributions with tails that decay faster than any power(e.g. exponential behavior)</li>
+                    <li>Frechet for distributions with heavy tails</li>
+                    <li>Weibull for distributions with finite upper bounds</li>
+                </ul>
+                These three were described above, but now their significance is given context. 
+                
+
+
 
 
                 </div>
