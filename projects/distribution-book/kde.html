@@ -234,7 +234,8 @@
                 </ol>
 
                 <h3>Building on Prior Chapters</h3>
-                In a previous chapter, we used mixture distributions to model a probability density function as a weighted sum of parametric distributions (e.g., Gaussian components). KDE is similar in that it also represents the density as a sum, but here, the sum is over non-parametric kernel functions centered at each data point. While mixture models assign each data point to a specific component, KDE essentially "spreads" each data point over the entire space using a kernel with equal weighting.
+                In a previous chapter, we used mixture distributions to model a probability density function as a weighted sum of parametric distributions (e.g., Gaussian components). KDE is similar in that it also represents the density as a sum, but here, the sum is over non-parametric kernel functions centered at each data point. While mixture models assign each data point to a specific component, KDE essentially "spreads" each data point over the entire space using a kernel with equal weighting. 
+                In some sense, it is like a mixture of mixture distributions and empirical distribution functions: placing evenly weighted mixture components at every data point. 
 
                 <br><br>
 
@@ -437,6 +438,70 @@
                     <h2>KDE Practice Problems</h2>
 
                     <ol>
+                      <li>
+                        <strong>Basic KDE Construction:</strong>
+                        <ol>
+                          <li>Explain the concept of a kernel density estimate (KDE). How does it differ from a histogram for estimating the underlying probability density function (PDF)?</li>
+                          <li>Given a sample dataset:
+                            \[
+                            \{1.0, 2.3, 2.9, 3.7, 4.1, 4.5, 5.0\}
+                            \]
+                            Calculate the KDE at \(x = 3.0\) using the Gaussian kernel and a bandwidth of \(h = 0.5\).</li>
+                        </ol>
+                      </li>
+
+                      <li>
+                        <strong>EDF for Large Datasets:</strong>
+                        <ol>
+                          <li>Discuss the computational challenges of constructing the EDF for very large datasets. What are some methods to improve the efficiency of EDF calculation for large-scale data?</li>
+                          <li>For a dataset of size \(n = 10^6\), simulate a sample from a normal distribution \(N(0, 1)\), compute the EDF, and compare the computational performance with kernel density estimation for the same dataset.</li>
+                        </ol>
+                      </li>
+
+                      <li>
+                        <strong>Bandwidth Selection:</strong>
+                        <ol>
+                          <li>Explain the role of the bandwidth parameter \(h\) in KDE. What happens when \(h\) is too small or too large?</li>
+                          <li>For the sample dataset:
+                            \[
+                            \{1.1, 2.0, 3.3, 3.9, 4.8, 5.2, 6.1\}
+                            \]
+                            Plot the KDE for different bandwidth values (\(h = 0.2, 0.5, 1.0\)) using the Gaussian kernel. Compare and describe the differences in the resulting estimates.</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Kernel Functions:</strong>
+                        <ol>
+                          <li>List and describe the commonly used kernel functions in KDE (e.g., Gaussian, Epanechnikov, Uniform). What are the advantages and disadvantages of each?</li>
+                          <li>For the dataset:
+                            \[
+                            \{0.5, 1.8, 2.2, 3.1, 4.0\}
+                            \]
+                            Compute the KDE at \(x = 2.5\) using the Epanechnikov kernel with bandwidth \(h = 0.5\).</li>
+                        </ol>
+                      </li>
+                    
+                      <li>
+                        <strong>Comparison of KDE and Histograms:</strong>
+                        <ol>
+                          <li>Given the dataset:
+                            \[
+                            \{0.8, 1.5, 2.0, 3.3, 4.2, 4.7, 5.0, 5.5\}
+                            \]
+                            Plot the histogram with a bin width of 1.0 and overlay the KDE with a Gaussian kernel and bandwidth \(h = 0.7\). Discuss the advantages and disadvantages of KDE compared to histograms in terms of smoothness and sensitivity to bin size.</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Multivariate KDE:</strong>
+                        <ol>
+                          <li>Explain how KDE can be extended to multivariate data. How does bandwidth selection differ in this case?</li>
+                          <li>For the 2D dataset:
+                            \[
+                            \{(1.0, 2.0), (2.1, 3.3), (2.5, 3.7), (3.0, 4.0), (4.1, 5.0)\}
+                            \]
+                            Calculate the KDE at \((x_1, x_2) = (2.0, 3.0)\) using the Gaussian kernel with bandwidth matrix \(H = \text{diag}(0.5, 0.5)\).</li>
+                        </ol>
+                      </li>
 
                     </ol>
     

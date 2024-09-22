@@ -356,6 +356,55 @@
                     <ol>
                       <li>Write code in your preferred language which samples from a mixture distribution that is N(0,1) with weight 0.3 and N(4,2) with weight 0.7.</li> 
                       <li>
+                        <strong>Understanding Mixture Distributions:</strong>
+                        <ol>
+                          <li>What is a mixture distribution, and how is it different from a simple distribution? Explain the concept of a mixture distribution using an example of combining two normal distributions.</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Plotting a Simple Mixture Distribution:</strong>
+                        <ol>
+                          <li>Given two normal distributions \(N(2, 1)\) and \(N(6, 1)\) with equal weights in the mixture, plot the probability density function of the mixture. What do you observe about the shape of the mixture distribution?</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Comparing Mixtures:</strong>
+                        <ol>
+                          <li>How does increasing the weight of one component in a mixture affect the overall mixture distribution? Consider the case of mixing two normal distributions with different means. Provide an example to illustrate your answer.</li>
+                        </ol>
+                      </li>
+
+                      <li>
+                        <strong>Simulating a Mixture Distribution:</strong>
+                        <ol>
+                          <li>Generate random samples from a mixture of two normal distributions with the following parameters: \(X_1 \sim N(1, 1)\) and \(X_2 \sim N(4, 1)\). The mixture proportion is 0.7 for \(X_1\) and 0.3 for \(X_2\). Simulate 1000 points and plot the histogram of the resulting mixture.</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Mixture of Exponential Distributions:</strong>
+                        <ol>
+                          <li>Consider a mixture of two exponential distributions with rate parameters \(\lambda_1 = 1\) and \(\lambda_2 = 0.5\). The mixture proportions are 0.4 for \(X_1\) and 0.6 for \(X_2\). Write down the PDF of the mixture distribution.</li>
+                          <li>What is the expected value of the mixture distribution?</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Mean of a Mixture Distribution:</strong>
+                        <ol>
+                          <li>Suppose you have two normal distributions \(X_1 \sim N(3, 1)\) and \(X_2 \sim N(7, 2)\), with mixture weights 0.3 and 0.7, respectively. Find the mean of the mixture distribution.</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Mixture of Categorical Distributions:</strong>
+                        <ol>
+                          <li>Consider a mixture of two categorical distributions with the following probability mass functions:
+                            \[
+                            P_1 = (0.1, 0.3, 0.6) \quad \text{and} \quad P_2 = (0.5, 0.3, 0.2)
+                            \]
+                            If the mixture weight for \(P_1\) is 0.4 and for \(P_2\) is 0.6, what is the probability mass function of the mixture distribution?
+                          </li>
+                        </ol>
+                      </li>
+                      <li>
                         <strong>Sampling from a Normal-Exponential Mixture Distribution</strong>
                         <p>
                             Consider a mixture distribution with two components:
@@ -386,7 +435,17 @@
                       </ol>
                       
                   </li>
-
+                  <li>
+                    <strong>Basic Definition of Mixture Distributions:</strong>
+                    <ol>
+                      <li>Suppose you have two component distributions: \(X_1 \sim N(\mu_1, \sigma_1^2)\) and \(X_2 \sim N(\mu_2, \sigma_2^2)\). The mixture distribution is given by:
+                        \[
+                        f_X(x) = p f_{X_1}(x) + (1 - p) f_{X_2}(x)
+                        \]
+                        Derive the mean and variance of the mixture distribution in terms of the means and variances of \(X_1\) and \(X_2\), as well as the mixture weight \(p\).</li>
+                      <li>If \( \mu_1 = 1 \), \( \sigma_1 = 1 \), \( \mu_2 = 4 \), and \( \sigma_2 = 2 \), compute the mixture's mean and variance for \(p = 0.3\).</li>
+                    </ol>
+                  </li>
                   <li>
                     <strong>Mixture of Three Normal Distributions</strong>
                     <p>Consider a mixture of three normal distributions with the following parameters:</p>
@@ -403,8 +462,74 @@
                     
                 </li>
                     </ol>
+
+                    <li>
+                      <strong>Mixture of Exponential Distributions:</strong>
+                      <ol>
+                        <li>Suppose a dataset is generated from a mixture of two exponential distributions with rate parameters \(\lambda_1\) and \(\lambda_2\). The mixture model is:
+                          \[
+                          f_X(x) = p \lambda_1 e^{-\lambda_1 x} + (1 - p) \lambda_2 e^{-\lambda_2 x}
+                          \]
+                          <ol>
+                            <li>Find the mean and variance of the mixture distribution in terms of \(\lambda_1\), \(\lambda_2\), and \(p\).</li>
+                            <li>Given the dataset:
+                              \[
+                              \{0.2, 0.5, 0.8, 1.1, 2.5, 2.8, 3.2, 3.5\}
+                              \]
+                              Estimate the parameters \(\lambda_1\), \(\lambda_2\), and \(p\) using the method of moments.
+                            </li>
+                          </ol>
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      <strong>Mixture of Binomial Distributions:</strong>
+                      <ol>
+                        <li>Consider a mixture of two binomial distributions, where:
+                          \[
+                          X_1 \sim \text{Binomial}(n, p_1), \quad X_2 \sim \text{Binomial}(n, p_2)
+                          \]
+                          The mixture distribution is:
+                          \[
+                          P(X = k) = p \binom{n}{k} p_1^k (1 - p_1)^{n-k} + (1 - p) \binom{n}{k} p_2^k (1 - p_2)^{n-k}
+                          \]
+                          <ol>
+                            <li>Derive the mean and variance of the mixture distribution.</li>
+                            <li>If \(n = 10\), \(p_1 = 0.3\), \(p_2 = 0.7\), and \(p = 0.4\), calculate the probability mass function for \(X\).</li>
+                          </ol>
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      <strong>Identifying Mixture Distributions from Data:</strong>
+                      <ol>
+                        <li>Given the following data:
+                          \[
+                          \{0.5, 0.7, 1.0, 1.5, 4.2, 4.5, 5.0, 5.2\}
+                          \]
+                          Assume the data comes from a mixture of two normal distributions. Estimate the parameters (means, variances, and mixing proportion) for the component distributions using the method of moments.
+                        </li>
+                      </ol>
+                    </li>
     
-    
+                    <li>
+                      <strong>Mixture of Poisson Distributions:</strong>
+                      <ol>
+                        <li>Suppose you have a mixture of two Poisson distributions:
+                          \[
+                          X_1 \sim \text{Poisson}(\lambda_1), \quad X_2 \sim \text{Poisson}(\lambda_2)
+                          \]
+                          The mixture is defined as:
+                          \[
+                          P(X = k) = p \frac{\lambda_1^k e^{-\lambda_1}}{k!} + (1 - p) \frac{\lambda_2^k e^{-\lambda_2}}{k!}
+                          \]
+                          <ol>
+                            <li>Derive the mean and variance of the mixture distribution.</li>
+                            <li>If \(\lambda_1 = 3\), \(\lambda_2 = 7\), and \(p = 0.6\), compute the probability that \(X = 4\).</li>
+                          </ol>
+                        </li>
+                      </ol>
+                    </li>
                 </div>
         </div>
         <script>

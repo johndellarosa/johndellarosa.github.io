@@ -86,8 +86,42 @@
                 <br><br>
                 As \(n\rightarrow\infty\), the EDF converges to the true CDF of the population by the Glivenko-Cantelli theorem. Thus, the EDF is a consistent estimator for the CDF. 
 
+                
+
+                <h2>Empirical Process</h2>
+
+                <h3>Definition</h3>
+
+                An empirical process captures deviations of the empirical distribution from the true distribution by focusing on the centered and scaled version:
+
+                $$a_n(x)=\sqrt{n}(F_n(x)-F(x))$$
+                Here, \(a_n(x)\) represents how much the empirical distribution at point x deviates from the true distribution \(F(x)\), and the scaling factor \(\sqrt{n}\) ensures convergence to a non-degenerate process as \(n\rightarrow\infty]\) (Remember that we would have convergence in not scaled by the Glivenko-Cantelli theorem). 
+
+                <h3>Donsker's Theorem</h3>
+
+                Donkster's Theorem states that an empirical process \(a_n(x)\) converges weakly to a limiting Gaussian process, called the Brownian Bridge. 
+
+                <br><br>
+
+                A Brownian Bridge, \(B(t)\),  is a continuous-time stochastic process that starts at zero and returns to zero at the end of the interval, with some properties of a Brownian motion but conditioned to return to zero. 
+
+                The Brownian Bridge is defined over the interval [0,1] as:
+
+                $$B(t)=W(t)-tW(1)$$
+                where \(W(t)\) is standard Brownian motion. 
+                <br><br>
+
+                <figure>
+                    <img src="./brownian-bridge.gif" alt="Brownian Bridge" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+                    <figcaption>Brownian Bridges</figcaption>
+                </figure>
+
+                Thus;
+
+                $$a_n(x)\overset{d}{\rightarrow} B(x)=W(F(x))-F(x)W(1)$$
+
                 <h3>Usage</h3>
-                One of the main usages of the EDF is performing goodness-of-fit tests, such as the Kolmogorov-Smirnov (KS) test, where the null hypothesis is that the sample comes from a specified distribution (or in the two-sample case, that two EDFs share a common distribution). 
+                One of the main usages of the EDF and empirical processes is performing goodness-of-fit tests, such as the Kolmogorov-Smirnov (KS) test, where the null hypothesis is that the sample comes from a specified distribution (or in the two-sample case, that two EDFs share a common distribution). 
                 The KS test essentially looks at the biggest absolute difference between the EDF and the distribution of the null hypothesis over the whole support. Formally, we write this as:
 
                 $$D_n=\sup_n\left|F_n(x)-F(x)\right|$$
@@ -104,24 +138,23 @@
 
                 <br><br>
                 But let's think of samples where the null hypothesis is true and thus we don't worry about the above. 
-                The EDF and the CDF would both be 0 at L and 1 at U, meaning that the absolute difference is 0 for both locations. However, they can vary in the middle. This shape is known as a Brownian Bridge. 
-
-                A Brownian Bridge, \(B(t)\),  is a continuous-time stochastic process that starts at zero and returns to zero at the end of the interval, with some properties of a Brownian motion but conditioned to return to zero. 
-
-                The Brownian Bridge is defined over the interval [0,1] as:
-
-                $$B(t)=W(t)-tW(1)$$
-                where \(W(t)\) is standard Brownian motion. 
-                <br><br>
-                The KS test statistic is asymptotically distributed as the supremum of the absolute value of the Brownian Bridge. The KS test tends to be more sensitive to deviations around the median, but less so at the tails, since the supremum being at the tail would imply a very unlikely sample. 
-
-                <figure>
-                    <img src="./brownian-bridge.gif" alt="Brownian Bridge" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
-                    <figcaption>Brownian Bridges</figcaption>
-                </figure>
+                The EDF and the CDF would both be 0 at L and 1 at U, meaning that the absolute difference is 0 for both locations. However, they can vary in the middle.                 The KS test statistic is asymptotically distributed as the supremum of the absolute value of the Brownian Bridge. The KS test tends to be more sensitive to deviations around the median, but less so at the tails, since the supremum being at the tail would imply a very unlikely sample. 
 
 
-                <h3>Confidence Bands</h3>
+                <h4>Cramer-von Mises</h4>
+
+                $$\omega^2=n\int_{-\infty}^{\infty}(F_n(x)-F(x))^2dF(x)$$
+
+                The Cramér-von Mises statistic is a distribution-free measure, meaning that its distribution under the null hypothesis is independent from the form of F. 
+                . It is especially useful for detecting deviations that occur uniformly across the distribution, but it is less sensitive to differences in the tails. 
+
+                <h4>Anderson Darling Distance</h4>
+                The Anderson-Darling distance improves on the Cramér-von Mises statistic by giving more weight to observations in the tails of the distribution, where deviations from the theoretical CDF are often more critical. The Anderson-Darling distance is defined as:
+
+                $$A^2=n\int_{-\infty}^{\infty}\frac{(F_n(x)-F(x))^2}{F(x)(1-F(x))}dF(x)$$
+
+
+                <h2>Confidence Bands</h2>
                 Confidence Bands are analogous to confidence intervals but extend over an entire range of values rather than at a single point. 
 
                 Several methods exist to construct confidence bands for the EDF. The most prominent among them include the Dvoretzky-Kiefer-Wolfowitz (DKW) Inequality, Kolmogorov-Based Bands, and Bootstrap Methods. 
@@ -172,7 +205,81 @@
                     <h2>Empirical Distribution Function Practice Problems</h2>
                     <ol>
                         
-                        </ol>
+                        <li>
+                            <strong>Definition of the Empirical Distribution Function (EDF):</strong>
+                            <ol>
+                              <li>Explain what the empirical distribution function (EDF) is. Given a sample dataset \(\{x_1, x_2, \dots, x_n\}\), write down the formula for the EDF, \(F_n(x)\).</li>
+                              <li>For the dataset:
+                                \[
+                                \{1.2, 2.3, 2.9, 4.5, 5.1\}
+                                \]
+                                Calculate the empirical distribution function \(F_n(x)\) at \(x = 3.0\), \(x = 4.5\), and \(x = 6.0\).</li>
+                            </ol>
+                          </li>
+                        
+                          <li>
+                            <strong>Glivenko-Cantelli Theorem:</strong>
+                            <ol>
+                              <li>State the Glivenko-Cantelli theorem and explain its significance in the context of empirical distribution functions.</li>
+                              <li>Using the same dataset:
+                                \[
+                                \{1.2, 1.5, 2.0, 2.5, 3.0, 4.0, 4.8, 5.5\}
+                                \]
+                                Simulate 1000 samples from a normal distribution \(N(3, 1^2)\) and compute the maximum difference between the EDF and the true CDF. Plot the EDF and the CDF on the same graph.</li>
+                            </ol>
+                          </li>
+
+                          <li>
+                            <strong>Kolmogorov-Smirnov Test:</strong>
+                            <ol>
+                              <li>Describe the Kolmogorov-Smirnov (KS) test and its use in comparing an empirical distribution to a theoretical distribution. What is the test statistic for the KS test?</li>
+                              <li>Perform the KS test for the dataset:
+                                \[
+                                \{1.3, 2.1, 3.2, 4.5, 5.7, 6.0, 6.3, 7.2\}
+                                \]
+                                against a theoretical exponential distribution with rate parameter \(\lambda = 0.5\). Compute the KS test statistic and interpret the result.</li>
+                            </ol>
+                          </li>
+
+                          <li>
+                            <strong>Confidence Bands for the EDF:</strong>
+                            <ol>
+                              <li>What are confidence bands for the EDF? How are they constructed using the Dvoretzky-Kiefer-Wolfowitz (DKW) inequality?</li>
+                              <li>Given the dataset:
+                                \[
+                                \{1.0, 1.7, 2.4, 2.8, 3.6, 4.9, 5.0\}
+                                \]
+                                Construct the \(95\%\) confidence bands for the EDF and plot them alongside the EDF.</li>
+                            </ol>
+                          </li>
+
+                          <li>
+                            <strong>Applications of the EDF:</strong>
+                            <ol>
+                              <li>Explain how the EDF can be used in non-parametric statistics for hypothesis testing and distribution fitting.</li>
+                              <li>Use the EDF to test whether the following dataset comes from a uniform distribution:
+                                \[
+                                \{0.1, 0.3, 0.4, 0.6, 0.8, 0.9, 1.0\}
+                                \]
+                                Perform a goodness-of-fit test and interpret the results.</li>
+                            </ol>
+                          </li>
+                          <li>
+                            <strong>EDF for Multivariate Data:</strong>
+                            <ol>
+                              <li>Explain how the empirical distribution function can be extended to multivariate data. What are the challenges associated with defining a multivariate EDF?</li>
+                              <li>For the 2D dataset:
+                                \[
+                                \{(1.0, 2.0), (2.3, 3.5), (3.1, 4.7), (4.0, 5.0)\}
+                                \]
+                                Compute the empirical cumulative distribution for each point and plot the results.</li>
+                            </ol>
+                          </li>
+                        
+                          
+
+
+                    </ol>
     
     
                 </div>

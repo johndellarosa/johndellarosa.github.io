@@ -319,8 +319,49 @@
                 <div id="Exercises">
                     <h2>Compound Poisson Distribution Practice Problems</h2>
                     <ol>
-                        
+                    
+                      <li>
+                        <strong>Mean and Variance of Compound Poisson Distribution:</strong>
+                        <ol>
+                          <li>Given \( N(t) \sim \text{Poisson}(\lambda t) \) and \( X_i \) drawn from a distribution with mean \( \mu \) and variance \( \sigma^2 \), derive the mean and variance of the compound Poisson process \( S(t) \).</li>
+                          <li>If \( X_i \) follows an exponential distribution with rate parameter \(\theta\), compute the mean and variance of \( S(t) \).</li>
                         </ol>
+                      </li>
+                      <li>
+                        <strong>Simulation of a Compound Poisson Process:</strong>
+                        <ol>
+                          <li>Write a Python (or R, MATLAB) program to simulate a compound Poisson process where the number of events \( N(t) \) follows \( \text{Poisson}(5) \), and the event sizes \( X_i \) are drawn from a normal distribution \( N(3, 1^2) \). Simulate 1000 realizations of the process and plot the resulting histogram of \( S(t) \).</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Fitting a Compound Poisson Distribution:</strong>
+                        <ol>
+                          <li>Suppose you observe data that you believe follows a compound Poisson distribution with unknown parameters. How would you estimate the parameters \( \lambda \), \( \mu \), and \( \sigma^2 \) using the method of moments?</li>
+                          <li>Given the following data:
+                            \[
+                            \{2.0, 4.1, 5.3, 7.8, 3.9, 6.2, 8.1, 5.5\}
+                            \]
+                            Fit a compound Poisson distribution assuming the event sizes follow a gamma distribution with shape parameter \( \alpha = 2 \) and scale parameter \( \beta = 1 \).</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Compound Poisson with Different Secondary Distributions:</strong>
+                        <ol>
+                          <li>Explain how the choice of the secondary distribution \( X_i \) affects the overall behavior of the compound Poisson process. Compare the effects of using a gamma distribution versus a normal distribution for \( X_i \).</li>
+                          <li>For \( X_i \sim \text{Gamma}(2, 1) \), derive the mean and variance of the compound Poisson process \( S(t) \). How do these moments compare to using a normal distribution for \( X_i \)?</li>
+                        </ol>
+                      </li>
+                      <li>
+                        <strong>Compound Poisson as a Limit of Discrete-Time Processes:</strong>
+                        <ol>
+                          <li>Explain how a compound Poisson process can be viewed as the limit of a discrete-time process. Specifically, consider a sequence of Bernoulli trials with success probability \( p_n \) and event sizes \( X_i \). Show that as \( n \to \infty \) and \( p_n \to 0 \), the sum of these trials converges to a compound Poisson distribution.</li>
+                        </ol>
+                      </li>
+
+
+
+
+                    </ol>
     
     
                 </div>
