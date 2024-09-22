@@ -270,78 +270,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Plot function with better axis range handling
-function plotCompoundDistribution(data, numBins, xMin, xMax, yMin, yMax) {
-    const ctx = document.getElementById('compoundChart').getContext('2d');
-
-    if (window.compoundChart instanceof Chart) {
-        window.compoundChart.destroy();
-    }
-
-    const histData = createHistogram(data, numBins); // Use the user-defined number of bins
-
-    // Parse axis range inputs and fallback to automatic ranges if left blank or invalid
-    const xMinValue = isNaN(xMin) || xMin === '' ? undefined : xMin;
-    const xMaxValue = isNaN(xMax) || xMax === '' ? undefined : xMax;
-    const yMinValue = isNaN(yMin) || yMin === '' ? undefined : yMin;
-    const yMaxValue = isNaN(yMax) || yMax === '' ? undefined : yMax;
-
-    window.compoundChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: histData.labels,
-            datasets: [{
-                label: 'Compound Distribution',
-                data: histData.values,
-                backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                borderColor: 'rgba(0, 123, 255, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    min: xMinValue,
-                    max: xMaxValue,
-                    title: {
-                        display: true,
-                        text: 'Value'
-                    },
-                    ticks: {
-                        callback: function(value) {
-                            return value.toFixed(3);  // Round x-axis ticks
+    function plotCompoundDistribution(data, numBins, xMin, xMax, yMin, yMax) {
+        const ctx = document.getElementById('compoundChart').getContext('2d');
+    
+        if (window.compoundChart instanceof Chart) {
+            window.compoundChart.destroy();
+        }
+    
+        const histData = createHistogram(data, numBins); // Generate histogram data
+    
+        // Parse axis range inputs and fallback to automatic ranges if left blank or invalid
+        const xMinValue = isNaN(xMin) || xMin === '' ? undefined : xMin;
+        const xMaxValue = isNaN(xMax) || xMax === '' ? undefined : xMax;
+        const yMinValue = isNaN(yMin) || yMin === '' ? undefined : yMin;
+        const yMaxValue = isNaN(yMax) || yMax === '' ? undefined : yMax;
+    
+        window.compoundChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: 'Compound Distribution',
+                    data: histData.data, // Use the histogram data with x and y properties
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1,
+                    barPercentage: 1.0,
+                    categoryPercentage: 1.0,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear', // Set x-axis type to 'linear' for numerical values
+                        min: xMinValue,
+                        max: xMaxValue,
+                        title: {
+                            display: true,
+                            text: 'Value'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toFixed(3);
+                            }
                         }
-                    }
-                },
-                y: {
-                    min: yMinValue,
-                    max: yMaxValue,
-                    title: {
-                        display: true,
-                        text: 'Frequency'
+                    },
+                    y: {
+                        min: yMinValue,
+                        max: yMaxValue,
+                        title: {
+                            display: true,
+                            text: 'Frequency'
+                        }
                     }
                 }
             }
-        }
-    });
-}
-    
-    function createHistogram(data, bins) {
-        const min = Math.min(...data);
-        const max = Math.max(...data);
-        const binWidth = (max === min) ? 1 : (max - min) / bins; // Prevent division by zero when min == max
-        const histogram = Array(bins).fill(0);
-    
-        data.forEach(value => {
-            const bin = Math.floor((value - min) / binWidth);
-            if (bin >= 0 && bin < bins) {
-                histogram[bin]++;
-            }
         });
-    
-        const labels = Array(bins).fill().map((_, i) => (min + i * binWidth).toFixed(2));
-        return { labels, values: histogram };
     }
+    
+function createHistogram(data, bins) {
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const binWidth = (max === min) ? 1 : (max - min) / bins; // Prevent division by zero when min == max
+    const histogram = Array(bins).fill(0);
+
+    data.forEach(value => {
+        let bin = Math.floor((value - min) / binWidth);
+        if (bin < 0) bin = 0;
+        if (bin >= bins) bin = bins - 1;
+        histogram[bin]++;
+    });
+
+
+    // Calculate bin centers
+    const binCenters = Array(bins).fill().map((_, i) => min + (i + 0.5) * binWidth);
+
+    // Create data array with x (bin center) and y (frequency)
+    const histogramData = binCenters.map((center, i) => ({ x: center, y: histogram[i] }));
+
+    return { data: histogramData };
+}
 
     // Function to export the generated data as a CSV file
 function exportData() {

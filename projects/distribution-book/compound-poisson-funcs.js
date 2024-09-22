@@ -174,6 +174,8 @@ function plotCompoundDistribution(data) {
             responsive: true,
             scales: {
                 x: {
+                    type: 'linear', // Set x-axis type to 'linear' for numerical values
+                        
                     title: {
                         display: true,
                         text: 'Value'
