@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Goodness of Fit</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="GLM, Generalized Linear Models">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Goodness-of-Fit for Distributions and Distributional Forecasts. ">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/scoring-rules"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="generalized-linear-models">
+                <h1>Goodness of Fit</h1>
+
+                <h2>Introduction</h2>
+
+                In prior chapters, we have looked at goodness of fit, moreso in the context of using it to fit parameters; e.g., likelihood and MLE. This chapter will focus more on it for its own sake rather than a means to an end. This will be written more from an applied, modeling perspective rather than a theoretical one. 
+
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./../biophysics-book/statistics">Introduction to Multivariate Distributions</a></li>
+                    <li><a href="./empirical-distribution.html">Empirical Distributions</a></li>
+
+                </ol>
+
+                <h2>Empirical Proccess</h2>
+
+                In the <a href="./empirical-distribution.html">Empirical Distribution Chapter</a>, we covered some goodness-of-fit metrics that come from the empirical process, specifically Kolmogorov-Smirnov, Cramer-von Mises, and Anderson-Darling. 
+                These are used to assess closeness of distributional fit. For more information, see that chapter. 
+
+
+
+                <h2>Scoring Rules</h2>
+                
+
+
+                <h3>Description</h3>
+                Scoring rules are used to evaluate how well probabilistic forecasts capture the uncertainty of the predictions. A proper scoring rule is one that is minimized when the forecasted probability distribution matches the true distribution. Scoring rules penalize poor forecasts, rewarding forecasts that are both sharp (concentrated) and well-calibrated (match the observed outcomes).
+
+
+                <h3>Examples</h3>
+
+                <h4>Log Score</h4>
+
+                The logarithmic score, or log score, is one of the most commonly used proper scoring rules. It evaluates how likely the forecasted distribution considers the actual observed outcome. 
+                For a probability distribution P and observation x, the log score is:
+
+                $$\text{Log Score}=\log P(x)$$
+                The smaller the log score, the better the forecast. The log score heavily penalizes forecasts that assign very low probabilities to the observed outcome. 
+
+                <h4>Brier Score</h4>
+
+                The Brier score can be used to assess the accuracy of probabilistic forecasts in binar classification settings. For a probabilitistic forecast \(p_i\) for even i and the corresponding outcome \(o_i\) which is 1 if an event occured and 0 otherwise, the Brier score is given by:
+
+                $$\text{Brier Score}=\frac{1}{n}\sum_{i=1}^{n}(p_i-o_i)^2$$
+
+                This is similar to MSE for continuous response variables. 
+
+                <h4>Continuous Ranked Probability Score</h4>
+                The Continuous Ranked Probability Score (CRPS) generalizes the Brier score to continuous outcomes. It measures the distance between the forecasted cumulative distribution function (CDF) \(F\) and the observed value \(x\). The CRPS is defined as:
+
+                $$CRPS(F,x)=\int_{-\infty}^{\infty}(F(y)-\mathbb{I}_{y\geq x})^2dy$$
+
+                where \(\mathbb{I}\) is the indicator function. Like the Brier score, smaller values of CRPS indicate better forecasts. 
+
+
+
+                
+                <h2>Categories of Metrics</h2>
+                <h3>Calibration</h3>
+                Calibration refers to how well the predicted probabilities match the actual outcomes. This is similar to the notion of bias. 
+                <h3>Sharpness</h3>
+                Sharpness measures how concentrated or "sharp" the forecasted distribution is. A sharp forecast is one that makes confident predictions, i.e., the distribution is concentrated around certain values. Sharpness does not assess the correctness of the predictions but focuses on the model’s confidence. 
+            
+            
+            
+            </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Goodness-of-Fit Practice Problems</h2>
+
+                    <ol>
+
+                    </ol>
+    
+    
+                </div>
+
+                <div id="Suggested-Reading">
+                    <h2>Further Reading</h2>
+
+
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
