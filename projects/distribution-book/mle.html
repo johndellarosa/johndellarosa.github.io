@@ -144,6 +144,72 @@
         width: 100%; /* Full width inputs for easier access */
     }
 }
+
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .comparison-table {
+    width: 80%;
+    max-width: 900px;
+    border-collapse: collapse;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .comparison-table thead tr {
+    background-color: #72A0C1;
+    color: white;
+    text-align: left;
+    font-size: 18px;
+    /* font-weight: bold; */
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .comparison-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .comparison-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .comparison-table td {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Add smooth transition effect */
+  .comparison-table tbody tr:hover td {
+    transition: background-color 0.3s ease;
+  }
+
+  /* Add some padding to the top and bottom */
+  h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .table-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
 </style>
 
 
@@ -189,48 +255,7 @@
                 $$L(\theta|x_1,x_2,\dots,x_n)=\prod_{i=1}^{n}f(x_i|\theta)$$
                 The likelihood function measures how probable the observed data is for different values of \(\theta\). This is in contrast to the PDF/PMF which talks about probability of a given data point over its support. With MLE, your axis is the possible values of the <b>parameter(s)</b> for a given set of observations.
 
-                <h3>Likelihood Function Interactive Chart</h3>
-
-
-                <div class="container">
-                <label for="distributionSelect">Distribution:</label>
-                <select id="distributionSelect" onchange="updateDistributionType();">
-                    <option value="poisson">Poisson</option>
-                    <option value="exponential">Exponential</option>
-
-                </select>
-                <div id="chartContainer">
-                    <canvas id="likelihoodChart"></canvas>
-                </div>
-                <div id="controls">
-                <div>
-                    <label for="intervalsSlider">Number of Intervals:</label>
-                    <input type="range" id="intervalsSlider" min="10" max="500" value="100" step="10" oninput="updateIntervalDisplay(this.value); updateChart();">
-                    <span id="intervalsDisplay">100</span>
-                </div>
-
-                <input type="number" id="dataPoint" placeholder="Enter a data point" onchange="updateChart()" inputmode="decimal">
-                <button id="addDataButton" onclick="addDataPoint()">Add Data Point</button>
-                <div id="dataDisplay">
-                    <h3>Data Points:</h3>
-                    <div id="dataPointsList">None</div>
-                </div>
-                <button id="clearDataButton" onclick="clearDataPoints()">Clear Data</button>
                 
-            
-                <div>
-                    <label for="xMin">X-Axis Min:</label>
-                    <input type="number" id="xMin" value="0" step="0.1" inputmode="decimal">
-                    <label for="xMax">X-Axis Max:</label>
-                    <input type="number" id="xMax" value="10" step="0.1" inputmode="decimal">
-                    <button id="bounds-button" onclick="updateChart()">Set Bounds</button>
-                </div>
-                <div id="modelStats">
-                    <p id="aicValue">AIC: N/A</p>
-                    <p id="bicValue">BIC: N/A</p>
-                </div>
-            </div>
-                </div>
 
                 <h3>Log-Likelihood Function</h3>
                 The likelihood function can be unwiedly due to its multiplicative nature, especially when dealing with large samples. To simplify calculations, we often use the log-likelihood function \(l(\theta|x)\), which is the natural logarithm of the likelihood function:
@@ -258,12 +283,135 @@
 
                 $$\mathcal{I}(\theta)=\mathbb{E}[(\frac{\partial}{\partial \theta}\log L(\theta|X))^2]$$
                 
-                <h3>Estimating Parameters</h3>
+                <h3>Akaike Information Criterion</h3>
+                $$\text{AIC}=-2\log(L)+2k$$
+
+                where L is the likelihood of the model given the data and k is the number of estimated parameters in the model. The second term penalizes having a more complex model unless the benefit that the extra parameter brings outweighs that cost. 
+
+                <h3>Bayesian Information Criterion</h3>
+
+                $$\text{BIC}=-2\log(L)+k\log(n)$$
+                where L is the likelihood of the model given the data, k is the number of estimated parameters in the model, and n is the number of data points. 
+                This has a strong penalty as the value of the logarithm will be greater than 1. This makes it favor simpler models much more than AIC based selection. 
+
+                <h4>Example</h4>
+
+
+                <p>Let’s consider a simple case of fitting a regression model with different numbers of predictor variables. You fit two models:</p>
+
+                <ul>
+                <li>Model 1: Includes 3 predictors, has \(L_1 = 0.01\), and \(n = 100\).</li>
+                <li>Model 2: Includes 5 predictors, has \(L_2 = 0.02\), and \(n = 100\).</li>
+                </ul>
+
+                <h5>AIC Calculation</h5>
+                <p>For Model 1:</p>
+                \[
+                \text{AIC}_1 = -2 \log(0.01) + 2(3) = 9.21 + 6 = 15.21
+                \]
+                <p>For Model 2:</p>
+                \[
+                \text{AIC}_2 = -2 \log(0.02) + 2(5) = 7.60 + 10 = 17.60
+                \]
+                <p>Since Model 1 has the lower AIC, it is the preferred model.</p>
+
+                <h5>BIC Calculation</h5>
+                <p>For Model 1:</p>
+                \[
+                \text{BIC}_1 = -2 \log(0.01) + 3 \log(100) = 9.21 + 13.82 = 23.03
+                \]
+                <p>For Model 2:</p>
+                \[
+                \text{BIC}_2 = -2 \log(0.02) + 5 \log(100) = 7.60 + 23.03 = 30.63
+                \]
+                <p>Since Model 1 has the lower BIC, it is the preferred model.</p>
+
+
+                <h4>Comparison of AIC and BIC</h4>
+                <div class="table-container">
+                    <table class="comparison-table">
+                      <thead>
+                        <tr>
+                          <th>Feature</th>
+                          <th>AIC</th>
+                          <th>BIC</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Penalty term</td>
+                          <td>\( 2k \)</td>
+                          <td>\( k \log(n) \)</td>
+                        </tr>
+                        <tr>
+                          <td>Penalty strength</td>
+                          <td>Lower penalty for more parameters</td>
+                          <td>Stronger penalty, especially as \(n\) increases</td>
+                        </tr>
+                        <tr>
+                          <td>Model selection</td>
+                          <td>Tends to favor more complex models</td>
+                          <td>Tends to favor simpler models</td>
+                        </tr>
+                        <tr>
+                          <td>Asymptotic behavior</td>
+                          <td>Minimizes prediction error</td>
+                          <td>Consistent in selecting the true model</td>
+                        </tr>
+                        <tr>
+                          <td>Philosophy</td>
+                          <td>Predictive accuracy (minimize information loss)</td>
+                          <td>Bayesian model comparison (posterior likelihood)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                <h2>Maximum Likelihood Estimation</h2>
                 To find the Maximum Likelihood Estimates (MLEs) of the parameters \(\theta\) we solve the optimization problem:
                 $$\hat{\theta} = \arg\max_{\theta} \ell(\theta \mid x)$$
                 This involves taking the derivative of the log-likelihood function with respect to the parameters and setting it to zero:
                 $$\frac{\partial \ell(\theta \mid x)}{\partial \theta} = 0$$
             
+
+                <h3>Estimating Parameters</h3>
+
+
+                <h4>Example</h4>
+
+                <h5>Problem</h5>
+                  We have a dataset with:
+
+                  $$x_1=1,x_2=2,x_3=1.5,x_4=3,x_5=2.5$$
+
+                  Let's assume that we want to fit this data to an exponential distribution due to some prior knowledge. 
+                  <h5>Calculate Likelihood function</h5>
+                  $$f(x|\lambda)=\lambda e^{-\lambda x}$$
+
+                  The likelihood function is the product of the PDF evaluated at every datapoint for a given \(\lambda\)
+
+                  $$L(\lambda)=\prod_{i=1}^{n}f(x_i|\lambda)=\prod_{i=1}^n \lambda e^{-\lambda x_i}$$
+
+                  By the properties of exponentials, we can rewrite this as the following:
+
+                  $$L(\lambda)=\lambda^n e^{-\lambda \sum_{i=1}^n x_i}$$
+
+                  Plugging in our datapoints:
+
+                  $$L(\lambda)=\lambda^5 e^{-\lambda(1+2+1.5+3+2.5)}=\lambda^5e^{-10\lambda}$$
+
+                  <h5>Take Log-Likelihood</h5>
+
+                  $$\log L(\lambda)=5\log(\lambda)-10\lambda$$
+
+                  <h5>Differentiate and Set to 0</h5>
+                  $$\frac{d}{d\lambda} \log L(\lambda)=\frac{5}{\lambda}-10=0$$
+
+                  $$\lambda=0.5$$
+
+                  
+
                 <h3>Properties of MLE</h3>
                 <ol>
                     <li>Consistency: As the sample size n approaches infinity, the MLE converges to the true parameter values with probability 1.</li>
@@ -276,7 +424,48 @@
             </div>
 
 
+            <h2>Likelihood Function Interactive Chart</h2>
 
+
+            <div class="container">
+            <label for="distributionSelect">Distribution:</label>
+            <select id="distributionSelect" onchange="updateDistributionType();">
+                <option value="poisson">Poisson</option>
+                <option value="exponential">Exponential</option>
+
+            </select>
+            <div id="chartContainer">
+                <canvas id="likelihoodChart"></canvas>
+            </div>
+            <div id="controls">
+            <div>
+                <label for="intervalsSlider">Number of Intervals:</label>
+                <input type="range" id="intervalsSlider" min="10" max="500" value="100" step="10" oninput="updateIntervalDisplay(this.value); updateChart();">
+                <span id="intervalsDisplay">100</span>
+            </div>
+
+            <input type="number" id="dataPoint" placeholder="Enter a data point" onchange="updateChart()" inputmode="decimal">
+            <button id="addDataButton" onclick="addDataPoint()">Add Data Point</button>
+            <div id="dataDisplay">
+                <h3>Data Points:</h3>
+                <div id="dataPointsList">None</div>
+            </div>
+            <button id="clearDataButton" onclick="clearDataPoints()">Clear Data</button>
+            
+        
+            <div>
+                <label for="xMin">X-Axis Min:</label>
+                <input type="number" id="xMin" value="0" step="0.1" inputmode="decimal">
+                <label for="xMax">X-Axis Max:</label>
+                <input type="number" id="xMax" value="10" step="0.1" inputmode="decimal">
+                <button id="bounds-button" onclick="updateChart()">Set Bounds</button>
+            </div>
+            <div id="modelStats">
+                <p id="aicValue">AIC: N/A</p>
+                <p id="bicValue">BIC: N/A</p>
+            </div>
+        </div>
+            </div>
              
 
 
@@ -285,8 +474,73 @@
                 <div id="Exercises">
                     <h2>Maximum Likelihood Estimate Practice Problems</h2>
                     <ol>
-                        
-                        </ol>
+                        <li>
+
+                            <p>You fit two models to a dataset with 150 data points:</p>
+<ul>
+  <li>Model A: Includes 4 parameters and has a likelihood \(L_A = 0.03\).</li>
+  <li>Model B: Includes 6 parameters and has a likelihood \(L_B = 0.04\).</li>
+</ul>
+
+<p>Calculate the AIC and BIC for both models. Which model is preferred by AIC? Which model is preferred by BIC?</p>
+
+                        </li>
+
+                        <li>
+
+                            <p>Assume you have the following data drawn from a uniform distribution \( U(0, \theta) \), where \( \theta \) is unknown. The observed data is:</p>
+                            <ul>
+                            <li>Data: \( x_1 = 2, \, x_2 = 3, \, x_3 = 1.5, \, x_4 = 4, \, x_5 = 2.5 \)</li>
+                            </ul>
+                            <p>1. Write down the likelihood function for the unknown parameter \( \theta \).</p>
+                            <p>2. Take the log-likelihood and find the value of \( \theta \) that maximizes it.</p>
+                            <p>3. Solve for \( \theta \) to find the MLE estimate.</p>
+                        </li>
+
+
+                        <li>
+                            Given datapoints \((0.5,1.5,2,2.5,1)\) that come from an exponential distribution:
+                            <ol type="a">
+                                <li>Write down the likelihood function</li>
+                                <li>Solve for the MLE for \(\lambda\)</li>
+                            </ol>
+                        </li>
+
+
+
+                        <li><p>Suppose you have the following data points drawn from a normal distribution with unknown mean \( \mu \) and known variance \( \sigma^2 = 1 \):</p>
+                            <ul>
+                              <li>Data: \( x_1 = 2, \, x_2 = 3, \, x_3 = 2.5, \, x_4 = 4, \, x_5 = 3.5 \)</li>
+                            </ul>
+                            <p>1. Write down the likelihood function for the unknown parameter \( \mu \).</p>
+                            <p>2. Take the log-likelihood and differentiate it with respect to \( \mu \).</p>
+                            <p>3. Solve for \( \mu \) to find the MLE estimate.</p>
+                            
+                            
+                            </li>
+
+                        <li>
+                            <p>Assume you have the following data from a series of Bernoulli trials, where \( x_i \in \{0,1\} \) represents success (1) or failure (0) in a trial. The probability of success is \( p \), and you want to estimate \( p \) using MLE:</p>
+<ul>
+  <li>Data: \( x_1 = 1, \, x_2 = 0, \, x_3 = 1, \, x_4 = 1, \, x_5 = 0 \)</li>
+</ul>
+<ol type="a">
+<li>Write down the likelihood function for the unknown parameter \( p \).</li>
+<li>Take the log-likelihood and differentiate it with respect to \( p \).</li>
+<li>Solve for \( p \) to find the MLE estimate.</li>
+</ol>
+                        </li>
+                        <li>
+                            <p>Consider the following data drawn from a geometric distribution where the random variable represents the number of trials until the first success. The probability of success is \( p \), and you want to estimate \( p \) using MLE:</p>
+                            <ul>
+                                <li>Data: \( x_1 = 3, \, x_2 = 1, \, x_3 = 2, \, x_4 = 4, \, x_5 = 2 \)</li> </ul>
+                                <ol type="a">
+                                <li>Write down the likelihood function for the unknown parameter \( p \).</li>
+                                <li>Take the log-likelihood and differentiate it with respect to \( p \).</li>
+                                <li>Solve for \( p \) to find the MLE estimate.</li>
+                                </ol>
+                        </li>
+                    </ol>
     
     
                 </div>
