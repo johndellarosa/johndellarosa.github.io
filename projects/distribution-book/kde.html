@@ -291,8 +291,20 @@
                     <figcaption>T Copula at Different Rho</figcaption>
                 </figure> -->
 
+                <h3>Sampling from a KDE</h3>
 
+                If we were going to try to treat the KDE by using its formula for \(f(x)\), it would be quite unweidly. Instead, we can take advantage of how the KDE is a form of a mixture distribution, which is easy to sample from. 
 
+                <h4>Step 1: Select a Data Point</h4>
+                Randomly select one of the n data points \(X_1,X_2,\dots, X_n\) with equal probability.
+
+                <h4>Step 2: Generate Kernel Noise</h4>
+                Generate noise from the kernel distribution (e.g. Gaussian noise if you're using a Gaussian kernel), and scale it by the bandwidth h. In other words, after you've selected your data point, you can treat it like you're sampling from a regular version of the kernel's distribution, with the appropraite scaling parameter based on the bandwidth. 
+
+                <h4>Step 3: Sample from Kernel Noise</h4>
+                Sample from that created distributed about the data point from step 1. This is your KDE sample. 
+
+                
                 </div>
 
 

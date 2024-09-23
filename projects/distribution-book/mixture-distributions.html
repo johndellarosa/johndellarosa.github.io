@@ -227,12 +227,13 @@
 
                 <h2>Expectation-Maximization Algorithm</h2>
 
+                <strong>Note:</strong> The reader may want to come back to this section after reading the <a href="./marginal-likelihood.html">Marginal Likelihood</a> section. There is somewhat of a circular dependency where that chapter builds off of things that builds off of this chapter. The contents of this section remain here since they are strongly tied to mixture distributions. 
+                <br><br>
                 In the <a href="./mle.html">MLE chapter</a>, we went over the eponymous parameter estimation method. We will now build on that in the context of Mixture Distributions with something called the Expectation-Maximization Algorithm.
 
                 The Expectation-Maximization (EM) algorithm is a powerful iterative method for estimating parameters in statistical models, particularly in cases where the data is incomplete or has a latent variable structure. It is widely used in a variety of applications such as clustering (e.g., Gaussian Mixture Models), missing data problems, and latent variable models. The EM algorithm alternates between two steps: the Expectation step (E-step) and the Maximization step (M-step), with the goal of finding the parameters that maximize the likelihood function. 
 
-                While the utility of this algorithm may not yet be apparently. In later chapters, we will cover problems where it is useful. 
-    
+              
                 <h4>Setup</h4>
     
                 Consider a statistical model with observed data \(X=\left\{x_1,x_2,\dots,x_n\right\}\), and unobserved (latent) variables \(Z=\left\{z_1,z_2,\dots,z_n\right\}\). The model is governed by a set of parameters \(\theta\), and we wish to estimate these parameters given only the observed data \(X\). 
@@ -397,7 +398,7 @@
                 <h5>Step 1: Select a Component Based on Weights</h5>
                 Select a Component Based on Weights: The first step is to randomly select one of the component distributions according to their weights. This step uses the weights as probabilities, so if a component has a larger weight, it is more likely to be selected.
 
-                You can think of this step as performing a weighted coin flip or drawing from a categorical distribution where each category corresponds to one of the component distributions.
+                You can think of this step as performing a weighted coin flip or drawing from a categorical distribution where each category corresponds to one of the component distributions. This is essentially a multinomial sampling with 1 trial which was covered in <a href="./sampling-discrete.html">Discrete Sampling</a>.
                 <br><br>
                 Example:
                 <ul>

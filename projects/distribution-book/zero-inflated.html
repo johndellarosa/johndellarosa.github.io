@@ -236,6 +236,19 @@
                 \end{cases}$$
                 where m is the mean of the negative binmomial distribution and r is the dispersion parameter. 
 
+                <h4>Sampling from the ZIP Model</h4>
+                Given the underlying model of the dynamics, the algorithm to sample from the ZIP is fairly intuitive.
+
+                <h5>Step 1: Binary Zero Inflation Check</h5>
+
+                Generate a Bernoulli random variable Z with succcess probability \(\pi\). If Z=1, the sampled value is 0 (i.e., a zero-inflated observation). 
+                <br><br>
+                If Z=0, proceed to Step 2.
+
+
+                <h5>Step 2: Sample from Normal Version of Poisson</h5>
+                If Z=0, draw a sample from a Poisson distribution with rate \(\lambda\).
+
 
 
                 <h2>Hurdle Models</h2>

@@ -232,6 +232,20 @@
                 If \(X_i=c\), then \(S\sim c\times N\).
 
 
+
+                <h3>Sampling from a Compound Poisson</h3>
+
+                The steps for sampling from a Compound Poisson distribution are fairly intuitive given the construction of the dynamics:
+
+                <h4>Poisson Sampling</h4>
+                First, sample \(N\sim \text{Po}(\lambda\)), where N is the number events occuring in a given time period. 
+
+                <h4>Secondary Distribution Sampling</h4>
+
+                Sample the secondary distribution N times. Sum them together:
+
+                $$Y=\sum_{i=1}^{N}X_i$$
+
                 <h3>Estimation of Parameters</h3>
 
                 For a Compound Poisson distribution, you now have the rate parameter from the Poisson distribution, as well as the parameter(s) for X. This can prove to make estimation tricky. 
@@ -246,18 +260,41 @@
                 <br><br>
                 In practice, this is difficult since there may be mutliple ways to get a given value of s. Compound Poisson PMFs or PDFs are often written as infinite sums
 
+
+                $$L(\lambda,\theta)=\prod_{i=1}^n\sum_{N=0}^\infty \left(\frac{e^{-\lambda}\lambda^N}{N!}\prod_{j=1}^Nf_{X}(y_{ij}|\theta)\right)$$
+
+                This is not a particularly nice equation to have to manipulate.
+
                 <h4>Method of Moments</h4>
                 Another parameter estimation method we talked about in a previous chapter is <a href="./method-of-moments.html">the method of moments</a>. 
 
+
+                The Compound Poisson distribution has a moment-generating function given by:
+
+                $$M_Y(t)=\exp\left(M_{X_{i}}(t)-1\right)$$
+
+                From this, moments of the compound distribution can be calculated using the relationship:
+
+                $$m_n=\mathbb{E}[Y^n]=M_{Y}^{(n)}(0)=\frac{d^nM_Y}{dt^n}|_{t=0}$$
+
                 The first two moments of the Compound Distribution are:
 
-                $$\mathbb{E}[S]=\lambda\mu_X$$
-                $$\text{Var}(S)=\lambda(\sigma_X^2+\mu_X^2)$$
+                $$\mathbb{E}[S]=\lambda\mathbb{E}[X]$$
+                $$\text{Var}(S)=\lambda(\text{Var}(X)+\mathbb{E}[X]^2)$$
+                $$\text{Skew}(Y)=\frac{1}{\sqrt{\lambda}}\frac{E[(X-\mathbb{E}[X])^3]}{(\text{Var(X)})^{3/2}}$$
+
+                $$\text{Kurt}(Y)=\frac{1}{\lambda}\frac{E[(X-\mathbb{E}[X])^4]}{(\text{Var(X)})^{2}}$$
+
+
 
                 Given a sample \(S_1,S_2,\dots,S_n\) the sample mean \(\hat{\mu}_S\) and sample variance \(\hat{\sigma}_S^2\) can be calculated as:
 
                 $$\hat{\mu}_S=\frac{1}{n}\sum_{i=1}^nS_i$$
                 $$\hat{\sigma}_S^2=\frac{1}{n}\sum_{i=1}^n(S_i-\hat{\mu}_S)^2$$
+
+
+                $$\hat{\mu}=\lambda\mathbb{E}[X]$$
+                $$\hat{\sigma}^2=\lambda\mathbb{E}[X^2]$$
 
 
 

@@ -94,6 +94,24 @@
 
                 $$P(X=k)={n \choose k} p^k(1-p)^{n-k};\quad k=0,1,\dots,n$$
 
+                <h3>Multinomial Distribution</h3>
+                The multinomial distribution extends the binomial distribution into more than 2 possible outcomes.
+                <br><br>
+                Let n be the total number of trials; \(p_1,p_2,\dots,p_k\) be the probabilities for the k categories such that \(\sum_{i=1}^kp_i=1\); and \(x_1,x_2,\dots,x_k\) be the number of times each category is observed, where \(\sum_{i=1}^kx_i=n\).
+
+                <br><br>
+                The probability of a particular combination is given by the multinomial PMF:
+                $$P(X_1=x_1,X_2=x_2,\dots,X_k=x_k)=\frac{n!}{x_1!x_2!\dots x_k!}p_1^{x_1}p_{2}^{x_2}\dots p_k^{x_k}$$
+
+                If you only care about one outcome of many, you essentially reduce it to a binomial case where the outcomes are desired category and any other category. Thus, the marginal distribution is given by:
+
+                $$P(X_i=x_i)={n\choose x_i}p_i^{x_i}(1-p_i)^{n-x_i}$$
+
+                This can be a useful relationship for algorithms. 
+
+
+
+
                 <h3>Geometric Distribution</h3>
                 Models the number of trials until the first success in a series of Bernoulli trials. Can be extended to the Negative Binomial Distribution. 
 
@@ -250,6 +268,36 @@ def sample_binomial_binv(n, p):
                 </pre></code>
 
 
+                <h3>Multinomial</h3>
+                
+                <h4>Naive Algorithm</h4>
+                Similar to the binomial distribution, we can just sample n times from the associated categorical distribution. 
+
+                $$P(k)=p_k$$
+
+                The categorical distribution sampling algorithm is very similar to that of the Bernoulli. The only difference is that we no longer have a single threshold. 
+
+                <h5>Generate a U(0,1)</h5>
+                Same as with the Bernoulli, we generate a realization \(U\sim \mathcal{U}(0,1)\). 
+
+                <h5>Use cumulative probability</h5>
+
+                While the Bernoulli had a threshold based on p, we have more than 3 areas that we break the line segment from 0 to 1 into. We do this based on something similar to a CDF:
+
+                $$P(C_i)=\sum_{j=1}^ip_j$$
+
+                We then output the sample based on which region it lies in. An example will make this more clear.
+
+
+                <h5>Example</h5>
+
+                Let's say we have k=3, and our p-vector is \([0.2,0.3,0.5]\). Our thresholds are 
+
+                <ul>
+                    <li>k=1 if \(0\lt U \leq 0.2)</li>
+                    <li>k=2 if \(0.2 \lt U \leq 0.5\)</li>
+                    <li>k=3 if \(U \gt 0.5\)</li>
+                </ul>
 
                 </div>
 

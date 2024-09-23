@@ -89,13 +89,21 @@
 
                 <h3>Examples</h3>
 
-                <h4>Log Score</h4>
+                <h4>Discrete Log Score</h4>
 
                 The logarithmic score, or log score, is one of the most commonly used proper scoring rules. It evaluates how likely the forecasted distribution considers the actual observed outcome. 
                 For a probability distribution P and observation x, the log score is:
 
                 $$\text{Log Score}=\log P(x)$$
-                The smaller the log score, the better the forecast. The log score heavily penalizes forecasts that assign very low probabilities to the observed outcome. 
+                The <strong>higher</strong> the <strong>discrete</strong> log score, the better the forecast. The log score heavily penalizes forecasts that assign very low probabilities to the observed outcome. 
+
+
+                <h4>Continuous Log Score</h4>
+
+                The continuous version is very similar, but with the distinction that there is a negative; thus, we want to <strong>minimize</strong> it.
+
+                $$L(D,y)=-\log(f_D(y))$$
+
 
                 <h4>Brier Score</h4>
 
@@ -110,7 +118,8 @@
 
                 $$CRPS(F,x)=\int_{-\infty}^{\infty}(F(y)-\mathbb{I}_{y\geq x})^2dy$$
 
-                where \(\mathbb{I}\) is the indicator function. Like the Brier score, smaller values of CRPS indicate better forecasts. 
+                where \(\mathbb{I}\) is the indicator function. Like the Brier score, smaller values of CRPS indicate better forecasts. Since this is a discontinuous function due to the indicator, we can break this integral into two pieces at the point \(x=y\) if evaluating by hand, or just not worry if doing things numerically. 
+                
 
 
 
