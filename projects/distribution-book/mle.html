@@ -410,7 +410,69 @@
 
                   $$\lambda=0.5$$
 
-                  
+                <h4>Example 2</h4>
+
+                <p>You are given the following data drawn from a shifted Exponential distribution:</p>
+                <ul>
+                <li>\( x_1 = 2 \), \( x_2 = 3 \), \( x_3 = 2.5 \), \( x_4 = 4 \), \( x_5 = 3.5 \)</li>
+                </ul>
+                <p>Assume that the data comes from a two-parameter Exponential distribution with unknown rate \( \lambda \) and shift \( \theta \). Use Maximum Likelihood Estimation (MLE) to estimate both \( \lambda \) and \( \theta \).</p>
+
+               
+
+                <h5>Step 1: Write Down the Likelihood Function</h5>
+                <p>The PDF of the two-parameter Exponential distribution is:</p>
+                \[
+                f(x \mid \lambda, \theta) = \lambda e^{-\lambda (x - \theta)}, \quad x \geq \theta
+                \]
+                <p>The likelihood function for \( n \) independent observations \( x_1, x_2, \dots, x_n \) is the product of the individual densities:</p>
+                \[
+                L(\lambda, \theta) = \prod_{i=1}^{n} \lambda e^{-\lambda (x_i - \theta)} = \lambda^n e^{-\lambda \sum_{i=1}^{n} (x_i - \theta)}
+                \]
+
+                
+
+                <h5>Step 2: Take the Log-Likelihood</h5>
+                <p>To simplify the maximization, take the natural logarithm of the likelihood function. The log-likelihood is:</p>
+                \[
+                \log L(\lambda, \theta) = n \log(\lambda) - \lambda \sum_{i=1}^{n} (x_i - \theta)
+                \]
+                <p>where \( n = 5 \) in this case.</p>
+
+                
+
+                <h5>Step 3: Differentiate with Respect to \( \lambda \) and Set to Zero</h5>
+                <p>First, differentiate the log-likelihood with respect to \( \lambda \) and set it equal to zero:</p>
+                \[
+                \frac{\partial}{\partial \lambda} \log L(\lambda, \theta) = \frac{n}{\lambda} - \sum_{i=1}^{n} (x_i - \theta) = 0
+                \]
+                <p>Solving for \( \lambda \) gives:</p>
+                \[
+                \lambda = \frac{n}{\sum_{i=1}^{n} (x_i - \theta)}
+                \]
+                <p>This is the MLE for \( \lambda \), given the shift parameter \( \theta \).</p>
+
+                <h5>Step 4: Differentiate with Respect to \( \theta \) and Set to Zero</h5>
+                <p>Next, differentiate the log-likelihood with respect to \( \theta \) and set it equal to zero:</p>
+                \[
+                \frac{\partial}{\partial \theta} \log L(\lambda, \theta) = \lambda n - \lambda \sum_{i=1}^{n} \frac{1}{x_i - \theta} = 0
+                \]
+                <p>However, solving for \( \theta \) here simplifies in many cases by assuming that \( \theta = \min(x_1, x_2, \dots, x_n) \), which is often the MLE for the shift parameter.</p>
+                <p>Thus, \( \hat{\theta} = \min(x_1, x_2, \dots, x_n) = 2 \).</p>
+
+
+
+                <h5>Step 5: Final Estimates</h5>
+                <p>With \( \hat{\theta} = 2 \), we can substitute this back into the equation for \( \lambda \) to find its MLE:</p>
+                \[
+                \hat{\lambda} = \frac{5}{(2 + 3 + 2.5 + 4 + 3.5) - 5 \times 2} = \frac{5}{15 - 10} = \frac{5}{5} = 1
+                \]
+                <p>Therefore, the Maximum Likelihood Estimates for the parameters are:</p>
+                <ul>
+                <li>\( \hat{\lambda} = 1 \)</li>
+                <li>\( \hat{\theta} = 2 \)</li>
+                </ul>
+
 
                 <h3>Properties of MLE</h3>
                 <ol>
