@@ -202,13 +202,24 @@ h1 {
                 where \(\bar{X}\) is the sample mean. 
 
                 <h3>Performing the Method of Moments</h3>
-                The idea behind the Method of Moments is to estimate the parameters of a probability distribution by matching the first few sample moments with their corresponding population moments. Suppose a distribution is characterized by a set of parameters \(\theta_1,\theta_2,\dots,\theta_k\). To estimate these parameters:
+                The idea behind the Method of Moments is to estimate the parameters of a probability distribution by matching the first few sample moments with their corresponding population moments. Suppose a distribution is characterized by a set of parameters \(\theta_1,\theta_2,\dots,\theta_k\). 
+
+
+                The equations that relate sample moments to the theoretical moments are called moment conditions. 
+                For a distribution parameterized by \(\theta\), let \(g(X,\theta)\) represent a moment condition. The MoM estimates \(\hat{\theta}\) by solving the moment conditions:
+
+                $$\mathbb{E}[g(X,\theta)]=0$$
+                
+                
+                To estimate these parameters:
 
                 <ol>
                     <li>Compute the first k sample moments \(m'_1,m'_2,\dots,m'_k\)</li>
-                    <li>Equate the sample moments to the corresponding population moments expressed as functions of \(\theta_1,\theta_2,\dots,\theta_k\)</li>
+                    <li>Equate the sample moments to the corresponding population moments expressed as functions of \(\theta_1,\theta_2,\dots,\theta_k\).</li>
                     <li>Solve the resulting system of equations to find estimates of the parameters.</li>
                 </ol>
+
+                
 
                 <h4>Example</h4>
                 The probability density of the gamma distribution is given by:
@@ -232,7 +243,7 @@ h1 {
 
                 Simplify and solve for \(\alpha\), then use the solution to find \(\beta\).
 
-                <h3></h3>
+                <h32>Generalized Method of Moments</h2>
 
 
                 </div>
