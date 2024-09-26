@@ -148,15 +148,16 @@
                 The Cramér-von Mises statistic is a distribution-free measure, meaning that its distribution under the null hypothesis is independent from the form of F. 
                  It is especially useful for detecting deviations that occur uniformly across the distribution, but it is less sensitive to differences in the tails. 
 
-                <figure>
-                  <img src="./empirical-process.png" alt="Empirical Process" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
-                  <figcaption>Empirical Process Statistics</figcaption>
-              </figure>
 
                 <h4>Anderson Darling Distance</h4>
                 The Anderson-Darling distance improves on the Cramér-von Mises statistic by giving more weight to observations in the tails of the distribution, where deviations from the theoretical CDF are often more critical. The Anderson-Darling distance is defined as:
 
                 $$A^2=n\int_{-\infty}^{\infty}\frac{(F_n(x)-F(x))^2}{F(x)(1-F(x))}dF(x)$$
+
+                <figure>
+                  <img src="./empirical-process.png" alt="Empirical Process" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
+                  <figcaption>Empirical Process Statistics</figcaption>
+              </figure>
 
 
                 <h2>Confidence Bands</h2>
