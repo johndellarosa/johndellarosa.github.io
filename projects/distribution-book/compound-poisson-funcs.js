@@ -17,14 +17,14 @@ function updateDiscreteParams() {
     if (discreteType === 'poisson') {
         discreteParams.innerHTML = `
             <label for="poissonLambda">Lambda (λ):</label>
-            <input type="number" id="poissonLambda" value="3">
+            <input type="number" id="poissonLambda" value="3" inputmode="decimal">
         `;
     } else if (discreteType === 'binomial') {
         discreteParams.innerHTML = `
             <label for="binomialN">n:</label>
-            <input type="number" id="binomialN" value="10">
+            <input type="number" id="binomialN" value="10" inputmode="decimal">
             <label for="binomialP">p:</label>
-            <input type="number" id="binomialP" step="0.01" value="0.5">
+            <input type="number" id="binomialP" step="0.01" value="0.5" inputmode="decimal">
         `;
     }
 }
@@ -38,21 +38,21 @@ function updateSecondaryParams() {
     if (secondaryType === 'normal') {
         secondaryParams.innerHTML = `
             <label for="normalMean">Mean (μ):</label>
-            <input type="number" id="normalMean" value="0">
+            <input type="number" id="normalMean" value="0" inputmode="decimal">
             <label for="normalVariance">Variance (σ²):</label>
-            <input type="number" id="normalVariance" value="1">
+            <input type="number" id="normalVariance" value="1" inputmode="decimal">
         `;
     } else if (secondaryType === 'exponential') {
         secondaryParams.innerHTML = `
             <label for="expLambda">Rate (λ):</label>
-            <input type="number" id="expLambda" value="1">
+            <input type="number" id="expLambda" value="1" inputmode="decimal">
         `;
     } else if (secondaryType === 'uniform') {
         secondaryParams.innerHTML = `
             <label for="uniformMin">Min:</label>
-            <input type="number" id="uniformMin" value="0">
+            <input type="number" id="uniformMin" value="0" inputmode="decimal">
             <label for="uniformMax">Max:</label>
-            <input type="number" id="uniformMax" value="1">
+            <input type="number" id="uniformMax" value="1" inputmode="decimal">
         `;
     }
 }

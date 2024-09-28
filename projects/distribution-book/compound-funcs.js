@@ -17,40 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
         if (primaryType === 'gamma') {
             primaryParams.innerHTML = `
                 <label for="gammaShape">Shape (k):</label>
-                <input type="number" id="gammaShape" value="2">
+                <input type="number" id="gammaShape" value="2" inputmode="decimal">
                 <label for="gammaRate">Rate (θ):</label>
-                <input type="number" id="gammaRate" value="2">
+                <input type="number" id="gammaRate" value="2" inputmode="decimal">
                 <p><strong>Support:</strong> (0, ∞) (All outputs will be positive)</p>
             `;
         } else if (primaryType === 'normal') {
             primaryParams.innerHTML = `
                 <label for="normalMean">Mean (μ):</label>
-                <input type="number" id="normalMean" value="0">
+                <input type="number" id="normalMean" value="0" inputmode="decimal">
                 <label for="normalVariance">Variance (σ²):</label>
-                <input type="number" id="normalVariance" value="1">
+                <input type="number" id="normalVariance" value="1" inputmode="decimal">
                 <p><strong>Support:</strong> (-∞, ∞) (Outputs can be both positive and negative)</p>
             `;
         } else if (primaryType === 'uniform') {
             primaryParams.innerHTML = `
                 <label for="uniformMin">Min:</label>
-                <input type="number" id="uniformMin" value="0">
+                <input type="number" id="uniformMin" value="0" inputmode="decimal">
                 <label for="uniformMax">Max:</label>
-                <input type="number" id="uniformMax" value="1">
+                <input type="number" id="uniformMax" value="1" inputmode="decimal">
                 <p><strong>Support:</strong> [min, max] (User-specified range)</p>
             `;
         }
         else if (primaryType === 'beta') {
             primaryParams.innerHTML = `
                 <label for="betaAlpha">Alpha (α):</label>
-                <input type="number" id="betaAlpha" value="2">
+                <input type="number" id="betaAlpha" value="2" inputmode="decimal">
                 <label for="betaBeta">Beta (β):</label>
-                <input type="number" id="betaBeta" value="2">
+                <input type="number" id="betaBeta" value="2" inputmode="decimal">
                 <p><strong>Support:</strong> (0, 1) (All outputs will be between 0 and 1)</p>
             `;
         } else if (primaryType === 'chiSquared') {
             primaryParams.innerHTML = `
                 <label for="chiDF">Degrees of Freedom (k):</label>
-                <input type="number" id="chiDF" value="2">
+                <input type="number" id="chiDF" value="2" inputmode="numeric">
                 <p><strong>Support:</strong> (0, ∞) (All outputs will be positive)</p>
             `;
         }
@@ -70,13 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             secondaryParams.innerHTML = `
             <label for="normalMean">Mean (μ):</label>
-            <input type="number" id="normalMean" value="0">
+            <input type="number" id="normalMean" value="0" inputmode="decimal">
             <p>Using variance from the primary distribution. <br> <strong>Note:</strong> Variance must be > 0.</p>
         `;
         } else if (secondaryType === 'binomial') {
             secondaryParams.innerHTML = `
             <label for="binomialN">n (number of trials):</label>
-            <input type="number" id="binomialN" value="10">
+            <input type="number" id="binomialN" value="10" inputmode="numeric">
             <p>Using probability (p) from the primary distribution. <br> <strong>Note:</strong> p must be between 0 and 1.</p>
         `;
             

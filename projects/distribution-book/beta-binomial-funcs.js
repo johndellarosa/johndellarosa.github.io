@@ -71,6 +71,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         const trials = parseInt(document.getElementById('trials').value);
         const alpha = parseFloat(document.getElementById('alpha').value);
         const beta = parseFloat(document.getElementById('beta').value);
+        const confidenceLevel = parseFloat(document.getElementById('confidence-level').value);
 
         // X-axis: range of theta (0 to 1)
         const thetaValues = [];
@@ -87,9 +88,12 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         const betaPost = trials - successes + beta;
         const posteriorData = thetaValues.map(theta => betaPDF(theta, alphaPost, betaPost));
 
+        // Compute credible intervals based on the selected confidence level
+        const lowerQuantile = (1 - confidenceLevel / 100) / 2;
+        const upperQuantile = 1 - lowerQuantile;
         // Compute credible intervals
-        const lowerCredible = jStat.beta.inv(0.025, alphaPost, betaPost);
-        const upperCredible = jStat.beta.inv(0.975, alphaPost, betaPost);
+        const lowerCredible = jStat.beta.inv(lowerQuantile, alphaPost, betaPost);
+        const upperCredible = jStat.beta.inv(upperQuantile, alphaPost, betaPost);
         const credibleIntervalData = thetaValues.map(theta => {
             if (theta >= lowerCredible && theta <= upperCredible) {
                 return betaPDF(theta, alphaPost, betaPost); // Return PDF in the credible interval
@@ -125,7 +129,8 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
     function displaySummaryStats(alphaPost, betaPost, lowerCredible, upperCredible)  {
         const posteriorMean = alphaPost / (alphaPost + betaPost);
         const posteriorVariance = (alphaPost * betaPost) / (Math.pow(alphaPost + betaPost, 2) * (alphaPost + betaPost + 1));
-        
+        const confidenceLevel = parseFloat(document.getElementById('confidence-level').value);
+    
         // Calculate the MAP estimate (Mode of Beta distribution)
         let posteriorMAP;
         if (alphaPost > 1 && betaPost > 1) {
@@ -146,6 +151,8 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         document.getElementById('posterior-variance').innerHTML = posteriorVariance.toFixed(4);
         document.getElementById('posterior-map').innerHTML = typeof posteriorMAP === "string" ? posteriorMAP : posteriorMAP.toFixed(4);
         document.getElementById('credible-interval').innerHTML = `[${lowerCredible.toFixed(4)}, ${upperCredible.toFixed(4)}]`;
+        document.getElementById('credible-percentage').innerHTML = `${confidenceLevel}% Credible Interval`;
+   
     }
 
 document.addEventListener('DOMContentLoaded', () => {

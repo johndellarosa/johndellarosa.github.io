@@ -12,16 +12,16 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
                     data: [],
                     borderColor: 'blue',
                     fill: false,
-                    pointRadius: isMobile ? 0.25:1.5,
-                    borderWidth: isMobile ? 1:2,
+                    pointRadius: isMobile ? 0.25:.1,
+                    borderWidth: isMobile ? .5:1.5,
                 },
                 {
                     label: 'Posterior Distribution',
                     data: [],
                     borderColor: 'red',
                     fill: false,
-                    pointRadius: isMobile ? 0.25:1.5,
-                    borderWidth: isMobile ? 1:2,
+                    pointRadius: isMobile ? 0.25:.1,
+                    borderWidth: isMobile ? .5:1.5,
                 },
                 {
                     label: 'Credible Interval',
@@ -69,6 +69,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         const nObservations = parseInt(document.getElementById('n-observations').value);
         const alpha = parseFloat(document.getElementById('alpha').value);
         const beta = parseFloat(document.getElementById('beta').value);
+        const confidenceLevel = parseFloat(document.getElementById('confidence-level').value);
 
         // Prior and posterior parameters
         const alphaPost = alpha + sumEvents;
@@ -83,7 +84,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
 
         // X-axis: range of lambda (0 to max value)
         const lambdaValues = [];
-        const step = 0.1;
+        const step = isMobile?0.05:0.01;
         for (let lambda = 0; lambda <= lambdaMax; lambda += step) {
             lambdaValues.push(lambda);
         }
@@ -94,9 +95,12 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         // Posterior: Gamma(alpha + sumEvents, beta + nObservations)
         const posteriorData = lambdaValues.map(lambda => jStat.gamma.pdf(lambda, alphaPost, 1 / betaPost));
 
-        // Compute credible intervals
-        const lowerCredible = jStat.gamma.inv(0.025, alphaPost, 1 / betaPost);
-        const upperCredible = jStat.gamma.inv(0.975, alphaPost, 1 / betaPost);
+        // Compute credible intervals based on the selected confidence level
+        const lowerQuantile = (1 - confidenceLevel / 100) / 2;
+        const upperQuantile = 1 - lowerQuantile;
+
+        const lowerCredible = jStat.gamma.inv(lowerQuantile, alphaPost, 1 / betaPost);
+        const upperCredible = jStat.gamma.inv(upperQuantile, alphaPost, 1 / betaPost);
         const credibleIntervalData = lambdaValues.map(lambda => {
             if (lambda >= lowerCredible && lambda <= upperCredible) {
                 return jStat.gamma.pdf(lambda, alphaPost, 1 / betaPost); // Return PDF in the credible interval
@@ -104,6 +108,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
                 return null; // Outside the credible interval
             }
         });
+
 
         // Update chart axis
         posteriorChart.options.scales.x.max = lambdaMax;
@@ -139,6 +144,8 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
     // Function to compute and display summary statistics for the posterior distribution
     function displaySummaryStats(alphaPost, betaPost, lowerCredible, upperCredible) {
         const posteriorMean = alphaPost / betaPost;
+        const confidenceLevel = parseFloat(document.getElementById('confidence-level').value);
+    
         const posteriorVariance = alphaPost / Math.pow(betaPost, 2);
         
         // Calculate the MAP estimate (Mode of Gamma distribution)
@@ -157,6 +164,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         document.getElementById('posterior-variance').innerHTML = posteriorVariance.toFixed(4);
         document.getElementById('posterior-map').innerHTML = typeof posteriorMAP === "string" ? posteriorMAP : posteriorMAP.toFixed(4);
         document.getElementById('credible-interval').innerHTML = `[${lowerCredible.toFixed(4)}, ${upperCredible.toFixed(4)}]`;
+        document.getElementById('credible-percentage').innerHTML = `${confidenceLevel}% Credible Interval`;
     }
 
 document.addEventListener('DOMContentLoaded', () => {

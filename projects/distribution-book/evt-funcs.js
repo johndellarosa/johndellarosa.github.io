@@ -44,15 +44,15 @@ function updateDistributionParameters() {
     let html = '';
     switch (distribution) {
         case 'normal':
-            html += '<label for="mean">Mean:</label> <input type="number" id="mean" value="0" step="any" onchange="onParameterChange();"><br>';
-            html += '<label for="stdDev">Standard Deviation:</label> <input type="number" id="stdDev" value="1" step="any" onchange="onParameterChange();">';
+            html += '<label for="mean">Mean:</label> <input type="number" id="mean" value="0" step="any" onchange="onParameterChange();" inputmode="decimal"><br>';
+            html += '<label for="stdDev">Standard Deviation:</label> <input type="number" id="stdDev" value="1" step="any" onchange="onParameterChange();" inputmode="decimal">';
             break;
         case 'exponential':
-            html += '<label for="lambda">Lambda (rate):</label> <input type="number" id="lambda" value="1" step="any" onchange="onParameterChange();">';
+            html += '<label for="lambda">Lambda (rate):</label> <input type="number" id="lambda" value="1" step="any" onchange="onParameterChange();" inputmode="decimal">';
             break;
         case 'uniform':
-            html += '<label for="min">Min:</label> <input type="number" id="min" value="0" step="any" onchange="onParameterChange();"">';
-            html += '<label for="max">Max:</label> <input type="number" id="max" value="1" step="any" onchange="onParameterChange();">';
+            html += '<label for="min">Min:</label> <input type="number" id="min" value="0" step="any" onchange="onParameterChange();" inputmode="decimal">';
+            html += '<label for="max">Max:</label> <input type="number" id="max" value="1" step="any" onchange="onParameterChange();" inputmode="decimal">';
             break;
 
     }

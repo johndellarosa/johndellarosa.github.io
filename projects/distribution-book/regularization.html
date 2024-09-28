@@ -82,7 +82,7 @@
 
                 For OLS, the objective function that gets minimized is the Residual Sum of Squares:
 
-                $$\text{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2$$
+                $$\text{Objective}=\text{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2$$
 
                 The LASSO objective function to be minimized for OLS is given by:
 
@@ -112,7 +112,17 @@
                 $$\text{MAP Objective}=\text{RSS}+\frac{1}{2\tau^2}\sum_{j=1}^p\beta_j^2$$
                 Comparing objective functions, we can see that \(\frac{1}{2\tau^2}=\lambda\)
 
+                <h3>Laplace Prior</h3>
 
+                Placing a (centered) Laplace prior on the parameters corresponds to a LASSO regression. The Laplace prior is given by:
+
+                $$P(\beta_j)=]frac{\lambda}{2}\exp\left(-\lambda|\beta_j|\right)$$
+
+                $$\text{MAP Objective}=\text{RSS}+\\lambda\sum_{j=1}^p|\beta_j|$$
+
+                The Laplace distribution has a sharper peak and heavier tails than a Gaussian. This leads to parameters being set to exactly 0 or being higher in magnitude compared to a Gaussian prior which strongly punishes large coefficients, but won't reduce to 0.
+
+                
 
 
                 </div>

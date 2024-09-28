@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="input-field" id="parameters_${i}">
                     <!-- Default: Normal distribution inputs -->
                     <label>Weight:</label>
-                    <input type="number" id="weight_${i}" min="0" max="1" step="0.01" value="0.5">
+                    <input type="number" id="weight_${i}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                     <label>Mean:</label>
-                    <input type="number" id="mean_${i}" value="${i}">
+                    <input type="number" id="mean_${i}" value="${i}" inputmode="decimal">
                     <label>Variance:</label>
-                    <input type="number" id="variance_${i}" value="1">
+                    <input type="number" id="variance_${i}" value="1" inputmode="decimal">
                 </div>
                 <div class="input-field">
                     <label>Color:</label>
@@ -57,27 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (distType === 'normal') {
             parametersDiv.innerHTML = `
                 <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5">
+                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Mean:</label>
-                <input type="number" id="mean_${index}" value="${index}">
+                <input type="number" id="mean_${index}" value="${index}" inputmode="decimal">
                 <label>Variance:</label>
-                <input type="number" id="variance_${index}" value="1">
+                <input type="number" id="variance_${index}" value="1" inputmode="decimal">
             `;
         } else if (distType === 'exponential') {
             parametersDiv.innerHTML = `
                 <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5">
+                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Rate (λ):</label>
-                <input type="number" id="rate_${index}" value="1">
+                <input type="number" id="rate_${index}" value="1" inputmode="decimal">
             `;
         } else if (distType === 'uniform') {
             parametersDiv.innerHTML = `
                 <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5">
+                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Min:</label>
-                <input type="number" id="min_${index}" value="0">
+                <input type="number" id="min_${index}" value="0" inputmode="decimal">
                 <label>Max:</label>
-                <input type="number" id="max_${index}" value="1">
+                <input type="number" id="max_${index}" value="1" inputmode="decimal">
             `;
         }
     }
