@@ -44,7 +44,7 @@ function updateDistributionParameters() {
     let html = '';
     switch (distribution) {
         case 'normal':
-            html += '<label for="mean">Mean:</label> <input type="number" id="mean" value="0" step="any" onchange="onParameterChange();">';
+            html += '<label for="mean">Mean:</label> <input type="number" id="mean" value="0" step="any" onchange="onParameterChange();"><br>';
             html += '<label for="stdDev">Standard Deviation:</label> <input type="number" id="stdDev" value="1" step="any" onchange="onParameterChange();">';
             break;
         case 'exponential':

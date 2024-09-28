@@ -44,11 +44,11 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
             scales: {
                 x: {
                     type: 'linear',
-                    min: 0,
-                    max: 1,
+                    min: 0, // Set dynamically in updateChart()
+                    max: 10, // Set dynamically in updateChart()
                     title: {
                         display: true,
-                        text: 'Theta (θ)'
+                        text: 'Lambda (λ)'
                     }
                 },
                 y: {
@@ -65,50 +65,65 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
 
     // Function to update the chart with new data
     function updateChart() {
-      isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
-  
-        const successes = parseInt(document.getElementById('successes').value);
-        const trials = parseInt(document.getElementById('trials').value);
+        const sumEvents = parseInt(document.getElementById('sum-events').value);
+        const nObservations = parseInt(document.getElementById('n-observations').value);
         const alpha = parseFloat(document.getElementById('alpha').value);
         const beta = parseFloat(document.getElementById('beta').value);
 
-        // X-axis: range of theta (0 to 1)
-        const thetaValues = [];
-        const step = 0.01;
-        for (let theta = 0; theta <= 1; theta += step) {
-            thetaValues.push(theta);
+        // Prior and posterior parameters
+        const alphaPost = alpha + sumEvents;
+        const betaPost = beta + nObservations;
+
+        // Calculate mean and variance of posterior
+        const posteriorMean = alphaPost / betaPost;
+        const posteriorVariance = alphaPost / Math.pow(betaPost, 2);
+
+        // Dynamically set x-axis max based on posterior mean and variance
+        const lambdaMax = posteriorMean + 4 * Math.sqrt(posteriorVariance); // Show 4 standard deviations around the mean
+
+        // X-axis: range of lambda (0 to max value)
+        const lambdaValues = [];
+        const step = 0.1;
+        for (let lambda = 0; lambda <= lambdaMax; lambda += step) {
+            lambdaValues.push(lambda);
         }
 
-        // Prior: Beta(alpha, beta)
-        const priorData = thetaValues.map(theta => betaPDF(theta, alpha, beta));
+        // Prior: Gamma(alpha, beta)
+        const priorData = lambdaValues.map(lambda => jStat.gamma.pdf(lambda, alpha, 1 / beta));
 
-        // Posterior: Beta(successes + alpha, trials - successes + beta)
-        const alphaPost = successes + alpha;
-        const betaPost = trials - successes + beta;
-        const posteriorData = thetaValues.map(theta => betaPDF(theta, alphaPost, betaPost));
+        // Posterior: Gamma(alpha + sumEvents, beta + nObservations)
+        const posteriorData = lambdaValues.map(lambda => jStat.gamma.pdf(lambda, alphaPost, 1 / betaPost));
 
         // Compute credible intervals
-        const lowerCredible = jStat.beta.inv(0.025, alphaPost, betaPost);
-        const upperCredible = jStat.beta.inv(0.975, alphaPost, betaPost);
-        const credibleIntervalData = thetaValues.map(theta => {
-            if (theta >= lowerCredible && theta <= upperCredible) {
-                return betaPDF(theta, alphaPost, betaPost); // Return PDF in the credible interval
+        const lowerCredible = jStat.gamma.inv(0.025, alphaPost, 1 / betaPost);
+        const upperCredible = jStat.gamma.inv(0.975, alphaPost, 1 / betaPost);
+        const credibleIntervalData = lambdaValues.map(lambda => {
+            if (lambda >= lowerCredible && lambda <= upperCredible) {
+                return jStat.gamma.pdf(lambda, alphaPost, 1 / betaPost); // Return PDF in the credible interval
             } else {
                 return null; // Outside the credible interval
             }
         });
 
+        // Update chart axis
+        posteriorChart.options.scales.x.max = lambdaMax;
+
         // Update the chart
-        posteriorChart.data.labels = thetaValues;
+        posteriorChart.data.labels = lambdaValues;
         posteriorChart.data.datasets[0].data = priorData;
         posteriorChart.data.datasets[1].data = posteriorData;
         posteriorChart.data.datasets[2].data = credibleIntervalData; // Shaded credible interval
-        
         posteriorChart.update();
 
         // Compute and display summary statistics
-        displaySummaryStats(alphaPost, betaPost,lowerCredible, upperCredible);
+        displaySummaryStats(alphaPost, betaPost, lowerCredible, upperCredible);
     }
+
+        // Function to compute Gamma distribution PDF
+        function gammaPDF(lambda, alpha, beta) {
+            if (lambda < 0) return 0;
+            return (Math.pow(lambda, alpha - 1) * Math.exp(-lambda * beta)) / math.gamma(alpha) / Math.pow(beta, alpha);
+        }
 
     // Function to compute Beta distribution PDF
     function betaPDF(theta, alpha, beta) {
@@ -122,21 +137,17 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
     }
 
     // Function to compute and display summary statistics for the posterior distribution
-    function displaySummaryStats(alphaPost, betaPost, lowerCredible, upperCredible)  {
-        const posteriorMean = alphaPost / (alphaPost + betaPost);
-        const posteriorVariance = (alphaPost * betaPost) / (Math.pow(alphaPost + betaPost, 2) * (alphaPost + betaPost + 1));
+    function displaySummaryStats(alphaPost, betaPost, lowerCredible, upperCredible) {
+        const posteriorMean = alphaPost / betaPost;
+        const posteriorVariance = alphaPost / Math.pow(betaPost, 2);
         
-        // Calculate the MAP estimate (Mode of Beta distribution)
+        // Calculate the MAP estimate (Mode of Gamma distribution)
         let posteriorMAP;
-        if (alphaPost > 1 && betaPost > 1) {
-            posteriorMAP = (alphaPost - 1) / (alphaPost + betaPost - 2);
+        if (alphaPost > 1) {
+            posteriorMAP = (alphaPost - 1) / betaPost;
         } else {
-            posteriorMAP = "Undefined (Alpha or Beta <= 1)";
+            posteriorMAP = "Undefined (α <= 1)";
         }
-        
-        // Compute credible intervals
-        // const lowerCredible = jStat.beta.inv(0.025, alphaPost, betaPost);
-        // const upperCredible = jStat.beta.inv(0.975, alphaPost, betaPost);
 
         // Display the statistics
             // Display posterior alpha and beta

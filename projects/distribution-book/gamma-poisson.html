@@ -15,7 +15,7 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Beta-Binomial Simulator</title>
+            <title>Gamma-Poisson Simulator</title>
     
         <!-- Meta tags -->
         
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/beta-binomial"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/gamma-poisson"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -213,8 +213,8 @@ h1 {
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
-            <div id="Beta-Binomial">
-                <h1>Beta-Binomial Simulation</h1>
+            <div id="Gamma-Poisson">
+                <h1>Gamma-Poisson Simulation</h1>
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
@@ -227,24 +227,25 @@ h1 {
                 </div>
 
                 <div class="container">
-                    <h2>Binomial with Beta Prior Simulation</h2>
+                    <h2>Poisson with Gamma Prior Simulation</h2>
                 
                     <div class="input-section">
                       <div>
-                        <label for="successes">Successes:</label>
-                        <input type="number" id="successes" value="7" inputmode="numeric">
+                        <label for="sum-events">Sum of Events (Σy):</label>
+                        <input type="number" id="sum-events" value="15">
                     </div>
                     <div>
-                        <label for="trials">Trials:</label>
-                        <input type="number" id="trials" value="10" inputmode="numeric">
+                        <label for="n-observations">Number of Observations (n):</label>
+                        <input type="number" id="n-observations" value="10">
                     </div>
+                    <div>
                     <div>
                         <label for="alpha">Prior Alpha:</label>
                         <input type="number" id="alpha" value="2" inputmode="decimal">
                     </div>
                     <div>
                         <label for="beta">Prior Beta:</label>
-                        <input type="number" id="beta" value="2" inputmode="decimal">
+                        <input type="number" id="beta" value="1" inputmode="decimal">
                     </div>
                     <button onclick="updateChart()">Update Chart</button>
                     </div>
@@ -261,14 +262,14 @@ h1 {
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                          <td>Posterior Alpha (α)</td>
+                          <td id="posterior-alpha"></td>
+                      </tr>
                       <tr>
-                        <td>Posterior Alpha (α)</td>
-                        <td id="posterior-alpha"></td>
-                    </tr>
-                    <tr>
-                        <td>Posterior Beta (β)</td>
-                        <td id="posterior-beta"></td>
-                    </tr>
+                          <td>Posterior Beta (β)</td>
+                          <td id="posterior-beta"></td>
+                      </tr>
                         <tr>
                             <td>Posterior Mean</td>
                             <td id="posterior-mean"></td>
@@ -296,7 +297,7 @@ h1 {
 
 
                 <div id="Exercises">
-                    <h2>Beta-Binomial Practice Problems</h2>
+                    <h2>Gamma-Poisson Practice Problems</h2>
 
                     <ol>
                       
@@ -308,7 +309,7 @@ h1 {
         <script src="https://cdn.jsdelivr.net/npm/mathjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
 
-        <script src="./beta-binomial-funcs.js"></script>
+        <script src="./gamma-poisson-funcs.js"></script>
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;

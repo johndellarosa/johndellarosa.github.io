@@ -146,9 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
               text: 'Value'
             },
             ticks: {
-              callback: function(value) {
-                  return value.toFixed(3);  // Round x-axis ticks
-              }
+            //   callback: function(value) {
+            //     return parseFloat(value).toFixed(3); // Format ticks to two decimal places
+            // },
           }
           },
           y: {
