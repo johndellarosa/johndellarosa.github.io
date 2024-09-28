@@ -15,7 +15,7 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Marginal Likelihood</title>
+            <title>Regularization</title>
     
         <!-- Meta tags -->
         
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/marginal-likelihood"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/regularization"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -57,57 +57,60 @@
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Marginal-Likelihood-Explanation">
-                <h1>Marginal Likelihood</h1>
-                <h2>Introduction to </h2>
+                <h1>Regularization</h1>
+                <h2>Introduction to Bayesian Inference</h2>
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./mle.html">MLE</a></li>
+                    <li><a href="./marginal-likelihood.html">Marginal Likelihood</a></li>
+                    <li><a href="./bayesian.html">Bayesian Inference</a></li>
                 </ol>
                 
-                <h3>Introduction</h3>
-                In the previous chapters, we explored compound distributions. In a compound distribution, one distribution controls the parameters of another, leading to a multi-layered structure. 
-                As we extend this understanding, marginal likelihood provides a framework for evaluating how well these models (and others) explain observed data, accounting for all possible values of the parameters. By integrating over the unknown parameters, marginal likelihood gives us a comprehensive measure of the model's fit to the data, offering insights that can guide model selection and decision-making. 
-
-                <h3>Recap on Marginalization in Context of Previous Chapters</h3>
-
-                <h4>Mixture Distributions</h4>
-
-                In a mixture distribution, the observed data is generated from one of several component distributions. The components are chosen according to a set of probabilities (weights). For example, in a Gaussian Mixture Model (GMM) with K components:
-
-                $$X\sim \sum_{k=1}^{K}\pi_{k}\mathcal{N}(X|\mu_k,\sigma_k^2)$$
-
-                Here, each component, \(\mathcal{N}(X|\mu_k,\sigma_k^2)\), is a Gaussian distribution, and \(\pi_k\) are the mixture weights (summing to 1). The marginal distribution of X is the weighted sum of the component densities, integrating over the latent variable (which component generated the data). 
 
 
-                <h4>Compound Distributions</h4>
-                For example, in a Gamma-Poisson compound distribution, the rate parameter \(\lambda\) of a Poisson distribution is drawn from a Gamma distribution: 
+                <h2>OLS Regularization</h2>
 
-                $$\lambda\sim \text{Gamma}(\alpha,\beta),\quad X|\lambda\sim\text{Poisson}(\lambda)$$
+                <h3>Basic</h3>
+                In frequentist statistics, regularization is a technique used to prevent models from overfitting the data by adding a penalty for complexity. This penalty is applied in various forms, such as:
 
-                The marginal distribution of \(X\) is found by integrating out the intermediate parameter \(\lambda\):
-
-                $$p(X=x)=\int_{0}^{\infty}p(X=x|\lambda)p(\lambda)d\lambda$$
-                The integration removes the dependence on the unknown/random parameter \(\lambda\), yielding the marginal distribution of X.
-
-
-
-                <h3>Bridging to Marginal Likelihood</h3>
-                In both compound and mixture distributions, marginalization plays a crucial role: we integrate over hidden or latent variables (such as the parameters in compound distributions or the component assignments in mixture models) to find the overall probability of the observed data. This exact idea underpins marginal likelihood.
-
-                The marginal likelihood of a model is the probability of the observed data D given the model, integrating out the unknown parameters \(\theta\):
-
-                $$p(D|M)=\int_{\theta}p(D|\theta,M)p(\theta,M)d\theta$$
-                where:
                 <ul>
-                    <li>\(p(D|\theta,M)\) is the likelihood of the data given parameters \(\theta\)</li>
-                    <li>\(p(\theta|M)\) is the prior distribution over the parameters</li>
-                    <li>M is the model</li>
+                    <li>LASSO (L1 regularization): Adds a penalty proportional to the absolute value of the model parameters</li>
+                    <li>Ridge (L2 regularization): Adds a penalty proportional to the square of the model parameters</li>
                 </ul>
-                This integral is precisely what we encountered in compound distributions: marginalizing over \(\theta\), an nknown parameter, which itself follows a prior distribution. In essence, marginal likelihood is an application of the same principle: we integrate out the uncertainty in the parameters to assess how well the model explains the data on average across all parameter configurations. 
 
+                For OLS, the objective function that gets minimized is the Residual Sum of Squares:
 
+                $$\text{RSS}=\sum_{i=1}^n(y_i-\hat{y}_i)^2$$
 
+                The LASSO objective function to be minimized for OLS is given by:
+
+                $$\text{Objective}=\text{RSS}+\lambda\sum_{j=1}^{p}|\beta_j|$$
+
+                The ridge objective function to be minimized for OLS is given by:
+
+                $$\text{Objective}=\text{RSS}+\lambda\sum_{j=1}^{p}\beta_j^2$$
+                where \(\beta\) is the vector of model coefficients and \(\lambda\) is the regularization parameter controlling the strength of the penalty. 
+                <h2>Bayesian</h2>
+
+                From a Bayesian point of view, regularization arises naturally through the prior distribution on the parameters. Regularization can be interpreted as placing a prior belief on the parameters, which encodes our preference for simpler models or smaller parameter values. 
+
+                Two priors that we will go over are the Gaussian prior and the Laplace prior.
+
+                <h3>Gaussian Prior</h3>
+
+                In Bayesian inference, placing a Gaussian prior on the parameters of a linear regression model leads to Ridge regression. 
+
+                If we place a zero-mean normal prior on each parameter \(\beta_j\):
+
+                $$P(\beta_j)=\frac{1}{\sqrt{2\pi\tau^2}}\exp\left(-\frac{\beta_j^2}{2\tau^2}\right)$$
+                This prior expresses the belief that the parameters are likely to be small, centered around zero, with \(\tau^2\) controlling the prior variance. 
+
+                For linear regression with Gaussian noise, the Maximum a Posteriori estimate of \(\beta\) is:
+
+                $$\text{MAP Objective}=\text{RSS}+\frac{1}{2\tau^2}\sum_{j=1}^p\beta_j^2$$
+                Comparing objective functions, we can see that \(\frac{1}{2\tau^2}=\lambda\)
 
 
 

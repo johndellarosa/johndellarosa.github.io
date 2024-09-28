@@ -301,6 +301,14 @@
                   <li>Smoother version of Epanechnikov Kernel</li>
                 </ul>
 
+                <h4>Cosine Kernel</h4>
+                $$K(x)=\frac{\pi}{4}\cos(\frac{\pi x}{2})\quad\text{for }|x|\leq 1$$
+
+                <ul>
+                  <li>Compact kernel</li>
+                  <li>Smooth</li>
+                </ul>
+
                 <h4>Laplace Kernel</h4>
                 <ul>
                   <li>Infinite support like Gaussian</li>
@@ -329,10 +337,6 @@
                 KDE can have problems near the boundaries of the support of the distribution. For example, if the true distribution is restricted to a finite range (e.g., non-negative values), the kernel functions may assign non-zero density outside this range, leading to a biased estimate. 
 
 
-                <!-- <figure>
-                    <img src="t-copula.png" alt="T at different rho" style="margin:auto; display: block;  width:clamp(300px,80vw, 900px)"/>
-                    <figcaption>T Copula at Different Rho</figcaption>
-                </figure> -->
 
                 <h3>Sampling from a KDE</h3>
 

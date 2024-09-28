@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Bayesian Methods</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Marginal Likelihood">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to marginal likelihood.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/bayesian"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+<style>
+    body {
+              font-family: Arial, sans-serif;
+            }
+        
+            table {
+              width: 80%;
+              margin: 0 auto;
+              border-collapse: collapse;
+              text-align: left;
+            }
+        
+            th, td {
+              padding: 10px;
+              border: 1px solid #ddd;
+            }
+        
+            th {
+              background-color: #f2f2f2;
+              font-weight: bold;
+              text-align: center;
+            }
+        
+            tr:nth-child(even) {
+              background-color: #f9f9f9;
+            }
+        
+            tr:hover {
+              background-color: #f1f1f1;
+            }
+        
+            caption {
+              caption-side: top;
+              font-size: 1.2em;
+              margin-bottom: 10px;
+            }
+
+                    /* Scrollable table for mobile devices */
+        .table-container {
+            overflow-x: auto;
+        }
+        /* Media query for mobile */
+        @media (max-width: 600px) {
+            table {
+                font-size: 14px;
+            }
+        }
+</style>
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Marginal-Likelihood-Explanation">
+                <h1>Bayesian Inference</h1>
+                <h2>Introduction to Bayesian Inference</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./mle.html">MLE</a></li>
+                    <li><a href="./marginal-likelihood.html">Marginal Likelihood</a></li>
+                </ol>
+                
+                <h3>Basics of Bayesian Inference</h3>
+                
+                Bayes' theorem relates conditional probabilities when you switch what is being conditioned on. This ends up being useful in the context of trying to fit parameters. 
+                
+
+                <h4>Restating Bayes' Theorem</h4>
+
+                In the context of what we are studying, Bayes' theorem can be stated as:
+
+                $$P(\theta|x)=\frac{P(x|\theta)P(\theta)}{P(x)}$$
+
+
+                Breaking down each component
+
+                <ul>
+                    <li>\(\theta\) is the parameter (or vector of parameters) that we are interested in, as we've seen before</li>
+                    <li>x is the observed data</li>
+                    <li>\(P(x|\theta)\) is the <strong>likelihood</strong>, which is the same as we've been seeing before. It gives a relative probability of seeing the data for a distribution with given parameter values</li>
+
+
+                    <li>\(P(\theta|x)\) is the <strong>posterior distribuition</strong>, the updated belief about the parameter \(\theta\) after seeing the data x</li>
+                    <li>\(P(\theta)\) is the <strong>prior distribution</strong>, which is the initial belief about \(\theta\), before seeing the data.</li>
+                    <li>\(P(x)\) is the marginal likelihood, which we covered before. This acts as a normalization constant. This is computed as 
+
+                        $$P(x)=\int_{-\infty}^{\infty}P(x|\theta)P(\theta)d\theta$$
+                    </li>
+
+                </ul>
+
+                <h4>Cromwell's Rule</h4>
+
+                Cromwell's Rule is principle that advises against assigning a prior probability of 0 or 1 unless it is logically impossible or certain. This is because it would make updating beliefs not possible. 
+
+
+
+
+                <h4>Example</h4>
+                The classic example is flipping a coin for which you don't know the weight.
+
+                The setup is this: we have a coin with an unknown probability of heads, \(\theta\). 
+
+                <h5>Prior Distribution</h5>
+                What are our prior beliefs regarding \(\theta\)? Well, we can be reasonably sure that it will be in the interval [0,1]. In this example, we will assume that all valid values are equally weighted (uniform).
+
+                $$P(\theta)=\begin{cases} 1 & \theta\in[0,1]\\
+                0 &\text{otherwise}\end{cases}$$
+
+                This is an example of a non-informative prior, reflecting that we have no strong prior belief about \(\theta\). 
+
+                <h5>Likelihood</h5>
+
+                Now we incorporate the data observed. We flip said coin n times and observe x heads. The likelihood \(P(x|\theta)\) is the probability of x heads, given that the probability of heads is \(\theta\).
+
+                $$P(x|\theta)={n \choose x}\theta^x(1-\theta)^{n-x}$$
+
+
+                <h5>Posterior Distribution</h5>
+
+                $$P(\theta|x)=\frac{P(x|\theta)P(\theta)}{P(x)}$$
+
+                Given that \(P(x)\) is just a normalizing constant and we selected our prior distribution to be uniform, our unnormalized posterior is proportion to:
+
+                $$P(\theta|x)\propto\theta^x(1-\theta)^{n-x}$$
+                which is a beta distribution. 
+
+
+                $$f(x;\alpha,\beta)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$$
+
+                Through matching exponents, we can see that 
+                $$\alpha=x+1$$
+                $$\beta=n-x+1$$
+                
+
+                <ul>
+                    <li>If you observe a lot of heads, the posterior will shift towards higher values of \(\theta\).</li>
+                    <li>If you observe a lot of tails, the posterior will shift towards lower values of \(\theta\).</li>
+                    <li>The more data you collect, the sharper the posterior distribution becomes, reflecting increasing confidence in the estimated value of \(\theta\).</li>
+
+                </ul>
+
+                What is the "average" estimate of \(\theta\) now?
+
+                $$\mathbb{E}[\theta|X]=\frac{x+1}{n+2}$$
+
+                Now, one thing to note is that this is <strong>not</strong> the percentage of heads that we saw. The maximum likelihood estimate would correspond to that fraction, \(\hat{\theta}=\frac{x}{n}\).
+
+
+                <h2>Posterior Distribution</h2>
+                In Bayesian inference, after updating our beliefs about model parameters based on observed data, we often want to make predictions about future or unseen data. The posterior predictive distribution provides a way to do this by incorporating the uncertainty in the parameters, as reflected in the posterior distribution. 
+                While the posterior distribution provides a complete description of our updated belief about \(\theta\), in some cases we need a point estimate for the parameter. There are a few reasonable choices for how to go about it. 
+
+                
+
+                <h3>Maximum A Posteriori (MAP) Estimate</h3>
+
+One is the Maximum A Posteriori (MAP) estimate, which selects the value of \(\theta\) that maximizes the posterior distribution. 
+                 
+
+                <h4>Definition</h4>
+                The MAP estimate is defined as:
+
+                $$\hat{\theta}_{\text{MAP}}=\arg \max_{\theta}P(\theta|x)$$
+
+                By Bayes' theorem, we can rewrite as:
+
+                $$P(\theta|x)\propto P(x|\theta)P(\theta)$$
+
+                Thus, the MAP estimate can also be seen as maximizing the product of the likelihood with the prior. The MAP estimate balances fitting the data through likelihood and our prior beliefs through \(P(\theta)\).
+
+                <h4>MLE Revisited</h4>
+
+
+                The MLE is actually a special case of MAP estimation when the prior distribution \(P(\theta)\) is uniform.
+
+                $$\hat{\theta}_{\text{MLE}}=\arg \max_\theta P(x|\theta)$$
+
+                Because multiplying every point by a positive constant doesn't affect the ordering, by plugging in a constant into our MAP equation, you can recover the MLE one above.
+
+
+                <h3>Summary of Point Estimates</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Estimate</th>
+                                <th>Formula</th>
+                                <th>Best for</th>
+                                <th>Limitations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MAP Estimate</td>
+                                <td>Maximizes the posterior</td>
+                                <td>\[
+                                    \hat{\theta}_{\text{MAP}} = \arg \max_{\theta} P(\theta | x)
+                                \]</td>
+                                <td>Computational simplicity, regularization</td>
+                                <td>Dependent on prior, doesn't take into account all of distribution</td>
+                            </tr>
+                            <tr>
+                                <td>Posterior Mean</td>
+                                <td>Expected value of posterior</td>
+                                <td>\[
+                                    \hat{\theta}_{\text{mean}} = E[\theta | x] = \int \theta P(\theta | x) d\theta
+                                \]</td>
+                                <td>Minimizing squared loss, average effects</td>
+                                <td>Sensitive to skewness</td>
+                            </tr>
+                            <tr>
+                                <td>Posterior Median</td>
+                                <td>Value that splits posterior in half</td>
+                                <td>\[
+                                    P(\theta \leq \hat{\theta}_{\text{median}} | x) = 0.5
+                                \]</td>
+                                <td>Skewed distributions, minimizing absolute loss</td>
+                                <td>Harder to compute</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Posterior Predictive Distribution</h3>
+
+                <h4>Formula</h4>
+                The posterior predictive distribution is the distribution of a new, unobserved data point \(x_{\text{new}}\), given the observed data \(x\). It is computed by averaging the likelihood of \(x_{\text{new}}\), weighted by the posterior distribution of the parameter(s) \(\theta\):
+
+                $$P(x_{\text{new}}|x)=\int_{-\infty}^{\infty}P(x_{\text{new}}|\theta)P(\theta|x)d\theta$$
+
+                <ul>
+                    <li>\(P(x_{\text{new}}|\theta)\): The likelihood function that describes how new data \(x_{\text{new}}\) is generated, given a particular value of parameter \(\theta\).</li>
+                    <li>\(P(\theta|x)\): The posterior distribution of parameter \(\theta\), which reflects our updated belief about \(\theta\) after observing the data x.</li>
+                </ul>
+
+                
+
+
+
+                <h2>Conjugate Priors</h2>
+
+                In Bayesian inference, a conjugate prior is a prior distribution that, when combined with a specific likelihood function, results in a posterior distribution that belongs to the same family of distributions as the prior. This conjugacy simplifies the calculation of the posterior distribution and makes Bayesian analysis more tractable, especially when working with common probability distributions. 
+
+                <h3>Definition</h3>
+
+                Mathematically, a prior \(P(\theta)\) is said to be conjugate to the likelihood \(L(x|\theta)\) if the posterior distribution, \(P(\theta|x)\) is in the same family as the prior. Only the parameters of the distribution are updated based on the observed data. 
+
+
+
+
+                <h3>Beta Prior for Binomial</h3>
+                <a href="./beta-binomial.html">See also Beta-Binomial simulation</a>
+  <p>Instead of the uniform prior that we used in a prior coin flip example, we will have a beta prior:</p>
+  <p>
+    \[
+    P(\theta) = \frac{\theta^{\alpha - 1} (1 - \theta)^{\beta - 1}}{B(\alpha, \beta)}
+    \]
+  </p>
+
+  <h4>Binomial Likelihood</h4>
+  <p>The likelihood for binomial data (observing \( x \) successes in \( n \) trials) is:</p>
+  <p>
+    \[
+    P(x | \theta) = \binom{n}{x} \theta^x (1 - \theta)^{n - x}
+    \]
+  </p>
+
+  <h4>Posterior Distribution</h4>
+  <p>The posterior distribution, given a Beta prior and binomial likelihood, is:</p>
+  <p>
+    \[
+    P(\theta | x) = \text{Beta}(x + \alpha, n - x + \beta)
+    \]
+  </p>
+
+  <h4>Numerical Example</h4>
+  <p>If we observe 7 heads in 10 flips and use a \( \text{Beta}(2, 2) \) prior, the posterior is:</p>
+  <p>
+    \[
+    P(\theta | x = 7) = \text{Beta}(9, 5)
+    \]
+  </p>
+
+<h3>Normal-Normal Conjugacy</h3>
+<p>If the prior distribution for the mean \( \mu \) of a normal distribution is:</p>
+  <p>
+    \[
+    P(\mu) = N(\mu_0, \tau_0^2)
+    \]
+  </p>
+
+  <h4>Normal Likelihood</h4>
+  <p>The likelihood for normally distributed data \( x \) with known variance \( \sigma^2 \) is:</p>
+  <p>
+    \[
+    P(x | \mu) = N(\mu, \sigma^2)
+    \]
+  </p>
+
+  <h4>Posterior Distribution</h4>
+  <p>The posterior distribution, given \( n \) observations and a normal prior, is:</p>
+  <p>
+    \[
+    P(\mu | x) = N\left( \frac{\tau_0^2 \sum_{i=1}^{n} x_i + \sigma^2 \mu_0}{n \sigma^2 + \tau_0^2}, \frac{\sigma^2 \tau_0^2}{n \sigma^2 + \tau_0^2} \right)
+    \]
+  </p>
+
+  <h4>Numerical Example</h4>
+  <p>Given a prior \( N(170, 5^2) \) for the average height of a population and 5 observations \( 168, 172, 169, 170, 171 \), the posterior distribution can be computed to update our estimate of the population mean.</p>
+
+
+
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Marginal Likelihood Practice Problems</h2>
+                    <ol>
+                        
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
