@@ -1,7 +1,8 @@
 const ctx = document.getElementById('posteriorChart').getContext('2d');
-
+let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
     // Chart.js configuration
-    const chartConfig = {
+    chartConfig = {
         type: 'line',
         data: {
             labels: [], // X-axis (theta values from 0 to 1)
@@ -10,17 +11,26 @@ const ctx = document.getElementById('posteriorChart').getContext('2d');
                     label: 'Prior Distribution',
                     data: [],
                     borderColor: 'blue',
-                    fill: false
+                    fill: false,
+                    pointRadius: isMobile ? 0.5:1.5,
                 },
                 {
                     label: 'Posterior Distribution',
                     data: [],
                     borderColor: 'red',
-                    fill: false
+                    fill: false,
+                    pointRadius: isMobile ? 0.5:1.5,
                 }
             ]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+              legend: {
+                  display: true,
+                  position: isMobile?'right':'top'
+              }},
             scales: {
                 x: {
                     type: 'linear',
@@ -45,6 +55,8 @@ const ctx = document.getElementById('posteriorChart').getContext('2d');
 
     // Function to update the chart with new data
     function updateChart() {
+      isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
         const successes = parseInt(document.getElementById('successes').value);
         const trials = parseInt(document.getElementById('trials').value);
         const alpha = parseFloat(document.getElementById('alpha').value);
