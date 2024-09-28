@@ -12,14 +12,14 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
                     data: [],
                     borderColor: 'blue',
                     fill: false,
-                    pointRadius: isMobile ? 0.5:1.5,
+                    pointRadius: isMobile ? 0.25:1.5,
                 },
                 {
                     label: 'Posterior Distribution',
                     data: [],
                     borderColor: 'red',
                     fill: false,
-                    pointRadius: isMobile ? 0.5:1.5,
+                    pointRadius: isMobile ? 0.25:1.5,
                 }
             ]
         },
