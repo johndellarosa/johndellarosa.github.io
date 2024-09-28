@@ -13,6 +13,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
                     borderColor: 'blue',
                     fill: false,
                     pointRadius: isMobile ? 0.25:1.5,
+                    borderWidth: isMobile ? 1:2,
                 },
                 {
                     label: 'Posterior Distribution',
@@ -20,6 +21,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
                     borderColor: 'red',
                     fill: false,
                     pointRadius: isMobile ? 0.25:1.5,
+                    borderWidth: isMobile ? 1:2,
                 }
             ]
         },
@@ -29,7 +31,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
           plugins: {
               legend: {
                   display: true,
-                  position: isMobile?'right':'top'
+                  // position: isMobile?'right':'top'
               }},
             scales: {
                 x: {

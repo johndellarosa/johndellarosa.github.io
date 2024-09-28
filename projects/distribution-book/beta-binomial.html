@@ -139,7 +139,7 @@ input, select {
               /* width:100%; */
             width: 80vw;
             max-height: 60vh;
-            min-height: 200px;
+            min-height: 300px;
             /* min-height: 30vh; */
               /* height: 20%; */
               /* height: 600px; */
@@ -232,19 +232,19 @@ h1 {
                     <div class="input-section">
                       <div>
                         <label for="successes">Successes:</label>
-                        <input type="number" id="successes" value="7">
+                        <input type="number" id="successes" value="7" inputmode="numeric">
                     </div>
                     <div>
                         <label for="trials">Trials:</label>
-                        <input type="number" id="trials" value="10">
+                        <input type="number" id="trials" value="10" inputmode="numeric">
                     </div>
                     <div>
                         <label for="alpha">Prior Alpha:</label>
-                        <input type="number" id="alpha" value="2">
+                        <input type="number" id="alpha" value="2" inputmode="decimal">
                     </div>
                     <div>
                         <label for="beta">Prior Beta:</label>
-                        <input type="number" id="beta" value="2">
+                        <input type="number" id="beta" value="2" inputmode="decimal">
                     </div>
                     <button onclick="updateChart()">Update Chart</button>
                     </div>

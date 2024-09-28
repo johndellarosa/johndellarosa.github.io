@@ -208,6 +208,33 @@
     display: flex;
     justify-content: center;
   }
+
+  /* Smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .comparison-table thead tr {
+      font-size: 14px;
+    }
+    .comparison-table th,
+  .comparison-table td {
+    padding: 5px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  .comparison-table td {
+
+    font-size: 12px;
+
+  }
+
+
+    input[type="number"], input[type="range"] {
+        width: 95%; /* Full width inputs for easier access */
+    }
+}
 </style>
 
 </style>
