@@ -157,7 +157,7 @@ function plotCompoundDistribution(data) {
     }
 
     const histData = createHistogram(data, 50); // Adjust the number of bins
-
+    let isMobile = window.innerWidth < 600 ? true : false;
     window.compoundChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -172,6 +172,11 @@ function plotCompoundDistribution(data) {
         },
         options: {
             responsive: true,
+            plugins:{
+                legend:{
+                    display:isMobile?false:true
+                }
+            },
             scales: {
                 x: {
                     type: 'linear', // Set x-axis type to 'linear' for numerical values

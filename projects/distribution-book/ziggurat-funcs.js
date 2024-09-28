@@ -304,7 +304,7 @@ const rejectedSamplesIndex = 3;  // Index for rejected samples trace
 
 // Function to add sample to plot (no Ziggurat modification)
 function addSampleToPlot(x, y, accepted) {
-    let sampleMarkerSize = window.innerWidth < 600 ? 2 : 4;  // Smaller size for mobile screens
+    let sampleMarkerSize = window.innerWidth < 600 ? 3 : 4;  // Smaller size for mobile screens
     acceptedSampleTrace.marker.size = sampleMarkerSize;
     rejectedSampleTrace.marker.size = sampleMarkerSize;
     if (accepted) {

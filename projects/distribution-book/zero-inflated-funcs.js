@@ -202,6 +202,11 @@ function plotMixture(data, xMin, xMax, yMin, yMax) {
         },
         options: {
             responsive: true,
+            plugins:{
+                legend:{
+                    display:false,
+                }
+            },
             scales: {
                 x: {
                     type: 'linear',

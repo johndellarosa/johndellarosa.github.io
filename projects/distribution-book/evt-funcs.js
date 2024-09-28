@@ -1,5 +1,6 @@
 let myChart; // Declare the chart variable globally
-
+let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
 // // Function to generate a random sample from a distribution
 // function generateSample(size, distribution) {
 //     let sample = [];
@@ -205,6 +206,12 @@ function plotHistogram(data, numBins) {
             }]
         },
         options: {
+
+            plugins:{
+                legend:{
+                    display:isMobile?false:true,
+                }
+            },
             scales: {
                 x: {
                     type: 'linear',  // Ensure this is set for numeric x-axis

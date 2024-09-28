@@ -1,6 +1,7 @@
 let dataPoints = [];
 let chart = null;
-
+let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
 function initializeChart() {
     const lambdaValues = Array.from({ length: 100 }, (_, i) => i / 10 + 0.1); // Precalculate lambda values
     const likelihoods = lambdaValues.map(lambda => 0); // Initialize with zeros
@@ -16,19 +17,35 @@ function initializeChart() {
                 borderColor: 'rgb(75, 192, 192)',
                 data: likelihoods,
                 fill: false,
+                pointRadius: isMobile ? 0.25:1.5,
+                borderWidth: isMobile ? 1:2,
             }]
         },
         options: {
+
+            plugins:{
+                legend:{
+                    display:isMobile?false:yes,
+
+                    labels:{
+                        padding:5,
+                    }
+                }
+            },
+
             scales: {
                 x: {
                     title: {
                         display: true,
                         text: 'Lambda (λ)'
+                    },
+                    ticks:{
+                        padding:isMobile?1:3,
                     }
                 },
                 y: {
                     title: {
-                        display: true,
+                        display: isMobile? false:true,
                         text: 'Likelihood',
                     },
                     beginAtZero: true
@@ -128,7 +145,8 @@ function updateChart() {
                             // This callback is now correctly using lambda values
                             callback: function(value) {
                                 return parseFloat(value).toFixed(3); // Format ticks to two decimal places
-                            }
+                            },
+                            padding:isMobile?1:3,
                         }
                     },
                     y: {

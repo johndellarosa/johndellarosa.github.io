@@ -151,7 +151,9 @@
             h1 {
               text-align: center;
             }
-            
+            #pmfContainer {
+            overflow-x: scroll;
+        }
             /* Smaller screens (e.g., smartphones) */
             @media (max-width: 600px) {
                 .container {
@@ -164,6 +166,8 @@
                 input[type="number"], input[type="range"] {
                     width: 95%; /* Full width inputs for easier access */
                 }
+
+
             }
             
             </style>
@@ -332,7 +336,7 @@
 
 
                     <button id="generate-mixture">Generate Zero-Inflated Model</button>
-                    <div>
+                    <div id="pmfContainer">
                         <h3>Probability Mass Function (PMF)</h3>
                         <p id="pmfFormula"></p>
                     </div>

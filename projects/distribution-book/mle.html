@@ -92,6 +92,7 @@
               /* width:100%; */
             width: 80vw;
             max-height: 50vh;
+            /* min-height: 200px; */
               /* height: 20%; */
               /* height: 600px; */
               /* max-height: 1000px; */
@@ -220,7 +221,7 @@
     }
     .comparison-table th,
   .comparison-table td {
-    padding: 5px 10px;
+    padding: 10px 15px;
     text-align: center;
     border-bottom: 1px solid #ddd;
   }
@@ -230,9 +231,19 @@
 
   }
 
+  .comparison-table {
+    width: 100%;
+  }
 
-    input[type="number"], input[type="range"] {
+  input[type="range"]{
+    margin-bottom:10px;
+  }
+
+    input[type="number"]  {
         width: 95%; /* Full width inputs for easier access */
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-bottom:5px;
     }
 }
 </style>
