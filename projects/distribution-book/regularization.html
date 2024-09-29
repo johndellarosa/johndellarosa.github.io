@@ -116,9 +116,9 @@
 
                 Placing a (centered) Laplace prior on the parameters corresponds to a LASSO regression. The Laplace prior is given by:
 
-                $$P(\beta_j)=]frac{\lambda}{2}\exp\left(-\lambda|\beta_j|\right)$$
+                $$P(\beta_j)=\frac{\lambda}{2}\exp\left(-\lambda|\beta_j|\right)$$
 
-                $$\text{MAP Objective}=\text{RSS}+\\lambda\sum_{j=1}^p|\beta_j|$$
+                $$\text{MAP Objective}=\text{RSS}+\lambda\sum_{j=1}^p|\beta_j|$$
 
                 The Laplace distribution has a sharper peak and heavier tails than a Gaussian. This leads to parameters being set to exactly 0 or being higher in magnitude compared to a Gaussian prior which strongly punishes large coefficients, but won't reduce to 0.
 

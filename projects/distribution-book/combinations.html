@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/combinations"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -153,7 +153,7 @@
                 The <strong>convolution</strong> of \(f_X\) and \(f_Y\) is a new function, which we shall denote \(f_Z(z)\), which corresponds to the PMF of a variable Z, such that 
                 \(Z=X+Y\). Mathematically, this convolution of \(p_X\) and \(p_Y\), denoted \(p_X\star p_Y\), is defined as:
 
-                $$P(Z=z)=p_X\star p_Y=\sum_{w\in\text{supp}(p_X)}P(Y=z-w|X=w)P(X=w)$$
+                $$P(Z=z)=p_X\star p_Y=\sum_{x\in\text{supp}(p_X)}P(Y=z-w|X=x)P(X=x)$$
 
 
 
@@ -170,7 +170,7 @@
                 If the two random variables are independent, then we can simplify the conditional probabilities and conditional densities to just be the regular probability and marginal density.
 
                 <h4>Discrete</h4>
-                $$p_Z(z)=\sum_{w\in\text{supp}(p_X)}P_X(w)p_Y(z-k)$$
+                $$p_Z(z)=\sum_{x\in\text{supp}(p_X)}P_X(w)p_Y(z-x)$$
 
 
                 <h4>Continuous</h4>
@@ -268,7 +268,12 @@
                     <h2>Convolution Practice Problems</h2>
 
                     <ol>
+                        <li>Let \(X_1, X_2, \dots, X_n\) be independent and identically distributed (i.i.d.) random variables, each with a known PDF \(f_X(x)\). Use convolution to find the distribution of \(Y = X_1 + X_2 + \dots + X_n\). Do this entirely symbolically for arbitrary \(X_i\). Don't overthink this.</li>
                         <li>Draw the Distribution of Z where \(Z=X+Y\), \(X\sim U(0,1)\), and \(Y\sim U(0,2)\).</li>
+                        <li>Let \(X_1\) and \(X_2\) be two independent random variables, each uniformly distributed on the interval \([0, 1]\). Compute the probability density function (PDF) of the random variable \(Y = X_1 + X_2\), i.e., find the convolution \(f_Y(y) = (f_{X_1} \star f_{X_2})(y)\).</li>
+                        <li>Let \(X_1\) and \(X_2\) be independent and identically distributed random variables following a Poisson distribution with parameter \(\lambda\). Compute the distribution of \(Y = X_1 + X_2\), and determine its probability mass function (PMF).</li>
+                        <li>Let \(X_1 \sim N(\mu_1, \sigma_1^2)\) and \(X_2 \sim N(\mu_2, \sigma_2^2)\) be two independent normally distributed random variables. Show that the convolution of these two distributions is also normally distributed, and find the mean and variance of the resulting distribution.</li>
+                        <li>Suppose \(X_1 \sim \text{Exp}(\lambda_1)\) and \(X_2 \sim \text{Exp}(\lambda_2)\) are independent exponentially distributed random variables. Determine the distribution of the sum \(Y = X_1 + X_2\), and find the corresponding PDF \(f_Y(y)\).</li>
                     </ol>
     
     
