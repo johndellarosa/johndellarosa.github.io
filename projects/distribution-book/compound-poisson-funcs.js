@@ -54,6 +54,51 @@ function updateSecondaryParams() {
             <label for="uniformMax">Max:</label>
             <input type="number" id="uniformMax" value="1" inputmode="decimal">
         `;
+    }  else if (secondaryType === 'gamma') {
+        secondaryParams.innerHTML = `
+            <label for="gammaShape">Shape (k):</label>
+            <input type="number" id="gammaShape" value="2" inputmode="decimal">
+            <label for="gammaScale">Scale (θ):</label>
+            <input type="number" id="gammaScale" value="1" inputmode="decimal">
+        `;
+    } else if (secondaryType === 'beta') {
+        secondaryParams.innerHTML = `
+            <label for="betaAlpha">Alpha (α):</label>
+            <input type="number" id="betaAlpha" value="2" inputmode="decimal">
+            <label for="betaBeta">Beta (β):</label>
+            <input type="number" id="betaBeta" value="5" inputmode="decimal">
+        `;
+    } else if (secondaryType === 'inverse-gamma') {
+        secondaryParams.innerHTML = `
+            <label for="invGammaShape">Shape (α):</label>
+            <input type="number" id="invGammaShape" value="2" inputmode="decimal">
+            <label for="invGammaScale">Scale (β):</label>
+            <input type="number" id="invGammaScale" value="1" inputmode="decimal">
+        `;
+    } else if (secondaryType === 'laplace') {
+        secondaryParams.innerHTML = `
+            <label for="laplaceLocation">Location (μ):</label>
+            <input type="number" id="laplaceLocation" value="0" inputmode="decimal">
+            <label for="laplaceScale">Scale (b):</label>
+            <input type="number" id="laplaceScale" value="1" inputmode="decimal">
+        `;
+    } else if (secondaryType === 'binomial') {
+        secondaryParams.innerHTML = `
+            <label for="binomialN">n:</label>
+            <input type="number" id="binomialN" value="10" inputmode="decimal">
+            <label for="binomialP">p:</label>
+            <input type="number" id="binomialP" step="0.01" value="0.5" inputmode="decimal">
+        `;
+    } else if (secondaryType === 'degenerate') {
+        secondaryParams.innerHTML = `
+            <label for="degenerateValue">Value (c):</label>
+            <input type="number" id="degenerateValue" value="1" inputmode="decimal">
+        `;
+    }else if (secondaryType === 'random-walk') {
+        secondaryParams.innerHTML = `
+            <label for="randomWalkP">Probability of +1 (p):</label>
+            <input type="number" id="randomWalkP" step="0.01" value="0.5" inputmode="decimal">
+        `;
     }
 }
 
@@ -92,6 +137,32 @@ function generateCompoundDistribution() {
             const min = parseFloat(document.getElementById('uniformMin').value);
             const max = parseFloat(document.getElementById('uniformMax').value);
             compoundSamples.push(uniformSample(min, max, sample));
+        } else if (secondaryType === 'gamma') {
+            const shape = parseFloat(document.getElementById('gammaShape').value);
+            const scale = parseFloat(document.getElementById('gammaScale').value);
+            compoundSamples.push(gammaSample(shape, scale, sample));
+        } else if (secondaryType === 'beta') {
+            const alpha = parseFloat(document.getElementById('betaAlpha').value);
+            const beta = parseFloat(document.getElementById('betaBeta').value);
+            compoundSamples.push(betaSample(alpha, beta, sample));
+        } else if (secondaryType === 'inverse-gamma') {
+            const shape = parseFloat(document.getElementById('invGammaShape').value);
+            const scale = parseFloat(document.getElementById('invGammaScale').value);
+            compoundSamples.push(inverseGammaSample(shape, scale, sample));
+        } else if (secondaryType === 'laplace') {
+            const location = parseFloat(document.getElementById('laplaceLocation').value);
+            const scale = parseFloat(document.getElementById('laplaceScale').value);
+            compoundSamples.push(laplaceSample(location, scale, sample));
+        } else if (secondaryType === 'binomial') {
+            const n = parseInt(document.getElementById('binomialN').value);
+            const p = parseFloat(document.getElementById('binomialP').value);
+            compoundSamples.push(binomialSample(n, p, sample));
+        } else if (secondaryType === 'degenerate') {
+            const value = parseFloat(document.getElementById('degenerateValue').value);
+            compoundSamples.push(degenerateSample(value, sample));
+        } else if (secondaryType === 'random-walk') {
+            const p = parseFloat(document.getElementById('randomWalkP').value);
+            compoundSamples.push(randomWalkSample(p, sample));
         }
     });
 
@@ -148,6 +219,55 @@ function uniformSample(min, max, factor = 1) {
     return factor * (min + (max - min) * Math.random());
 }
 
+function gammaSample(shape, scale, factor = 1) {
+    let d = shape - 1 / 3;
+    let c = 1 / Math.sqrt(9 * d);
+    let z, u, v;
+
+    do {
+        do {
+            z = normalSample(0, 1);
+            v = Math.pow(1 + c * z, 3);
+        } while (v <= 0);
+
+        u = Math.random();
+    } while (u > 1 - 0.331 * Math.pow(z, 4) && Math.log(u) > 0.5 * z * z + d * (1 - v + Math.log(v)));
+
+    return factor * d * v * scale;
+}
+
+function betaSample(alpha, beta, factor = 1) {
+    const gamma1 = gammaSample(alpha, 1);
+    const gamma2 = gammaSample(beta, 1);
+    return factor * (gamma1 / (gamma1 + gamma2));
+}
+
+// Add sampling functions for Inverse Gamma and Laplace distributions
+function inverseGammaSample(shape, scale, factor = 1) {
+    const gammaSampleValue = gammaSample(shape, 1);
+    return factor * (scale / gammaSampleValue);
+}
+
+function laplaceSample(location, scale, factor = 1) {
+    const u = Math.random() - 0.5;
+    return factor * (location - scale * Math.sign(u) * Math.log(1 - 2 * Math.abs(u)));
+}
+function binomialSample(n, p, factor = 1) {
+    let successes = 0;
+    for (let i = 0; i < n; i++) {
+        if (Math.random() < p) successes++;
+    }
+    return factor * successes;
+}
+
+function degenerateSample(value, factor = 1) {
+    return factor * value;
+}
+
+// Add sampling function for Random Walk
+function randomWalkSample(p = 0.5, factor = 1) {
+    return factor * (Math.random() < p ? 1 : -1);
+}
 // Function to plot the compound distribution using Chart.js
 function plotCompoundDistribution(data) {
     const ctx = document.getElementById('compoundChart').getContext('2d');
