@@ -176,19 +176,20 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
         plotMixture(mixtureData, componentData, components, xMin, xMax, yMin, yMax);
     }
     
-    // Generate mixture data from the component inputs
-    // Generate convolution data from the component inputs
     function generateConvolutionData(components) {
         const xValues = [];
         const componentYValues = [];
+    
         const xMin = parseFloat(document.getElementById('xMin').value);  // User-defined xMin
         const xMax = parseFloat(document.getElementById('xMax').value);  // User-defined xMax
         const interval = parseFloat(document.getElementById('interval').value);  // User-defined interval
     
-        const numPoints = Math.ceil((xMax - xMin) / interval);  // Calculate number of points based on x-range and interval
+        // Calculate the number of points based on the x-range and interval
+        const numPoints = Math.ceil((xMax - xMin) / interval);  
         
+        // Generate x-values starting from xMin
         for (let i = 0; i <= numPoints; i++) {
-            const x = xMin + i * interval;  // Generate x-values starting from xMin
+            const x = xMin + i * interval;
             xValues.push(x);
         }
     
@@ -208,7 +209,6 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
             } else if (component.distType === 'laplace') {
                 componentY = laplacePDF(xValues, component.location, component.scale);
             }
-            // Add additional cases for uniform or other distributions here
             componentYValues.push(componentY);
         });
     
@@ -221,21 +221,37 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
         return { xValues, convolvedY, componentYValues };
     }
 
-// Convolution of two discrete functions using numerical integration approximation
+// Convolution of two continuous PDFs using numerical integration approximation
 function convolve(f, g, xValues) {
     const result = [];
     const dx = xValues[1] - xValues[0];  // Step size based on x-values
+    const xMin = xValues[0];             // Starting x-value
+    const N = xValues.length;
 
-    for (let x = 0; x < xValues.length; x++) {
+    for (let n = 0; n < N; n++) {
         let sum = 0;
-        for (let i = 0; i <= x; i++) {
-            sum += f[i] * g[x - i] * dx;
+
+        const x_n = xValues[n];
+
+        for (let k = 0; k < N; k++) {
+            const x_k = xValues[k];
+            const x_m = x_n - x_k;  // x_m = x_n - x_k
+
+            // Find index m such that xValues[m] == x_m
+            const m = Math.round((x_m - xMin) / dx);
+
+            // Check if m is within bounds
+            if (m >= 0 && m < N) {
+                sum += f[k] * g[m] * dx;
+            }
         }
+
         result.push(sum);
     }
 
     return result;
 }
+
     
    // Gaussian PDF function
 function gaussianPDF(xValues, mean, stdDev) {
@@ -330,7 +346,7 @@ function plotConvolutionAndComponents(convolutionData, components, xMin, xMax, y
     window.mixtureChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: convolutionData.xValues,  // Use xValues for labels
+            labels: convolutionData.xValues,  // Use xValues for labels to reflect the correct x-axis range
             datasets: [convolutionDataset, ...componentDatasets]  // Include convolution and individual component datasets
         },
         options: {
