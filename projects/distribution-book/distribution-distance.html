@@ -69,10 +69,60 @@
                
                 </ol>
 
+                <h3>Notion of Distance Between Distributions</h3>
+
+                In regular geometry, distances, especially L2 or Euclidian, are intuitive and have several properties that we take for granted. When we start talking about distances between distributions, some of these properties may not hold. 
+                One term is a <strong>metric</strong>, d(a,b) which has properties:
+
+                <ol>
+                    <li>Distance to itself is 0; \(d(a,a)=0\)</li>
+                    <li>Distances are positive if not covered by the first axiom. If \(a\neq b\), \(d(a,b)\gt 0\)</li>
+                    <li>Distance from A to B is the same as the distance from B to A (Symmetry); \(d(a,b)=d(b,a)\) </li>
+                    <li>Triangle Inequality, which given 3 points and 2 known distances between them, places a range on possible values for the unknown 3rd distance. \(d(a,c)\leq d(a,b)+d(b,c)\)</li>
+
+                </ol>
+
+                In probability theory and statistics, it is often necessary to measure the distance or similarity between probability distributions. 
+                This begs the question, what does it mean for two probability distributions to be close or far apart? The idea of distance between distributions captures how different two distributions are in terms of their likelihood of producing the same outcomes. Unlike traditional geometric distances, the space of probability distributions is not inherently spatial, and the comparison involves aspects such as shape, spread, and probability mass. 
 
 
 
-                 
+                <h3>Total Variational Distance</h3>
+
+                The Total Variation Distance (TVD) between two probability distributions P and Q on a measurable space \(\Omega\) is defined as:
+
+                $$\delta_{TV}(P,Q)=\sup_{A\subset\Omega}|P(A)-Q(A)|$$
+
+
+
+                 The TVD obeys the properties of a metric. 
+
+                <h3>Kullback-Leibler Divergence</h3>
+                Shannon Entropy in Information Theory is given by
+
+                $$H(X)=-\sum_{x\in\Omega}p(x)\log(p(x))$$
+
+                A continuous analogue, differential entropy, extends this concept to non-discrete variables:
+
+                $$H(X)=\mathbb{E}[-\log(f(X))]=\int_{\Omega}f(x)\log(f(x))dx$$
+
+                KL Divergence builds off that idea:
+                <br><br>
+                For continuous distributions,
+                $$D_{KL}(P||Q)=\int_{\Omega}f_P(x)\log\left(\frac{f_P(x)}{f_Q(x)}\right)dx$$
+                <br><br>
+                For discrete distributions:
+                $$D_{KL}(P||Q)=\sum_{x\in\Omega}P(x)\log\left(\frac{P(x)}{Q(x)}\right)$$
+
+                One important thing to note is that KL Divergence is not symmetric; i.e., \(D_{KL}(P||Q)\neq D_{KL}(Q||P)\) unless P=Q (almost surely). 
+                
+
+
+
+
+
+
+
 
                 </div>
 
@@ -87,7 +137,7 @@
                     <h2>Distribution Distance Practice Problems</h2>
 
                     <ol>
-                        <li>Draw the Distribution of Z where \(Z=X+Y\), \(X\sim U(0,1)\), and \(Y\sim U(0,2)\).</li>
+                       
                     </ol>
     
     
