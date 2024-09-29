@@ -2,9 +2,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
 
-    document.getElementById('numComponents').addEventListener('input', generateComponentInputs);
-    document.getElementById('generate-mixture').addEventListener('click', generateMixture);
+// Update the event listener for convolution
+document.getElementById('generate-mixture').addEventListener('click', () => {
+    const numComponents = parseInt(document.getElementById('numComponents').value);
+    const components = [];
+    const xMin = parseFloat(document.getElementById('xMin').value);
+    const xMax = parseFloat(document.getElementById('xMax').value);
+    const yMin = parseFloat(document.getElementById('yMin').value);
+    const yMax = parseFloat(document.getElementById('yMax').value);
 
+    for (let i = 1; i <= numComponents; i++) {
+        const distType = document.getElementById(`distType_${i}`).value;
+        const color = document.getElementById(`color_${i}`).value;  // Get the user-selected color
+
+        if (distType === 'normal') {
+            const mean = parseFloat(document.getElementById(`mean_${i}`).value);
+            const variance = parseFloat(document.getElementById(`variance_${i}`).value);
+            components.push({ distType, mean, variance, color });
+        } else if (distType === 'exponential') {
+            const rate = parseFloat(document.getElementById(`rate_${i}`).value);
+            components.push({ distType, rate, color });
+        } else if (distType === 'uniform') {
+            const min = parseFloat(document.getElementById(`min_${i}`).value);
+            const max = parseFloat(document.getElementById(`max_${i}`).value);
+            components.push({ distType, min, max, color });
+        }
+    }
+
+
+    const convolutionData = generateConvolutionData(components);
+    plotConvolutionAndComponents(convolutionData, components, xMin, xMax, yMin, yMax);
+});
 
     // document.getElementById('numComponents').addEventListener('input', generateComponentInputs);
 
@@ -31,8 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="input-field" id="parameters_${i}">
                     <!-- Default: Normal distribution inputs -->
-                    <label>Weight:</label>
-                    <input type="number" id="weight_${i}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                     <label>Mean:</label>
                     <input type="number" id="mean_${i}" value="${i}" inputmode="decimal">
                     <label>Variance:</label>
@@ -89,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <label>Alpha (α):</label>
                 <input type="number" id="alpha_${index}" value="2" inputmode="decimal">
                 <label>Beta (β):</label>
-                <input type="number" id="beta_${index}" value="2" inputmode="decimal">
+                <input type="number" id="beta_${index}" value="5" inputmode="decimal">
             `;
         } else if (distType === 'gamma') {
             parametersDiv.innerHTML = `
@@ -137,18 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const min = parseFloat(document.getElementById(`min_${i}`).value);
                 const max = parseFloat(document.getElementById(`max_${i}`).value);
                 components.push({ weight, distType, min, max, color });
-            } else if (distType == 'beta'){
-                const alpha = parseFloat(document.getElementById(`alpha_${i}`).value);
-                const beta = parseFloat(document.getElementById(`beta_${i}`).value);
-                components.push({ weight, distType, alpha, beta, color });
-            } else if (distType == 'gamma'){
-                const shape = parseFloat(document.getElementById(`shape_${i}`).value);
-                const rate = parseFloat(document.getElementById(`rate_${i}`).value);
-                components.push({ weight, distType, shape, rate, color });
-            } else if (distType == 'laplace'){
-                const location = parseFloat(document.getElementById(`location_${i}`).value);
-                const scale = parseFloat(document.getElementById(`scale_${i}`).value);
-                components.push({ weight, distType, location, scale, color });
             }
     
             weightSum += weight;
@@ -163,66 +177,84 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Generate mixture data from the component inputs
-    function generateMixtureData(components) {
+    // Generate convolution data from the component inputs
+    function generateConvolutionData(components) {
         const xValues = [];
-        const yValues = [];
-        let weightSum = 0;
-        const componentYValues = components.map(() => []); 
+        const componentYValues = [];
         const xMin = parseFloat(document.getElementById('xMin').value);  // User-defined xMin
         const xMax = parseFloat(document.getElementById('xMax').value);  // User-defined xMax
         const interval = parseFloat(document.getElementById('interval').value);  // User-defined interval
     
         const numPoints = Math.ceil((xMax - xMin) / interval);  // Calculate number of points based on x-range and interval
         
-    
         for (let i = 0; i <= numPoints; i++) {
             const x = xMin + i * interval;  // Generate x-values starting from xMin
             xValues.push(x);
-    
-            // Mixture distribution calculation
-            let mixtureY = 0;
-            components.forEach((component, index) => {
-                let componentY = 0;
-                if (component.distType === 'normal') {
-                    componentY = component.weight * gaussianPDF(x, component.mean, Math.sqrt(component.variance));
-                } else if (component.distType === 'exponential') {
-                    componentY = component.weight * exponentialPDF(x, component.rate);
-                } else if (component.distType === 'uniform') {
-                    componentY = component.weight * uniformPDF(x, component.min, component.max);
-                } else if (component.distType === 'beta') {
-                    componentY = component.weight * betaPDF(x, component.alpha, component.beta);
-                } else if (component.distType === 'gamma') {
-                    componentY = component.weight * gammaPDF(x, component.shape, component.rate);
-                } else if (component.distType === 'laplace') {
-                    componentY = component.weight * laplacePDF(x, component.location, component.scale);
-                }
-                mixtureY += componentY;
-                componentYValues[index].push(componentY);  // Store the individual component Y-values
-            });
-            
-            yValues.push(mixtureY);
         }
     
-        // return { xValues, yValues };
-        return { mixtureData: { xValues, yValues }, componentData: { xValues, componentYValues } };
-    }
+        // Calculate individual component PDFs
+        components.forEach(component => {
+            let componentY = [];
+            if (component.distType === 'normal') {
+                componentY = gaussianPDF(xValues, component.mean, Math.sqrt(component.variance));
+            } else if (component.distType === 'exponential') {
+                componentY = exponentialPDF(xValues, component.rate);
+            } else if (component.distType === 'uniform') {
+                componentY = xValues.map(x => uniformPDF(x, component.min, component.max));
+            } else if (component.distType === 'beta') {
+                componentY = xValues.map(x => betaPDF(x, component.alpha, component.beta));
+            } else if (component.distType === 'gamma') {
+                componentY = gammaPDF(xValues, component.shape, component.rate);
+            } else if (component.distType === 'laplace') {
+                componentY = laplacePDF(xValues, component.location, component.scale);
+            }
+            // Add additional cases for uniform or other distributions here
+            componentYValues.push(componentY);
+        });
     
-    // Gaussian PDF
-    function gaussianPDF(x, mean, stdDev) {
+        // Convolve the components to get the final distribution
+        let convolvedY = componentYValues[0];  // Start with the first component
+        for (let i = 1; i < componentYValues.length; i++) {
+            convolvedY = convolve(convolvedY, componentYValues[i], xValues);  // Convolve with the next component
+        }
+    
+        return { xValues, convolvedY, componentYValues };
+    }
+
+// Convolution of two discrete functions using numerical integration approximation
+function convolve(f, g, xValues) {
+    const result = [];
+    const dx = xValues[1] - xValues[0];  // Step size based on x-values
+
+    for (let x = 0; x < xValues.length; x++) {
+        let sum = 0;
+        for (let i = 0; i <= x; i++) {
+            sum += f[i] * g[x - i] * dx;
+        }
+        result.push(sum);
+    }
+
+    return result;
+}
+    
+   // Gaussian PDF function
+function gaussianPDF(xValues, mean, stdDev) {
+    return xValues.map(x => {
         const exponent = -Math.pow(x - mean, 2) / (2 * Math.pow(stdDev, 2));
         return (1 / (stdDev * Math.sqrt(2 * Math.PI))) * Math.exp(exponent);
-    }
-    
-    // Exponential PDF
-    function exponentialPDF(x, rate) {
-        return (x >= 0) ? rate * Math.exp(-rate * x) : 0;
-    }
-    
-    // Uniform PDF
-    function uniformPDF(x, min, max) {
-        return (x >= min && x <= max) ? 1 / (max - min) : 0;
-    }
-    
+    });
+}
+
+// Exponential PDF function
+function exponentialPDF(xValues, rate) {
+    return xValues.map(x => (x >= 0) ? rate * Math.exp(-rate * x) : 0);
+}
+
+// Uniform PDF
+function uniformPDF(x, min, max) {
+    return (x >= min && x <= max) ? 1 / (max - min) : 0;
+}
+
 
 // Beta PDF
 function betaPDF(x, alpha, beta) {
@@ -263,68 +295,70 @@ function gammaFunction(z) {
 
 
 
-    function plotMixture(mixtureData, componentData, components, xMin, xMax, yMin, yMax) {
-        const ctx = document.getElementById('mixtureChart').getContext('2d');
-    
-        // Check if mixtureChart already exists and is an instance of Chart, then destroy it
-        if (window.mixtureChart instanceof Chart) {
-            window.mixtureChart.destroy();
-        }
-    
-        // Prepare datasets for each component
-        const componentDatasets = componentData.componentYValues.map((componentY, index) => ({
-            label: `Component ${index + 1}`,
-            data: componentY,
-            borderColor: components[index].color,  // Use the selected color
-            backgroundColor: components[index].color + '33',  // Transparent fill
-            borderDash: [5, 5],  // Dashed line for component distributions
-            fill: true,
-            pointRadius: 1
-        }));
-    
-        // Add the mixture distribution dataset
-        const mixtureDataset = {
-            label: 'Mixture Distribution',
-            data: mixtureData.yValues,
-            borderColor: 'blue',
-            fill: false,
-            pointRadius: 1
-        };
-    
-        // Create a new Chart with custom bounds
-        window.mixtureChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: mixtureData.xValues,
-                datasets: [mixtureDataset, ...componentDatasets]  // Include all component datasets
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        min: xMin,  // Use user-defined xMin
-                        max: xMax,  // Use user-defined xMax
-                        title: {
-                            display: true,
-                            text: 'x'
-                        }
-                    },
-                    y: {
-                        min: yMin,  // Use user-defined yMin
-                        max: yMax,  // Use user-defined yMax
-                        title: {
-                            display: true,
-                            text: 'PDF'
-                        }
+
+function plotConvolutionAndComponents(convolutionData, components, xMin, xMax, yMin, yMax) {
+    const ctx = document.getElementById('mixtureChart').getContext('2d');
+
+    // Check if the chart already exists and destroy it
+    if (window.mixtureChart instanceof Chart) {
+        window.mixtureChart.destroy();
+    }
+
+    // Prepare datasets for individual components
+    const componentDatasets = convolutionData.componentYValues.map((componentY, index) => ({
+        label: `Component ${index + 1}`,
+        data: componentY,
+        borderColor: components[index].color,  // Use the selected color
+        backgroundColor: components[index].color + '33',  // Transparent fill
+        borderDash: [5, 5],  // Dashed line for component PDFs
+        fill: true,
+        pointRadius: 1,
+        tension: 0.4  // Optional: smooth line
+    }));
+
+    // Dataset for the final convolved result
+    const convolutionDataset = {
+        label: 'Convolution',
+        data: convolutionData.convolvedY,
+        borderColor: 'blue',
+        fill: false,
+        pointRadius: 1,
+        tension: 0.4  // Optional: smooth line
+    };
+
+    // Create a new Chart with custom bounds
+    window.mixtureChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: convolutionData.xValues,  // Use xValues for labels
+            datasets: [convolutionDataset, ...componentDatasets]  // Include convolution and individual component datasets
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    min: xMin,  // User-defined xMin
+                    max: xMax,  // User-defined xMax
+                    title: {
+                        display: true,
+                        text: 'x'
+                    }
+                },
+                y: {
+                    min: yMin,  // User-defined yMin
+                    max: yMax,  // User-defined yMax
+                    title: {
+                        display: true,
+                        text: 'PDF'
                     }
                 }
             }
-        });
-    }
+        }
+    });
+}
+
     
-    
-    // Initialize the component inputs
-    generateComponentInputs();
-    
+generateComponentInputs();
+
     
 });
