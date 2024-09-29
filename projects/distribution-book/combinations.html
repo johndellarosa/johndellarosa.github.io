@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Convolution</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Copulas">
+                <h1>Convolution</h1>
+                <h2>Introduction to Convolution</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+
+
+
+
+                <h3>Building Intuition</h3>
+                Let X and Y be two randomly distributed variables. What are the properties of X+Y? 
+                For some properties, this is easy. The mean and variance
+                <ol>
+                    <li>\(\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]\)
+                        <ul>
+                            <li>Note that this does not depend on the correlation between the two variables</li>
+                        </ul>
+                    </li>
+                    <li>\(\text{Var}[X+Y]=\text{Var}[X]+\text{Var}[Y]+2\text{Cov}[X,Y]\)</li>
+                </ol>
+                But what about the distribution? 
+                <br>
+                This is a bit more involved to try to calculate. Let's try to get an understanding for how we might approach this. 
+                <br>
+                Let us incrementally solve for harder systems.
+
+                <h4>Two Bernoulli Distributions</h4>
+                Let us consider two independent Bernoulli distributed variables, X and Y.
+                <ul>
+                    <li>\(P(X=1)=p\); \(P(X=0)=1-p\)</li>
+                    <li>\(P(Y=1)=q\); \(P(Y=0)=1-q\)</li>
+                </ul>
+
+                Using our set theory notation, let's write out the possibilities for X+Y:
+                <ul>
+                    <li>X+Y=0: \(X=0\cap Y=0\)</li>
+                    <li>X+Y=1: \((X=1\cap Y=0)\cup(X=0\cap Y=1)\)</li>
+                    <li>X+Y=2: \(X=1\cap Y=1\)</li>
+                </ul>
+                While this may be a bit overkill, it helps us start with a basic system and extrapolate to more advanced cases. 
+                In fact, the above list of outcomes holds even if the variables aren't independent!
+                <br><br>
+                Now to get the distribution, we can just take the probability of each outcome. Because X and Y can only take one value at a time each, the events X=0 and X=1 are mutually exclusive and same with Y=0 and Y=1. 
+                This makes the calculation for X+Y=1 simpler as we don't have to invoke the Inclusion-Exclusion Principle.
+
+                $$P(X+Y=0) = P(X=0\cap Y=0)$$
+                $$P(X+Y=1)=P(X=1\cap Y=0)+P(X=0\cap Y=1)$$
+                $$P(X+Y=2) = P(X=1\cap Y=1)$$
+                Again, this calculation holds regardless of whether X and Y are independent. 
+
+                <br><br>
+                <h5>Independent</h5>
+                In the case of independence, we can write the probabilities as follows:
+                $$P(X+Y=0) = P(X=0)P(Y=0)$$
+                $$P(X+Y=1)=P(X=1)P(Y=0)+P(X=0)P(Y=1)$$
+                $$P(X+Y=2) = P(X=1)P(Y=1)$$
+
+                Substituting in our values for the probabilities:
+
+                $$P(X+Y=0)=(1-p)(1-q)$$
+                $$P(X+Y=1)=p(1-q)+(1-p)q$$
+                $$P(X+y=2)=pq$$
+
+                <h5>Example: Convolution of Two Independent Binomials</h5>
+                <figure>
+                <img src="./../biophysics-book/convolution.png" alt="Convolution of Two Independent Binomials" style="margin:auto; display: block;  width:clamp(300px,40vw, 800px)" loading="lazy" />
+                <figcaption>Discrete Convolution PMF Example</figcaption>
+
+
+                 </figure>
+                <h5>Non Independent</h5>
+                If X and Y are not independent, we cannot simply factor out the probabilities. However, we can use the definition of conditional probability to rewrite.
+                $$P(X+Y=0)=P(Y=0|X=0)P(X=0)$$
+                $$P(X+Y=1)=P(Y=0|X=1)P(X=1)+P(Y=1|X=0)P(X=0)$$
+                $$P(X+Y=2)=P(Y=1|X=1)P(X=1)$$
+
+
+                In this example, I used the probability of X and the probability of Y given X, but this could have just as easily been reversed according to Bayes' Law. 
+
+                <h2>General Case</h2>
+                By now, hopefully the way to generalize this is clearer. Note that this should not be confused with the concept of mixture distributions where the pdf is a combination of other pdfs. With convolution, we are summing the variables themselves.
+
+
+
+
+                <h3>Discrete</h3>
+                Let X and Y now be any two discrete distributions that have PMFs \(f_{X}(x)\) and \(f_Y(y)\) respectively. 
+                The <strong>convolution</strong> of \(f_X\) and \(f_Y\) is a new function, which we shall denote \(f_Z(z)\), which corresponds to the PMF of a variable Z, such that 
+                \(Z=X+Y\). Mathematically, this convolution of \(p_X\) and \(p_Y\), denoted \(p_X\star p_Y\), is defined as:
+
+                $$P(Z=z)=p_X\star p_Y=\sum_{w\in\text{supp}(p_X)}P(Y=z-w|X=w)P(X=w)$$
+
+
+
+                <h3>Continuous</h3>
+
+                For a continuous X and Y, we can write this as:
+
+                $$f_{Z}(z)=f_X\star f_Y=\int_{-\infty}^{\infty}f_{Y|X}(z-w|w)f_{X}(w)dw$$
+
+                <h3>Independence</h3>
+                You can think of this as taking the sum of the probabilities of all the possible ways that X and Y can add up to a target value.
+
+                <br><br>
+                If the two random variables are independent, then we can simplify the conditional probabilities and conditional densities to just be the regular probability and marginal density.
+
+                <h4>Discrete</h4>
+                $$p_Z(z)=\sum_{w\in\text{supp}(p_X)}P_X(w)p_Y(z-k)$$
+
+
+                <h4>Continuous</h4>
+                $$f_Z(z)=\int_{-\infty}^{\infty}f_X(x)f_Y(z-x)dx$$
+
+                <h3>Properties</h3>
+
+                <h4>Commutivity</h4>
+                $$f_X\star f_Y=f_Y \star f_X$$
+                The order of convolution does not matter, this can be shown by a change of variables. 
+
+                <h4>Associativity</h4>
+                Let X, Y, Z be three random variables with PDFs \(f_X\),\(f_Y\), \(f_Z\) respectively. 
+
+                $$(f_X\star f_Y)\star f_Z = f_X \star (f_Y\star f_Z)$$
+
+                The same holds for discrete variables as well.
+
+                <h4>Distributive over Addition</h4>
+                $$f_X\star (f_Y+f_Z)=(f_X\star f_Y)+(f_X\star f_Z)$$
+                This can be useful if convolving with mixture distributions, where you have a weighted sum of densities. 
+
+                <h4>Identity Element</h4>
+                The Dirac delta "function" is a distribution that integrates to 1 and has non-zero density at a single point. 
+
+                $$f_X\star \delta(x)=f_X(x)$$
+
+
+                 <h3>Similar Extensions</h3>
+
+                 Similar to how we derived the distribution for the sum, we can do it for other binary operations as well by summing up the probabilities of all the difference ways to obtain a given value. 
+
+                 <h4>Product Distribution</h4>
+
+                 Let X and Y be independent random variables, the distribution of a random variable Z that is given by \(Z=XY\) is a product distribution. 
+
+                 $$f_Z(z)=\int_{-\infty}^{\infty}f_X(x)f_Y(z/x)\frac{1}{|x|}dx$$
+
+                <h2>Stable Distributions</h2>
+
+                Some distributions have the nice property that linear combinations of random variables who are of its kind yield another random variable that is distributed with that distribution, albeit with different parameters. 
+                The two main examples that we will see are Normal (Gaussian) distributions and Poisson distributions.
+                This is convenient because we can get a closed form version without having to go through all the effort of convolution.
+
+
+
+
+                <h4>Example: Normal Distribution</h4>
+
+                For independent X, Y with Z=X+Y. 
+
+                $$Z\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$$
+
+                 <h4>Formal Definition</h4>
+                 A random variable \(X\) is said to follow a <strong>stable distribution</strong> if, for any \(X_1, X_2\) that are iid copies of \(X\), the sum 
+                 \(X_1+X_2\) is distributed as \(aX+b\) for some constants \(a\gt 0\) and \(b\in \mathbb{R}\). 
+
+                <h4>Characteristic Function</h4>
+                Stable distributions do not generally have closed-form expressions for their probability density functions (PDFs). Instead, they are typically described via their characteristic functions. 
+
+                $$\varphi_X(t)=\mathbb{E}[e^{itX}]=\exp\left(it\delta -|ct|^\alpha\left(1-i\beta\frac{t}{|t|}\tan(\frac{\pi\alpha}{2})\right)\right)$$
+                 where
+                 <ul>
+                    <li>\(\alpha\in(0,2]\) is the index of stability</li>
+                    <li>\(\beta\in[-1,1]\) is the skewness parameter</li>
+                    <li>\(c\gt0\) is the scale parameter</li>
+                    <li>\(\delta\in\mathbb{R}\) is the location parameter</li>
+                 </ul>
+
+                 When \(\alpha=2\) and \(\beta=0\), the distribution is a normal distribution. 
+
+                 <h3>Properties</h3>
+
+                 <h4>Heavy Tails</h4>
+
+                 For \(\alpha\lt 2\), the stable distribution has heavy tails and infinite variance
+
+                 <h4>Mean</h4>
+                 For \(\alpha\leq 1\), the mean is undefined. One example is the Cauchy distribution which has \(\alpha=1\) and \(\beta=0\). 
+
+
+
+                 
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Convolution Practice Problems</h2>
+
+                    <ol>
+                        <li>Draw the Distribution of Z where \(Z=X+Y\), \(X\sim U(0,1)\), and \(Y\sim U(0,2)\).</li>
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

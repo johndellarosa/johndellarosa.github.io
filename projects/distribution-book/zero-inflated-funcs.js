@@ -12,21 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (distType === 'binomial') {
             parametersDiv.innerHTML = `
                 <label>Trials (n):</label>
-                <input type="number" id="trials" value="10">
+                <input type="number" id="trials" value="10" inputmode="numeric">
                 <label>Probability (p):</label>
-                <input type="number" id="probability" min="0" max="1" step="0.01" value="0.5">
+                <input type="number" id="probability" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
             `;
         } else if (distType === 'negative_binomial') {
             parametersDiv.innerHTML = `
                 <label>Successes (n):</label>
-                <input type="number" id="successes" value="5">
+                <input type="number" id="successes" value="5" inputmode="numeric">
                 <label>Probability (p):</label>
-                <input type="number" id="probability" min="0" max="1" step="0.01" value="0.5">
+                <input type="number" id="probability" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
             `;
         } else if (distType === 'poisson') {
             parametersDiv.innerHTML = `
                 <label>Rate (λ):</label>
-                <input type="number" id="rate" value="3">
+                <input type="number" id="rate" value="3" inputmode="decimal">
             `;
         }
     }
