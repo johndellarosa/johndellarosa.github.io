@@ -53,6 +53,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 <input type="number" id="chiDF" value="2" inputmode="numeric">
                 <p><strong>Support:</strong> (0, ∞) (All outputs will be positive)</p>
             `;
+        } else if (primaryType === 'lognormal') {
+            primaryParams.innerHTML = `
+                <label for="lognormalMean">Mean of log (μ):</label>
+                <input type="number" id="lognormalMean" value="0" inputmode="decimal">
+                <label for="lognormalStdDev">Std Dev of log (σ):</label>
+                <input type="number" id="lognormalStdDev" value="1" inputmode="decimal">
+                <p><strong>Support:</strong> (0, ∞) (All outputs will be positive)</p>
+            `;
+        } else if (primaryType === 'weibull') {
+            primaryParams.innerHTML = `
+                <label for="weibullShape">Shape (k):</label>
+                <input type="number" id="weibullShape" value="1.5" inputmode="decimal">
+                <label for="weibullScale">Scale (λ):</label>
+                <input type="number" id="weibullScale" value="1" inputmode="decimal">
+                <p><strong>Support:</strong> (0, ∞) (All outputs will be positive)</p>
+            `;
         }
     }
     
@@ -82,6 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } else if (secondaryType === 'geometric') {
             secondaryParams.innerHTML = `<p>Using probability (p) from the primary distribution. <br> <strong>Note:</strong> p must be between 0 and 1.</p>`;
+        } else if (secondaryType === 'negativeBinomial') {
+            secondaryParams.innerHTML = `
+                <label for="negativeBinomialN">n (number of successes):</label>
+                <input type="number" id="negativeBinomialN" value="10" inputmode="numeric">
+                <p>Using probability (p) from the primary distribution. <br> <strong>Note:</strong> p must be between 0 and 1.</p>
+            `;
+        } else if (secondaryType === 'weibull') {
+            secondaryParams.innerHTML = `
+                <label for="weibullShapeSecondary">Shape (k):</label>
+                <input type="number" id="weibullShapeSecondary" value="1.5" inputmode="decimal">
+                <p>Using scale parameter (λ) from the primary distribution.</p><br> <strong>Note:</strong> Lambda must be positive.</p>
+            `;
         }
     }
     
@@ -140,12 +168,32 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < numSimulations; i++) {
                 primarySamples.push(chiSquaredSample(df));
             }
+        } else if (primaryType === 'lognormal') {
+            const mean = parseFloat(document.getElementById('lognormalMean').value);
+            const stdDev = parseFloat(document.getElementById('lognormalStdDev').value);
+            for (let i = 0; i < numSimulations; i++) {
+                primarySamples.push(lognormalSample(mean, stdDev));
+            }
+        } else if (primaryType === 'weibull') {
+            const shape = parseFloat(document.getElementById('weibullShape').value);
+            const scale = parseFloat(document.getElementById('weibullScale').value);
+            for (let i = 0; i < numSimulations; i++) {
+                primarySamples.push(weibullSample(shape, scale));
+            }
         }
+
+        // Validate and filter primary samples based on secondary distribution requirements
+    const validSamples = primarySamples.filter(param => isValidForSecondary(param, secondaryType));
+    
+    if (validSamples.length !== numSimulations) {
+        alert("Invalid configuration: some primary samples are not in the valid range for the secondary distribution.");
+        return; // Stop execution if invalid samples are detected
+    }
 
     
         // Generate the compound distribution samples based on the secondary distribution
         let compoundSamples = [];
-        primarySamples.forEach(param => {
+        validSamples.forEach(param => {
             if (secondaryType === 'poisson') {
                 if (param <= 0) {
                     alert("λ (rate) must be positive for Poisson distribution.");
@@ -171,7 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
       
             } else if (secondaryType === 'geometric') {
                 compoundSamples.push(geometricSample(param)); // p from primary
-            }
+            } else if (secondaryType === 'negativeBinomial') {
+                const n = parseInt(document.getElementById('negativeBinomialN').value);
+                compoundSamples.push(negativeBinomialSample(n, param));
+            } else if (secondaryType === 'weibull') {
+                const shapeSecondary = parseFloat(document.getElementById('weibullShapeSecondary').value);
+                compoundSamples.push(weibullSample(shapeSecondary, param));            }
         });
     
         // Plot the compound distribution
@@ -268,6 +321,44 @@ document.addEventListener('DOMContentLoaded', () => {
     function geometricSample(p) {
         return Math.ceil(Math.log(1 - Math.random()) / Math.log(1 - p));
     }
+
+    function lognormalSample(mean, stdDev) {
+        const normal = normalSample(mean, stdDev);
+        return Math.exp(normal);
+    }
+    
+    function weibullSample(shape, scale) {
+        return scale * Math.pow(-Math.log(Math.random()), 1 / shape);
+    }
+    
+    function negativeBinomialSample(n, p) {
+        let failures = 0;
+        let successes = 0;
+        while (successes < n) {
+            if (Math.random() < p) {
+                successes++;
+            } else {
+                failures++;
+            }
+        }
+        return failures;
+    }
+
+    function isValidForSecondary(param, secondaryType) {
+        if (secondaryType === 'poisson' || secondaryType === 'exponential') {
+            return param > 0; // Poisson and Exponential require rate > 0
+        } else if (secondaryType === 'binomial' || secondaryType === 'geometric') {
+            return param >= 0 && param <= 1; // Binomial and Geometric require probability in [0, 1]
+        } else if (secondaryType === 'normal') {
+            return param > 0; // Normal variance must be > 0
+        } else if (secondaryType === 'negativeBinomial') {
+            return param >= 0 && param <= 1; // Negative binomial requires probability in [0, 1]
+        } else if (secondaryType === 'weibull') {
+            return param > 0; // Weibull scale parameter must be > 0
+        }
+        return true; // If no specific restriction, consider it valid
+    }
+    
     
     // Plot function with better axis range handling
     function plotCompoundDistribution(data, numBins, xMin, xMax, yMin, yMax) {
@@ -401,6 +492,14 @@ function updateDistributionFormulas() {
     } else if (primaryType === 'chiSquared') {
         const df = parseFloat(document.getElementById('chiDF').value);
         primaryLatex = `f(x; k) = \\frac{1}{2^{k/2} \\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}, \\; k=${df}, \\; x \\geq 0`;
+    } else if (primaryType === 'lognormal') {
+        const mean = parseFloat(document.getElementById('lognormalMean').value);
+        const stdDev = parseFloat(document.getElementById('lognormalStdDev').value);
+        primaryLatex = `f(x; \\mu, \\sigma) = \\frac{1}{x \\sigma \\sqrt{2\\pi}} e^{-\\frac{(\\ln x - \\mu)^2}{2 \\sigma^2}}, \\; \\mu=${mean}, \\; \\sigma=${stdDev}, \\; x > 0`;
+    } else if (primaryType === 'weibull') {
+        const shape = parseFloat(document.getElementById('weibullShape').value);
+        const scale = parseFloat(document.getElementById('weibullScale').value);
+        primaryLatex = `f(x; k, \\lambda) = \\frac{k}{\\lambda} \\left( \\frac{x}{\\lambda} \\right)^{k-1} e^{-\\left( \\frac{x}{\\lambda} \\right)^{k}}, \\; k=${shape}, \\; \\lambda=${scale}, \\; x \\geq 0`;
     }
 
 
@@ -417,6 +516,12 @@ function updateDistributionFormulas() {
         secondaryLatex = `P(X=k) = \\binom{n}{k} p^k (1 - p)^{n - k}, \\; n=${n}, \\; p = \\text{from primary distribution}`;
     } else if (secondaryType === 'geometric') {
         secondaryLatex = `P(X=k) = (1 - p)^{k-1} p, \\; p = \\text{from primary distribution}`;
+    } else if (secondaryType === 'negativeBinomial') {
+        const n = parseInt(document.getElementById('negativeBinomialN').value);
+        secondaryLatex = `P(X=k) = \\binom{k + n - 1}{k} p^n (1 - p)^{k}, \\; n=${n}, \\; p = \\text{from primary distribution}`;
+    } else if (secondaryType === 'weibull') {
+        const shapeSecondary = parseFloat(document.getElementById('weibullShapeSecondary').value);
+        secondaryLatex = `f(x; k, \\lambda) = \\frac{k}{\\lambda} \\left( \\frac{x}{\\lambda} \\right)^{k-1} e^{-\\left( \\frac{x}{\\lambda} \\right)^{k}}, \\; k=${shapeSecondary}, \\lambda = \\text{from primary distribution}`;
     }
 
 
