@@ -312,7 +312,15 @@ def sample_binomial_binv(n, p):
                     <h2>Discrete Sampling Practice Problems</h2>
 
                     <ol>
-
+                        <li>Use rejection sampling to generate samples from a Beta distribution with \(\alpha=2,\beta=3\). Use a Uniform as the proposal distribution and scale appropriately. 
+                            For reference, the non-normalized PDF for a Beta Distribution is \(f(x|\alpha,\beta)=x^{\alpha-1}(1-x)^{\beta-1}\).
+                        </li>
+                        <li>Use rejection sampling to generate samples from a Raised Cosine distribution with \(\mu=0,s=1\). Use a Uniform as the proposal distribution and scale appropriately. 
+                            For reference, the PDF for a Raised Cosine Distribution is \(f(x|\mu,s)=\frac{1}{2s}\left[1+\cos\left(\frac{x-\mu}{s}\pi\right)\right]\) with \(x\in[\mu-s,\mu+s]\).
+                        </li>
+                        <li>Use rejection sampling to generate samples from a Wigner Semicircle distribution with \(R=2\). Use a Uniform as the proposal distribution and scale appropriately. 
+                            For reference, the PDF for a Wigner Semicircle Distribution is \(f(x|R)=\frac{2}{\piR^2}\sqrt{R^2-x^2}\) with \(x\in[\-R,R]\).
+                        </li>
                     </ol>
     
     
