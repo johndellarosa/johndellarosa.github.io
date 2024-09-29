@@ -33,7 +33,8 @@
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -236,7 +237,9 @@
                             <option value="normal">Normal</option>
                             <option value="exponential">Exponential</option>
                             <option value="uniform">Uniform</option>
-    
+                            <option value="beta">Beta</option>
+                            <option value="poisson">Poisson</option>
+                            <option value="lognormal">Lognormal</option>
                         </select></div>
                         <div class="slider-container">                     <div id="distributionParameters"></div>    </div>
                         <div class="slider-container"><button id="process-btn" onclick="runSimulation()">Run Simulation</button></div>
@@ -357,6 +360,7 @@
     
                 </div>
         </div>
+        
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;

@@ -1,39 +1,7 @@
 let myChart; // Declare the chart variable globally
 let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
   
-// // Function to generate a random sample from a distribution
-// function generateSample(size, distribution) {
-//     let sample = [];
-//     // Handling parameters based on the distribution
-//     const mean = parseFloat(document.getElementById('mean') ? document.getElementById('mean').value : 0);
-//     const stdDev = parseFloat(document.getElementById('stdDev') ? document.getElementById('stdDev').value : 1);
-//     const lambda = parseFloat(document.getElementById('lambda') ? document.getElementById('lambda').value : 1);
-//     const min = parseFloat(document.getElementById('min') ? document.getElementById('min').value : 0);
-//     const max = parseFloat(document.getElementById('max') ? document.getElementById('max').value : 1);
-//     // const shape = parseFloat(document.getElementById('shape') ? document.getElementById('shape').value : 1);
-//     // const scale = parseFloat(document.getElementById('scale') ? document.getElementById('scale').value : 1);
-//     // const alpha = parseFloat(document.getElementById('alpha') ? document.getElementById('alpha').value : 1);
-//     // const beta = parseFloat(document.getElementById('beta') ? document.getElementById('beta').value : 1);
 
-//     for (let i = 0; i < size; i++) {
-//         switch (distribution) {
-//             case 'normal':
-//                 sample.push(math.randomNormal(mean, stdDev));
-//                 break;
-//             case 'exponential':
-//                 sample.push(math.randomExponential(lambda));
-//                 break;
-//             case 'uniform':
-//                 sample.push(math.random(min, max));
-//                 break;
-
-//         }
-//     }
-
-//     console.log("Sample data:", sample);
-    
-//     return sample;
-// }
 
 // Handle parameter inputs based on distribution type
 function updateDistributionParameters() {
@@ -54,7 +22,17 @@ function updateDistributionParameters() {
             html += '<label for="min">Min:</label> <input type="number" id="min" value="0" step="any" onchange="onParameterChange();" inputmode="decimal">';
             html += '<label for="max">Max:</label> <input type="number" id="max" value="1" step="any" onchange="onParameterChange();" inputmode="decimal">';
             break;
-
+        case 'beta':
+            html += '<label for="alpha">Alpha:</label> <input type="number" id="alpha" value="2" step="any" onchange="onParameterChange();" inputmode="decimal">';
+            html += '<label for="beta">Beta:</label> <input type="number" id="beta" value="2" step="any" onchange="onParameterChange();" inputmode="decimal">';
+            break;
+        case 'poisson':
+            html += '<label for="lambda">Lambda:</label> <input type="number" id="lambda" value="1" step="any" onchange="onParameterChange();" inputmode="decimal">';
+            break;
+        case 'lognormal':
+            html += '<label for="mu">Mu:</label> <input type="number" id="mu" value="0" step="any" onchange="onParameterChange();" inputmode="decimal">';
+            html += '<label for="sigma">Sigma:</label> <input type="number" id="sigma" value="1" step="any" onchange="onParameterChange();" inputmode="decimal">';
+            break;
     }
 
     container.innerHTML = html; // Set the appropriate HTML for parameters
@@ -116,7 +94,37 @@ function runSimulation() {
 
 }
 
-// Function to create histogram data (binning)
+// // Function to create histogram data (binning)
+// function createHistogramData(data, numBins) {
+//     let min = Math.min(...data);
+//     let max = Math.max(...data);
+//     const xMinInput = document.getElementById('xMin').value;
+//     const xMaxInput = document.getElementById('xMax').value;
+//     let xMinValue = isNaN(parseFloat(xMinInput)) ? min : parseFloat(xMinInput);
+//     let xMaxValue = isNaN(parseFloat(xMaxInput)) ? max : parseFloat(xMaxInput);
+
+//     min = Math.min(min, xMinValue);  // Ensure the bins cover the user specified range
+//     max = Math.max(max, xMaxValue);
+
+//     const binWidth = (max - min) / numBins;
+//     let bins = new Array(numBins).fill(0);
+//     let labels = [];
+
+//     for (let i = 0; i < numBins; i++) {
+//         const binStart = min + i * binWidth;
+//         labels.push(binStart.toFixed(2));
+//     }
+
+//     data.forEach(val => {
+//         if (val >= xMinValue && val <= xMaxValue) {
+//             const binIndex = Math.min(Math.floor((val - min) / binWidth), numBins - 1);
+//             bins[binIndex]++;
+//         }
+//     });
+
+//     return { labels: labels, values: bins };
+// }
+
 function createHistogramData(data, numBins) {
     let min = Math.min(...data);
     let max = Math.max(...data);
@@ -132,20 +140,32 @@ function createHistogramData(data, numBins) {
     let bins = new Array(numBins).fill(0);
     let labels = [];
 
+    // Jitter threshold for closely packed values (can be adjusted if needed)
+    const jitterThreshold = 0.00001;
+
     for (let i = 0; i < numBins; i++) {
         const binStart = min + i * binWidth;
-        labels.push(binStart.toFixed(2));
+        labels.push(binStart.toFixed(4));
     }
 
     data.forEach(val => {
         if (val >= xMinValue && val <= xMaxValue) {
-            const binIndex = Math.min(Math.floor((val - min) / binWidth), numBins - 1);
+            // Calculate the bin index
+            let binIndex = Math.min(Math.floor((val - min) / binWidth), numBins - 1);
+
+            // Jitter the value slightly if the data points are too close and would overlap
+            if (binIndex > 0 && Math.abs(data[binIndex - 1] - val) < jitterThreshold) {
+                val += jitterThreshold;
+                binIndex = Math.min(Math.floor((val - min) / binWidth), numBins - 1);
+            }
+
             bins[binIndex]++;
         }
     });
 
     return { labels: labels, values: bins };
 }
+
 
 // Function to generate a random sample from a distribution
 function generateSample(size, distribution) {
@@ -155,6 +175,10 @@ function generateSample(size, distribution) {
     const lambda = parseFloat(document.getElementById('lambda') ? document.getElementById('lambda').value : 1);
     const min = parseFloat(document.getElementById('min') ? document.getElementById('min').value : 0);
     const max = parseFloat(document.getElementById('max') ? document.getElementById('max').value : 1);
+    const alpha = parseFloat(document.getElementById('alpha') ? document.getElementById('alpha').value : 2);
+    const beta = parseFloat(document.getElementById('beta') ? document.getElementById('beta').value : 2);
+    const mu = parseFloat(document.getElementById('mu') ? document.getElementById('mu').value : 0);
+    const sigma = parseFloat(document.getElementById('sigma') ? document.getElementById('sigma').value : 1);
 
     for (let i = 0; i < size; i++) {
         switch (distribution) {
@@ -165,11 +189,23 @@ function generateSample(size, distribution) {
                 sample.push(z);
                 break;
             case 'exponential':
-                const x = -Math.log(1 - Math.random()) / lambda;
-                sample.push(x);
+                const exp = -Math.log(1 - Math.random()) / lambda;
+                sample.push(exp);
                 break;
             case 'uniform':
                 sample.push(min + Math.random() * (max - min));
+                break;
+            case 'beta':
+                const betaSample = jStat.beta.sample(alpha, beta);  // Using jStat for Beta
+                sample.push(betaSample);
+                break;
+            case 'poisson':
+                const pois = jStat.poisson.sample(lambda);  // Using jStat for Poisson
+                sample.push(pois);
+                break;
+            case 'lognormal':
+                const lognormal = Math.exp(mu + sigma * Math.random());
+                sample.push(lognormal);
                 break;
         }
     }
@@ -222,9 +258,9 @@ function plotHistogram(data, numBins) {
                     min: xMinValue,  // Set the x-axis minimum
                     max: xMaxValue,  // Set the x-axis maximum
                     ticks: {
-                        callback: function(value) {
-                            return value.toFixed(3);  // Round x-axis ticks
-                        }
+                        // callback: function(value) {
+                        //     return value.toFixed(3);  // Round x-axis ticks
+                        // }
                     }
                 },
                 y: {
