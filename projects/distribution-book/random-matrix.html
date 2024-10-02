@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Random Matrices</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Random matrix">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to random matrices.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/random-matrix"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Random-Matrix">
+                <h1>Random Matrices</h1>
+                <h2>Introduction to Random Matrices</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+
+                <h3>Building on Prior Sections</h3>
+                In the last couple of chapters, we covered multivariate distributions. Now, we shall extend this idea to random matrices, where some or all of the elements are random variables. 
+                <br><br>
+                To understand a random matrix, consider a matrix where each entry is determined by a random experiment. For example, imagine a matrix representing the returns of multiple stocks over several days. Each row corresponds to a stock, and each column to a day. The entries are random because stock returns are inherently unpredictable. 
+
+                Visually, a random matrix can be thought of as a grid or table filled with random numbers. Each element varies according to a specified probability distribution, and the entire matrix captures the collective randomness of a system with multiple interrelated components. 
+
+
+                <h2>Wishart Distribution</h2>
+
+                <h3>Introduction</h3>
+                The Wishart distribution extends the concept of the chi-squared distribution to multidimensional settings, dealing with matrices instead of scalar values. 
+
+                <h4>Definition</h4>
+                Let \(X\) be a \(p\times n\) matrix whose columns \(x_i\) are iid p-dimensional normal vectors with mean zero and covariance matrix \(\Sigma\). 
+
+                $$x_i\sim N_p(0,\Sigma),\quad i=1,2,\dots,n$$
+
+                Then the matrix
+
+                $$S=\sum_{i=1}^{n}x_ix_{i}^T=XX^T$$
+                follows a Wishart distribution with n degrees of freedom and scale matrix \(\Sigma\), denoted \(S\sim W_p(n,\Sigma)\).
+
+                <h4>Chi-Square Distribution</h4>
+                Since it was mentioned earlier, let's revisit the Chi-Square Distribution. If \(z_1,z_2,\dots,z_n\) are independent standard normal random variables, then the sum of their squares follows a chi-square distribution with n degrees of freedom:
+
+                $$Q=\sum_{i=1}^nz_{i}^2\sim \chi_{n}^2$$
+
+                <h4>Back to Wishart</h4>
+                Let's look at the Wishart distribution when \(p=1\). Well, since the columns are p-dimensional normals and \(p=1\), it is a scalar normal random variable \(x_i\sim N(0,\sigma^2)\). The Wishart matrix \(S\) reduces to:
+
+                $$S=\sum_{i=1}^nx_{i}^2$$
+
+                Dividing both sides by \(\sigma^2\),
+
+                $$=frac{S}{\sigma^2}=\sum_{i=1}^n\left(\frac{x_i}{\sigma}\right)^2$$
+
+                Since a 0-mean normal divided by its standard deviation is a standard normal along with our prior description of the Chi-Square distribution:
+
+                $$\frac{S}{\sigma^2}\sim \chi_{n}^2$$
+
+
+                <h3>Density Function</h3>
+
+                The PDF of the Wishart distribution is given by:
+
+                $$f(S)=\frac{|S|^{(n-p-1)/2}e^{-\frac{1}{2}\text{tr}(\Sigma^{-1}S)}}{2^{np/2}|\Sigma|^{n/2}\Gamma_p(\frac{n}{2})}$$
+                
+                where 
+                <ul>
+                    <li>\(|S|\) is the determinant of S</li>
+                    <li>\(\text{tr}(\Sigma^{-1}S)\) is the trace of the product \(\Sigma^{-1}S\)</li>
+                    <li>\(\Gamma_p(\frac{n}{2})\) is the multivariate gamma function.</li>
+                </ul>
+
+
+                
+            </div>
+
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Random Matrix Practice Problems</h2>
+
+                    <ol>
+                        
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

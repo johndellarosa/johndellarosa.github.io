@@ -196,6 +196,73 @@
 
                 If this condition does not hold, repeat the process starting from generating x from the proposal distribution. 
 
+                <h3>Alias Method</h3>
+                The Alias Method is one that is unique to discrete distributions, so we haven't covered it in the prior chapter. 
+                It's useful when there are many, but finite, possible values that the distribution could output. It is able to perform sampling at O(1) once the preprocessing is done, which makes it useful when many samples are needed to be drawn. 
+                For other methods, the time complexity of sampling could be O(n) if you need to traverse the support and compare it to the CDF, such as with inverse transform sampling.
+
+                <h4>Pre-processing</h4>
+                The Alias method involves constructing two tables: 
+                <ol>
+                    <li>Probability Table: Probabilities of the enumerated outcomes that are scaled such that it makes it easier to uniformly sample</li>
+
+                    <li>Alias Table: Stores the secondary outcomes that are used when the primary outcome's probability isn't high enough.</li>
+                </ol>
+
+                Each entry in these tables corresponds to one of the possible outcomes, and the sampling algorithm involves selecting a random index and deciding which outcome to return based on a simple comparison.
+
+                <h5>Normalize the Probabilities</h5>
+                Scale the original weights such that they sum up to 1 then multiply each probability by n, so that the average probability becomes 1:
+
+                $$p_{i}'=p_i\times n$$
+
+                Now, we have a set of modified probabilities \(p_{1}',p_{2}',\dots,p_{n}'\), where some values will be greater than 1 ("heavy"), and others will be less than 1 ("light").
+
+
+                <br><br>
+                We create two lists:
+
+                <ul>
+                    <li>A list of indices for overfilled outcomes</li>
+                    <li>A list of indices for underfilled outcomes</li>
+                </ul>
+
+                <h5>Construct the Probability and Alias Tables</h5>
+
+                <ol>
+                    <li>Probability table: stores values that correspond to the adjusted probabilities for each outcome</li>
+                    <li>Alias table: stores indices for the "alias" outcomes, which represent the secondary outcome that can be sampled if the primary outcome is not chosen.</li>
+                </ol>
+
+
+                Now the probabilities have to be balanced out:
+
+                <ul>
+                    
+                    <li>Select an underfilled outcome: take an index i from the list of underfilled outcomes. The probability of this outcome is less than 1, so it cannot be directly sampled from.</li>
+                    <li>Select an Overfilled Outcome: Take an index j from the list of overfilled outcomes. The probability for this is greater than 1, so we can "transfer" part of its excess to the underfilled outcome</li>
+                    <li>Set the entry in the <b>Probability Table</b> for outcome i to its current scaled probability \(p_{i}'\) (which is less than 1).</li>
+                    <li>Set the entry in the Alias Table for outcome i to point to outcome j, meaning the outcome j will serve as the alias for outcome i</li>
+                    <li>Adjust the probability for the overfilled outcome j by reducing it by the amount we gave to outcome i.
+                        $$p_j'\leftarrow p_j'-(1-p_i')$$
+                        where \(\leftarrow\) is the assignment operator. Now, the outcome i has total probability 1 (split between itself and outcome j), and the overfilled outcome j has less excess probability.
+
+                    </li>
+                    <li>Update the lists: if the probability for j has fallen below 1, move it to the list of underfilled outcomes. If j is still overfilled, leave it in the list of overfilled outcomes.</li>
+                
+                </ul>
+                
+                Repeat the above steps until all probabilities are close to 1. At the end of the process, each entry in the Probability Table will have a value less than or equal to 1, and each entry in the Alias table will store an alias for the corresponding outcome. Both lists should be empty. If not, there might be an outcome left that is close to 1. Just set that probability to 1 in the Probability Table and have it be its own alias. 
+
+                <h4>Sampling</h4>
+                <h5>Choose index</h5>
+                Pick a random index i uniformly from \(\{1,2,\dots,n\}\).
+
+                <h5>Sample Primary of Secondary</h5>
+                We now simulate a Bernoulli trial with p being the value in the Probability Table for index i. If success, then return i; else, return the alias stored in the Alias table at index i.
+                
+
+
                 <h2>Distribution-Specific Algorithms</h2>
 
                 While general methods like Inverse Transform Sampling and Rejection Sampling can be applied to any distribution, there are distribution-specific algorithms that offer more efficient sampling for particular distributions. These algorithms often take advantage of the structure of the distribution's probability mass function (PMF) or cumulative distribution function (CDF). Other properties that can be taken advantage of are convolution relationships, such as Bernoulli and Binomial; Geometric and Negative Binomial. 

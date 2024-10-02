@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Update the event listener for convolution
 document.getElementById('generate-mixture').addEventListener('click', () => {
-    const numComponents = parseInt(document.getElementById('numComponents').value);
+    const numComponents = 2//parseInt(document.getElementById('numComponents').value);
     const components = [];
     const xMin = parseFloat(document.getElementById('xMin').value);
     const xMax = parseFloat(document.getElementById('xMax').value);
@@ -26,6 +26,18 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
             const min = parseFloat(document.getElementById(`min_${i}`).value);
             const max = parseFloat(document.getElementById(`max_${i}`).value);
             components.push({ distType, min, max, color });
+        } else if (distType === 'beta') {
+            const alpha = parseFloat(document.getElementById(`alpha_${i}`).value);
+            const beta = parseFloat(document.getElementById(`beta_${i}`).value);
+            components.push({ distType, alpha, beta, color });
+        } else if (distType === 'gamma') {
+            const shape = parseFloat(document.getElementById(`shape_${i}`).value);
+            const rate = parseFloat(document.getElementById(`rate_${i}`).value);
+            components.push({ distType, shape, rate, color });
+        } else if (distType === 'laplace') {
+            const location = parseFloat(document.getElementById(`location_${i}`).value);
+            const scale = parseFloat(document.getElementById(`scale_${i}`).value);
+            components.push({ distType, location, scale, color });
         }
     }
 
@@ -37,7 +49,7 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
     // document.getElementById('numComponents').addEventListener('input', generateComponentInputs);
 
     function generateComponentInputs() {
-        const numComponents = parseInt(document.getElementById('numComponents').value);
+        const numComponents = 2//parseInt(document.getElementById('numComponents').value);
         const componentInputs = document.getElementById('componentInputs');
         componentInputs.innerHTML = '';  // Clear previous inputs
     
@@ -85,8 +97,6 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
     
         if (distType === 'normal') {
             parametersDiv.innerHTML = `
-                <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Mean:</label>
                 <input type="number" id="mean_${index}" value="${index}" inputmode="decimal">
                 <label>Variance:</label>
@@ -94,15 +104,11 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
             `;
         } else if (distType === 'exponential') {
             parametersDiv.innerHTML = `
-                <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Rate (λ):</label>
                 <input type="number" id="rate_${index}" value="1" inputmode="decimal">
             `;
         } else if (distType === 'uniform') {
             parametersDiv.innerHTML = `
-                <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Min:</label>
                 <input type="number" id="min_${index}" value="0" inputmode="decimal">
                 <label>Max:</label>
@@ -110,17 +116,13 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
             `;
         } else if (distType === 'beta') {
             parametersDiv.innerHTML = `
-                <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
-                <label>Alpha (α):</label>
+               <label>Alpha (α):</label>
                 <input type="number" id="alpha_${index}" value="2" inputmode="decimal">
                 <label>Beta (β):</label>
                 <input type="number" id="beta_${index}" value="5" inputmode="decimal">
             `;
         } else if (distType === 'gamma') {
             parametersDiv.innerHTML = `
-                <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Shape (k):</label>
                 <input type="number" id="shape_${index}" value="2" inputmode="decimal">
                 <label>Rate (θ):</label>
@@ -128,8 +130,6 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
             `;
         } else if (distType === 'laplace') {
             parametersDiv.innerHTML = `
-                <label>Weight:</label>
-                <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Location (μ):</label>
                 <input type="number" id="location_${index}" value="0" inputmode="decimal">
                 <label>Scale (b):</label>
@@ -195,6 +195,7 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
     
         // Calculate individual component PDFs
         components.forEach(component => {
+            console.log(component);
             let componentY = [];
             if (component.distType === 'normal') {
                 componentY = gaussianPDF(xValues, component.mean, Math.sqrt(component.variance));
@@ -203,11 +204,13 @@ document.getElementById('generate-mixture').addEventListener('click', () => {
             } else if (component.distType === 'uniform') {
                 componentY = xValues.map(x => uniformPDF(x, component.min, component.max));
             } else if (component.distType === 'beta') {
+                
                 componentY = xValues.map(x => betaPDF(x, component.alpha, component.beta));
             } else if (component.distType === 'gamma') {
-                componentY = gammaPDF(xValues, component.shape, component.rate);
+                
+                componentY = xValues.map(x => gammaPDF(x, component.shape, component.rate));
             } else if (component.distType === 'laplace') {
-                componentY = laplacePDF(xValues, component.location, component.scale);
+                componentY = xValues.map(x => laplacePDF(x, component.location, component.scale));
             }
             componentYValues.push(componentY);
         });
