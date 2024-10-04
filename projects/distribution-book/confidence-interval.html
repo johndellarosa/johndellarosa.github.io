@@ -179,8 +179,22 @@
 
 
              
+                <h2>Credible Interval</h2>
+                Credible Intervals are the Bayesian equivalent of confidence intervals. We will discuss this more in the Bayesian inference section, but here is a brief primer:
+                <br><br>
+                A credible interval is an interval \([a,b]\) such that the posterior probability that the parameter 
+                𝜃
+                θ lies within this interval is equal to a specified value \(1-\alpha\).
 
+                $$P(a\leq \theta \leq b|\text{data})=1-\alpha$$
 
+                $$P(\theta|X)=\frac{P(X|\theta)P(\theta)}{P(X)}$$
+
+                The equal-tailed credible interval has a,b such that
+                $$P(\theta \lt a|X)=P(\theta\gt b)=\frac{\alpha}{2}$$
+                An alternative is Highest Posterior Density interval, which does not require equal mass on each side of the interval. It is defined as the interval that incldues all values of \(\theta\) for which the posterior density is higher than any point outside the interval while containing mass \(1-\alpha\).
+
+                
 
 
                 <div id="Exercises">

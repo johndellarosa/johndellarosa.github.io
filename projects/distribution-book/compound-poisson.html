@@ -263,7 +263,7 @@
 
                 $$L(\lambda,\theta)=\prod_{i=1}^n\sum_{N=0}^\infty \left(\frac{e^{-\lambda}\lambda^N}{N!}\prod_{j=1}^Nf_{X}(y_{ij}|\theta)\right)$$
 
-                This is not a particularly nice equation to have to manipulate.
+                This is not a particularly nice equation to have to manipulate. The
 
                 <h4>Method of Moments</h4>
                 Another parameter estimation method we talked about in a previous chapter is <a href="./method-of-moments.html">the method of moments</a>. 
@@ -291,13 +291,16 @@
 
                 Given a sample \(S_1,S_2,\dots,S_n\) the sample mean \(\hat{\mu}_S\) and sample variance \(\hat{\sigma}_S^2\) can be calculated as:
 
-                $$\hat{\mu}_S=\frac{1}{n}\sum_{i=1}^nS_i$$
-                $$\hat{\sigma}_S^2=\frac{1}{n}\sum_{i=1}^n(S_i-\hat{\mu}_S)^2$$
+                $$\bar{S}=\frac{1}{n}\sum_{i=1}^nS_i$$
+                $$s_{S}^2=\frac{1}{n}\sum_{i=1}^n(S_i-\hat{\mu}_S)^2$$
 
 
-                $$\hat{\mu}=\lambda\mathbb{E}[X]$$
-                $$\hat{\sigma}^2=\lambda\mathbb{E}[X^2]$$
+                $$\bar{S}=\lambda\mathbb{E}[X]$$
+                $$s_{S}^2=\lambda\mathbb{E}[X^2]$$
 
+
+                $$\lambda=\frac{\bar{S}^2}{s_{2}^2-\bar{S}}$$
+                $$\mu_X=\frac{\bar{S}}{\lambda}$$
 
 
                 </div>
