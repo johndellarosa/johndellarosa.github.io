@@ -203,7 +203,22 @@
                 $$g(\mu)=\sqrt{\mu}$$
 
 
-            <h3></h3>
+
+
+            <h2>Using GLMs</h2>
+
+            <h3>Iteratively Reweighted Least Squares (IRLS)</h3>
+
+            The MLE of the coefficients, \(\beta\), can be obtained through the IRLS algorithm, which iteratively solved weighted least-squares problems:
+
+            $$\beta^{(k+1)}=\beta^{(k)}+(X^TWX)^{-1}X^TWz$$
+
+            where W is a weight matrix and z is the adjuted dependent variable.
+
+            <h2>Generalized Addition Models</h2>
+            The ideas of additive models and GLMs can be combined into GAMs:
+
+            $$g(\mu_i)=\beta_0+\sum_js_j(x_ij)$$
 
                 
             </div>

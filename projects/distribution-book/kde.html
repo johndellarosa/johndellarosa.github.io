@@ -319,7 +319,14 @@
                 <h4>The Bandwidth Parameter h</h4>
                 The bandwidth \(h\) is a crucial parameter in KDE as it controls the spread of the kernel around each data point. A small bandwidth produces a highly detailed estimate that may overfit the data, while a large bandwidth results in an oversmoothed estimate that may fail to capture important features of the distribution. 
 
+                <h5>Silverman's Rule</h5>
+                Silverman's Rule is a rule of thumb for picking h:
+
+                $$h'=1.06\sigman^{-1/5}$$
+
                 
+
+
                 <h3>Contrasting with Regular Mixture Distributions</h3>
                 As mentioned, mixture distributions and KDE share a conceptual similarity, both combining multiple components to approximate the overall density. However, there are key differences: 
                 <ul>
@@ -327,14 +334,27 @@
                     <li>Smoothness: KDE produces smooth density estimates by construction, whereas mixture distributions can sometimes lead to multimodal or piecewise estimates, depending on the number and type of components used.</li>
                     <li>Data-Driven: KDE places a kernel at every data point, while in mixture models, the parameters of the components are estimated from the data, and individual data points are assigned probabilistically to components.</li>
                 </ul>
+                
 
                 <h3>Higher Dimensions</h3>
                 The KDE framework extends naturally to multivariate data. For a d-dimensional sample \(x_1,x_2,\dots,x_n\), the multivariate KDE is given by:
 
-                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}^{n}K_h(\vec{x}-\vec{x}_i)$$
-
+                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}^{n|H|^{1/2}}K(H^{-1/2}(\vec{x}-\vec{x}_i))$$
+                where H is the bandwidth matrix
                 <h3>Issues</h3>
                 KDE can have problems near the boundaries of the support of the distribution. For example, if the true distribution is restricted to a finite range (e.g., non-negative values), the kernel functions may assign non-zero density outside this range, leading to a biased estimate. 
+
+                <br><br>
+                Standard kernel functions are symmetric and have support that extends beyond the data boundary. When estimating the density near a boundary, a portion of the kernel extends outside the domain where the true density is defined (e.g., negative values for a non-negative variable). 
+
+                <br>
+                Since there is no data beyond the boundary to balance the kernel weight, the estimated density at points near the boundary is biased downward.
+                <!-- <h4>Bias</h4> -->
+
+                
+                <h4>Reflection Method</h4>
+                $$\hat{f}_{ref}(x)=\frac{1}{nh}\sum_{i=1}^n[K(\frac{x-X_i}{h})+K(\frac{x+X_i-2a}{h})]$$
+                where a is the boundary point.
 
 
 
