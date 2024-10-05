@@ -85,7 +85,7 @@
 
                 <h3>Markov's Inequality</h3>
                 Let \(X\) be a non-negative random variable with finite expected value \(\mathbb{E}[X]\). Then, for any \(a\gt 0\):
-                $$P(X\geq a)\leq \frac{\mathbb{E}}{a}$$
+                $$P(X\geq a)\leq \frac{\mathbb{E}[X]}{a}$$
 
                 <h4>Extended Markov's Inequality</h4>
 
@@ -163,7 +163,8 @@
                 Let \(\{X_i\}\) be iid random variables with finite mean \(\mu\) and finite variance \(\sigma^2\). Then as \(n\rightarrow\infty\):
 
                 $$\frac{\sum_{i=1}^nX_i-n\mu}{\sigma\sqrt{n}}\overset{d}{\rightarrow}N(0,1)$$
-
+                or equivalently
+                $$\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}}\overset{d}{\rightarrow}N(0,1)$$
                 <h4>Continuous Mapping Theorem</h4>
                 If \(X_n\overset{d}{\rightarrow}X\) and g is a continuous function, then:
 
