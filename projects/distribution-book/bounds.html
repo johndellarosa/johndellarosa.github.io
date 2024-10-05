@@ -130,15 +130,23 @@
 
                 <h2>Convergence of Random Variables</h2>
 
+                <h3>Sure Convergergence</h3>
+                Also known as pointwise convergence.
+                Let \(\left\{X_n\right\}\) be a sequence of random variables. 
+                Let \(\Omega\) be the sample space of \(X_i\). \(X_n\) converges pointwise (surely) if
+                $$\forall \omega\in\Omega: \lim_{n\rightarrow\infty}X_n(\omega)=X(\omega)$$
+
+
+
                 <h3>Almost Sure Convergence</h3>
 
                 A sequence of random variables \(\left\{X_n\right\}\) converges almost surely (a.s.) to \(X\) if:
 
                 $$P(\lim_{n\rightarrow \infty}X_n=X)=1$$
-                Pointwise convergence allows it to not converge where the measure is 0.
-
+                We can denote this as \(X_n\overset{\text{a.s.}}{{\to}X}\).
+                How is this different from sure convergence? The notation of "almost sure" refers to allowing \(X_n\) and X to disagree on sets of probability (measure) 0. 
                 <h4>Strong Law of Large Numbers</h4>
-
+                An example of almost sure convergence is the Strong Law of Large Numbers.
                 $$P(\lim_{n\rightarrow\infty}\frac{1}{n}\sum_{i=1}^nX_i=\mu)=1$$
 
                 <h3>Converges in Probability</h3>
@@ -146,19 +154,66 @@
                 \(\left\{X_n\right\}\) converges in probability to X if, for every \(\varepsilon\gt0\):
                 $$\lim_{n\rightarrow\infty}P(|X_n-X|\geq \varepsilon)=0$$
 
-                Almost sure convergence implies convergence in probability, but the converse is not necessarily true. 
+                Almost sure convergence implies convergence in probability, but the converse is not necessarily true. It only requires that the probability of large deviations goes to zero.
 
                 <h4>Weak Law of Large Numbers</h4>
-
+                An example of convergence in probability is the weak law of large numbers.
                 $$\lim_{n\rightarrow\infty}P(|\frac{1}{n}\sum_{i=1}^nX_i-\mu|\geq\varepsilon)=0$$
 
-
+                <h4>Example of Convergence in Probability but not Almost Surely</h4>
 
                 <h3>Convergence in Distribution</h3>
                 \(\left\{X_n\right\}\) converges in distribution to \(X\) if, for all continuity points x of \(F_X(x)\):
 
                 $$\lim_{n\rightarrow\infty}F_{X_n}(x)=F_X(x)$$
-                
+                We can denote this as
+
+                $$F_n(x)\overset{d}{\rightarrow}F(x)$$
+
+                Convergence in distribution does not imply convergence in probability. However, convergence in probability does imply convergence in distribution. 
+
+                <!-- <h4>Convergence in Distribution but not in Probability</h4>
+                This can occur when the limit is a non-degenerate random variable. 
+
+                Let \(\{X_n\}\) be a sequence of random variables given by 
+
+                $$X_n\sim U(0,n)$$
+                <h5>CDF</h5>
+                $$F_{X_n}=\begin{cases}0, & x\lt 0\\
+                \frac{x}{n}, & 0\leq x\leq n\\
+                1, & x\geq n\end{cases}$$
+
+                For any fixed \(x \geq 0\):
+                $$lim_{n\rightarrow\infty}F_{X_n}(x)=\lim_{n\to\infty}\frac{x}{n}=0$$
+                Thus, for all finite \(x\geq 0\):
+
+                $$\lim_{n\to\infty}F_{X_n}(x)=0$$
+                At \(x=\infty\):
+                $$\lim_{n\to\infty}F_{X_n}(\infty)=1$$
+                Thus, the limiting distribution \(F_X(x)\) is:
+                $$F_X(x)=\begin{cases}0, x\lt \infty\\
+                1, & x=\infty\end{cases}$$
+                which is the CDF of a degenerate random variable concentrated at infinity.
+
+                <br>
+                Since \(F_{X_n}(x)\to F_{X}(x)\) at all continuity point of \(F_X(x)\), we have:
+                $$X_n\overset{d}{\to}X$$
+                where X is a degenerate random variable taking the value \(\infty\) almost surely
+
+                <h5>Lack of Convergence in Probability</h5>
+
+                Suppose, for contradiction, that \(X_n\overset{P}{\to}X\) for some random variable X:
+
+                Then for any fixed \(x\geq 0\) and \(\varepsilon\gt 0\):
+
+                $$P(|X_n-x|\geq \varepsilon)=P(X_n\leq x-\varepsilon)+P(X_n\geq x+\varepsilon)=1-P(x-\varepsilon \lt X_n \lt x+\varepsilon)$$
+
+                $$P(x-\varepsilon\lt X_n\lt x+\varepsilon)=\frac{2\varepsilon}{n}$$
+                $$P(|X_n-x|\geq \varepsilon)=1-\frac{2\varepsilon}{n}$$
+                As \(n\to\infty\):
+                $$P(|X_n-x|\geq \varepsilon)\to 1$$
+                 -->
+
                 <h4>Central Limit Theorem</h4>
                 Let \(\{X_i\}\) be iid random variables with finite mean \(\mu\) and finite variance \(\sigma^2\). Then as \(n\rightarrow\infty\):
 
@@ -170,6 +225,38 @@
 
                 $$g(X_n)\overset{d}{\rightarrow}g(X)$$
                 
+
+
+                <h3>Borel-Cantelli Lemma</h3>
+                <h4>First Borel-Cantelli Lemma</h4>
+                If \(\sum_{n=1}^\infty P(A_n)\lt \infty):
+                $$P(\limsup_{n\rightarrow\infty}A_n)=0$$
+                <h4>Second Borel-Cantelli Lemma</h4>
+                If \(\left\{A_n\right\}\) are independent events and \(\sum_{n=1}^\infty P(A_n)=\infty\):
+
+                $$P(\limsup_{n\rightarrow\infty}A_n)=1$$
+
+                <h4>Example of Using Borel-Cantelli</h4>
+                Let \(\left\{X_n\right\}\) be a sequence of independent Bernouilli random variables defined on a probability space where \(X_n\) takes values:
+
+                $$X_n=\begin{cases}1 & \text{with probability }p_n=\frac{1}{n}\\
+                0 & \text{with probability }1-p_n=1-\frac{1}{n}\end{cases}$$
+                <h5>Showing Convergence in Probability</h5>
+                $$X_n\to 0$$
+                
+                For any \(\varepsilon\gt 0\):
+                $$P(|X_n-0|\geq \varepsilon)=P(X_n=1)=\frac{1}{n}\to 0\text{ as n }\to\infty$$
+                Therefore, \(X_n\) to 0.
+
+                <h5>Showing No Almost Sure Convergence</h5>
+                Let \(A_n=\left\{X_n=1\right\}\). These are the events where \(X_n\) deviates from the limiting distribution of 0. 
+
+                
+                $$\sum_{n=1}^\infty P(A_n)=\sum_{n=1}^\infty\frac{1}{n}=\infty$$
+                From the second Borel-Cantelli Lemma, if \(\{A_n\}\) are independent events and \(\sum P(A_n)=\infty\) then:
+
+                $$P(\limsup_{n\to\infty}A_n)=1$$
+                Thus, \(X_n\) does not converge almost surely to 0.
                 </div>
 
 
