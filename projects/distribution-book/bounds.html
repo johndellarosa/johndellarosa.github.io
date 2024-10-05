@@ -77,8 +77,8 @@
 
                 $$|\mu-m|\leq \sigma$$
 
-                <h4>Higher Dimensional Analogue</h4>
-                A similar statement can be done with respect to the skewness \(\gamma\):
+                <h4>Higher Moment Analogue</h4>
+                A similar statement can be done with respect to the skewness \(\gamma\) (provided it is finite):
 
                 $$|\mu-m|\leq \frac{\gamma \sigma}{3}$$
 
@@ -87,7 +87,7 @@
                 Let \(X\) be a non-negative random variable with finite expected value \(\mathbb{E}[X]\). Then, for any \(a\gt 0\):
                 $$P(X\geq a)\leq \frac{\mathbb{E}}{a}$$
 
-                <h5>Extended Markov's Inequality</h5>
+                <h4>Extended Markov's Inequality</h4>
 
                 Let \(\phi\) be a non-decreasing non-negative function with \(\phi(a)\gt 0\):
 
@@ -102,6 +102,14 @@
                 Let \(X\) be a random variable with finite mean \(\mu\) and finite variance \(\sigma^2\). Then for \(k\gt 0\):
 
                 $$P(|X-\mu|\geq k\sigma)\leq \frac{1}{k^2}$$
+
+                <h4>Vysochanskij-Petunin</h4>
+
+                If X is unimodal, we can get tigheter bounds for a given distance away:
+
+                $$P(|X-\mu|\geq \lambda\sigma)\leq \frac{4}{9\lambda^2}$$
+
+                for \(\lambda \gt \sqrt{\frac{8}{3}}\)
 
                 <h4>Cantelli's Inequality</h4>
                 Cantelli's Inequality is a one-sided analogue:
@@ -120,8 +128,46 @@
                 <h2>Distribution-Specific</h2>
 
 
+                <h2>Convergence of Random Variables</h2>
+
+                <h3>Almost Sure Convergence</h3>
+
+                A sequence of random variables \(\left\{X_n\right\}\) converges almost surely (a.s.) to \(X\) if:
+
+                $$P(\lim_{n\rightarrow \infty}X_n=X)=1$$
+                Pointwise convergence allows it to not converge where the measure is 0.
+
+                <h4>Strong Law of Large Numbers</h4>
+
+                $$P(\lim_{n\rightarrow\infty}\frac{1}{n}\sum_{i=1}^nX_i=\mu)=1$$
+
+                <h3>Converges in Probability</h3>
+
+                \(\left\{X_n\right\}\) converges in probability to X if, for every \(\varepsilon\gt0\):
+                $$\lim_{n\rightarrow\infty}P(|X_n-X|\geq \varepsilon)=0$$
+
+                Almost sure convergence implies convergence in probability, but the converse is not necessarily true. 
+
+                <h4>Weak Law of Large Numbers</h4>
+
+                $$\lim_{n\rightarrow\infty}P(|\frac{1}{n}\sum_{i=1}^nX_i-\mu|\geq\varepsilon)=0$$
 
 
+
+                <h3>Convergence in Distribution</h3>
+                \(\left\{X_n\right\}\) converges in distribution to \(X\) if, for all continuity points x of \(F_X(x)\):
+
+                $$\lim_{n\rightarrow\infty}F_{X_n}(x)=F_X(x)$$
+                
+                <h4>Central Limit Theorem</h4>
+                Let \(\{X_i\}\) be iid random variables with finite mean \(\mu\) and finite variance \(\sigma^2\). Then as \(n\rightarrow\infty\):
+
+                $$\frac{\sum_{i=1}^nX_i-n\mu}{\sigma\sqrt{n}}\overset{d}{\rightarrow}N(0,1)$$
+
+                <h4>Continuous Mapping Theorem</h4>
+                If \(X_n\overset{d}{\rightarrow}X\) and g is a continuous function, then:
+
+                $$g(X_n)\overset{d}{\rightarrow}g(X)$$
                 
                 </div>
 
@@ -133,9 +179,20 @@
 
 
                 <div id="Exercises">
-                    <h2>Probability II Practice Problems</h2>
+                    <h2>Distribution Inequality and Bounds Practice Problems</h2>
 
                     <ol>
+                        <li>A random variable \(X\) has mean \(\mu=50\) and standard deviation \(\sigma=5\). Give the range of possible values for the median.</li>
+                        <li>A random variable \(X\) has mean \(\mu=100\), standard deviation \(\sigma=10\), and skewness \(\gamma=0.6\). 
+                            <ol>
+                                <li>Use McKay's inequality to estimate the range where the median m lies.</li>
+                                <li>Use the skewness inequality to estimate the range where the median m lies.</li>
+                            </ol>
+                            
+                        </li>
+
+                        <li>Given a random variable \(X\) with mean \(\mu=1\) and variance \(\sigma^2=1\), use Cantelli's inequality to bound \(P(X\geq 3)\).</li>
+
 
                     </ol>
     
