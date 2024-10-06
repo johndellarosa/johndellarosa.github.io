@@ -244,11 +244,51 @@ input[type="color"] {
                 <h3>Definition</h3>
                 A mixture distribution is defined as a weighted sum of two or more component distributions. Suppose there are k component distributions 
                 \(f_1(x),f_2(x),\dots,f_k(x)\), with weights \(w_1,w_2,\dots,w_k\), where \(w_i\geq 0\) and \(\sum_{i=1}^{k}w_if_i(x)=1\). 
-                Then the PDF or PMF of the mixture distribution is given by:
-
+                Then the PDF of the mixture distribution is given by:
                 $$f(x)=\sum_{i=1}^{k}w_if_i(x)$$
+                Similarly, a discrete case is given by:
+                $$P(X=x)=\sum_{i=1}^k w_i P(X_i=x)$$
+                
 
-                One possible interpretation is that \(w_i\) is the probability of sampling from \(f_i(x)\). 
+
+                One possible interpretation is that \(w_i\) is the probability of sampling from \(f_i(x)\). Some literature will denote the weights by \(\pi_i\) instead of \(w_i\).
+
+                This makes mixture models and its extensions useful for Latent Variable Models:
+
+                $$X|Z\sim i\sim F_{X_i}(x)$$
+                $$f_{X}(x)=\sum_{i=1}^kP(Z=i)f_{X_i}(x)$$
+                This approach can also be useful when combining multiple models.
+
+                <h3>Moments</h3>
+
+
+                
+                <h4>Mean</h4>
+                Since the expectation is a linear operator, the mean is given by:
+
+                $$\mathbb{E}[X]=\sum_{i=1}^k \pi_{i}\mathbb{E}[X_i]$$
+
+                <h4>Variance</h4>
+
+                $$\text{Var}(X)=\sum_{i=1}^k\pi_i(\text{Var}(X_i)+(\mathbb{E}[X_i])^2)-(\mathbb{E}[X])^2$$
+
+
+
+                <h3>CDF</h3>
+
+                Since the integral is a linear operator, the CDF has a similar relationship to the PMF/PDF. 
+                $$F_X(x)=\sum_{i=1}^k \pi_i F_{X_i}(x)$$
+
+                <h3>MGF</h3>
+
+                $$M_X(t)=\sum_{i=1}^k\pi_iM_{X_i}(t)$$
+
+
+                <h3>Likelihood</h3>
+
+                For independent observations \(x_1,x_2,\dots,x_n\):
+
+                $$L(\theta)=\prod_{j=1}^{n}f_X(x_j;\theta)=\prod_{j=1}^n(\sum_{i=1}^k\pi_if_{X_i}(x_j;\theta))$$
 
                 <h2>Expectation-Maximization Algorithm</h2>
 
@@ -372,7 +412,13 @@ input[type="color"] {
 
                 In the example, we were given the number of components and their distribution families. If these are not known, it becomes a more difficult problem. For unknown number of components, you can use some sort of penalization method like AIC, BIC. Another quantitative method of assessing performance is cross-validation.  
 
-                
+                <h3>Label Switching</h3>
+
+                Because the likelihood is invariant under permutations of the component labels, you have multiple equivalent solutions
+
+                <h3>Bayes' Theorem for Mixtures</h3>
+
+                $$P(Z=i|X=x)=\frac{\pi_if_{X_i}(x)}{f_X(x)}$$
 
                 <div class="container">
                     <h2>Mixture Distribution Generator</h2>

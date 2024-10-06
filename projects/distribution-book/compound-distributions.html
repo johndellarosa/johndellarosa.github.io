@@ -250,6 +250,15 @@
                 The distribution of \(X\) is "compounded" by the randomness of Y.
                 This should hopefully look similar to the Law of Total Probability, as it is the same, just restated in probability distribution notation for P(A). 
 
+                <h3>Other Characteristics</h3>
+
+                <h4>MGF</h4>
+                M_X(t)=\mathbb{E}_Y[M_{X|Y}(t|Y)]=\int M_{X|Y}(t|y)F_{Y}(y)dy$$
+                <h4>Characteristic Function</h4>
+                \varphi_X(t)=\mathbb{E}_Y[\varphi_{X|Y}(t|Y)]=\int \varphi_{X|Y}(t|y)F_{Y}(y)dy$$
+
+
+
                 <h3>Sampling</h3>
                 Sampling from a compound distribution involves two steps:
                 <h4>Step 1: Draw Parameter from Primary Distribution</h4>

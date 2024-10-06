@@ -231,7 +231,16 @@
 
                 Because both component distributions can produce zero, this leads to the above formula for P(Y=0). 
 
-                <h4>Zero-Inflated Negative Binomial Model</h4>
+                <h4>Moments</h4>
+                From using the moment equations for <a href="./mixture-distributions.html">Mixture Distributions</a>, we get the following:
+                <br>
+                Let Y be a ZIP with Poisson rate \(\lambda\) and zero inflation parameter \(\pi\):
+
+                $$\mathbb{E}[Y]=(1-\pi)\lambda$$
+
+                $$\text{Var}(Y)=(1-\pi)\lambda(1+\pi\lambda)$$
+
+               <h4>Zero-Inflated Negative Binomial Model</h4>
                 Similar to what we saw with GLMs, sometimes Poisson doesn't cut it when there's overdispersion, which leads to the choice of Negative Binomial regression over Poisson regression. The same logic applies for Zero-Inflated Models. 
                 $$P_{\text{ZINB}}(k)= \begin{cases}
                 (1-\pi)\frac{\Gamma(y+r)}{k!\Gamma(r)}\left(\frac{r}{r+m}\right)^r\left(\frac{m}{r+m}\right)^k, & k\geq 1\\
@@ -253,6 +262,28 @@
                 <h5>Step 2: Sample from Normal Version of Poisson</h5>
                 If Z=0, draw a sample from a Poisson distribution with rate \(\lambda\).
 
+                <h3>Fitting Parameters</h3>
+                <h4>Likelihood Function</h4>
+
+                $$L(\pi,\lambda)=\prod_{i=1}^n\left[\pi I_{y_i=0}_(1-\pi)\frac{\lambda^{y_i}e^{-\lambda}}{y_i!}\right]$$
+                where \(I_{y_i=0}\) is an indicator function that equals 1 when \(y_i=0\) and 0 otherwise.
+                Parameters are often determined through Expectation-Maximization or Newton-Raphson.
+                
+                <h4>Expectation Maximimization for ZIP</h4>
+
+                <h5>E-Step</h5>
+                Calculate the expected value of the latent variable \(Z_i\) given the current parameter estimates:
+
+                $$\gamma_i=\mathbb{E}[Z_i|y_i]=\begin{cases}\frac{\pi^{(t)}}{\pi^{(t)}+(1-\pi^{(t)})e^{-\lambda^{(t)}}}, & \text{ if }y_i=0\\
+                0, &\text{ if }y_i\gt 0\end{cases}$$
+
+                <h5>M-Step</h5>
+
+                Update the parameter estimates:
+
+                $$\pi^{(t+1)}=\frac{\sum_{i=1}^n\gamma_i}{n}$$
+                $$\lambda^{(t+1)}=\frac{\sum_{i=1}^n(1-\gamma_i)y_i}{\sum_{i=1}^n(1-\gamma_i)}$$
+                
 
 
                 <h2>Hurdle Models</h2>
