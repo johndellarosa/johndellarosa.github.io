@@ -31,7 +31,12 @@
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
         <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/parameter-families"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
-<!-- 
+
+        <!-- <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      /> -->
+        <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       
 
@@ -77,6 +82,126 @@
               tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
             });
           </script>
+
+          <!-- Include Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Link to the external JavaScript file -->
+  <script src="./parameter-funcs.js" defer></script>
+  <style>
+    /* Basic styling for better presentation */
+    body {
+      /* font-family: Arial, sans-serif; */
+      margin: 20px;
+      /* background-color: #f5f5f5; */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .menu {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .menu label {
+      font-size: 1.1em;
+      margin-right: 10px;
+    }
+
+    .menu select {
+      padding: 5px;
+      font-size: 1em;
+    }
+
+    .menu button {
+      padding: 5px 15px;
+      font-size: 1em;
+      margin-left: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu button:hover {
+      background-color: #218838;
+    }
+
+    #parameterSets {
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+    }
+
+    .parameter-set {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .parameter-set-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .parameter-set-header h2 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .parameter-set-header button {
+      padding: 5px 10px;
+      font-size: 0.9em;
+      background-color: white;
+      color: red;
+      border: 1px solid #ccc;
+      cursor: pointer;
+        transition: background-color 0.25s ease;
+        
+    }
+
+    .parameter-set-header button:hover {
+      background-color: #F40009;
+      color:white;
+    }
+
+    .parameter-set-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .parameter-set-body .input-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .parameter-set-body label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .parameter-set-body input[type="number"],
+    .parameter-set-body input[type="color"] {
+      width: 100%;
+      padding: 5px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    #pdfChart {
+      width:100%;
+      margin: 0 auto;
+    }
+  </style>
     </head>
     <body>
         <div class="navbar">
@@ -132,127 +257,159 @@
 
 
                 <table>
-                    <caption>Parameter Families for Common Distributions</caption>
-                    <thead>
-                      <tr>
-                        <th>Distribution</th>
-                        <th>Location (\(\mu\))</th>
-                        <th>Scale (\(\sigma\))</th>
-                        <th>Shape (\(\xi\), \(\alpha\), etc.)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Normal</td>
-                        <td>\(\mu\)</td>
-                        <td>\(\sigma\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Exponential</td>
-                        <td>—</td>
-                        <td>\(\lambda^{-1}\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Gamma</td>
-                        <td>—</td>
-                        <td>\(\theta\)</td>
-                        <td>\(\alpha\)</td>
-                      </tr>
-                      <tr>
-                        <td>Weibull</td>
-                        <td>—</td>
-                        <td>\(\lambda\)</td>
-                        <td>\(\kappa\)</td>
-                      </tr>
-                      <tr>
-                        <td>Gumbel</td>
-                        <td>\(\mu\)</td>
-                        <td>\(\beta\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Fréchet</td>
-                        <td>—</td>
-                        <td>\(\sigma\)</td>
-                        <td>\(\alpha\)</td>
-                      </tr>
-                      <tr>
-                        <td>Cauchy</td>
-                        <td>\(x_0\)</td>
-                        <td>\(\gamma\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Beta</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>\(\alpha, \beta\)</td>
-                      </tr>
-                      <tr>
-                        <td>Pareto</td>
-                        <td>\(x_m\)</td>
-                        <td>—</td>
-                        <td>\(\alpha\)</td>
-                      </tr>
-                      <tr>
-                        <td>Log-normal</td>
-                        <td>\(\mu\)</td>
-                        <td>\(\sigma\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Student’s t</td>
-                        <td>\(\mu\)</td>
-                        <td>\(\sigma\)</td>
-                        <td>\(\nu\)</td>
-                      </tr>
-                      <tr>
-                        <td>Generalized Pareto</td>
-                        <td>\(\mu\)</td>
-                        <td>\(\sigma\)</td>
-                        <td>\(\xi\)</td>
-                      </tr>
-                      <tr>
-                        <td>Laplace</td>
-                        <td>\(\mu\)</td>
-                        <td>\(b\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Rayleigh</td>
-                        <td>—</td>
-                        <td>\(\sigma\)</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Beta prime</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>\(\alpha, \beta\)</td>
-                      </tr>
-                      <tr>
-                        <td>Burr</td>
-                        <td>—</td>
-                        <td>\(c\)</td>
-                        <td>\(k\)</td>
-                      </tr>
-                      <tr>
-                        <td>Logistic</td>
-                        <td>\(\mu\)</td>
-                        <td>\(s\)</td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <caption>Parameter Families for Common Distributions</caption>
+                  <thead>
+                    <tr>
+                      <th>Distribution</th>
+                      <th>Location (\(\mu\))</th>
+                      <th>Scale (\(\sigma\))</th>
+                      <th>Shape (\(\xi\), \(\alpha\), etc.)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Normal</td>
+                      <td title="Mean of the distribution">\(\mu\)</td>
+                      <td title="Standard deviation">\(\sigma\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Exponential</td>
+                      <td>—</td>
+                      <td title="Inverse of the rate parameter \(\lambda^{-1}\) controls the scale">\(\lambda^{-1}\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Gamma</td>
+                      <td>—</td>
+                      <td title="Scale parameter \(\theta\) stretches or compresses the distribution">\(\theta\)</td>
+                      <td title="Shape parameter \(\alpha\) determines the form of the distribution">\(\alpha\)</td>
+                    </tr>
+                    <tr>
+                      <td>Weibull</td>
+                      <td>—</td>
+                      <td title="Scale parameter \(\lambda\) adjusts the spread of the distribution">\(\lambda\)</td>
+                      <td title="Shape parameter \(\kappa\) influences the failure rate and distribution shape">\(\kappa\)</td>
+                    </tr>
+                    <tr>
+                      <td>Gumbel</td>
+                      <td title="Location parameter \(\mu\) shifts the distribution along the x-axis">\(\mu\)</td>
+                      <td title="Scale parameter \(\beta\) controls the spread">\(\beta\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Fréchet</td>
+                      <td>—</td>
+                      <td title="Scale parameter \(\sigma\) stretches or compresses the distribution">\(\sigma\)</td>
+                      <td title="Shape parameter \(\alpha\) affects the tail behavior">\(\alpha\)</td>
+                    </tr>
+                    <tr>
+                      <td>Cauchy</td>
+                      <td title="Location parameter \(x_0\) (median of the distribution)">\(x_0\)</td>
+                      <td title="Scale parameter \(\gamma\) (half-width at half-maximum)">\(\gamma\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Beta</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td title="Shape parameters \(\alpha\) and \(\beta\) control the distribution's shape">\(\alpha, \beta\)</td>
+                    </tr>
+                    <tr>
+                      <td>Pareto</td>
+                      <td title="Location parameter \(x_m\) (minimum possible value)">\(x_m\)</td>
+                      <td>—</td>
+                      <td title="Shape parameter \(\alpha\) determines the heaviness of the tail">\(\alpha\)</td>
+                    </tr>
+                    <tr>
+                      <td>Log-normal</td>
+                      <td title="Location parameter \(\mu\) (mean of the log of the variable)">\(\mu\)</td>
+                      <td title="Scale parameter \(\sigma\) (standard deviation of the log of the variable)">\(\sigma\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Student’s t</td>
+                      <td title="Location parameter \(\mu\) (mean of the distribution)">\(\mu\)</td>
+                      <td title="Scale parameter \(\sigma\) (controls spread of the distribution)">\(\sigma\)</td>
+                      <td title="Shape parameter \(\nu\) (degrees of freedom, affects tail thickness)">\(\nu\)</td>
+                    </tr>
+                    <tr>
+                      <td>Generalized Pareto</td>
+                      <td title="Location parameter \(\mu\) (threshold value)">\(\mu\)</td>
+                      <td title="Scale parameter \(\sigma\) (must be positive)">\(\sigma\)</td>
+                      <td title="Shape parameter \(\xi\) (determines tail behavior)">\(\xi\)</td>
+                    </tr>
+                    <tr>
+                      <td>Laplace</td>
+                      <td title="Location parameter \(\mu\) (peak of the distribution)">\(\mu\)</td>
+                      <td title="Scale parameter \(b\) (diversity, controls spread)">\(b\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Rayleigh</td>
+                      <td>—</td>
+                      <td title="Scale parameter \(\sigma\) (controls the mode of the distribution)">\(\sigma\)</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td>Beta prime</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td title="Shape parameters \(\alpha\) and \(\beta\) control the distribution's shape">\(\alpha, \beta\)</td>
+                    </tr>
+                    <tr>
+                      <td>Burr</td>
+                      <td>—</td>
+                      <td title="Scale parameter \(c\) adjusts the spread of the distribution">\(c\)</td>
+                      <td title="Shape parameter \(k\) influences the tail and peak of the distribution">\(k\)</td>
+                    </tr>
+                    <tr>
+                      <td>Logistic</td>
+                      <td title="Location parameter \(\mu\) (midpoint of the distribution)">\(\mu\)</td>
+                      <td title="Scale parameter \(s\) (controls the steepness of the curve)">\(s\)</td>
+                      <td>—</td>
+                    </tr>
+                  </tbody>
+                </table>
                   
 
 
 
                 </div>
-
-
+                <br><br><br>
+                <div class="container">
+                  <h2 class="mb-4 text-center">Interactive Probability Distribution Plotter</h2>
+                  <div class="menu">
+                    <label for="distribution">Select Distribution:</label>
+                    <select id="distribution">
+                      <option value="normal">Normal</option>
+                      <option value="exponential">Exponential</option>
+                      <option value="gamma">Gamma</option>
+                      <option value="weibull">Weibull</option>
+                      <option value="gumbel">Gumbel</option>
+                      <option value="frechet">Fréchet</option>
+                      <option value="cauchy">Cauchy</option>
+                      <option value="beta">Beta</option>
+                      <option value="pareto">Pareto</option>
+                      <option value="lognormal">Log-normal</option>
+                      <option value="studentt">Student's t</option>
+                      <option value="genpareto">Generalized Pareto</option>
+                      <option value="laplace">Laplace</option>
+                      <option value="rayleigh">Rayleigh</option>
+                      <option value="betaprime">Beta Prime</option>
+                      <option value="burr">Burr</option>
+                      <option value="logistic">Logistic</option>
+                    </select>
+                
+                    <button id="addCurve">Add Curve</button>
+                  </div>
+                
+                  <div id="parameterSets">
+                    <!-- Parameter sets will be dynamically inserted here -->
+                  </div>
+                
+                  <canvas id="pdfChart"></canvas>
+                </div>
 
              
 
