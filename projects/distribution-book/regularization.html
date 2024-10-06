@@ -92,6 +92,27 @@
 
                 $$\text{Objective}=\text{RSS}+\lambda\sum_{j=1}^{p}\beta_j^2$$
                 where \(\beta\) is the vector of model coefficients and \(\lambda\) is the regularization parameter controlling the strength of the penalty. 
+
+                <h3>Elastic Net</h3>
+
+                The two can combined into Elastic Net Regularization, which has both an L1 and L2 penalty term:
+
+                $$\text{Objective}=\text{RSS}+\lambda_1\sum_{j=1}^{p}|\beta_j|+\lambda_2\sum_{j=1}^p\beta_{j}^{2}$$
+
+                <h3>Regularization in Other Forms of Optimization</h3>
+
+                Regularization terms can be added for other objective functions. 
+                $$\text{Loss}_{\text{regularized}}(\beta)=\text{Loss}(\beta)+\lambda R(\beta)$$
+
+                <h4>Example Logistic Regression</h4>
+
+                For example, the objective function for logistic regression:
+
+                $$\min_{\beta}\left\{-\sum_{i=1}^{n}[y_i\log p_i+(1-y_i)\log(1-p_i)]+\lambda\sum_{j=1}^p R(\beta_j)\right\}$$
+                where \(R(\beta_j)\) is the regularization term; e.g., \(|\beta_j|\). 
+
+
+
                 <h2>Bayesian</h2>
 
                 From a Bayesian point of view, regularization arises naturally through the prior distribution on the parameters. Regularization can be interpreted as placing a prior belief on the parameters, which encodes our preference for simpler models or smaller parameter values. 

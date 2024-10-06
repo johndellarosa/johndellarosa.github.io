@@ -265,7 +265,7 @@
                 <h3>Fitting Parameters</h3>
                 <h4>Likelihood Function</h4>
 
-                $$L(\pi,\lambda)=\prod_{i=1}^n\left[\pi I_{y_i=0}_(1-\pi)\frac{\lambda^{y_i}e^{-\lambda}}{y_i!}\right]$$
+                $$L(\pi,\lambda)=\prod_{i=1}^n\left[\pi I_{y_i=0}+(1-\pi)\frac{\lambda^{y_i}e^{-\lambda}}{y_i!}\right]$$
                 where \(I_{y_i=0}\) is an indicator function that equals 1 when \(y_i=0\) and 0 otherwise.
                 Parameters are often determined through Expectation-Maximization or Newton-Raphson.
                 
