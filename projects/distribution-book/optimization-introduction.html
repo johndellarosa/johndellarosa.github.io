@@ -197,9 +197,33 @@
                 $$\lambda_{k+1}=\lambda_k+\left(\frac{n-\lambda_k\sum x_i}{n}\right)$$
                 
                 <h3>Secant Method</h3>
+            The Secant Method is similar to Newton-Raphson but doesn't require computation of the second derivative. 
 
+            <h4>Algorithm</h4>
+            <ol>
+                <li>Initial Estimates: Choose two initial guesses \(\theta_0\) and \(\theta_1\)</li>
+                <li>Iteration: \(theta_{k+1}=\theta_k-f'(\theta_k)\left(\frac{\theta_k-\theta_{k-1}}{f'(\theta_k)-f'(\theta_{k-1})}\right)\)</li>
+                <li>Convergence Check: If \(\theta_{k+1}-\theta_k|\lt \varepsilon\), stop; else, repeat.</li>
+            </ol>
 
+            <h3>Bisection Method</h3>
+            This technique can be used to find where the derivative is 0 (or more generally a function). 
+            
 
+            <h4>Algorithm</h4>
+
+            <ol>
+                <li>Initial Interval: Choose \([a,b]\) such that \(f(a)\cdot f(b)\lt 0\)</li>
+                <li>Compute Midpoint: \(c=\frac{a+b}{2}\)</li>
+                <li>Check Sign:
+                    <ul>
+                        <li>If \(f(a)\cdot f(c)\lt 0\), set \(b\leftarrow c\)</li>
+                        <li>Else, set \(a\leftarrow c\)</li>
+                    </ul>
+
+                </li>
+                <li>Convergence Check: If \(|b-a|\lt \varepsilon\), stop; else repeat</li>
+            </ol>
             
             
             
@@ -216,29 +240,7 @@
                     <h2>Copula Practice Problems</h2>
 
                     <ol>
-                        <li>Generate pairs of random variables (X,Y) such that:
-                            <ol>
-                                <li>The marginal distribution of X is exponential with \(\lambda=1\)</li>
-                                <li>The marginal distribution of Y is uniform on interval \([0,1]\)</li>
-                                <li>The dependence structure between X and Y is given by a Gaussian copula coefficients \(\rho=0.7\)</li>
-
-                            </ol>
-                            Output this as a scatter plot. Also output histograms of each marginal.
-                        </li>
-                        <li>Generate pairs of random variables (X,Y) such that:
-                            <ol>
-                                <li>The marginal distribution of X is exponential with \(\lambda=2\)</li>
-                                <li>The marginal distribution of Y is exponential with \(\lambda=3\)</li>
-                                <li>The dependence structure between X and Y is given by a Gaussian copula coefficients \(\rho=-0.3\)</li>
-
-                            </ol>
-                            Output this as a scatter plot. Also output histograms of each marginal.
-                        </li>
-
-
-                        <li>Generate pairs of random variables \((X, Y)\) such that: <ol> <li>The marginal distribution of \(X\) is a standard normal distribution.</li> <li>The marginal distribution of \(Y\) follows a Pareto distribution with shape parameter \(\alpha = 2\) and scale parameter \(x_m = 1\).</li> <li>The dependence structure is defined by a Gaussian copula with correlation coefficient \(\rho = -0.5\).</li> </ol> Compute the sample correlation coefficient between \(X\) and \(Y\), and discuss whether it aligns with the specified dependence. </li>
-                        <li>Create pairs \((X, Y)\) where: <ol> <li>\(X\) follows a gamma distribution with shape \(k=2\) and scale \(\theta=2\).</li> <li>\(Y\) follows a logistic distribution with location \(m=0\) and scale \(s=1\).</li> <li>The dependence is modeled using a Gaussian copula with correlation coefficient \(\rho = 0.3\).</li> </ol> Simulate 2,000 pairs and plot the histograms of \(X\) and \(Y\) to verify the marginals. Assess the dependence by calculating Kendall's tau and interpret the result. </li> 
-
+                        
                     </ol>
     
     
