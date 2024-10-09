@@ -70,15 +70,15 @@
                 </ol>
 
 
-                <h3>Refresher on Multivariable Calculus</h3>
+                <h2>Refresher on Multivariable Calculus</h2>
 
-                <h4>Types of Functions</h4>
+                <h3>Types of Functions</h3>
                 <ul>
                     <li>A scalar-valued function maps a vector to a scalar: \(f: \mathbb{R}^n\to\mathbb{R}\)</li>
                     <li>A vector-valued function maps a vector to a vector: \(F:\mathbb{R}^n\to\mathbb{R}^m\)</li>
                 </ul>
                 
-                <h4>Gradient</h4>
+                <h3>Gradient</h3>
                 The gradient of a scalar-valued function \(f:\mathbb{R}^n\to\mathbb{R}\) is a vector that contains all its first-order partial derivatives:
 
                 $$\nabla f(x)=\begin{vmatrix}
@@ -93,6 +93,57 @@
             <br><br>
             The critical points occur where \(\nabla f(x)=0\)
             
+
+            <h3>Jacobian</h3>
+
+            The Jacobian generalizes the derivative to vector-valued functions. For a vector function \(F:\mathbb{R}^n\to\mathbb{R}^m\), the Jacobian is an \(m\times n\) matrix of first-order partial derivatives
+
+            $$J(F)(x)=\begin{bmatrix} \frac{\partial F_1}{\partial x_1} & \frac{\partial F_1}{\partial x_2} & \dots & \frac{\partial F_1}{\partial x_n} \\
+            \frac{\partial F_2}{\partial x_1} & \frac{\partial F_2}{\partial x_2} & \dots & \frac{\partial F_2}{\partial x_n}\\
+            \vdots & \vdots & \ddots & \vdots \\
+            \frac{\partial F_m}{\partial x_1} & \frac{\partial F_m}{\partial x_2} & \dots & \frac{\partial F_m}{\partial x_n}\end{bmatrix}$$
+
+            <h3>Hessian</h3>
+            The Hessian matrix is a square matrix of second-order partial derivatives of a scalar function \(f:\mathbb{R}^n\to\mathbb{R}\).
+
+            $$H(F)(x)=\begin{bmatrix}
+            \frac{\partial^2f}{\partial x_{1}^2} & \frac{\partial^2f}{\partial x_{1}\partial x_{2}} & \dots & \frac{\partial^2f}{\partial x_{1}\partial x_{n}}\\
+            \frac{\partial^2f}{\partial x_{2}\partial x_{1}} & \frac{\partial^2f}{\partial x_{2}^2} & \dots & \frac{\partial^2f}{\partial x_{2}\partial x_{n}}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \frac{\partial^2f}{\partial x_{n}\partial x_{1}} & \frac{\partial^2f}{\partial x_{n}\partial x_{2}} & \dots & \frac{\partial^2f}{\partial x_{n}^2}
+            \end{bmatrix}$$
+
+
+            <h3>First Order Taylor Series</h3>
+
+            $$f(x)\approx f(x_0)+\nabla f(x_0)^T(x-x_0)$$
+
+            <h3>Second-Order Taylor Series</h3>
+
+
+            $$f(x)\approx f(x_0)+\nabla f(x_0)^T(x-x_0)+\frac{1}{2}H(f)(x_0)(x-x_0)$$
+
+
+            <h3>Positive Definite and Semi-Definite Matrices</h3>
+            
+            <h4>Postivie Definite</h4>
+            A symmetric matrix A is positive definite if \(x^TAx\gt 0\) for all non-zero \(x\in\mathbb{R}^n\).
+
+            <h4>Negative Definitely</h4>
+            Simiarly, a symmetric matrix A is negative definite if \(x^TAx\lt 0\) for all non-zero \(x\in\mathbb{R}^n\).
+
+            <h4>Positive Semi-Definite Matrix</h4>
+
+            A symmetric matrix A is positive semi-definite if \(x^TAx\geq 0\) for all x. This allows for it to be equal to 0.
+
+            <h4>Eigenvalues</h4>
+           
+            All positive eigenvalues for A means that it is positive definite.
+             All negative eigenvalues means that it is negative definite.
+            
+
+
+
             </div>
 
 

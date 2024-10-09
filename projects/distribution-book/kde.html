@@ -339,7 +339,7 @@
                 <h3>Higher Dimensions</h3>
                 The KDE framework extends naturally to multivariate data. For a d-dimensional sample \(x_1,x_2,\dots,x_n\), the multivariate KDE is given by:
 
-                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}^{n|H|^{1/2}}K(H^{-1/2}(\vec{x}-\vec{x}_i))$$
+                $$\hat{f}_h(\vec{x})=\frac{1}{n}\sum_{i=1}^{n}|H|^{1/2}K(H^{-1/2}(\vec{x}-\vec{x}_i))$$
                 where H is the bandwidth matrix
                 <h3>Issues</h3>
                 KDE can have problems near the boundaries of the support of the distribution. For example, if the true distribution is restricted to a finite range (e.g., non-negative values), the kernel functions may assign non-zero density outside this range, leading to a biased estimate. 
