@@ -276,6 +276,157 @@
                 In the context of MLE, we set \(f(\alpha)=S(\alpha)\) and \(f'(\alpha)=S'(\alpha)\) to find where \(S(\alpha)=0\).
 
 
+                <h4>Import Libraries</h4>
+
+                <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+from scipy.special import psi, polygamma  # Digamma and trigamma functions
+                    
+                </pre></code>
+
+                <h4>Defining the Functions</h4>
+
+                <code style="margin: auto; width: 50%;"><pre>
+def neg_log_likelihood(alpha, data, beta):
+    n = len(data)
+    if alpha <= 0:
+        return np.inf  # Shape parameter must be positive
+    sum_ln_x = np.sum(np.log(data))
+    sum_x = np.sum(data)
+    ll = (alpha - 1) * sum_ln_x - n * alpha * np.log(beta) - n * np.log(np.math.gamma(alpha)) - sum_x / beta
+    return -ll  # Negative log-likelihood
+
+def score_function(alpha, data, beta):
+    if alpha <= 0:
+        return np.inf
+    n = len(data)
+    mean_ln_x = np.mean(np.log(data))
+    score = n * (mean_ln_x - np.log(beta) - psi(alpha))
+    return score
+
+def score_function_derivative(alpha, data, beta):
+    if alpha <= 0:
+        return np.inf
+    n = len(data)
+    derivative = -n * polygamma(1, alpha)  # polygamma(1, alpha) is the trigamma function
+    return derivative
+
+
+                </pre></code>
+
+                <h4>Problem Set-Up</h4>
+                <code style="margin: auto; width: 50%;"><pre>
+# True parameters
+alpha_true = 5.0  # Shape parameter
+beta_known = 2.0  # Known scale parameter
+
+# Generate sample data
+np.random.seed(0)
+sample_size = 1000
+data = np.random.gamma(shape=alpha_true, scale=beta_known, size=sample_size)
+                    
+    
+    
+                </pre></code>
+                <h4>Implementation</h4>
+
+<code style="margin: auto; width: 50%;"><pre>
+# Initial guess
+alpha_initial = 1.0
+
+def newton_raphson(f, f_prime, x0, args=(), tol=1e-6, max_iter=100):
+    alpha = x0
+    for i in range(max_iter):
+        f_val = f(alpha, *args)
+        f_prime_val = f_prime(alpha, *args)
+        if np.isnan(f_val) or np.isnan(f_prime_val) or f_prime_val == 0:
+            raise ValueError("Invalid function value or derivative encountered.")
+        alpha_new = alpha - f_val / f_prime_val
+        if alpha_new <= 0:
+            alpha_new = alpha / 2  # Ensure alpha remains positive
+        if abs(alpha_new - alpha) < tol:
+            print(f"Converged in {i+1} iterations.")
+            return alpha_new
+        alpha = alpha_new
+    raise ValueError("Maximum iterations reached without convergence.")
+
+# Run Newton-Raphson method
+alpha_estimated = newton_raphson(score_function, score_function_derivative, x0=alpha_initial, args=(data, beta_known))
+print(f"Estimated alpha (Newton-Raphson Method): {alpha_estimated:.4f}")   
+</pre></code>
+
+<h3>Secant Method</h3>
+
+$$\alpha_{n+1}=\alpha_{n}-f(\alpha_n)\times\frac{\alpha_n-\alpha_{n-1}}{f(\alpha_n)-f(\alpha_{n-1})}$$
+
+where \(f(\cdot)=S(\alpha)\).
+
+<h4>Defining the Functions</h4>
+
+                <code style="margin: auto; width: 50%;"><pre>
+def neg_log_likelihood(alpha, data, beta):
+    n = len(data)
+    if alpha <= 0:
+        return np.inf  # Shape parameter must be positive
+    sum_ln_x = np.sum(np.log(data))
+    sum_x = np.sum(data)
+    ll = (alpha - 1) * sum_ln_x - n * alpha * np.log(beta) - n * np.log(np.math.gamma(alpha)) - sum_x / beta
+    return -ll  # Negative log-likelihood
+
+def score_function(alpha, data, beta):
+    if alpha <= 0:
+        return np.inf
+    n = len(data)
+    mean_ln_x = np.mean(np.log(data))
+    score = n * (mean_ln_x - np.log(beta) - psi(alpha))
+    return score
+
+
+
+                </pre></code>
+
+<h4>Initialize</h4>
+<code style="margin: auto; width: 50%;"><pre>
+# Initial guesses
+alpha0 = 1.0
+alpha1 = 10.0
+
+
+</pre></code>
+
+<h4>Implementation</h4>
+<code style="margin: auto; width: 50%;"><pre>
+def secant_method(f, x0, x1, args=(), tol=1e-6, max_iter=100):
+    alpha_prev, alpha = x0, x1
+    for i in range(max_iter):
+        f_prev = f(alpha_prev, *args)
+        f_curr = f(alpha, *args)
+        if np.isnan(f_prev) or np.isnan(f_curr) or (f_curr - f_prev) == 0:
+            raise ValueError("Invalid function values or zero denominator encountered.")
+        alpha_new = alpha - f_curr * (alpha - alpha_prev) / (f_curr - f_prev)
+        if alpha_new <= 0:
+            alpha_new = (alpha + alpha_prev) / 2  # Ensure alpha remains positive
+        if abs(alpha_new - alpha) < tol:
+            print(f"Converged in {i+1} iterations.")
+            return alpha_new
+        alpha_prev, alpha = alpha, alpha_new
+    raise ValueError("Maximum iterations reached without convergence.")
+
+alpha_estimated_secant = secant_method(score_function, x0=alpha0, x1=alpha1, args=(data, beta_known))
+print(f"Estimated alpha (Secant Method): {alpha_estimated_secant:.4f}")
+</pre></code>
+
+<h3>Comparison</h3>
+<figure>
+    <img src="./gamma-alpha-convergence-likelihood.png" alt="Gamma Parameter Fitting" style="margin:auto; display: block;  width:clamp(300px,80vw, 800px)"/>
+    <figcaption>Gamma Alpha Fitting Likelihood</figcaption>
+</figure>
+<figure>
+    <img src="./gamma-alpha-convergence-iteration.png" alt="Gamma Parameter Fitting Iterations" style="margin:auto; display: block;  width:clamp(300px,80vw, 800px)"/>
+    <figcaption>Gamma Alpha Fitting Iterations</figcaption>
+</figure>
+
+
 
 
 
