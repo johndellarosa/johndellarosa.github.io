@@ -121,13 +121,13 @@
                 <h3>Second Derivative Test</h3>
 
                 <ul>
-                    <li>If \(f"(\theta)\gt 0\), the function is concave upward, indicating a local minimum</li>
-                    <li>If \(f"(\theta)\lt 0\), the function is concave downward, indicating a local maximum.</li>
+                    <li>If \(f''(\theta)\gt 0\), the function is concave upward, indicating a local minimum</li>
+                    <li>If \(f''(\theta)\lt 0\), the function is concave downward, indicating a local maximum.</li>
                 </ul>
 
                 <ol>
-                    <li>Compute the second derivative \(f"(\theta)\)</li>
-                    <li>Evaluate \(f"(\theta)\) at each critical point</li>
+                    <li>Compute the second derivative \(f''(\theta)\)</li>
+                    <li>Evaluate \(f''(\theta)\) at each critical point</li>
                 </ol>
 
                 <h3>Example: MLE for Mean of a Normal</h3>
@@ -166,7 +166,7 @@
 
                 <ol>
                     <li>Initial Guess: Choose an initial estimate \(\theta_0\)</li>
-                    <li>Iteration: \(\theta_{k+1}=\theta_k-\frac{f'(\theta_k)}{f"(\theta_k)}\)</li>
+                    <li>Iteration: \(\theta_{k+1}=\theta_k-\frac{f'(\theta_k)}{f''(\theta_k)}\)</li>
                     <li>Convergence Check: If \(|\theta_{k+1}-\theta_k|\lt \varepsilon\), stop; else, repeat</li>
                 </ol>
 
@@ -196,13 +196,14 @@
 
                 $$\lambda_{k+1}=\lambda_k+\left(\frac{n-\lambda_k\sum x_i}{n}\right)$$
                 
+                
                 <h3>Secant Method</h3>
             The Secant Method is similar to Newton-Raphson but doesn't require computation of the second derivative. 
 
             <h4>Algorithm</h4>
             <ol>
                 <li>Initial Estimates: Choose two initial guesses \(\theta_0\) and \(\theta_1\)</li>
-                <li>Iteration: \(theta_{k+1}=\theta_k-f'(\theta_k)\left(\frac{\theta_k-\theta_{k-1}}{f'(\theta_k)-f'(\theta_{k-1})}\right)\)</li>
+                <li>Iteration: \(\theta_{k+1}=\theta_k-f'(\theta_k)\left(\frac{\theta_k-\theta_{k-1}}{f'(\theta_k)-f'(\theta_{k-1})}\right)\)</li>
                 <li>Convergence Check: If \(\theta_{k+1}-\theta_k|\lt \varepsilon\), stop; else, repeat.</li>
             </ol>
 
@@ -230,7 +231,55 @@
             </div>
 
 
+            <div>
+                <h2>Gamma Distribution Example</h2>
 
+                The Gamma distribution is a continuous probility distribution whose PDF is given by:
+
+                $$f(x;\alpha,\beta)=\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}$$
+                where
+                <ul>
+                    <li>\(x\in(0,\infty)\)</li>
+                    <li>\(\alpha\) is the shape parameter \((\alpha\gt 0)\)</li>
+                    <li>\(beta\) is the scale parameter \((\beta\gt 0)\)</li>
+                    <li>\(\Gamma(\cdot)\) is the gamma function</li>
+                </ul>
+
+                For our example, we will assume that \(\beta\) is known, so estimating the shape parameter \(\alpha\) becomes a univariate optimization problem.
+
+                <h3>Log-Likelihood</h3>
+                Given a sample of n independent observations \(\{x_i\}\) from a Gamma distribution with known \(\beta\) and unknown \(\alpha\), the log-likelihood function is:
+
+                $$\ell(\alpha)=(\alpha-1)\sum_{i=1}^{n}\log(x_i)-\frac{\sum_{i=1}^{n}x_i}{\beta}-n\alpha\log(\beta)-n\log(\Gamma(\alpha))$$
+
+
+                To find the MLE of \(\alpha\), we need to solve \(\ell'(\alpha)=0\), where \(\ell'(\alpha)\) is the first derivative of the log-likelihood function with respect to \(\alpha\), also known as the score function.
+
+                <br>
+
+                $$S(\alpha)=\frac{d\ell}{d\alpha}=\sum_{i=1}^{n}\log(x_i)-n\log(\beta)-n\psi(\alpha)$$
+                where \(\psi(\dot)\) is the digamma function
+
+                For Newton's Method, we need the second derivative of the likelihood function (first derivative of score function) calculated as well:
+
+                $$S'(\alpha)=\frac{d^2\ell}{d\alpha^2}=-n\psi^{(1)}(\alpha)$$
+                where \(\psi^{(1)}(\alpha)\) is the trigamma function.
+
+                <br>
+
+                <h3>Newton Example</h3>
+
+                Our iterative equation in Newton's Method will be:
+
+                $$\alpha_{n+1}=\alpha_n-\frac{f(\alpha_n)}{f'(\alpha_n)}$$
+
+                In the context of MLE, we set \(f(\alpha)=S(\alpha)\) and \(f'(\alpha)=S'(\alpha)\) to find where \(S(\alpha)=0\).
+
+
+
+
+
+            </div>
              
 
 
