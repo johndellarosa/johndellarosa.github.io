@@ -147,7 +147,172 @@
             </div>
 
 
+            <div id="example">
+            <h2>Example Implementation</h2>
 
+            <h3>Problem Set Up</h3>
+            We will use the Weibull distribution as an example. Its PDF is given by:
+
+            $$f(x;k,\lambda)=\frac{k}{\lambda}(\frac{x}{\lambda})^{k-1}e^{-(x/\lambda)^k}$$
+
+            <h3>Log-Likelihood</h3>
+            $$\ell(k,\lambda)=n\log(k)-nk\log(\lambda)+(k-1)\sum_{i=1}^{n}\log(x_i)-\sum_{i=1}^{n}(\frac{x_i}{\lambda})^{k}$$
+
+            <h4>First Derivatives</h4>
+            $$\frac{\partial \ell}{\partial k}=\frac{n}{k}-n\log(\lambda)+sum_{i=1}^n\log(x_i)-\sum_{i=1}^{n}(\frac{x_i}{\lambda})^{k}\log(\frac{x_i}{\lambda})$$
+            $$\frac{\partial \ell}{\partial \lambda}=-\frac{nk}{\lambda}+k\sum_{i=1}^{n}(\frac{x_i}{\lambda})^{k}\frac{x_i}{\lambda^2}$$
+
+            $$\frac{\partial\ell}{\partial \lambda}=-\frac{nk}{\lambda}+k^2\lambda^{-(k+1)}\sum_{i=1}^{n}x_{i}^{k}$$
+
+            <h4>Second Derivatives</h4>
+            $$\frac{\partial^2\ell}{\partial k^2}=-\frac{n}{k^2}-\sum_{i=1}^{n}(\frac{x_i}{\lambda})^k\left[\log(\frac{x_i}{\lambda})\right]^2$$
+
+            $$\frac{\partial^2\ell}{\partial \lambda^2}=\frac{nk}{\lambda^2}-k(k+1)\lambda^{-(k+2)}\sum_{i=1}^{n}x_{i=1}^{k}$$
+
+            $$\frac{\partial^2\ell}{\partial k\partial \lambda}=-\frac{n}{\lambda}+\sum_{i=1}^{n}(\frac{x_i^}{\lambda})^k(\frac{x_i}{\lambda})\log(\frac{x_i}{\lambda})$$
+
+            <h3>Algorithm</h3>
+
+
+            <code style="margin: auto; width: 50%;"><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.special import gamma, gammaln, psi  # Gamma functions and digamma function
+# True parameters
+k_true = 1.5  # Shape parameter
+lambda_true = 2.0  # Scale parameter
+
+# Generate sample data
+np.random.seed(0)
+sample_size = 1000
+data = np.random.weibull(k_true, sample_size) * lambda_true
+                              
+            
+            </pre></code>
+def log_likelihood(params, data):
+    k, lam = params
+    if k <= 0 or lam <= 0:
+        return -np.inf  # Log-likelihood is undefined for non-positive parameters
+    n = len(data)
+    ln_data = np.log(data)
+    term1 = n * np.log(k)
+    term2 = n * k * np.log(lam)
+    term3 = (k - 1) * np.sum(ln_data)
+    term4 = np.sum((data / lam) ** k)
+    ll = term1 - term2 + term3 - term4
+    return ll
+
+def gradient(params, data):
+    k, lam = params
+    if k <= 0 or lam <= 0:
+        return np.array([0, 0])  # Return zero gradient for invalid parameters
+    n = len(data)
+    ln_data = np.log(data)
+    ln_x_over_lam = ln_data - np.log(lam)
+    x_over_lam = data / lam
+    x_over_lam_k = x_over_lam ** k
+    # Partial derivative with respect to k
+    dl_dk = (n / k) - n * np.log(lam) + np.sum(ln_data) - np.sum(x_over_lam_k * ln_x_over_lam)
+    # Partial derivative with respect to lambda
+    dl_dlam = (-n * k / lam) + (k * np.sum(x_over_lam_k * x_over_lam)) / lam
+    return np.array([dl_dk, dl_dlam])
+
+def hessian(params, data):
+    k, lam = params
+    if k <= 0 or lam <= 0:
+        return np.array([[0, 0], [0, 0]])  # Return zero Hessian for invalid parameters
+    n = len(data)
+    ln_data = np.log(data)
+    ln_x_over_lam = ln_data - np.log(lam)
+    x_over_lam = data / lam
+    x_over_lam_k = x_over_lam ** k
+    ln_x_over_lam_squared = ln_x_over_lam ** 2
+    x_over_lam_squared = x_over_lam ** 2
+    # Second derivative with respect to k
+    d2l_dk2 = -n / k**2 - np.sum(x_over_lam_k * ln_x_over_lam_squared)
+    # Second derivative with respect to lambda
+    d2l_dlam2 = (n * k) / lam**2 - (k * (k + 1)) * np.sum(x_over_lam_k * x_over_lam_squared) / lam**2
+    # Mixed partial derivatives
+    d2l_dk_dlam = (-n / lam) + (np.sum(x_over_lam_k * (1 + k * ln_x_over_lam) * x_over_lam)) / lam
+    return np.array([[d2l_dk2, d2l_dk_dlam],
+                     [d2l_dk_dlam, d2l_dlam2]])
+
+
+            <code style="margin: auto; width: 50%;"><pre>
+def newton_raphson_multivariate(func, grad_func, hess_func, x0, args=(), tol=1e-6, max_iter=100):
+    x = np.array(x0, dtype=float)
+    for i in range(max_iter):
+        grad = grad_func(x, *args)
+        hess = hess_func(x, *args)
+        if np.linalg.det(hess) == 0:
+            raise ValueError("Singular Hessian matrix.")
+        delta = np.linalg.solve(hess, grad)
+        x_new = x - delta
+        # Ensure parameters remain positive
+        x_new = np.maximum(x_new, 1e-6)
+        if np.linalg.norm(x_new - x) < tol:
+            print(f"Converged in {i+1} iterations.")
+            return x_new
+        x = x_new
+    raise ValueError("Maximum iterations reached without convergence.")
+                
+# Initial guesses
+k_initial = 1.0
+lambda_initial = 1.0
+x0 = [k_initial, lambda_initial]
+
+# Run Newton-Raphson method
+params_estimated = newton_raphson_multivariate(
+    func=log_likelihood,
+    grad_func=gradient,
+    hess_func=hessian,
+    x0=x0,
+    args=(data,)
+)
+print(f"Estimated parameters (Newton-Raphson): k = {params_estimated[0]:.4f}, lambda = {params_estimated[1]:.4f}")
+    
+            </pre></code>
+
+            <code style="margin: auto; width: 50%;"><pre>
+def gradient_descent(func, grad_func, x0, args=(), learning_rate=0.001, tol=1e-6, max_iter=10000):
+    x = np.array(x0, dtype=float)
+    for i in range(max_iter):
+        grad = grad_func(x, *args)
+        x_new = x + learning_rate * grad  # Maximizing the function
+        # Ensure parameters remain positive
+        x_new = np.maximum(x_new, 1e-6)
+        if np.linalg.norm(x_new - x) < tol:
+            print(f"Converged in {i+1} iterations.")
+            return x_new
+        x = x_new
+    print("Maximum iterations reached without convergence.")
+    return x
+
+    # Initial guesses
+    k_initial = 1.0
+    lambda_initial = 1.0
+    x0 = [k_initial, lambda_initial]
+    
+# Run Gradient Descent method
+params_estimated_gd = gradient_descent(
+    func=log_likelihood,
+    grad_func=gradient,
+    x0=x0,
+    args=(data,),
+    learning_rate=0.0001  # Adjust learning rate as needed
+)
+print(f"Estimated parameters (Gradient Descent): k = {params_estimated_gd[0]:.4f}, lambda = {params_estimated_gd[1]:.4f}")
+    
+            </pre></code>
+
+
+
+            <figure>
+                <img src="./weibull-parameter-convergence.png" alt="Weibull Parameter Fitting" style="margin:auto; display: block;  width:clamp(300px,80vw, 800px)"/>
+                <figcaption>Weibull Parameter Fitting Likelihood</figcaption>
+            </figure>
+
+            </div>
              
 
 
