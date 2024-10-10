@@ -169,7 +169,7 @@
 
             $$\frac{\partial^2\ell}{\partial \lambda^2}=\frac{nk}{\lambda^2}-k(k+1)\lambda^{-(k+2)}\sum_{i=1}^{n}x_{i=1}^{k}$$
 
-            $$\frac{\partial^2\ell}{\partial k\partial \lambda}=-\frac{n}{\lambda}+\sum_{i=1}^{n}(\frac{x_i^}{\lambda})^k(\frac{x_i}{\lambda})\log(\frac{x_i}{\lambda})$$
+            $$\frac{\partial^2\ell}{\partial k\partial \lambda}=-\frac{n}{\lambda}+\sum_{i=1}^{n}(\frac{x_i}{\lambda})^k(\frac{x_i}{\lambda})\log(\frac{x_i}{\lambda})$$
 
             <h3>Algorithm</h3>
 
@@ -189,6 +189,7 @@ data = np.random.weibull(k_true, sample_size) * lambda_true
                               
             
             </pre></code>
+            <code style="margin: auto; width: 50%;"><pre>
 def log_likelihood(params, data):
     k, lam = params
     if k <= 0 or lam <= 0:
@@ -237,7 +238,7 @@ def hessian(params, data):
     return np.array([[d2l_dk2, d2l_dk_dlam],
                      [d2l_dk_dlam, d2l_dlam2]])
 
-
+                    </pre></code>
             <code style="margin: auto; width: 50%;"><pre>
 def newton_raphson_multivariate(func, grad_func, hess_func, x0, args=(), tol=1e-6, max_iter=100):
     x = np.array(x0, dtype=float)
