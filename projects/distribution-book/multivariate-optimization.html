@@ -312,7 +312,7 @@ print(f"Estimated parameters (Gradient Descent): k = {params_estimated_gd[0]:.4f
                 <img src="./weibull-parameter-convergence.png" alt="Weibull Parameter Fitting" style="margin:auto; display: block;  width:clamp(300px,80vw, 800px)"/>
                 <figcaption>Weibull Parameter Fitting Likelihood</figcaption>
             </figure>
-
+While it's apparent that Newton's Method takes fewer steps than Gradient Descent, that doesn't necessarily mean that it is faster in terms of wall time. A gradient descent iteration takes less time than an interation of Newton's Method, so which method is faster is not so clear. For more complex cases, the Hessian becomes expensive to compute, which leads to it getting approximated into extensions to the method.
             </div>
              
 
@@ -320,7 +320,7 @@ print(f"Estimated parameters (Gradient Descent): k = {params_estimated_gd[0]:.4f
 
 
                 <div id="Exercises">
-                    <h2>Copula Practice Problems</h2>
+                    <h2>Multivariate OPtimization Practice Problems</h2>
 
                     <ol>
 

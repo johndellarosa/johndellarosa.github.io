@@ -70,77 +70,75 @@
                 </ol>
 
 
-                <h2>Refresher on Multivariable Calculus</h2>
+                <h2>Types of Constraints</h2>
 
-                <h3>Types of Functions</h3>
+
+                <h3>Equality Constraints</h3>
+                $$g_i(x)=0,\quad i=1,2,\dots,m$$
+
+                <h3>Inequality Constraints</h3>
+                Inequality constraints specify that certain functions of the variables must be less than or equal to, or greater than or equal to, a constant value.
+
+                $$h_j(x)\leq 0,\quad j=1,2,\dots,p$$
+                $$k_k(x)\geq 0,\quad k=1,2,\dots,q$$
+
+                <h3>Feasible Region</h3>
+
+                The feasible region is the set of all points \(x\) that satisfy all the constraints.
+
+                $$\mathcal{F}=\{x\in\mathbb{R}^n|g_i(x)=0,h_j(x)\leq 0\}$$
+
+                <h4>Types of Solutions</h4>
                 <ul>
-                    <li>A scalar-valued function maps a vector to a scalar: \(f: \mathbb{R}^n\to\mathbb{R}\)</li>
-                    <li>A vector-valued function maps a vector to a vector: \(F:\mathbb{R}^n\to\mathbb{R}^m\)</li>
+                    <li>Global Optimum: The best possible solution over the entire feasible region.</li>
+                    <li>Local Optimum: The best solution within a neighborhood of points</li>
+                    <li>Boundary Solutions: Solutions that lie on the edge of the feasible region</li>
+                    <li>Interior Solutions: Solutions that lie strictly within the feasible region</li>
                 </ul>
+
+
+
+                <h2>Lagrange Multipliers</h2>
+
+                Consider the optimization problem:
+
+                $$\min_{x}f(x)$$
+                which is subject to
+
+                $$g_i(x)=0;\quad i=1,2,\dots,m$$
+
+                The Lagrangian is given by
+                $$\mathcal{L}(x,\lambda)=f(x)-\sum_{i=1}^m\lambda_ig_i(x)$$
+
+
+                Optimality Conditions:
+
+                $$\nabla_{X}\mathcal{L}(x^*,\lambda^*)=\nabla f(x^*)-\sum_{i=1}^m\lambda_{i}^{*}\nabla g_i(x^*)=0$$
+
+                Primal feasibility:
+
+                $$g_i(x^*)=0,\quad \forall i$$
+
+                <h3>Example</h3>
+                $$\min_{x,y} f(x,y)=x^2+y^2$$
+                Subject to:
+                $$g(x,y)=x+y-1=0$$
+                Lagrangian:
+                $$\mathcal{L}(x,y,\lambda)=x^2+y^2-\lambda(x+y-1)$$
+                Stationarity Conditions:
+
+                $$\frac{\partial\mathcal{L}}{\partial x}=2x-\lambda=0\Longrightarrow\lambda=2x$$
+                $$\frac{\partial\mathcal{L}}{\partial y}=2y-\lambda=0\Longrightarrow\lambda=2y$$
+                Equation \(\lambda\) and solve:
+
+                $$2x=2y\Longrightarrow x=y$$
+                $$x+y=1\Longrightarrow 2x=1\Longrightarrow x=\frac{1}{2},y=\frac{1}{2}$$
+
+                <h2>Optimization with Inequality Constraints</h2>
                 
-                <h3>Gradient</h3>
-                The gradient of a scalar-valued function \(f:\mathbb{R}^n\to\mathbb{R}\) is a vector that contains all its first-order partial derivatives:
-
-                $$\nabla f(x)=\begin{vmatrix}
-                \frac{\partial f}{\partial x_1}\\
-                \frac{\partial f}{\partial x_2}\\
-                \vdots \\
-                \frac{\partial f}{\partial x_n}
-               
-               \end{vmatrix}$$
-            The gradient evaluated at a point, gives the direction of the steepest increase of the function
-
-            <br><br>
-            The critical points occur where \(\nabla f(x)=0\)
-            
-
-            <h3>Jacobian</h3>
-
-            The Jacobian generalizes the derivative to vector-valued functions. For a vector function \(F:\mathbb{R}^n\to\mathbb{R}^m\), the Jacobian is an \(m\times n\) matrix of first-order partial derivatives
-
-            $$J(F)(x)=\begin{bmatrix} \frac{\partial F_1}{\partial x_1} & \frac{\partial F_1}{\partial x_2} & \dots & \frac{\partial F_1}{\partial x_n} \\
-            \frac{\partial F_2}{\partial x_1} & \frac{\partial F_2}{\partial x_2} & \dots & \frac{\partial F_2}{\partial x_n}\\
-            \vdots & \vdots & \ddots & \vdots \\
-            \frac{\partial F_m}{\partial x_1} & \frac{\partial F_m}{\partial x_2} & \dots & \frac{\partial F_m}{\partial x_n}\end{bmatrix}$$
-
-            <h3>Hessian</h3>
-            The Hessian matrix is a square matrix of second-order partial derivatives of a scalar function \(f:\mathbb{R}^n\to\mathbb{R}\).
-
-            $$H(F)(x)=\begin{bmatrix}
-            \frac{\partial^2f}{\partial x_{1}^2} & \frac{\partial^2f}{\partial x_{1}\partial x_{2}} & \dots & \frac{\partial^2f}{\partial x_{1}\partial x_{n}}\\
-            \frac{\partial^2f}{\partial x_{2}\partial x_{1}} & \frac{\partial^2f}{\partial x_{2}^2} & \dots & \frac{\partial^2f}{\partial x_{2}\partial x_{n}}\\
-            \vdots & \vdots & \ddots & \vdots\\
-            \frac{\partial^2f}{\partial x_{n}\partial x_{1}} & \frac{\partial^2f}{\partial x_{n}\partial x_{2}} & \dots & \frac{\partial^2f}{\partial x_{n}^2}
-            \end{bmatrix}$$
 
 
-            <h3>First Order Taylor Series</h3>
 
-            $$f(x)\approx f(x_0)+\nabla f(x_0)^T(x-x_0)$$
-
-            <h3>Second-Order Taylor Series</h3>
-
-
-            $$f(x)\approx f(x_0)+\nabla f(x_0)^T(x-x_0)+\frac{1}{2}H(f)(x_0)(x-x_0)$$
-
-
-            <h3>Positive Definite and Semi-Definite Matrices</h3>
-            
-            <h4>Postivie Definite</h4>
-            A symmetric matrix A is positive definite if \(x^TAx\gt 0\) for all non-zero \(x\in\mathbb{R}^n\).
-
-            <h4>Negative Definitely</h4>
-            Simiarly, a symmetric matrix A is negative definite if \(x^TAx\lt 0\) for all non-zero \(x\in\mathbb{R}^n\).
-
-            <h4>Positive Semi-Definite Matrix</h4>
-
-            A symmetric matrix A is positive semi-definite if \(x^TAx\geq 0\) for all x. This allows for it to be equal to 0.
-
-            <h4>Eigenvalues</h4>
-           
-            All positive eigenvalues for A means that it is positive definite.
-             All negative eigenvalues means that it is negative definite.
-            
 
 
 
@@ -154,7 +152,7 @@
 
 
                 <div id="Exercises">
-                    <h2>Copula Practice Problems</h2>
+                    <h2>Constrained Optimization Practice Problems</h2>
 
                     <ol>
 
