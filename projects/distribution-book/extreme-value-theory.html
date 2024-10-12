@@ -344,6 +344,70 @@
 
 
 
+                <h2>Theory of Regular Variation</h2>
+                The theory of regular variation helps describe the asymptotic behavior of functions and distribution. 
+
+                <h3>Definition</h3>
+
+                A function \(L: (0,\infty)\to(0,\infty)\) is called slowly varying at infinity if for all \(t\gt 0\):
+
+                $$\lim_{x\to\infty}\frac{L(tx)}{L(x)}=1$$
+
+                A measurable function \(f:(0,\infty)\to(0,\infty)\) is said to be regularly varying at infinity with index \(\alpha\in\mathbb{R}\) if it can be written in the form:
+
+                $$f(x)=x^{\alpha}L(x)$$
+                where \(L(x)\) is a slowly varying function at infinity. We can write \(f\in RV_{\alpha}\) for f regularly varying with index \(\alpha\). If \(\alpha=0\), then \(f\) is slowly varying. 
+
+                <h3>Domain of Attraction</h3>
+
+                A distribution function \(F\) is said to belong to the domain of attraction to an extreme value distribution if there exists sequences \(\{a_n\gt 0\}\) and \(\{b_n\}\) such that:
+
+                $$\lim_{n\to\infty}F^{n}(a_n x+ b_n)=G(x)$$
+                where \(G\) is a non-degenerate extreme value distribution. 
+                
+                <h3>Heavy Tails</h3>
+
+                A distribution function \(F\) is said to have a heavy tail if:
+
+                $$\bar{F}(x)=1-F(x)\in RV_{-\alpha},\quad \alpha\gt 0$$
+
+                This means that the survival function \(\bar{F}(x)\) is regularly varying with index \(-\alpha\), indicating a polynomial decay of the tail. 
+
+                <h4>Example: Pareto Distribution</h4>
+
+                For \(x\geq x_0 \gt 0\):
+
+                $$F(x)=1-(\frac{x_0}{x})^{\alpha},\quad \alpha\gt0$$
+                
+                The survival function \(\bar{F}(x)=(x_0/x)^{\alpha}\in RV_{-\alpha}\)
+
+                <h4>Example: Student's t-Distribution</h4>
+                $$\bar{F}(x)\sim kx^{-\nu},\quad x\to\infty$$
+
+
+                <h4>Tail Equivalence</h4>
+                Two distribution functions F and G are tail-equivalent if:
+
+                $$\lim_{x\to\infty}\frac{\bar{F}(x)}{\bar{G}(x)}=c\in(0,\infty)$$
+
+                If F and G are tail-equivalent and F is regularly varying, so is G.
+
+
+                <h3>Light Tails</h3>
+                A distribution is considered light-tailed if its tail probability decrease exponentially or faster as \(x\to\infty\). 
+                Formally, a distribution F is light-tailed if its survival function satisfies:
+
+                $$\limsup_{x\to\infty}\frac{\log(\bar{F}(x))}{x}\lt 0$$
+                The distribution to said to be exponentially decaying if the above is true.
+
+                <h4>Super-Exponential Decay</h4>
+                For distributions with tails that decay faster than any exponential function, such as the Gaussian distribution, we have:
+
+                $$\lim_{x\to\infty}\frac{\log(\bar{F}(x))}{x^2}= -\infty$$
+                
+                <h4>Example: Exponential</h4>
+                $$\bar{F}(x)=e^{-\lambda x},\quad x\geq 0$$
+                
 
                 </div>
 

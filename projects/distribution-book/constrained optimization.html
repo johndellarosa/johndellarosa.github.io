@@ -137,6 +137,53 @@
                 <h2>Optimization with Inequality Constraints</h2>
                 
 
+$$\min_{x\in\mathbb{R}^n}f(x)$$
+Subject to Constraints:
+$$\text{Equality Constraints:}\quad g_i(x)=0,\quad i=1,2,\dots,m$$
+$$\text{Inequality Constraints:}\quad h_j(x)\leq 0,\quad j=1,\dots,p$$
+Lagrangian
+$$\mathcal{L}(x,\lambda,\mu)=f(x)-\sum_{i=1}^{m}\lambda_ig_i(x)-\sum_{j=1}^{p}\mu_j h_j(x)$$
+
+<ul>
+    <li>\(\lambda\in\mathbb{R}^{m}\): Lagrange multiplier for equality constraints</li>
+    <li>\(\mu\in\mathbb{R}^p\): Lagrange multipliers (dual variables) for inequality constraints</li>
+</ul>
+
+<h3>Convexity</h3>
+<h4>Convex Set</h4>
+A Set \(\mathcal{C}\subeq\mathbb{R}^n\) is convex if, for any \(x,y \in \mathcal{C}\) and \(\theta\in[0,1]\), the point \(\theta x+(1-\theta) y\in \mathcal{C}\).
+
+<h4>Convex Function</h4>
+A function \(f:\mathbb{R}^n\to\mathbb{R}\) is convex if its domain is convex and, for all x,y in its domain:
+
+$$f(\theta x+(1-\theta)y)\leq \theta f(x) + (1-\theta)f(y)$$
+
+<h3>KKT Conditions</h3>
+<h4>Stationarity</h4>
+$$\nabla f(x^*)-\sum_{i=1}^{m}\lambda_{i}^{*}\nabla g_i(x^*)-\sum_{j=1}^{p}\mu_{j}^{*}\nabla h_j(x^*)=0$$
+In unconstrained optimization, setting \(\nabla f(x^*)=0\) identifies stationary points. However, when constraints are present, the feasible direction is limited by the constraints. Therefore, the gradient of the objective function must be balanced by the gradients of the constraints to prevent movement outside the feasible region. 
+
+
+
+<h4>Primal Feasibility</h4>
+$$g_i(x^*)=0,\quad h_j(x^*)\leq 0$$
+The solution \(x^*\) must satisfy all the original problem's constraints. This is self-explanatory.
+
+<h4>Dual Feasibility</h4>
+$$\mu_{j}^{*}\geq 0,\quad \forall j$$
+The Lagrange multipliers associated with the inequality constraints must be non-negative. For why this is necessary, if the multipliers were negative, that would imply increasing the constraint violation would improve the objective function, which contradicts optimality. 
+
+
+<h4>Complementary Slackness</h4>
+$$\mu_{j}^{*}h_j(x^*)=0,\quad \forall j$$
+For each inequality constraint: \(h_j(x)\leq 0\):
+<ul>
+    <li>If \(\mu_{j}^{*}\gt0\), then \(h_j(x^*)=0\) (the constraint is active)</li>
+    <li>If \(h_j(x^*)\lt 0\), then \(\mu_j^{*}=0\) (the constraint is inactive)</li>
+</ul>
+
+This ensures that only the constraints that are binding at the optimum have a non-zero influence on the solution.
+
 
 
 
