@@ -154,6 +154,7 @@ function generateScatterData() {
             showscale: true,
             colorbar: {
                 title: 'Counts',
+                display: isMobile? false:true,
             },
             line: {
                 color: '#000000',
