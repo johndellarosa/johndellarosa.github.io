@@ -16,7 +16,8 @@
 
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+    
             <title>Multivariate Distribution Simulator</title>
     
         <!-- Meta tags -->
@@ -225,7 +226,7 @@ footer {
 
                 <div class="input-group">
                     <label for="distType">Distribution Type:</label>
-                    <select id="distType">
+                    <select id="distType"  onchange="toggleDFInput()">
                         <option value="normal">Multivariate Normal</option>
                         <option value="t">Multivariate t-Distribution</option>
                         <option value="laplace">Multivariate Laplace</option>
@@ -256,6 +257,10 @@ footer {
                     <label for="rho">Correlation ρ:</label>
                     <input type="range" id="rhoSlider" min="-.99" max=".99" step="0.01" value="0" oninput="updateRhoDisplay(this.value)">
                     <span id="rhoDisplay" class="fixed-width">0</span>
+                </div>
+                <div class="input-group" id="df-group" style="display: none;">
+                    <label for="df">Degrees of Freedom ν:</label>
+                    <input type="number" id="df" value="4" min="1" step="1">
                 </div>
                 <div class="input-group">
                     <label for="heatmapColor">Heatmap Color:</label>
