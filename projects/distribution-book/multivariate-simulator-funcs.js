@@ -16,13 +16,13 @@ function bivariateTPDF(x, y, muX, muY, sigmaX, sigmaY, rho, df = 4) {
   const normalization = normalizationNumerator / normalizationDenominator;
   
   // Log intermediate values for debugging
-  console.log(`bivariateTPDF - x: ${x}, y: ${y}, z: ${z}, adjustedZ: ${adjustedZ}, normalization: ${normalization}`);
+  // console.log(`bivariateTPDF - x: ${x}, y: ${y}, z: ${z}, adjustedZ: ${adjustedZ}, normalization: ${normalization}`);
   
   // Compute the PDF value
   const pdf = normalization * Math.pow(1 + adjustedZ / df, -(df + 2) / 2);
   
   // Log the final PDF value
-  console.log(`bivariateTPDF - PDF: ${pdf}`);
+  // console.log(`bivariateTPDF - PDF: ${pdf}`);
   
   // Handle potential numerical issues
   if (!isFinite(pdf) || pdf < 0) {
@@ -46,31 +46,35 @@ function bivariateLaplacePDF(x, y, muX, muY, sigmaX, sigmaY, rho) {
   return Math.exp(-Math.sqrt(z)) / denominator;
 }
 
-// Function to generate grid data
-function generateGrid(muX, muY, sigmaX, sigmaY, rho, distType, df = 4) {
+function generateGrid(muX, muY, sigmaX, sigmaY, rho, distType, df = 4, xMin, xMax, yMin, yMax) {
   const numPoints = 100;
-  let rangeX, rangeY;
 
-  if (distType === 't') {
-      // Calculate the t-quantile for 99% coverage
-      // This covers the central 99% of the distribution
-      const tQuantile = jStat.studentt.inv(0.9995, df); // 99% coverage
-      
-      // Set range based on the t-quantile
-      rangeX = tQuantile * sigmaX;
-      rangeY = tQuantile * sigmaY;
+  // If bounds are not provided, set them based on distribution type
+  if (xMin === undefined || xMax === undefined || yMin === undefined || yMax === undefined) {
+      if (distType === 't') {
+          // Calculate the t-quantile for 99% coverage
+          const tQuantile = jStat.studentt.inv(0.995, df); // 99% coverage
+          const rangeX = tQuantile * sigmaX;
+          const rangeY = tQuantile * sigmaY;
 
-      console.log(`t-quantile (99% coverage) for df=${df}: ${tQuantile}`);
-  } else {
-      // For normal and Laplace distributions, use 4 standard deviations
-      rangeX = 4 * sigmaX;
-      rangeY = 4 * sigmaY;
+          console.log(`t-quantile (99% coverage) for df=${df}: ${tQuantile}`);
+
+          xMin = muX - rangeX;
+          xMax = muX + rangeX;
+          yMin = muY - rangeY;
+          yMax = muY + rangeY;
+      } else {
+          // For normal and Laplace distributions, use 4 standard deviations
+          const rangeX = 4 * sigmaX;
+          const rangeY = 4 * sigmaY;
+
+          xMin = muX - rangeX;
+          xMax = muX + rangeX;
+          yMin = muY - rangeY;
+          yMax = muY + rangeY;
+      }
   }
 
-  const xMin = muX - rangeX;
-  const xMax = muX + rangeX;
-  const yMin = muY - rangeY;
-  const yMax = muY + rangeY;
   const xValues = [];
   const yValues = [];
   const zValues = [];
@@ -126,9 +130,8 @@ function toggleDFInput() {
   }
 }
 
-
-// Function to generate samples
-function generateSamples(muX, muY, sigmaX, sigmaY, rho, numSamples, distType, df = 4) {
+// Function to generate samples and plot them within a dynamically determined grid
+function generateSamplesAndPlot(muX, muY, sigmaX, sigmaY, rho, numSamples, distType, df = 4) {
   const samples = [];
   const cov = [
       [sigmaX ** 2, rho * sigmaX * sigmaY],
@@ -185,6 +188,109 @@ function generateSamples(muX, muY, sigmaX, sigmaY, rho, numSamples, distType, df
 
       // Debugging: Log x and y values
       console.log(`Sample ${i + 1}: x = ${x}, y = ${y}`);
+
+      // Check if x and y are valid numbers
+      if (isNaN(x) || isNaN(y)) {
+          console.error(`Sample ${i + 1}: x or y is NaN. Skipping this sample.`);
+          continue; // Skip this iteration and do not add to samples
+      }
+
+      samples.push([x, y]);
+
+      // Add to text area
+      document.getElementById('sampleOutput').value += `(${x.toFixed(4)}, ${y.toFixed(4)})\n`;
+  }
+
+  // Store samples globally for download
+  generatedSamples = samples;
+
+  // Determine the range of the samples
+  const xValues = samples.map(s => s[0]);
+  const yValues = samples.map(s => s[1]);
+  const xMinSample = Math.min(...xValues);
+  const xMaxSample = Math.max(...xValues);
+  const yMinSample = Math.min(...yValues);
+  const yMaxSample = Math.max(...yValues);
+
+  // Add padding (10%) to the range
+  const paddingX = (xMaxSample - xMinSample) * 0.1;
+  const paddingY = (yMaxSample - yMinSample) * 0.1;
+
+  const xMin = xMinSample - paddingX;
+  const xMax = xMaxSample + paddingX;
+  const yMin = yMinSample - paddingY;
+  const yMax = yMaxSample + paddingY;
+
+  console.log(`Sample Range: X [${xMinSample}, ${xMaxSample}], Y [${yMinSample}, ${yMaxSample}]`);
+  console.log(`Grid Range with Padding: X [${xMin}, ${xMax}], Y [${yMin}, ${yMax}]`);
+
+  // Generate grid data based on the sample range
+  const gridData = generateGrid(muX, muY, sigmaX, sigmaY, rho, distType, df, xMin, xMax, yMin, yMax);
+
+  // Plot heatmap and samples
+  plotContour(gridData, samples);
+}
+
+
+
+// Function to generate samples
+function generateSamples(muX, muY, sigmaX, sigmaY, rho, numSamples, distType, df = 4) {
+  const samples = [];
+  const cov = [
+      [sigmaX ** 2, rho * sigmaX * sigmaY],
+      [rho * sigmaX * sigmaY, sigmaY ** 2]
+  ];
+
+  // Cholesky decomposition for 2x2 matrix
+  const L = [
+      [Math.sqrt(cov[0][0]), 0],
+      [
+          cov[1][0] / Math.sqrt(cov[0][0]),
+          Math.sqrt(cov[1][1] - (cov[1][0] ** 2) / cov[0][0])
+      ]
+  ];
+
+  // Log the Cholesky matrix for debugging
+  // console.log('Cholesky Decomposition Matrix L:', L);
+
+  // Clear the textarea before adding new samples
+  document.getElementById('sampleOutput').value = '';
+
+  for (let i = 0; i < numSamples; i++) {
+      // Generate two independent standard normal random variables using Box-Muller transform
+      let u1 = Math.random();
+      let u2 = Math.random();
+      let z1 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+      let z2 = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+
+      let x, y;
+
+      if (distType === 'normal') {
+          // Transform for normal distribution
+          x = L[0][0] * z1 + L[0][1] * z2 + muX;
+          y = L[1][0] * z1 + L[1][1] * z2 + muY;
+      } else if (distType === 't') {
+          // Transform for t-distribution
+          let chiSquared = jStat.chisquare.sample(df);
+          let sqrtChi = Math.sqrt(chiSquared / df);
+          // Prevent division by zero
+          if (sqrtChi === 0) {
+              console.warn(`Sample ${i + 1}: sqrtChi is zero. Adjusting to a small positive number.`);
+              sqrtChi = 1e-10; // Adjusted to a small positive number
+          }
+          x = L[0][0] * z1 / sqrtChi + muX;
+          y = L[1][0] * z1 / sqrtChi + L[1][1] * z2 / sqrtChi + muY;
+      } else if (distType === 'laplace') {
+          // Transform for Laplace distribution
+          // Using symmetric Laplace distribution: difference of two independent exponential variables
+          const e1 = Math.random() < 0.5 ? -Math.log(1 - Math.random()) : Math.log(1 - Math.random());
+          const e2 = Math.random() < 0.5 ? -Math.log(1 - Math.random()) : Math.log(1 - Math.random());
+          x = muX + e1;
+          y = muY + e2;
+      }
+
+      // Debugging: Log x and y values
+      // console.log(`Sample ${i + 1}: x = ${x}, y = ${y}`);
 
       // Check if x and y are valid numbers
       if (isNaN(x) || isNaN(y)) {
@@ -258,7 +364,6 @@ function plotContour(gridData, samples = null) {
   Plotly.newPlot('plot', data, layout, { responsive: true });
 }
 
-// Event listeners for buttons
 document.getElementById('plotBtn').addEventListener('click', () => {
   // Get user inputs
   const muX = parseFloat(document.getElementById('muX').value);
@@ -267,7 +372,7 @@ document.getElementById('plotBtn').addEventListener('click', () => {
   const sigmaY = parseFloat(document.getElementById('sigmaY').value);
   const rho = parseFloat(document.getElementById('rhoSlider').value);
   const distType = document.getElementById('distType').value;
-  const df = parseInt(document.getElementById('df').value) || 4; // Default to 4 if not provided
+  const df = document.getElementById('dfSlider') ? parseInt(document.getElementById('dfSlider').value) : 4; // Default to 4 if not provided
 
   // Validate inputs
   if (sigmaX <= 0 || sigmaY <= 0) {
@@ -279,16 +384,40 @@ document.getElementById('plotBtn').addEventListener('click', () => {
       return;
   }
   if (distType === 't' && (isNaN(df) || df <= 0)) {
-    alert('Degrees of freedom must be a positive integer.');
-    return;
-}
+      alert('Degrees of freedom must be a positive integer.');
+      return;
+  }
+
+  // Determine default grid bounds based on distribution type
+  let xMin, xMax, yMin, yMax;
+
+  if (distType === 't') {
+      const tQuantile = jStat.studentt.inv(0.995, df); // 99% coverage
+      xMin = muX - tQuantile * sigmaX;
+      xMax = muX + tQuantile * sigmaX;
+      yMin = muY - tQuantile * sigmaY;
+      yMax = muY + tQuantile * sigmaY;
+      console.log(`Plot Grid Range for t-Distribution: X [${xMin}, ${xMax}], Y [${yMin}, ${yMax}]`);
+  } else {
+      const rangeX = 4 * sigmaX;
+      const rangeY = 4 * sigmaY;
+      xMin = muX - rangeX;
+      xMax = muX + rangeX;
+      yMin = muY - rangeY;
+      yMax = muY + rangeY;
+      console.log(`Plot Grid Range for ${distType.charAt(0).toUpperCase() + distType.slice(1)} Distribution: X [${xMin}, ${xMax}], Y [${yMin}, ${yMax}]`);
+  }
 
   // Generate grid data
-  const gridData = generateGrid(muX, muY, sigmaX, sigmaY, rho, distType,df);
+  const gridData = generateGrid(muX, muY, sigmaX, sigmaY, rho, distType, df, xMin, xMax, yMin, yMax);
 
-  // Plot contour without samples
-  plotContour(gridData);
+  // Plot heatmap without samples
+  plotContour(gridData, null);
+
+  // Disable the download button since no samples are generated
+  document.getElementById('downloadBtn').disabled = true;
 });
+
 
 document.getElementById('sampleBtn').addEventListener('click', () => {
   // Get user inputs
@@ -319,22 +448,17 @@ document.getElementById('sampleBtn').addEventListener('click', () => {
       return;
   }
 
-  // Generate grid data
-  const gridData = generateGrid(muX, muY, sigmaX, sigmaY, rho, distType, df);
-
-  // Generate samples
-  const samples = generateSamples(muX, muY, sigmaX, sigmaY, rho, numSamples, distType, df);
-
-  // Plot contour with samples
-  plotContour(gridData, samples);
+  // Generate samples and plot
+  generateSamplesAndPlot(muX, muY, sigmaX, sigmaY, rho, numSamples, distType, df);
 
   // Enable the download button
-  if (samples.length > 0) {
+  if (generatedSamples.length > 0) {
       document.getElementById('downloadBtn').disabled = false;
   } else {
       document.getElementById('downloadBtn').disabled = true;
   }
 });
+
 
 
 
