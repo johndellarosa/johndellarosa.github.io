@@ -240,7 +240,8 @@ def hessian(params, data):
 
                     </pre></code>
             <code style="margin: auto; width: 50%;"><pre>
-def newton_raphson_multivariate(func, grad_func, hess_func, x0, args=(), tol=1e-6, max_iter=100):
+def newton_raphson_multivariate(func, grad_func,
+ hess_func, x0, args=(), tol=1e-6, max_iter=100):
     x = np.array(x0, dtype=float)
     for i in range(max_iter):
         grad = grad_func(x, *args)

@@ -351,7 +351,8 @@ def newton_raphson(f, f_prime, x0, args=(), tol=1e-6, max_iter=100):
     raise ValueError("Maximum iterations reached without convergence.")
 
 # Run Newton-Raphson method
-alpha_estimated = newton_raphson(score_function, score_function_derivative, x0=alpha_initial, args=(data, beta_known))
+alpha_estimated = newton_raphson(score_function, score_function_derivative,
+ x0=alpha_initial, args=(data, beta_known))
 print(f"Estimated alpha (Newton-Raphson Method): {alpha_estimated:.4f}")   
 </pre></code>
 
@@ -370,7 +371,8 @@ def neg_log_likelihood(alpha, data, beta):
         return np.inf  # Shape parameter must be positive
     sum_ln_x = np.sum(np.log(data))
     sum_x = np.sum(data)
-    ll = (alpha - 1) * sum_ln_x - n * alpha * np.log(beta) - n * np.log(np.math.gamma(alpha)) - sum_x / beta
+    ll = (alpha - 1) * sum_ln_x - n * alpha * np.log(beta) - n 
+    \* np.log(np.math.gamma(alpha)) - sum_x / beta
     return -ll  # Negative log-likelihood
 
 def score_function(alpha, data, beta):
@@ -412,7 +414,8 @@ def secant_method(f, x0, x1, args=(), tol=1e-6, max_iter=100):
         alpha_prev, alpha = alpha, alpha_new
     raise ValueError("Maximum iterations reached without convergence.")
 
-alpha_estimated_secant = secant_method(score_function, x0=alpha0, x1=alpha1, args=(data, beta_known))
+alpha_estimated_secant = secant_method(score_function, x0=alpha0, x1=alpha1,
+ args=(data, beta_known))
 print(f"Estimated alpha (Secant Method): {alpha_estimated_secant:.4f}")
 </pre></code>
 

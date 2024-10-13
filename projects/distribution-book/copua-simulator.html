@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"></script>
+
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Copula Simulator</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Multivariate distribution">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to multivariate distributions, elliptical distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula-simulator"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.5/dist/jstat.min.js"></script>
+
+        <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+    
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px; /* Adjust gap between buttons if needed */
+            margin-top: 20px; /* Space above the button container */
+            max-width: 500px;
+            margin: 0 auto;
+            
+        }
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    width: 160px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="number"], input[type="range"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100px;
+}
+
+select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100%;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.grid-container-multi {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+#plot {
+    width: 100%;
+    height: 600px;
+    margin-top: 20px;
+}
+
+.container {
+    width: 60%;
+    margin: 0 auto;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+}
+
+.fixed-width {
+    display: inline-block;
+    width: 30px; /* Fixed width to prevent jitter */
+    text-align: right; /* Align numbers to the right */
+}
+.histogram-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#histogramX, #histogramY {
+    width: 48%;
+    height: 400px;
+}
+</style>
+
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Measures">
+                <h1>Copula Simulator</h1>
+                
+                <div class="input-group">
+                    <label for="copulaType">Select Copula:</label>
+                    <select id="copulaType">
+                        <option value="gaussian">Gaussian Copula</option>
+                        <option value="t">t-Copula</option>
+                        <option value="clayton">Clayton Copula</option>
+                        <option value="gumbel">Gumbel Copula</option>
+                    </select>
+                </div>
+            
+                <!-- Copula Parameters -->
+                <div id="copula-params">
+                    <!-- For Gaussian and t-Copula -->
+                    <div class="input-group">
+                        <label for="rho">Correlation ρ:</label>
+                        <input type="range" id="rhoSlider" min="-0.99" max="0.99" step="0.01" value="0" oninput="updateRhoDisplay(this.value)">
+                        <span id="rhoDisplay" class="fixed-width">0</span>
+                    </div>
+                    <!-- For t-Copula -->
+                    <div class="input-group" id="df-group" style="display: none;">
+                        <label for="df">Degrees of Freedom ν:</label>
+                        <input type="number" id="df" value="4" min="1" step="1">
+                    </div>
+                </div>
+            
+                <!-- Marginal Distributions -->
+                <h3>Marginal Distributions</h3>
+                <div class="grid-container-multi">
+                    <!-- Marginal for X -->
+                    <div class="input-group">
+                        <label for="marginalX">Marginal X:</label>
+                        <select id="marginalX" onchange="updateMarginalParams('X')">
+                            <option value="normal">Normal</option>
+                            <option value="exponential">Exponential</option>
+                            <option value="uniform">Uniform</option>
+                            <option value="gamma">Gamma</option>
+                            <option value="beta">Beta</option>
+                            <option value="lognormal">Log-Normal</option>
+                            <option value="laplace">Laplace</option>
+                            <option value="binomial">Binomial</option>
+                            <option value="negative_binomial">Negative Binomial</option>
+                            <option value="poisson">Poisson</option>
+                            <option value="beta_prime">Beta Prime</option>
+                        </select>
+                    </div>
+                    <!-- Marginal for Y -->
+                    <div class="input-group">
+                        <label for="marginalY">Marginal Y:</label>
+                        <select id="marginalY" onchange="updateMarginalParams('Y')">
+                            <option value="normal">Normal</option>
+                            <option value="exponential">Exponential</option>
+                            <option value="uniform">Uniform</option>
+                            <option value="gamma">Gamma</option>
+                            <option value="beta">Beta</option>
+                            <option value="lognormal">Log-Normal</option>
+                            <option value="laplace">Laplace</option>
+                            <option value="binomial">Binomial</option>
+                            <option value="negative_binomial">Negative Binomial</option>
+                            <option value="poisson">Poisson</option>
+                            <option value="beta_prime">Beta Prime</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Marginal Parameters -->
+                <div id="marginal-params">
+                    <!-- Parameters for X -->
+                    <div id="paramsX"></div>
+                    <!-- Parameters for Y -->
+                    <div id="paramsY"></div>
+                </div>
+            
+                <!-- Sample Size -->
+                <div class="input-group">
+                    <label for="samples">Number of Samples:</label>
+                    <input type="number" id="samples" value="500" min="1" step="1">
+                </div>
+                
+                <!-- Buttons -->
+                <div id="button-container">
+                <button id="generateBtn">Generate Samples</button>
+                <button id="downloadBtn">Download CSV</button>
+                </div>
+                <!-- Plot -->
+                <div id="plot"></div>
+                <h3>Marginal Histograms</h3>
+                <div class="histogram-container">
+                    <div id="histogramX"></div>
+                    <div id="histogramY"></div>
+                </div>
+                <!-- Sample Output -->
+                <div>
+                    <label for="sampleOutput">Generated Sample Coordinates:</label>
+                    <textarea id="sampleOutput" rows="10" cols="50" readonly></textarea>
+                </div>
+            
+                <footer>
+                    Interactive Copula Simulator
+                </footer>
+                
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Coupla Practice Problems</h2>
+
+                    <ol>
+                        
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+
+            <script src="./copula-simulator-funcs.js"></script>
+</body>
+</html>
