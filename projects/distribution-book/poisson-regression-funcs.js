@@ -38,7 +38,7 @@ function fitPoissonRegression() {
             let z = beta0 + beta1 * x1 + beta2 * x2;
 
             // Clip z to prevent overflow/underflow
-            z = Math.max(Math.min(z, 20), -20);  // z ∈ [-20, 20]
+            z = Math.max(Math.min(z, 50), -50);  // z ∈ [-20, 20]
 
             let lambda = computeLambda(z);
 
@@ -115,7 +115,7 @@ function generateHeatmapData() {
         for (let i = 0; i <= gridSize; i++) {
             let xVal = xRange[0] + i * xStep;
             let z = beta0 + beta1 * xVal + beta2 * yVal;
-            z = Math.max(Math.min(z, 5), -5);  // Clip z
+            z = Math.max(Math.min(z, 50), -50);  // Clip z
 
             let lambda = computeLambda(z);
             zRow.push(lambda);
@@ -242,7 +242,7 @@ function autogeneratePoints() {
         let x2 = Math.random() * 15 - 7.5;  // Random x2 in range [-5, 5]
 
         // Calculate z with added noise
-        let z = true_beta0 + true_beta1 * x1 + true_beta2 * x2 + (Math.random() - 0.5) * 2.0; // Add noise
+        let z = true_beta0 + true_beta1 * x1 + true_beta2 * x2 + (Math.random() - 0.5) * 3.0; // Add noise
 
         // Clip z to prevent lambda from being too large
         z = Math.max(Math.min(z, 50), -50);  // z ∈ [-5, 5]
