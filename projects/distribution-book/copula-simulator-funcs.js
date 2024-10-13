@@ -550,10 +550,11 @@ function plotSamples(samples) {
       title: 'Copula Samples',
       xaxis: { title: 'X' },
       yaxis: { title: 'Y' },
-      showlegend: false
+      showlegend: false,
+      autosize:true,
   };
 
-  Plotly.newPlot('plot', data, layout);
+  Plotly.newPlot('plot', data, layout,{ responsive: true });
 }
 
 function isDiscrete(marginal) {
@@ -578,7 +579,8 @@ function plotMarginalHistograms(samples) {
       title: 'Histogram of X',
       xaxis: { title: 'X' },
       yaxis: { title: 'Frequency' },
-      bargap: 0.05
+      bargap: 0.05,
+      autosize: true
   };
 
   const traceY = {
@@ -594,11 +596,12 @@ function plotMarginalHistograms(samples) {
       title: 'Histogram of Y',
       xaxis: { title: 'Y' },
       yaxis: { title: 'Frequency' },
-      bargap: 0.05
+      bargap: 0.05,
+      autosize: true
   };
 
-  Plotly.newPlot('histogramX', [traceX], layoutX);
-  Plotly.newPlot('histogramY', [traceY], layoutY);
+  Plotly.newPlot('histogramX', [traceX], layoutX, { responsive: true });
+  Plotly.newPlot('histogramY', [traceY], layoutY, { responsive: true });
 }
 
 

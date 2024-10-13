@@ -123,6 +123,7 @@ function plotContour(gridData, samples = null) {
       z: gridData.z,
       type: 'contour',
       colorscale: heatmapColor,
+      // showscale: isMobile? false:true,
       contours: {
           coloring: 'heatmap',
           showlegend:false,
@@ -153,10 +154,11 @@ function plotContour(gridData, samples = null) {
       title: 'Multivariate Distribution',
       xaxis: { title: 'X' },
       yaxis: { title: 'Y' },
-      showlegend: false
+      showlegend: false,
+      autosize:true,
   };
 
-  Plotly.newPlot('plot', data, layout);
+  Plotly.newPlot('plot', data, layout, { responsive: true });
 }
 
 // Event listeners for buttons
