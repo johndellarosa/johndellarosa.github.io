@@ -405,21 +405,7 @@ document.getElementById('file-upload').addEventListener('change', function(event
         // Populate the data points input field with the uploaded data
         document.getElementById('data-points').value = uploadedData.join(', ');
 
-        // // Update the data points dataset
-        // dataPointsDataset = {
-        //     label: 'Data Points',
-        //     data: uploadedData.map(d => ({ x: d, y: 0 })),
-        //     type: 'scatter',
-        //     borderColor: 'red',
-        //     backgroundColor: 'red',
-        //     pointRadius: 5
-        // };
 
-        // // Update existing KDEs with the new data
-        // updateAllKDEsWithNewData(uploadedData);
-
-        // // Refresh the chart to show the updated data points
-        // updateChart();
         refreshKDEWithManualData();
     };
 

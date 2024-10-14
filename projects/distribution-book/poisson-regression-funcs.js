@@ -4,6 +4,8 @@ let pointsY = [];
 let labels = [];
 const isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
 
+const plotTypeSelect = document.getElementById('plotType');
+
 // Adjusted learning rate for stability
 const learningRate = 0.000001;  // Decreased learning rate
 const numIterations = 5000;
@@ -97,14 +99,16 @@ function updateEquations() {
 }
 
 // Function to generate heatmap data
-function generateHeatmapData() {
+function generateHeatmapData(plotType) {
     const gridSize = 100;  // Reduced grid size for performance
     const xRange = [-10, 10];
     const yRange = [-10, 10];
     const xStep = (xRange[1] - xRange[0]) / gridSize;
     const yStep = (yRange[1] - yRange[0]) / gridSize;
 
-    const zGrid = [];
+    const xValues = [];
+    const yValues = [];
+    const zValues = [];
 
     // Loop through y (vertical axis)
     for (let j = 0; j <= gridSize; j++) {
@@ -118,43 +122,65 @@ function generateHeatmapData() {
             z = Math.max(Math.min(z, 50), -50);  // Clip z
 
             let lambda = computeLambda(z);
+
             zRow.push(lambda);
+
+            // Store x and y values only once
+            if (j === 0) {
+                xValues.push(xVal);
+            }
         }
 
-        zGrid.push(zRow);
+        zValues.push(zRow);
+        yValues.push(yVal);
     }
 
-    return {
-        x: Array.from({ length: gridSize + 1 }, (_, i) => xRange[0] + i * xStep),
-        y: Array.from({ length: gridSize + 1 }, (_, i) => yRange[0] + i * yStep),
-        z: zGrid,
-        type: 'heatmap',
-        colorscale: 'Cividis',  // Improved color scale
+    const heatmapData = {
+        x: xValues,
+        y: yValues,
+        z: zValues,
+        type: plotType, // Use the selected plot type
+        colorscale: 'Cividis',
         showscale: true,
-        opacity: 0.6,  // Semi-transparent
+        opacity: 0.6,
         colorbar: {
             thickness: isMobile ? 5 : 10,
             orientation: 'h',
             title: 'Lambda',
         }
     };
+
+    if (plotType === 'surface') {
+        // Adjust properties specific to surface plots if needed
+        heatmapData.contours = {
+            z: {
+                show: true,
+                usecolormap: true,
+                highlightcolor: "#42f462",
+                project: { z: true }
+            }
+        };
+        heatmapData.opacity = 1; // Surface plots don't support opacity
+    }
+
+    return heatmapData;
 }
 
+
 // Function to generate scatter plot data
-function generateScatterData() {
-    return {
+function generateScatterData(plotType) {
+    const scatterData = {
         x: pointsX,
         y: pointsY,
         mode: 'markers+text',
-        type: 'scatter',
         marker: {
-            size: 10,  // Fixed size
+            size: 10,
             color: labels,
             colorscale: 'Viridis',
             showscale: true,
             colorbar: {
                 title: 'Counts',
-                display: isMobile? false:true,
+                display: isMobile ? false : true,
             },
             line: {
                 color: '#000000',
@@ -169,13 +195,39 @@ function generateScatterData() {
         },
         hovertemplate: 'Count: %{text}<extra></extra>',
     };
+
+    if (plotType === 'surface') {
+        scatterData.type = 'scatter3d';
+        scatterData.z = labels.map(() => 0); // Place points at z=0
+        scatterData.textposition = 'top center';
+    } else {
+        scatterData.type = 'scatter';
+    }
+
+    return scatterData;
 }
 
-// Function to update the plot with new data
+
 function updatePlot() {
-    const data = [generateHeatmapData(), generateScatterData()];
-    Plotly.react('plot', data, layout);
+    const plotType = plotTypeSelect.value; // Get the selected plot type
+    const data = [generateHeatmapData(plotType), generateScatterData(plotType)];
+
+    let updatedLayout = { ...layout };
+
+    if (plotType === 'surface') {
+        updatedLayout.scene = {
+            xaxis: { title: 'Feature 1' },
+            yaxis: { title: 'Feature 2' },
+            zaxis: { title: 'Lambda' },
+        };
+        // Remove 2D axes from layout
+        delete updatedLayout.xaxis;
+        delete updatedLayout.yaxis;
+    }
+
+    Plotly.react('plot', data, updatedLayout);
 }
+
 
 // Initial empty plot
 const layout = {

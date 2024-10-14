@@ -13,7 +13,7 @@
   gtag('config', 'G-2C44LTKBE1');
 </script>
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
             <title>Method of Moments</title>
     
@@ -57,7 +57,7 @@ body {
   align-items: center;
 }
 
-.input-section, .output-section {
+.input-section, .output-section,#explanationSection {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -81,7 +81,7 @@ body {
 
 #dataPointsList button:hover{
 
-  background-color: #6699CC
+  background-color: #D2122E;
 
 }
 
@@ -249,61 +249,63 @@ h1 {
                 </div>
 
                 <div class="container">
-                    <h2>Method of Moments Estimator</h2>
-                
-                    <div class="input-section">
-                        <!-- <div class="input-group">
-                          <label for="data">Enter Data Points (comma-separated):</label>
-                          <input type="text" id="data" placeholder="e.g., 1, 2, 3, 4, 5" />
-                        </div> -->
-                        <div class="input-group">
-                            <label for="dataPoint">Enter Data Point:</label>
-                            <input type="numeric" id="dataPoint" placeholder="Enter a number" inputmode="decimal"/>
-                        </div>
-                            <button id="addDataButton" >Add Data Point</button>
-                          
-                          <div class="input-group"></div>
-                          <!-- <div class="input-group"> -->
-                            <label>Data Points:</label>
-                            <div id="dataPointsList">None</div>
-                          <!-- </div> -->
-                        
-                          <button id="clearDataButton">Clear Data Points</button>
-                        <div class="input-group">
+                  <h2>Method of Moments Estimator</h2>
+              
+                  <div class="input-section">
+                      <div class="input-group">
+                          <label for="dataPoint">Enter Data Point:</label>
+                          <input type="number" id="dataPoint" placeholder="Enter a number" inputmode="decimal"/>
+                      </div>
+                      <button id="addDataButton">Add Data Point</button>
+                      
+                      <label>Data Points:</label>
+                      <div id="dataPointsList">None</div>
+                      
+                      <button id="clearDataButton">Clear Data Points</button>
+                      
+                      <div class="input-group">
                           <label for="distribution">Select Distributions:</label>
                           <select id="distribution" multiple>
-                            <option value="normal">Normal (μ, σ²)</option>
-                            <option value="exponential">Exponential (λ)</option>
-                            <option value="gamma">Gamma (α, β)</option>
-                            <option value="beta">Beta (α, β)</option>
-                            <option value="uniform">Uniform (a, b)</option>
+                              <option value="normal">Normal (μ, σ²)</option>
+                              <option value="exponential">Exponential (λ)</option>
+                              <option value="gamma">Gamma (α, β)</option>
+                              <option value="beta">Beta (α, β)</option>
+                              <option value="uniform">Uniform (a, b)</option>
+                              <option value="weibull">Weibull (k, λ)</option>
+                              <option value="lognormal">Log-Normal (μ, σ)</option>
                           </select>
-                        </div>
-                  
-                        <div class="input-group">
+                      </div>
+              
+                      <div class="input-group">
                           <label for="minRange">Min Range:</label>
                           <input type="number" id="minRange" placeholder="Min value for histogram" inputmode="decimal"/>
-                        </div>
-                  
-                        <div class="input-group">
+                      </div>
+              
+                      <div class="input-group">
                           <label for="maxRange">Max Range:</label>
                           <input type="number" id="maxRange" placeholder="Max value for histogram" inputmode="decimal"/>
-                        </div>
-                  
-                        <div class="input-group">
+                      </div>
+              
+                      <div class="input-group">
                           <label for="numBins">Number of Bins:</label>
                           <input type="number" id="numBins" placeholder="Number of histogram bins" value="10" inputmode="decimal"/>
-                        </div>
-                  
-                        <button id="estimate-button" >Compare Distributions</button>
                       </div>
-                
-                    <div class="output-section" id="outputSection">
-                        <h2>Estimated Parameters</h2>
-                        <div id="outputLabel"></div>
-                        <canvas id="chart"></canvas>
-                      </div>
+              
+                      <button id="estimate-button">Compare Distributions</button>
                   </div>
+              
+                  <div class="output-section" id="outputSection" style="display: none;">
+                      <h2>Estimated Parameters</h2>
+                      <div id="outputLabel"></div>
+                      <canvas id="chart"></canvas>
+                  </div>
+              
+                  <!-- Explanation Section -->
+                  <div id="explanationSection" style="display: none; margin-top: 20px;">
+                      <h3>Method of Moments Explanation</h3>
+                      <div id="explanationContent"></div>
+                  </div>
+              </div>
 
              
 
