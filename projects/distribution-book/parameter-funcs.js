@@ -95,9 +95,21 @@ document.addEventListener('DOMContentLoaded', () => {
       input.id = param.id + '_' + paramSetId;
       input.value = param.value;
       input.step = param.step || '0.1';
-      input.inputmode = 'decimal';
+      // input.inputmode = 'decimal';
       if (param.min !== undefined) input.min = param.min;
       if (param.max !== undefined) input.max = param.max;
+
+      input.addEventListener('input', () => {
+        const minValue = parseFloat(input.min);
+        const maxValue = parseFloat(input.max);
+        const inputValue = parseFloat(input.value);
+  
+        if (inputValue < minValue || inputValue > maxValue) {
+          input.setCustomValidity(`Please enter a value between ${minValue} and ${maxValue}.`);
+        } else {
+          input.setCustomValidity(''); // Clear any existing error
+        }
+      });
 
       inputGroup.appendChild(label);
       inputGroup.appendChild(input);

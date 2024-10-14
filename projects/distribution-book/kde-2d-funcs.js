@@ -296,26 +296,40 @@ function generateKDE2D() {
         [h22 / detH, -h12 / detH],
         [-h21 / detH, h11 / detH]
     ];
-
+    const autoBounds = document.getElementById('auto-bounds').checked;
+    
+    let xMin = 0;
+    let xMax = 10;
+    let yMin = 0;
+    let yMax = 10;
     // Automatically determine plot ranges
     const xValues = dataPoints.map(p => p.x);
     const yValues = dataPoints.map(p => p.y);
-
-    const xStdDev = Math.sqrt(H[0][0]);
+    if (autoBounds){
+        const xStdDev = Math.sqrt(H[0][0]);
     const yStdDev = Math.sqrt(H[1][1]);
 
-    const xMin = Math.min(...xValues) - 3 * xStdDev;
-    const xMax = Math.max(...xValues) + 3 * xStdDev;
-    const yMin = Math.min(...yValues) - 3 * yStdDev;
-    const yMax = Math.max(...yValues) + 3 * yStdDev;
+     xMin = Math.min(...xValues) - 3 * xStdDev;
+     xMax = Math.max(...xValues) + 3 * xStdDev;
+     yMin = Math.min(...yValues) - 3 * yStdDev;
+     yMax = Math.max(...yValues) + 3 * yStdDev;
 
+    } else{
+        xMin = parseFloat(document.getElementById('x-min').value);
+        xMax = parseFloat(document.getElementById('x-max').value);
+        yMin = parseFloat(document.getElementById('y-min').value);
+        yMax = parseFloat(document.getElementById('y-max').value);
+
+    }
+    
     const adjustedXMin = isFinite(xMin) ? xMin : 0;
     const adjustedXMax = isFinite(xMax) ? xMax : 10;
     const adjustedYMin = isFinite(yMin) ? yMin : 0;
     const adjustedYMax = isFinite(yMax) ? yMax : 10;
 
     // Generate x and y ranges for the grid
-    const numPoints = 100;
+    const granularityInput = parseInt(document.getElementById('granularity').value);
+    const numPoints = granularityInput;
     const xRange = generateRange(adjustedXMin, adjustedXMax, numPoints);
     const yRange = generateRange(adjustedYMin, adjustedYMax, numPoints);
 
