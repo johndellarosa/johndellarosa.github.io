@@ -513,12 +513,16 @@ document.getElementById('generateBtn').addEventListener('click', () => {
   plotMarginalHistograms(samples);
   displaySamples(samples);
 });
-
+function updateMarkerSizeDisplay(value) {
+    document.getElementById('markerSizeDisplay').textContent = value;
+  }
+  
 
 function plotSamples(samples) {
   const xData = samples.map(s => s[0]);
   const yData = samples.map(s => s[1]);
-
+  const markerSize = parseInt(document.getElementById('markerSize').value);  // Get marker size from slider
+  
   const marginalX = document.getElementById('marginalX').value;
   const marginalY = document.getElementById('marginalY').value;
 
@@ -538,7 +542,7 @@ function plotSamples(samples) {
       y: yPlotData,
       mode: 'markers',
       type: 'scatter',
-      marker: { color: 'blue', size: 5 },
+      marker: { color: 'blue', size: markerSize },
       name: 'Samples'
   };
 

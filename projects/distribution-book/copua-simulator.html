@@ -311,13 +311,18 @@ footer {
                     <!-- Parameters for Y -->
                     <div id="paramsY"></div>
                 </div>
-            
+                <div class="grid-container-multi">
                 <!-- Sample Size -->
                 <div class="input-group">
                     <label for="samples">Number of Samples:</label>
                     <input type="number" id="samples" value="500" min="1" step="1" inputmode="numeric">
                 </div>
-                
+                <div class="input-group">
+                    <label for="markerSize">Marker Size:</label>
+                    <input type="range" id="markerSize" min="1" max="15" step="1" value="6" oninput="updateMarkerSizeDisplay(this.value)" inputmode="decimal">
+                    <span id="markerSizeDisplay" class="fixed-width">6</span>
+                </div>
+            </div>
                 <!-- Buttons -->
                 <div id="button-container">
                 <button id="generateBtn">Generate Samples</button>
