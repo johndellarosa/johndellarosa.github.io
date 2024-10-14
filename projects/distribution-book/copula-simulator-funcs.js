@@ -26,14 +26,14 @@ function updateMarginalParams(varName) {
           </div>
           <div class="input-group">
               <label>Std Dev σ<sub>${varName.toLowerCase()}</sub>:</label>
-              <input type="number" id="sigma${varName}" value="1" min="0.0001" step="0.1">
+              <input type="number" id="sigma${varName}" value="1" min="0.0001" step="0.1" inputmode="decimal">
           </div>
       `;
   } else if (marginal === 'exponential') {
       paramsDiv.innerHTML += `
           <div class="input-group">
               <label>Rate λ<sub>${varName.toLowerCase()}</sub>:</label>
-              <input type="number" id="lambda${varName}" value="1" min="0.0001" step="0.1">
+              <input type="number" id="lambda${varName}" value="1" min="0.0001" step="0.1" inputmode="decimal">
           </div>
       `;
   } else if (marginal === 'uniform') {
@@ -51,22 +51,22 @@ function updateMarginalParams(varName) {
       paramsDiv.innerHTML += `
           <div class="input-group">
               <label>Shape α<sub>${varName.toLowerCase()}</sub>:</label>
-              <input type="number" id="shape${varName}" value="2" min="0.0001" step="0.1">
+              <input type="number" id="shape${varName}" value="2" min="0.0001" step="0.1" inputmode="decimal">
           </div>
           <div class="input-group">
               <label>Scale θ<sub>${varName.toLowerCase()}</sub>:</label>
-              <input type="number" id="scale${varName}" value="2" min="0.0001" step="0.1">
+              <input type="number" id="scale${varName}" value="2" min="0.0001" step="0.1" inputmode="decimal">
           </div>
       `;
   } else if (marginal === 'beta') {
       paramsDiv.innerHTML += `
           <div class="input-group">
               <label>Alpha α<sub>${varName.toLowerCase()}</sub>:</label>
-              <input type="number" id="alpha${varName}" value="2" min="0.0001" step="0.1">
+              <input type="number" id="alpha${varName}" value="2" min="0.0001" step="0.1" inputmode="decimal">
           </div>
           <div class="input-group">
               <label>Beta β<sub>${varName.toLowerCase()}</sub>:</label>
-              <input type="number" id="beta${varName}" value="2" min="0.0001" step="0.1">
+              <input type="number" id="beta${varName}" value="2" min="0.0001" step="0.1" inputmode="decimal">
           </div>
       `;
   } else if (marginal === 'laplace') {
@@ -77,47 +77,47 @@ function updateMarginalParams(varName) {
         </div>
         <div class="input-group">
             <label>Scale b<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="b${varName}" value="1" min="0.0001" step="0.1">
+            <input type="number" id="b${varName}" value="1" min="0.0001" step="0.1" inputmode="decimal">
         </div>
     `;
 } else if (marginal === 'binomial') {
     paramsDiv.innerHTML += `
         <div class="input-group">
             <label>Number of Trials n<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="n${varName}" value="10" min="1" step="1">
+            <input type="number" id="n${varName}" value="10" min="1" step="1" inputmode="numeric">
         </div>
         <div class="input-group">
             <label>Probability p<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="p${varName}" value="0.5" min="0" max="1" step="0.01">
+            <input type="number" id="p${varName}" value="0.5" min="0" max="1" step="0.01" inputmode="decimal">
         </div>
     `;
 } else if (marginal === 'negative_binomial') {
     paramsDiv.innerHTML += `
         <div class="input-group">
             <label>Number of Failures r<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="r${varName}" value="5" min="1" step="1">
+            <input type="number" id="r${varName}" value="5" min="1" step="1" inputmode="numeric">
         </div>
         <div class="input-group">
             <label>Probability p<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="p${varName}" value="0.5" min="0" max="1" step="0.01">
+            <input type="number" id="p${varName}" value="0.5" min="0" max="1" step="0.01" inputmode="decimal">
         </div>
     `;
 } else if (marginal === 'poisson') {
     paramsDiv.innerHTML += `
         <div class="input-group">
             <label>Rate λ<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="lambda${varName}" value="3" min="0.0001" step="0.1">
+            <input type="number" id="lambda${varName}" value="3" min="0.0001" step="0.1" inputmode="decimal">
         </div>
     `;
 } else if (marginal === 'beta_prime') {
     paramsDiv.innerHTML += `
         <div class="input-group">
             <label>Alpha α<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="alpha${varName}" value="2" min="0.0001" step="0.1">
+            <input type="number" id="alpha${varName}" value="2" min="0.0001" step="0.1" inputmode="decimal">
         </div>
         <div class="input-group">
             <label>Beta β<sub>${varName.toLowerCase()}</sub>:</label>
-            <input type="number" id="beta${varName}" value="2" min="0.0001" step="0.1">
+            <input type="number" id="beta${varName}" value="2" min="0.0001" step="0.1" inputmode="decimal">
         </div>
     `;
 }

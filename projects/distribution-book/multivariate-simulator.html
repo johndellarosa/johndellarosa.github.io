@@ -254,11 +254,11 @@ footer {
                 <div class="grid-container-multi">
                     <div class="input-group">
                         <label for="sigmaX">Std Dev σₓ:</label>
-                        <input type="number" id="sigmaX" value="1" min="0.1" step="0.1">
+                        <input type="number" id="sigmaX" value="1" min="0.1" step="0.1" inputmode="decimal">
                     </div>
                     <div class="input-group">
                         <label for="sigmaY">Std Dev σᵧ:</label>
-                        <input type="number" id="sigmaY" value="1" min="0.1" step="0.1">
+                        <input type="number" id="sigmaY" value="1" min="0.1" step="0.1" inputmode="decimal">
                     </div>
                 </div>
                 <div class="input-group">
@@ -268,7 +268,7 @@ footer {
                 </div>
                 <div class="input-group" id="df-group" style="display: none;">
                     <label for="df">Degrees of Freedom ν:</label>
-                    <input type="number" id="df" value="4" min="1" step="1">
+                    <input type="number" id="df" value="4" min="1" step="1" inputmode="numeric">
                 </div>
                 <div class="input-group">
                     <label for="heatmapColor">Heatmap Color:</label>
@@ -293,14 +293,14 @@ footer {
                 <!-- Scatter Plot Marker Size Slider -->
                 <div class="input-group">
                     <label for="markerSize">Marker Size:</label>
-                    <input type="range" id="markerSize" min="1" max="20" step="1" value="6" oninput="updateMarkerSizeDisplay(this.value)">
+                    <input type="range" id="markerSize" min="1" max="20" step="1" value="6" oninput="updateMarkerSizeDisplay(this.value)" inputmode="decimal">
                     <span id="markerSizeDisplay" class="fixed-width">6</span>
                 </div>
                 </div>
                 
                 <div class="input-group">
                     <label for="samples">Number of Samples:</label>
-                    <input type="number" id="samples" value="100" min="1" step="1">
+                    <input type="number" id="samples" value="100" min="1" step="1" inputmode="numeric">
                 </div>
                 <div id="button-container">
                 <button id="plotBtn">Plot Contour</button>

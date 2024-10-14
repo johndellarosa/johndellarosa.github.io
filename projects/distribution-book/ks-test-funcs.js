@@ -126,38 +126,38 @@ function updateDistributionParams() {
     if (distType === 'normal') {
         paramsDiv.innerHTML += `
             <label for="mean">Mean (μ):</label>
-            <input type="number" id="mean" value="0" step="any" placeholder="e.g., 0">
+            <input type="number" id="mean" value="0" step="any" placeholder="e.g., 0" >
             <label for="stdDev">Standard Deviation (σ):</label>
-            <input type="number" id="stdDev" value="1" step="any" placeholder="e.g., 1">
+            <input type="number" id="stdDev" min=".01" value="1" step="any" placeholder="e.g., 1" inputmode="decimal">
         `;
     } else if (distType === 'uniform') {
         paramsDiv.innerHTML += `
             <label for="min">Minimum (a):</label>
-            <input type="number" id="min" value="0" step="any" placeholder="e.g., 0">
+            <input type="number" id="min" value="0" step="any" placeholder="e.g., 0" >
             <label for="max">Maximum (b):</label>
-            <input type="number" id="max" value="1" step="any" placeholder="e.g., 1">
+            <input type="number" id="max" value="1" step="any" placeholder="e.g., 1" >
         `;
     } else if (distType === 'exponential') {
         paramsDiv.innerHTML += `
             <label for="lambda">Rate (λ):</label>
-            <input type="number" id="lambda" value="1" step="any" placeholder="e.g., 1">
+            <input type="number" id="lambda" value="1" min="0" step="any" placeholder="e.g., 1" inputmode="decimal">
         `;
     } else if (distType === 'lognormal') {
         paramsDiv.innerHTML += `
             <label for="mu">Mu (μ):</label>
-            <input type="number" id="mu" value="0" step="any" placeholder="e.g., 0">
+            <input type="number" id="mu" value="0" step="any" placeholder="e.g., 0" >
             <label for="sigma">Sigma (σ):</label>
-            <input type="number" id="sigma" value="1" step="any" placeholder="e.g., 1">
+            <input type="number" id="sigma" value="1" min="0.01" step="any" placeholder="e.g., 1" inputmode="decimal">
         `;
     } else if (distType === 'gamma') {
         paramsDiv.innerHTML += `
             <label for="shape">Shape (k):</label>
-            <input type="number" id="shape" value="2" step="any" placeholder="e.g., 2">
+            <input type="number" id="shape" value="2" min="0.0001" step="any" placeholder="e.g., 2" inputmode="decimal">
             <label for="scale">Scale (θ):</label>
-            <input type="number" id="scale" value="2" step="any" placeholder="e.g., 2">
+            <input type="number" id="scale" value="2" min="0.0001" step="any" placeholder="e.g., 2" inputmode="decimal">
         `;
     }
-    // Add more distributions as needed
+    
 }
 
 function getDistributionParams(distType) {

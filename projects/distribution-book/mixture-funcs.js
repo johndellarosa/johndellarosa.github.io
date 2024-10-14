@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label>Weight:</label>
                     <input type="number" id="weight_${i}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                     <label>Mean:</label>
-                    <input type="number" id="mean_${i}" value="${i}" inputmode="decimal">
+                    <input type="number" id="mean_${i}" value="${i}" >
                     <label>Variance:</label>
                     <input type="number" id="variance_${i}" value="1" inputmode="decimal">
                 </div>
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <label>Weight:</label>
                 <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Mean:</label>
-                <input type="number" id="mean_${index}" value="${index}" inputmode="decimal">
+                <input type="number" id="mean_${index}" value="${index}" >
                 <label>Variance:</label>
                 <input type="number" id="variance_${index}" value="1" inputmode="decimal">
             `;
@@ -78,9 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <label>Weight:</label>
                 <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Min:</label>
-                <input type="number" id="min_${index}" value="0" inputmode="decimal">
+                <input type="number" id="min_${index}" value="0" >
                 <label>Max:</label>
-                <input type="number" id="max_${index}" value="1" inputmode="decimal">
+                <input type="number" id="max_${index}" value="1" >
             `;
         } else if (distType === 'beta') {
             parametersDiv.innerHTML = `
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <label>Weight:</label>
                 <input type="number" id="weight_${index}" min="0" max="1" step="0.01" value="0.5" inputmode="decimal">
                 <label>Location (μ):</label>
-                <input type="number" id="location_${index}" value="0" inputmode="decimal">
+                <input type="number" id="location_${index}" value="0" >
                 <label>Scale (b):</label>
                 <input type="number" id="scale_${index}" value="1" inputmode="decimal">
             `;

@@ -389,13 +389,13 @@ input[type=number]::-webkit-inner-spin-button {
                         <option value="sqrt">Square Root x</option>
                         <option value="meanReversion">Mean Reversion</option>
                     </select>
-                    <input type="number" id="driftCoeff" placeholder="Drift Coefficient" step="0.01" value="0" inputmode="decimal">
+                    <input type="number" id="driftCoeff" placeholder="Drift Coefficient" step="0.01" value="0" >
                     <div id="meanReversionFields" style="display: none;">
                         <label for="longTermMean">Long Term Mean:</label>
-                        <input type="number" id="longTermMean" name="longTermMean" value="0" inputmode="decimal">
+                        <input type="number" id="longTermMean" name="longTermMean" value="0" >
                       
                         <label for="meanReversionRate">Mean Reversion Rate:</label>
-                        <input type="number" id="meanReversionRate" name="meanReversionRate" value="0" inputmode="decimal">
+                        <input type="number" id="meanReversionRate" name="meanReversionRate" value="0" >
                       </div>
                     <label for="volatilityForm">Volatility Function:</label>
                     <select id="volatilityForm">
@@ -407,7 +407,7 @@ input[type=number]::-webkit-inner-spin-button {
                     <input type="number" id="volatilityCoeff" placeholder="Volatility Coefficient" step="0.01" value="1" min="0" inputmode="decimal">
 
                     <label for="initialX">Initial Value of x:</label>
-                    <input type="number" id="initialX" placeholder="Initial Value" step="0.01" value="0" inputmode="decimal">
+                    <input type="number" id="initialX" placeholder="Initial Value" step="0.01" value="0" >
                     <button id="updateButton">Update Chart</button>
                 </div>
                 </div>

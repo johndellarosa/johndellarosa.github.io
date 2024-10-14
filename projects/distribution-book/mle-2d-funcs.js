@@ -32,34 +32,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <label>σ (standard deviation) Range:</label>
                 <div class="parameter-range">
-                    <input type="number" id="sigmaMin" placeholder="Min σ" value="1">
-                    <input type="number" id="sigmaMax" placeholder="Max σ" value="5">
+                    <input type="number" id="sigmaMin" placeholder="Min σ" value="1" inputmode="decimal">
+                    <input type="number" id="sigmaMax" placeholder="Max σ" value="5" inputmode="decimal">
                 </div>
             `;
         } else if (distribution === 'gamma' || distribution === 'invGamma') {
             parameterRangesDiv.innerHTML = `
                 <label>α (shape parameter) Range:</label>
                 <div class="parameter-range">
-                    <input type="number" id="alphaMin" placeholder="Min α" value="2">
-                    <input type="number" id="alphaMax" placeholder="Max α" value="5">
+                    <input type="number" id="alphaMin" placeholder="Min α" value="2" inputmode="decimal">
+                    <input type="number" id="alphaMax" placeholder="Max α" value="5" inputmode="decimal">
                 </div>
                 <label>β (rate parameter) Range:</label>
                 <div class="parameter-range">
-                    <input type="number" id="betaMin" placeholder="Min β" value="1">
-                    <input type="number" id="betaMax" placeholder="Max β" value="3">
+                    <input type="number" id="betaMin" placeholder="Min β" value="1" inputmode="decimal">
+                    <input type="number" id="betaMax" placeholder="Max β" value="3" inputmode="decimal">
                 </div>
             `;
         } else if (distribution === 'beta') {
             parameterRangesDiv.innerHTML = `
                 <label>α (alpha parameter) Range:</label>
                 <div class="parameter-range">
-                    <input type="number" id="alphaMin" placeholder="Min α" value="2">
-                    <input type="number" id="alphaMax" placeholder="Max α" value="5">
+                    <input type="number" id="alphaMin" placeholder="Min α" value="2" inputmode="decimal">
+                    <input type="number" id="alphaMax" placeholder="Max α" value="5" inputmode="decimal">
                 </div>
                 <label>β (beta parameter) Range:</label>
                 <div class="parameter-range">
-                    <input type="number" id="betaMin" placeholder="Min β" value="2">
-                    <input type="number" id="betaMax" placeholder="Max β" value="5">
+                    <input type="number" id="betaMin" placeholder="Min β" value="2" inputmode="decimal">
+                    <input type="number" id="betaMax" placeholder="Max β" value="5" inputmode="decimal">
                 </div>
             `;
         } else if (distribution === 'laplace') {
@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <label>b (scale parameter) Range:</label>
                 <div class="parameter-range">
-                    <input type="number" id="bMin" placeholder="Min b" value="1">
-                    <input type="number" id="bMax" placeholder="Max b" value="5">
+                    <input type="number" id="bMin" placeholder="Min b" value="1" inputmode="decimal">
+                    <input type="number" id="bMax" placeholder="Max b" value="5" inputmode="decimal">
                 </div>
             `;
         } else if (distribution === 'cauchy') {
