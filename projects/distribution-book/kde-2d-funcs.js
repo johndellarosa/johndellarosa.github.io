@@ -202,7 +202,50 @@ function capitalizeFirstLetter(string) {
 function clearUploadedData() {
     uploadedDataPoints = [];
     document.getElementById('data-file').value = ''; // Reset file input
-    alert("Uploaded data cleared. Using data from textarea.");
+    // alert("Uploaded data cleared. Using data from textarea.");
+}
+
+function generateRandomData() {
+    const numPointsInput = document.getElementById('num-random-points');
+    let numPoints = parseInt(numPointsInput.value);
+    if (isNaN(numPoints) || numPoints <= 0) {
+        alert("Please enter a valid number of data points.");
+        return;
+    }
+
+    // Randomly choose a center within (-5, 5) for both x and y
+    const centerX = Math.random() * 10 - 5;
+    const centerY = Math.random() * 10 - 5;
+
+    // Standard deviations for the noise
+    const sigmaX = 2; // Adjust as needed
+    const sigmaY = 2; // Adjust as needed
+
+    const dataPoints = [];
+
+    for (let i = 0; i < numPoints; i++) {
+        const x = generateGaussianRandom(centerX, sigmaX);
+        const y = generateGaussianRandom(centerY, sigmaY);
+        dataPoints.push(`${x.toFixed(4)},${y.toFixed(4)}`);
+    }
+
+    // Update the data-points textarea
+    document.getElementById('data-points').value = dataPoints.join(' ');
+    // Clear any uploaded data
+    clearUploadedData();
+    // alert(`${numPoints} random data points generated around center (${centerX.toFixed(2)}, ${centerY.toFixed(2)}).`);
+}
+
+
+function generateGaussianRandom(mean = 0, standardDeviation = 1) {
+    let u1 = Math.random();
+    let u2 = Math.random();
+
+    // Convert [0,1) to (0,1] to avoid log(0)
+    u1 = u1 === 0 ? Number.MIN_VALUE : u1;
+
+    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+    return z0 * standardDeviation + mean;
 }
 
 // Main function to generate 2-D KDE
