@@ -12,9 +12,16 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
+
+
             <title>Method of Moments</title>
     
         <!-- Meta tags -->
@@ -116,6 +123,31 @@ button {
 button:hover {
   background-color: #218838;
 }
+
+table {
+              width: 60%;
+              margin: 0 auto;
+              border-collapse: collapse;
+              text-align: left;
+            }
+        
+            th, td {
+              padding: 10px;
+              border: 1px solid #ddd;
+            }
+        
+            th {
+              background-color: #f2f2f2;
+              font-weight: bold;
+            }
+        
+            tr:nth-child(even) {
+              background-color: #f9f9f9;
+            }
+        
+            tr:hover {
+              background-color: #f1f1f1;
+            }
 
 input, select {
     margin-bottom:10px;
@@ -243,7 +275,117 @@ h1 {
 
                 Simplify and solve for \(\alpha\), then use the solution to find \(\beta\).
 
-                <h32>Generalized Method of Moments</h2>
+                <h3>Table of Estimates</h3>
+                <table>
+                  <thead>
+                      <tr>
+                          <th>Distribution</th>
+                          <th>Parameters</th>
+                          <th>MoM Estimates</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Normal (Gaussian)</td>
+                          <td>\(\mu, \sigma\)</td>
+                          <td>
+                              \(\hat{\mu} = M_1 = \frac{1}{n} \sum_{i=1}^{n} X_i\)<br>
+                              \(\hat{\sigma}^2 = M_2 - M_1^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - M_1)^2\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Exponential</td>
+                          <td>\(\lambda\)</td>
+                          <td>\(\hat{\lambda} = \frac{1}{M_1} = \frac{1}{\frac{1}{n} \sum_{i=1}^{n} X_i}\)</td>
+                      </tr>
+                      <tr>
+                          <td>Poisson</td>
+                          <td>\(\lambda\)</td>
+                          <td>\(\hat{\lambda} = M_1 = \frac{1}{n} \sum_{i=1}^{n} X_i\)</td>
+                      </tr>
+                      <tr>
+                          <td>Uniform \((a, b)\)</td>
+                          <td>\(a, b\)</td>
+                          <td>
+                              \(\hat{a} = M_1 - \sqrt{3(M_2 - M_1^2)}\)<br>
+                              \(\hat{b} = M_1 + \sqrt{3(M_2 - M_1^2)}\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Binomial \((n, p)\)</td>
+                          <td>\(n, p\)</td>
+                          <td>
+                              \(\hat{p} = \frac{M_1}{n}\)<br>
+                              \(M_2 = np(1-p) + (np)^2\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Gamma \((\alpha, \beta)\)</td>
+                          <td>\(\alpha, \beta\)</td>
+                          <td>
+                              \(\hat{\alpha} = \frac{M_1^2}{M_2 - M_1^2}\)<br>
+                              \(\hat{\beta} = \frac{M_2 - M_1^2}{M_1}\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Beta \((\alpha, \beta)\)</td>
+                          <td>\(\alpha, \beta\)</td>
+                          <td>
+                              \(\hat{\alpha} = \frac{M_1\left(M_1(1-M_1)/M_2 - 1\right)}{1-M_1}\)<br>
+                              \(\hat{\beta} = \frac{(1-M_1)\left(M_1(1-M_1)/M_2 - 1\right)}{M_1}\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Negative Binomial \((r, p)\)</td>
+                          <td>\(r, p\)</td>
+                          <td>
+                              \(\hat{p} = 1 - \frac{M_1}{M_2 - M_1^2}\)<br>
+                              \(\hat{r} = \frac{M_1^2}{M_2 - M_1^2}\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Log-Normal \((\mu, \sigma)\)</td>
+                          <td>\(\mu, \sigma\)</td>
+                          <td>
+                              \(\hat{\mu} = \log(M_1) - \frac{1}{2} \log\left(\frac{M_2}{M_1^2}\right)\)<br>
+                              \(\hat{\sigma}^2 = \log\left(\frac{M_2}{M_1^2}\right)\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Weibull \((\lambda, k)\)</td>
+                          <td>\(\lambda, k\)</td>
+                          <td>
+                              \(\hat{k} = \frac{M_1}{\left(\frac{M_2}{M_1^2} - 1\right)^{1/2}}\)<br>
+                              \(\hat{\lambda} = M_1\left(\frac{M_2}{M_1^2} - 1\right)^{1/k}\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Chi-Squared \((k)\)</td>
+                          <td>\(k\)</td>
+                          <td>
+                              \(\hat{k} = 2 M_1\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Cauchy \((x_0, \gamma)\)</td>
+                          <td>\(x_0, \gamma\)</td>
+                          <td>
+                              \(\hat{x}_0 = M_1\)<br>
+                              \(\hat{\gamma} = \frac{M_2 - M_1^2}{M_1}\)
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Pareto \((x_m, \alpha)\)</td>
+                          <td>\(x_m, \alpha\)</td>
+                          <td>
+                              \(\hat{\alpha} = \frac{n}{\sum_{i=1}^{n} \log\left(\frac{X_i}{x_m}\right)}\)
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+
+                <h2>Generalized Method of Moments</h2>
 
 
                 </div>

@@ -199,6 +199,31 @@
     transition: background-color 0.3s ease;
   }
 
+  #reference-table table {
+              width: 60%;
+              margin: 0 auto;
+              border-collapse: collapse;
+              text-align: left;
+            }
+        
+            #reference-table th,#reference-table td {
+              padding: 10px;
+              border: 1px solid #ddd;
+            }
+        
+            #reference-table th {
+              background-color: #f2f2f2;
+              font-weight: bold;
+            }
+        
+            #reference-table tr:nth-child(even) {
+              background-color: #f9f9f9;
+            }
+        
+            #reference-table tr:hover {
+              background-color: #f1f1f1;
+            }
+
   /* Add some padding to the top and bottom */
   h2 {
     font-family: 'Arial', sans-serif;
@@ -211,6 +236,8 @@
     display: flex;
     justify-content: center;
   }
+
+
 
   /* Smaller screens (e.g., smartphones) */
 @media (max-width: 600px) {
@@ -569,7 +596,127 @@
         </div>
             </div>
              
-
+            <div id="reference-table">
+              <h2>Table of Maximum Likelihood Estimates for Common Distributions</h2>
+              <table>
+                <thead>
+                    <tr>
+                        <th>Distribution</th>
+                        <th>Parameters</th>
+                        <th>MLE Formula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Normal (Gaussian)</td>
+                        <td>\(\mu, \sigma\)</td>
+                        <td>
+                            \(\hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} X_i\)<br>
+                            \(\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \hat{\mu})^2\) <br>
+                            <small>(Reference: Casella & Berger, *Statistical Inference*, 2002)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Exponential</td>
+                        <td>\(\lambda\)</td>
+                        <td>
+                            \(\hat{\lambda} = \frac{n}{\sum_{i=1}^{n} X_i}\)<br>
+                            <small>(Reference: Lehmann & Casella, *Theory of Point Estimation*, 1998)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Poisson</td>
+                        <td>\(\lambda\)</td>
+                        <td>
+                            \(\hat{\lambda} = \frac{1}{n} \sum_{i=1}^{n} X_i\)<br>
+                            <small>(Reference: Myung, *Tutorial on Maximum Likelihood Estimation*, 2003)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Uniform \((a, b)\)</td>
+                        <td>\(a, b\)</td>
+                        <td>
+                            \(\hat{a} = \min(X_1, X_2, \dots, X_n)\)<br>
+                            \(\hat{b} = \max(X_1, X_2, \dots, X_n)\)<br>
+                            <small>(Reference: Casella & Berger, *Statistical Inference*, 2002)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Binomial \((n, p)\)</td>
+                        <td>\(n, p\)</td>
+                        <td>
+                            \(\hat{p} = \frac{1}{n} \sum_{i=1}^{n} X_i\)<br>
+                            <small>(Reference: Lehmann & Casella, *Theory of Point Estimation*, 1998)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gamma \((\alpha, \beta)\)</td>
+                        <td>\(\alpha, \beta\)</td>
+                        <td>
+                            Numerical optimization required <br>
+                            <small>(Reference: Myung, *Tutorial on Maximum Likelihood Estimation*, 2003)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Beta \((\alpha, \beta)\)</td>
+                        <td>\(\alpha, \beta\)</td>
+                        <td>
+                            Numerical optimization required <br>
+                            <small>(Reference: Lehmann & Casella, *Theory of Point Estimation*, 1998)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Negative Binomial \((r, p)\)</td>
+                        <td>\(r, p\)</td>
+                        <td>
+                            Numerical optimization required <br>
+                            <small>(Reference: Casella & Berger, *Statistical Inference*, 2002)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Log-Normal \((\mu, \sigma)\)</td>
+                        <td>\(\mu, \sigma\)</td>
+                        <td>
+                            \(\hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} \log(X_i)\)<br>
+                            \(\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} (\log(X_i) - \hat{\mu})^2\)<br>
+                            <small>(Reference: Casella & Berger, *Statistical Inference*, 2002)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Weibull \((\lambda, k)\)</td>
+                        <td>\(\lambda, k\)</td>
+                        <td>
+                            Numerical optimization required <br>
+                            <small>(Reference: Myung, *Tutorial on Maximum Likelihood Estimation*, 2003)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Chi-Squared \((k)\)</td>
+                        <td>\(k\)</td>
+                        <td>
+                            \(\hat{k} = \frac{2}{n} \sum_{i=1}^{n} X_i\) <br>
+                            <small>(Reference: Casella & Berger, *Statistical Inference*, 2002)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cauchy \((x_0, \gamma)\)</td>
+                        <td>\(x_0, \gamma\)</td>
+                        <td>
+                            Numerical optimization required <br>
+                            <small>(Reference: Myung, *Tutorial on Maximum Likelihood Estimation*, 2003)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pareto \((x_m, \alpha)\)</td>
+                        <td>\(x_m, \alpha\)</td>
+                        <td>
+                            \(\hat{\alpha} = \frac{n}{\sum_{i=1}^{n} \log(X_i/x_m)}\)<br>
+                            <small>(Reference: Casella & Berger, *Statistical Inference*, 2002)</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
 
 
 
