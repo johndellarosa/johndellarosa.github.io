@@ -574,7 +574,7 @@ function plotMarginalHistograms(samples) {
       x: xData,
       type: 'histogram',
       name: 'X',
-      marker: { color: 'blue' },
+      marker: { color: 'red' },
       opacity: 0.7,
       autobinx: true
   };
