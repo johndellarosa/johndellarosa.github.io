@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>KS Test Simulator</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Bayesian, Gamma, Poisson">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Bayesian poisson simulator with a gamma distribution prior.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/ks-test"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+/* Responsive styling */
+body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input, select, button {
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 1em;
+        }
+        .input-section {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .input-section label {
+            flex: 1 0 150px;
+        }
+        .input-section input, .input-section select, .input-section button {
+            flex: 2 0 200px;
+            max-width: 100%;
+        }
+        .distributionParams {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .distributionParams label {
+            flex: 1 0 150px;
+        }
+        .distributionParams input {
+            flex: 2 0 200px;
+            max-width: 100%;
+        }
+        .axisLimits input {
+            width: 100px;
+            margin: 20px 20px;
+        }
+        #testResults {
+            margin-top: 20px;
+        }
+        #myChart {
+            max-width: 100%;
+            height: auto;
+        }
+        /* New styles for side-by-side layout */
+        .samples-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .sample-panel {
+            flex: 1 1 50%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        #generateBtn1 {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+
+#generateBtn1:hover {
+  background-color: #218838;
+}
+
+#generateBtn2 {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+
+
+#generateBtn2:hover {
+  background-color: #218838;
+}
+
+#submitBtn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+#submitBtn:hover {
+  background-color: #0056b3;
+}
+
+#clearBtn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ED2939;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+#clearBtn:hover {
+  background-color: #C80815;
+}
+
+
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+        @media (max-width: 800px) {
+            .samples-container {
+                flex-direction: column;
+            }
+            .sample-panel {
+                flex: 1 1 100%;
+            }
+        }
+        /* Adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .input-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-section label, .input-section input, .input-section select, .input-section button {
+                flex: 1 0 100%;
+                max-width: 100%;
+            }
+            .distributionParams label, .distributionParams input {
+                flex: 1 0 100%;
+            }
+        }
+
+</style>
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Gamma-Poisson">
+              <h1>Two-Sample Goodness-of-Fit Tests Visualization</h1>
+
+    <!-- Container for samples -->
+    <div class="samples-container">
+      <!-- Sample 1 Panel -->
+      <div class="sample-panel">
+          <h2>Sample 1</h2>
+          <div class="input-section">
+              <!-- Data Points Input -->
+              <label for="dataPoints1">Enter Data Points:</label>
+              <textarea id="dataPoints1" placeholder="e.g., 1, 2, 3, 4, 5" rows="3" cols="50"></textarea>
+          </div>
+          <div class="input-section">
+              <!-- CSV File Upload -->
+              <label for="csvFile1">Import Data from CSV:</label>
+              <input type="file" id="csvFile1" accept=".csv">
+          </div>
+          <div class="input-section">
+              <!-- Theoretical Distribution Selection -->
+              <label for="theoreticalDist1">Select Theoretical Distribution:</label>
+              <select id="theoreticalDist1">
+                  <option value="normal">Normal Distribution</option>
+                  <option value="uniform">Uniform Distribution</option>
+                  <option value="exponential">Exponential Distribution</option>
+                  <option value="lognormal">Log-Normal Distribution</option>
+                  <option value="gamma">Gamma Distribution</option>
+                  <!-- Add more distributions as needed -->
+              </select>
+          </div>
+          <div class="input-section distributionParams" id="distributionParams1">
+              <!-- Parameters will be dynamically added here -->
+          </div>
+          <div class="input-section">
+              <!-- Plot Theoretical CDF Checkbox -->
+              <label for="plotTheoretical1">Plot Theoretical CDF:</label>
+              <input type="checkbox" id="plotTheoretical1" >
+          </div>
+          <div class="input-section">
+              <!-- Number of Samples for Autogeneration -->
+              <label for="numSamples1">Number of Samples:</label>
+              <input type="number" id="numSamples1" value="100" min="1" step="1">
+          </div>
+          <div class="input-section">
+              <!-- Color Selection -->
+              <label for="empiricalColor1">Empirical CDF Color:</label>
+              <input type="color" id="empiricalColor1" value="#0000FF">
+              <label for="theoreticalColor1">Theoretical CDF Color:</label>
+              <input type="color" id="theoreticalColor1" value="#FF0000">
+          </div>
+          <div class="input-section">
+              <!-- Buttons -->
+              <button id="generateBtn1">Generate Data</button>
+          </div>
+      </div>
+
+      <!-- Sample 2 Panel -->
+      <div class="sample-panel">
+          <h2>Sample 2</h2>
+          <div class="input-section">
+              <!-- Data Points Input -->
+              <label for="dataPoints2">Enter Data Points:</label>
+              <textarea id="dataPoints2" placeholder="e.g., 1, 2, 3, 4, 5" rows="3" cols="50"></textarea>
+          </div>
+          <div class="input-section">
+              <!-- CSV File Upload -->
+              <label for="csvFile2">Import Data from CSV:</label>
+              <input type="file" id="csvFile2" accept=".csv">
+          </div>
+          <div class="input-section">
+              <!-- Theoretical Distribution Selection -->
+              <label for="theoreticalDist2">Select Theoretical Distribution:</label>
+              <select id="theoreticalDist2">
+                  <option value="normal">Normal Distribution</option>
+                  <option value="uniform">Uniform Distribution</option>
+                  <option value="exponential">Exponential Distribution</option>
+                  <option value="lognormal">Log-Normal Distribution</option>
+                  <option value="gamma">Gamma Distribution</option>
+                  <!-- Add more distributions as needed -->
+              </select>
+          </div>
+          <div class="input-section distributionParams" id="distributionParams2">
+              <!-- Parameters will be dynamically added here -->
+          </div>
+          <div class="input-section">
+              <!-- Plot Theoretical CDF Checkbox -->
+              <label for="plotTheoretical2">Plot Theoretical CDF:</label>
+              <input type="checkbox" id="plotTheoretical2" >
+          </div>
+          <div class="input-section">
+              <!-- Number of Samples for Autogeneration -->
+              <label for="numSamples2">Number of Samples:</label>
+              <input type="number" id="numSamples2" value="100" min="1" step="1">
+          </div>
+          <div class="input-section">
+              <!-- Color Selection -->
+              <label for="empiricalColor2">Empirical CDF Color:</label>
+              <input type="color" id="empiricalColor2" value="#FFA500">
+              <label for="theoreticalColor2">Theoretical CDF Color:</label>
+              <input type="color" id="theoreticalColor2" value="#008000">
+          </div>
+          <div class="input-section">
+              <!-- Buttons -->
+              <button id="generateBtn2">Generate Data</button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Common Inputs -->
+  <h2>Common Settings</h2>
+  <div class="input-section axisLimits">
+      <!-- Axis limits -->
+      <label for="xMin">X-Axis Min:</label>
+      <input type="number" id="xMin" step="any" placeholder="Auto">
+      <label for="xMax">X-Axis Max:</label>
+      <input type="number" id="xMax" step="any" placeholder="Auto">
+  </div>
+  <div class="input-section" >
+      <!-- Buttons -->
+      <button id="submitBtn">Plot and Analyze</button>
+      <button id="clearBtn">Clear</button>
+  </div>
+  <!-- Canvas for Chart.js -->
+  <canvas id="myChart"></canvas>
+  <!-- Div for displaying test results -->
+  <div id="testResults"></div>
+                </div>
+                  
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Empirical Process Test Practice Problems</h2>
+
+                    <ol>
+                      
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/mathjs"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+
+        <script src="./ks-test-two-sample-funcs.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+    
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>
