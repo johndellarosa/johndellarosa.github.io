@@ -15,7 +15,7 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>KS Test Simulator</title>
+            <title>Distribution Distance Simulator</title>
     
         <!-- Meta tags -->
         
@@ -29,14 +29,17 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/ks-test"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/distance-visualizer"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       
 
         <script src="../../math.js" type="text/javascript"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
 
 <style>
 /* Responsive styling */
@@ -229,132 +232,59 @@ input[type=checkbox] {
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Gamma-Poisson">
-              <h1>Two-Sample Goodness-of-Fit Tests Visualization</h1>
+                <h1>Probability Distribution Comparison</h1>
 
-    <!-- Container for samples -->
-    <div class="samples-container">
-      <!-- Sample 1 Panel -->
-      <div class="sample-panel">
-          <h2>Sample 1</h2>
-          <div class="input-section">
-              <!-- Data Points Input -->
-              <label for="dataPoints1">Enter Data Points:</label>
-              <textarea id="dataPoints1" placeholder="e.g., 1, 2, 3, 4, 5" rows="3" cols="50"></textarea>
-          </div>
-          <div class="input-section">
-              <!-- CSV File Upload -->
-              <label for="csvFile1">Import Data from CSV:</label>
-              <input type="file" id="csvFile1" accept=".csv">
-          </div>
-          <div class="input-section">
-              <!-- Theoretical Distribution Selection -->
-              <label for="theoreticalDist1">Select Theoretical Distribution:</label>
-              <select id="theoreticalDist1">
-                  <option value="normal">Normal Distribution</option>
-                  <option value="uniform">Uniform Distribution</option>
-                  <option value="exponential">Exponential Distribution</option>
-                  <option value="lognormal">Log-Normal Distribution</option>
-                  <option value="gamma">Gamma Distribution</option>
-                  <!-- Add more distributions as needed -->
-              </select>
-          </div>
-          <div class="input-section distributionParams" id="distributionParams1">
-              <!-- Parameters will be dynamically added here -->
-          </div>
-          <div class="input-section">
-              <!-- Plot Theoretical CDF Checkbox -->
-              <label for="plotTheoretical1">Plot Theoretical CDF:</label>
-              <input type="checkbox" id="plotTheoretical1" >
-          </div>
-          <div class="input-section">
-              <!-- Number of Samples for Autogeneration -->
-              <label for="numSamples1">Number of Samples:</label>
-              <input type="number" id="numSamples1" value="100" min="1" step="1">
-          </div>
-          <div class="input-section">
-              <!-- Color Selection -->
-              <label for="empiricalColor1">Empirical CDF Color:</label>
-              <input type="color" id="empiricalColor1" value="#0000FF">
-              <label for="theoreticalColor1">Theoretical CDF Color:</label>
-              <input type="color" id="theoreticalColor1" value="#FF0000">
-          </div>
-          <div class="input-section">
-              <!-- Buttons -->
-              <button id="generateBtn1">Generate Data</button>
-          </div>
+                <!-- Distribution 1 -->
+                <h3>Distribution 1</h3>
+                <label for="dist1">Select Distribution:</label>
+                <select id="dist1">
+                    <option value="normal">Normal Distribution</option>
+                    <option value="exponential">Exponential Distribution</option>
+                    <option value="uniform">Uniform Distribution</option>
+                    <option value="binomial">Binomial Distribution</option>
+                    <option value="poisson">Poisson Distribution</option>
+                    <option value="beta">Beta Distribution</option>
+                    <option value="gamma">Gamma Distribution</option>
+                </select>
+                <div id="params1"></div>
+                <label for="color1">Select Color:</label>
+    <input type="color" id="color1" value="#1f77b4"><br>
+
+
+                <!-- Distribution 2 -->
+                <h3>Distribution 2</h3>
+                <label for="dist2">Select Distribution:</label>
+                <select id="dist2">
+                    <option value="normal">Normal Distribution</option>
+                    <option value="exponential">Exponential Distribution</option>
+                    <option value="uniform">Uniform Distribution</option>
+                    <option value="binomial">Binomial Distribution</option>
+                    <option value="poisson">Poisson Distribution</option>
+                    <option value="beta">Beta Distribution</option>
+                    <option value="gamma">Gamma Distribution</option>
+                </select>
+                <div id="params2"></div>
+                <label for="color2">Select Color:</label>
+                <input type="color" id="color2" value="#ff7f0e"><br>
+
+                <h3>X-Axis Bounds</h3>
+                <label for="x_min">X-Axis Minimum:</label>
+                <input type="number" id="x_min" value="-10" step="0.1"><br>
+                <label for="x_max">X-Axis Maximum:</label>
+                <input type="number" id="x_max" value="10" step="0.1"><br>
+            
+                <!-- Button to update the plot -->
+                <button onclick="updatePlot()">Update Plot</button>
+            
+                <!-- Div for the plot -->
+                <div id="plot"></div>
+            
+                <!-- Div for divergence measures -->
+                <div id="divergence"></div>
       </div>
 
-      <!-- Sample 2 Panel -->
-      <div class="sample-panel">
-          <h2>Sample 2</h2>
-          <div class="input-section">
-              <!-- Data Points Input -->
-              <label for="dataPoints2">Enter Data Points:</label>
-              <textarea id="dataPoints2" placeholder="e.g., 1, 2, 3, 4, 5" rows="3" cols="50"></textarea>
-          </div>
-          <div class="input-section">
-              <!-- CSV File Upload -->
-              <label for="csvFile2">Import Data from CSV:</label>
-              <input type="file" id="csvFile2" accept=".csv">
-          </div>
-          <div class="input-section">
-              <!-- Theoretical Distribution Selection -->
-              <label for="theoreticalDist2">Select Theoretical Distribution:</label>
-              <select id="theoreticalDist2">
-                  <option value="normal">Normal Distribution</option>
-                  <option value="uniform">Uniform Distribution</option>
-                  <option value="exponential">Exponential Distribution</option>
-                  <option value="lognormal">Log-Normal Distribution</option>
-                  <option value="gamma">Gamma Distribution</option>
-                  <!-- Add more distributions as needed -->
-              </select>
-          </div>
-          <div class="input-section distributionParams" id="distributionParams2">
-              <!-- Parameters will be dynamically added here -->
-          </div>
-          <div class="input-section">
-              <!-- Plot Theoretical CDF Checkbox -->
-              <label for="plotTheoretical2">Plot Theoretical CDF:</label>
-              <input type="checkbox" id="plotTheoretical2" >
-          </div>
-          <div class="input-section">
-              <!-- Number of Samples for Autogeneration -->
-              <label for="numSamples2">Number of Samples:</label>
-              <input type="number" id="numSamples2" value="100" min="1" step="1">
-          </div>
-          <div class="input-section">
-              <!-- Color Selection -->
-              <label for="empiricalColor2">Empirical CDF Color:</label>
-              <input type="color" id="empiricalColor2" value="#FFA500">
-              <label for="theoreticalColor2">Theoretical CDF Color:</label>
-              <input type="color" id="theoreticalColor2" value="#008000">
-          </div>
-          <div class="input-section">
-              <!-- Buttons -->
-              <button id="generateBtn2">Generate Data</button>
-          </div>
-      </div>
-  </div>
 
-  <!-- Common Inputs -->
-  <h2>Common Settings</h2>
-  <div class="input-section axisLimits">
-      <!-- Axis limits -->
-      <label for="xMin">X-Axis Min:</label>
-      <input type="number" id="xMin" step="any" placeholder="Auto">
-      <label for="xMax">X-Axis Max:</label>
-      <input type="number" id="xMax" step="any" placeholder="Auto">
-  </div>
-  <div class="input-section" >
-      <!-- Buttons -->
-      <button id="submitBtn">Plot and Analyze</button>
-      <button id="clearBtn">Clear</button>
-  </div>
-  <!-- Canvas for Chart.js -->
-  <canvas id="myChart"></canvas>
-  <!-- Div for displaying test results -->
-  <div id="testResults"></div>
-                </div>
+
                   
 
 
@@ -365,7 +295,7 @@ input[type=checkbox] {
 
 
                 <div id="Exercises">
-                    <h2>Empirical Process Test Practice Problems</h2>
+                    <h2>Distribution Distance Practice Problems</h2>
 
                     <ol>
                       
@@ -377,8 +307,8 @@ input[type=checkbox] {
         <script src="https://cdn.jsdelivr.net/npm/mathjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
 
-        <script src="./ks-test-two-sample-funcs.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+        <script src="./distribution-distance-funcs.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script> -->
     
         <script>
             var coll = document.getElementsByClassName("collapsible");

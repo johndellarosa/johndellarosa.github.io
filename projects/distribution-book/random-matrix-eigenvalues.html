@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+
+            <title>Maximum Likelihood Estimation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Maximum Likelihood Method, MLE">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to the Maximum Likelihood Method for parameter estimation.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/mle-2d"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.2/math.min.js"></script>
+  
+
+
+<style>
+ body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f4f4f4; /* Light background color for the page */
+    }
+    h1 {
+        text-align: center;
+        color: #333333;
+        padding: 20px 0;
+        background-color: #ffffff;
+        margin: 0;
+        border-bottom: 1px solid #dddddd;
+    }
+    #controls {
+        margin: 20px auto;
+        max-width: 800px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    }
+    #plot {
+        width: 90%;
+        max-width: 900px;
+        height: 600px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+        color: #555555;
+    }
+    textarea, input[type="number"], select {
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+    .parameter-range {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 8px;
+    }
+    .parameter-range input {
+        width: 100%;
+    }
+    #options {
+        margin-top: 20px;
+    }
+    #options label {
+        font-weight: normal;
+    }
+    #plotButton {
+        margin-top: 25px;
+        padding: 12px 20px;
+        background-color: #007bff; /* Primary blue color */
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+    #plotButton:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    #autogenerateButton {
+    padding: 8px 12px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+#autogenerateButton:hover {
+    background-color: #4cae4c;
+}
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+        .parameter-range {
+            flex-direction: column;
+        }
+        .parameter-range input {
+            width: 100%;
+        }
+        #plot {
+            width: 100%;
+        }
+    }
+    #button-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px; /* Adjust gap between buttons if needed */
+            margin-top: 20px; /* Space above the button container */
+            /* max-width: 500px; */
+            margin: 0 auto;
+            
+        }
+
+
+    /* Add this at the end of your CSS */
+.spinner {
+    margin: 0 auto;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #cccccc;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.loader {
+            display: none;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+
+#eigenvalue-distribution {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+#statistics {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+</style>
+
+<script src="random-matrix-eigenvalues-funcs.js" defer></script>
+
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="MLE-explanation">
+                <h1>Eigenvalue Distribution in Random Matrices</h1>
+                <div class="controls">
+                    <label for="matrix-type">Matrix Type:</label>
+                    <select id="matrix-type">
+                        <option value="wigner">Wigner Matrix</option>
+                        <option value="wishart">Wishart Matrix</option>
+                    </select>
+
+                    <label for="matrix-size">Matrix Size (N):</label>
+                    <input type="number" id="matrix-size" value="100" min="10" max="500" step="10">
+
+                    <label for="degrees-freedom" id="df-label" style="display:none;">Degrees of Freedom (p):</label>
+                    <input type="number" id="degrees-freedom" value="150" min="10" max="500" step="10" style="display:none;">
+                    
+                    <label for="bin-count">Number of Bins:</label>
+                    <input type="number" id="bin-count" value="50" min="10" max="200" step="10">
+            
+                    <button id="generate-btn">Generate</button>
+                </div>
+
+                <div id="eigenvalue-distribution" style="width:100%;height:600px;"></div>
+                <div class="loader" id="loader">Computing eigenvalues, please wait...</div>
+                <div id="statistics"></div>
+
+
+            </div>
+
+
+          
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Maximum Likelihood Estimate Practice Problems</h2>
+                    <ol>
+                    
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+
+            </script>
+</body>
+</html>
