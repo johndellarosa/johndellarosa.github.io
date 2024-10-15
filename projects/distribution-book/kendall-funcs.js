@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const sampleSizeInput = document.getElementById('sample-size');
     const correlationInput = document.getElementById('correlation');
     const generateBtn = document.getElementById('generate-btn');
+    const runBtn = document.getElementById('run-btn');
+    const manualInput = document.getElementById('manual-input');
     const tauValueSpan = document.getElementById('tau-value');
 
     // Color pickers
@@ -61,6 +63,22 @@ document.addEventListener('DOMContentLoaded', function () {
         return params;
     }
 
+    // Parse manual data input (from the textarea)
+    function parseManualInput() {
+        const inputText = manualInput.value.trim();
+        const points = inputText.split(/\s+/); // Split by space
+        const x = [];
+        const y = [];
+        for (const point of points) {
+            const [xCoord, yCoord] = point.split(',').map(Number);
+            if (!isNaN(xCoord) && !isNaN(yCoord)) {
+                x.push(xCoord);
+                y.push(yCoord);
+            }
+        }
+        return { dataX: x, dataY: y };
+    }
+
     function generateDataFromGaussianCopula(size, rho) {
         // Generate samples from a bivariate normal distribution with correlation rho
         const data = { u: [], v: [] };
@@ -112,6 +130,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const { lambda } = paramsY;
                 y = -Math.log(1 - v) / lambda;
             }
+
+            const generatedPoints = dataX.map((x, i) => `${x.toFixed(2)},${dataY[i].toFixed(2)}`).join(' ');
+            manualInput.value = generatedPoints;
 
             dataX.push(x);
             dataY.push(y);
@@ -192,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const layout = {
             xaxis: { title: 'X' },
             yaxis: { title: 'Y' },
-            title: "Scatter Plot of Generated Data",
+            title: "Scatter Plot of Generated Data (Click on Points)",
             dragmode: false // Disable zoom and pan
         };
         const config = {
@@ -208,6 +229,18 @@ document.addEventListener('DOMContentLoaded', function () {
             plotDiv.on('plotly_click', handleClick);
             plotDiv.on('plotly_clickannotation', handleUnclick); // Handle clicking outside points
         });
+    }
+
+
+    function runCalculation() {
+        const data = parseManualInput();
+        dataX = data.dataX;
+        dataY = data.dataY;
+
+        const tau = calculateKendallsTau(dataX, dataY);
+        tauValueSpan.textContent = tau.toFixed(4);
+
+        updatePlot(dataX, dataY);
     }
 
     function handleClick(eventData) {
@@ -252,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function updatePointColors(colors) {
         Plotly.restyle('plot', 'marker.color', [colors]);
     }
-
     function generateAndPlot() {
         const distX = distXSelect.value;
         const distY = distYSelect.value;
@@ -286,8 +318,21 @@ document.addEventListener('DOMContentLoaded', function () {
         createParamsInputs(this.value, paramsYDiv);
     });
 
-    generateBtn.addEventListener('click', generateAndPlot);
+    generateBtn.addEventListener('click', function() {
+        const distX = distXSelect.value;
+        const distY = distYSelect.value;
+        const paramsX = getParams(paramsXDiv);
+        const paramsY = getParams(paramsYDiv);
+        const sampleSize = parseInt(sampleSizeInput.value);
+        let rho = parseFloat(correlationInput.value);
+        if (rho < -1) rho = -1;
+        if (rho > 1) rho = 1;
+        const generatedData = generateData(distX, paramsX, distY, paramsY, sampleSize, rho);
+        dataX = generatedData.dataX;
+        dataY = generatedData.dataY;
+    });
 
-    // Initial plot
-    generateAndPlot();
+    runBtn.addEventListener('click', runCalculation);
+
+    runCalculation();
 });

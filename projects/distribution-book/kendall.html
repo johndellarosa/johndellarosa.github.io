@@ -74,15 +74,27 @@ body {
             display: inline-block;
             width: 140px;
         }
-        input[type="number"], select, input[type="color"] {
+        input[type="number"], select {
             width: 150px;
             padding: 5px;
         }
-        #generate-btn {
-            display: block;
+
+        input[type="color"] {
+            padding: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            resize: none;
+        }
+
+        #generate-btn, #run-btn {
+            display: inline-block;
             margin: 0 auto;
             padding: 10px 20px;
             font-size: 1em;
+            margin-right: 10px;
         }
         #plot {
             margin-top: 30px;
@@ -148,7 +160,9 @@ button:hover {
             <div id="Measures">
                 <h1>Kendall's Tau Simulator</h1>
                 <div class="controls">
-                    <div>
+
+
+                    <div  class="control-group">
                         <label for="dist-x">Distribution X:</label>
                         <select id="dist-x">
                             <option value="uniform">Uniform</option>
@@ -205,9 +219,15 @@ button:hover {
                 </div>
                 <br>
                 
-                    
+                
+                </div>
+                <div class="control-group">
+                    <h2>Data Input</h2>
+                    <textarea id="manual-input" placeholder="Enter points like this: x1,y1 x2,y2 ..."></textarea>
                 </div>
                 <button id="generate-btn">Generate Data</button>
+                <button id="run-btn">Run Calculation</button>
+            
                 
                 <div id="plot"></div>
                 <p>Kendall's Tau: <span id="tau-value"></span></p>    
