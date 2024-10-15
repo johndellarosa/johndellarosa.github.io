@@ -277,7 +277,7 @@ input[type=checkbox] {
                         baseUniformProbs[j] = 1;
                     }
                     let probs = {};
-                    for (let j = minLevel; j <= row['Max']; j++) {
+                    for (let j = minLevel; j < row['Max']; j++) {
                         probs[j] = 1;
                     }
                     for (let j = 0; j < minLevel; j++) {
