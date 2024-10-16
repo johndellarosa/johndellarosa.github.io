@@ -196,7 +196,8 @@ function updatePlot() {
         xaxis: { title: 'x', range: [xMinPlot, xMaxPlot] },
         yaxis: { title: 'Probability Density' },
         // Disable drag mode
-        dragmode: false
+        dragmode: false,
+        showlegend:false,
     };
 
     // Disable zoom feature
