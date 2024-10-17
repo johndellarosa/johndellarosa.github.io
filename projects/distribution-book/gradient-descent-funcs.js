@@ -307,6 +307,8 @@ let currentDistribution = 'normal';
         function gradientDescent() {
             const learningRate = parseFloat(document.getElementById('learningRate').value);
             const maxIter = parseInt(document.getElementById('maxIterations').value);
+            const tolerance = parseFloat(document.getElementById('tolerance').value);
+   
             const dist = distributions[currentDistribution];
             let params = dist.parameters.map(param => parseFloat(document.getElementById('init' + capitalize(param)).value));
         
@@ -317,9 +319,9 @@ let currentDistribution = 'normal';
             costValues = [];
         
             // Add initial parameters to path before starting the loop
-            const initialCost = dist.nll(params);
+            let cost = dist.nll(params);
             path.push([...params]); // Clone params
-            costValues.push(initialCost);
+            costValues.push(cost);
         
             for (let i = 0; i < maxIter; i++) {
                 const grads = dist.gradients(params);
@@ -328,11 +330,26 @@ let currentDistribution = 'normal';
                 // Apply parameter constraints
                 params = dist.parameterConstraints(params);
         
-                const cost = dist.nll(params);
+                const newCost = dist.nll(params);
                 path.push([...params]); // Clone params
-                costValues.push(cost);
+                costValues.push(newCost);
+
+                        // Check for convergence if tolerance is set
+                if (tolerance > 0 && Math.abs(newCost - cost) < tolerance) {
+                    console.log(`Converged at iteration ${i}`);
+                    break;
+                }
+
+                cost = newCost; // Update cost for next iteration
             }
         }
+
+        function togglePlotView() {
+            const view = document.getElementById('toggleView').value;
+            document.getElementById('contourOptions').style.display = (view === 'contour') ? 'block' : 'none';
+            plotCostFunction();
+        }
+        
 
         function plotCostFunction() {
             const dist = distributions[currentDistribution];
@@ -363,7 +380,9 @@ let currentDistribution = 'normal';
 
             let data = [];
 
-            if (isHeatmap) {
+            const view = document.getElementById('toggleView').value;
+
+            if (view === 'heatmap') {
                 data.push({
                     x: param2Range,
                     y: param1Range,
@@ -375,6 +394,48 @@ let currentDistribution = 'normal';
                     }
                 });
 
+                
+            } else if (view === 'contour') {
+                const numContours = parseInt(document.getElementById('numContours').value);
+       
+                data.push({
+                    x: param2Range,
+                    y: param1Range,
+                    z: z,
+                    type: 'contour',
+                    colorscale: selectedColormap,
+                    ncontours: numContours,
+                    contours: {
+                        coloring: 'heatmap', // Options: 'none', 'heatmap', 'lines', 'fill', 'tonext'
+                        showlabels: true,
+                        labelfont: {
+                            size: 12,
+                            color: 'white'
+                        }
+                    },
+                    colorbar: {
+                        title: applyLog ? 'log(Cost)' : 'Cost'
+                    }
+                });
+            } 
+            
+            
+            else if (view === 'surface') {
+                // 3D Surface
+                data.push({
+                    x: param2Range,
+                    y: param1Range,
+                    z: z,
+                    type: 'surface',
+                    colorscale: selectedColormap,
+                    colorbar: {
+                        title: applyLog ? 'log(Cost)' : 'Cost'
+                    }
+                });
+
+
+            }
+            if (view === "heatmap" || view === "contour"){
                 // Add gradient descent path as 2D line with labels
                 const pathTrace = {
                     x: path.map(p => p[1]),
@@ -433,90 +494,82 @@ let currentDistribution = 'normal';
                 };
 
                 Plotly.newPlot('plot', data, layout);
-            } else {
-                // 3D Surface
-                data.push({
-                    x: param2Range,
-                    y: param1Range,
-                    z: z,
-                    type: 'surface',
-                    colorscale: selectedColormap,
-                    colorbar: {
-                        title: applyLog ? 'log(Cost)' : 'Cost'
-                    }
-                });
-
-                // Add gradient descent path as 3D scatter with labels every 10 iterations
-                const pathTrace3D = {
-                    x: path.map(p => p[1]),
-                    y: path.map(p => p[0]),
-                    z: path.map(p => {
-                        const cost = distributions[currentDistribution].nll(p);
-                        return applyLog ? Math.log(cost + 1e-8) : cost;
-                    }),
-                    mode: 'lines+markers+text',
-                    marker: {
-                        color: document.getElementById('pathColor').value, // Use user-selected color
-                        size: parseFloat(document.getElementById('pathThickness').value)
-                    },
-                    line: {
-                        color: document.getElementById('pathColor').value, // Use user-selected color
-                        width: parseFloat(document.getElementById('pathThickness').value) // Use user-selected thickness
-                    },
-                    text: path.map((p, idx) => (idx % 100 === 0 ? `Iter ${idx}` : '')),
-                    textfont: {
-                        family: 'Arial',
-                        size: 10,
-                        color: 'white' // Contrast color for visibility
-                    },
-                    textposition: 'top center',
-                    name: 'Gradient Descent Path',
-                    type: 'scatter3d',
-                    showlegend:false,
-                };
-                // Add starting guess marker
-                const startTrace3D = {
-                    x: [path[0][1]],
-                    y: [path[0][0]],
-                    z: [applyLog ? Math.log(distributions[currentDistribution].nll(path[0]) + 1e-8) : distributions[currentDistribution].nll(path[0])],
-                    mode: 'markers+text',
-                    marker: {
-                        color: 'blue',
-                        size: 6,
-                        symbol: 'circle'
-                    },
-                    text: ['Start'],
-                    textfont: {
-                        family: 'Arial',
-                        size: 10,
-                        color: 'blue'
-                    },
-                    textposition: 'bottom center',
-                    name: 'Starting Guess',
-                    type: 'scatter3d',
-                    showlegend:false,
-                };
-                data.push(pathTrace3D);
-                data.push(startTrace3D);
-
-                const layout = {
-                    title: (applyLog ? 'Log ' : '') + 'Cost Function Surface',
-                    scene: {
-                        xaxis: { title: capitalize(param2) },
-                        yaxis: { title: capitalize(param1) },
-                        zaxis: { title: applyLog ? 'log(Cost)' : 'Cost' }
-                    },
-                    width: 800,
-                    height: 600
-                };
-
-                Plotly.newPlot('plot', data, layout);
+            } else if (view === "surface"){
+                                // Add gradient descent path as 3D scatter with labels every 10 iterations
+                                const pathTrace3D = {
+                                    x: path.map(p => p[1]),
+                                    y: path.map(p => p[0]),
+                                    z: path.map(p => {
+                                        const cost = distributions[currentDistribution].nll(p);
+                                        return applyLog ? Math.log(cost + 1e-8) : cost;
+                                    }),
+                                    mode: 'lines+markers+text',
+                                    marker: {
+                                        color: document.getElementById('pathColor').value, // Use user-selected color
+                                        size: parseFloat(document.getElementById('pathThickness').value)
+                                    },
+                                    line: {
+                                        color: document.getElementById('pathColor').value, // Use user-selected color
+                                        width: parseFloat(document.getElementById('pathThickness').value) // Use user-selected thickness
+                                    },
+                                    text: path.map((p, idx) => (idx % 100 === 0 ? `Iter ${idx}` : '')),
+                                    textfont: {
+                                        family: 'Arial',
+                                        size: 10,
+                                        color: 'white' // Contrast color for visibility
+                                    },
+                                    textposition: 'top center',
+                                    name: 'Gradient Descent Path',
+                                    type: 'scatter3d',
+                                    showlegend:false,
+                                };
+                                // Add starting guess marker
+                                const startTrace3D = {
+                                    x: [path[0][1]],
+                                    y: [path[0][0]],
+                                    z: [applyLog ? Math.log(distributions[currentDistribution].nll(path[0]) + 1e-8) : distributions[currentDistribution].nll(path[0])],
+                                    mode: 'markers+text',
+                                    marker: {
+                                        color: 'blue',
+                                        size: 6,
+                                        symbol: 'circle'
+                                    },
+                                    text: ['Start'],
+                                    textfont: {
+                                        family: 'Arial',
+                                        size: 10,
+                                        color: 'blue'
+                                    },
+                                    textposition: 'bottom center',
+                                    name: 'Starting Guess',
+                                    type: 'scatter3d',
+                                    showlegend:false,
+                                };
+                                data.push(pathTrace3D);
+                                data.push(startTrace3D);
+                
+                                const layout = {
+                                    title: (applyLog ? 'Log ' : '') + 'Cost Function Surface',
+                                    scene: {
+                                        xaxis: { title: capitalize(param2) },
+                                        yaxis: { title: capitalize(param1) },
+                                        zaxis: { title: applyLog ? 'log(Cost)' : 'Cost' }
+                                    },
+                                    width: 800,
+                                    height: 600
+                                };
+                
+                                Plotly.newPlot('plot', data, layout);
             }
+
+
         }
 
         function togglePlotView() {
             const view = document.getElementById('toggleView').value;
-            isHeatmap = (view === 'heatmap');
+            // Show contour options only when 'contour' view is selected
+            document.getElementById('contourOptions').style.display = (view === 'contour') ? 'block' : 'none';
+        
             plotCostFunction();
         }
 
@@ -737,3 +790,35 @@ let currentDistribution = 'normal';
             updateParameterBoundaries();
             runGradientDescent();
         };
+
+
+        document.getElementById('dataFile').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const contents = e.target.result;
+                    const parsedData = parseCSV(contents);
+                    if (parsedData.length === 0) {
+                        alert('No valid data found in the CSV file.');
+                        return;
+                    }
+                    dataPoints = parsedData;
+                    document.getElementById('data').value = dataPoints.join(', ');
+                    alert('Data successfully loaded from CSV file.');
+                };
+                reader.readAsText(file);
+            }
+        });
+        
+        function parseCSV(contents) {
+            const lines = contents.split(/\r\n|\n/);
+            let result = [];
+            for (let line of lines) {
+                if (line.trim() === '') continue;
+                const values = line.split(',').map(Number).filter(x => !isNaN(x));
+                result = result.concat(values);
+            }
+            return result;
+        }
+        
