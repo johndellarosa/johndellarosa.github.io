@@ -1,27 +1,31 @@
+// Maximum number of outcomes
+const MAX_OUTCOMES = 10;
+
 // Initial probabilities
 let probabilities = [0.2, 0.15, 0.25, 0.1, 0.3];
 
 // Number of outcomes
 let N = probabilities.length;
 
-// Alias tables
-let alias = [];
-let prob = [];
+// CDF array
+let cdf = [];
 
-// Color palette for outcomes
+// Color palette for outcomes (up to 10 colors)
 const outcomeColors = [
-    'rgba(31, 119, 180, 0.8)',  // Outcome 1 - Blue
-    'rgba(255, 127, 14, 0.8)',  // Outcome 2 - Orange
-    'rgba(44, 160, 44, 0.8)',   // Outcome 3 - Green
-    'rgba(214, 39, 40, 0.8)',    // Outcome 4 - Red
-    'rgba(148, 103, 189, 0.8)',  // Outcome 5 - Purple
-    // Add more colors if needed
+    'rgba(31, 119, 180, 0.8)',   // Blue
+    'rgba(255, 127, 14, 0.8)',   // Orange
+    'rgba(44, 160, 44, 0.8)',    // Green
+    'rgba(214, 39, 40, 0.8)',    // Red
+    'rgba(148, 103, 189, 0.8)',  // Purple
+    'rgba(140, 86, 75, 0.8)',     // Brown
+    'rgba(227, 119, 194, 0.8)',   // Pink
+    'rgba(127, 127, 127, 0.8)',   // Gray
+    'rgba(188, 189, 34, 0.8)',    // Olive
+    'rgba(23, 190, 207, 0.8)'     // Cyan
 ];
 
 // Variables to store steps
 let steps = [];
-let currentSmall = [];
-let currentLarge = [];
 
 // Initialize sample data
 let sampleData = {};
@@ -82,177 +86,91 @@ function updateProbabilities(event) {
         document.querySelector(`input[data-index="${i}"]`).value = p;
     });
 
-    // Reconstruct alias tables and redraw charts
-    constructAliasTables();
-    drawChart();
-    // updateAliasLists();
+    // Reconstruct CDF and redraw charts
+    constructCDF();
+    drawProbChart();
+    drawCDFChart();
     updateDerivationList();
     resetSampling();
 }
 
-// Function to construct alias tables and record steps
-function constructAliasTables() {
-    N = probabilities.length;
-    alias = new Array(N).fill(0);
-    prob = new Array(N).fill(0);
-
-    // Scale probabilities by N
-    const scaledProb = probabilities.map(p => p * N);
-
-    // Initialize small and large lists
-    const small = [];
-    const large = [];
-
-    scaledProb.forEach((sp, i) => {
-        if (sp < 1.0) {
-            small.push(i);
-        } else {
-            large.push(i);
-        }
-    });
-
-    // Record initial probabilities and scaled probabilities
+// Function to construct CDF and record steps
+function constructCDF() {
+    cdf = [];
+    let cumulative = 0;
     steps = [];
+
+    // Record initial probabilities
     steps.push({
         stepNumber: 0,
         title: "Initial Probabilities",
         description: "Original Probabilities:",
         data: probabilities.map((p, i) => `Outcome ${i + 1}: ${p.toFixed(4)}`)
     });
-    steps.push({
-        stepNumber: 0.5,
-        title: "Scaled Probabilities",
-        description: `Scaled Probabilities (P[i] * N where N=${N}):`,
-        data: scaledProb.map((sp, i) => `Outcome ${i + 1}: ${sp.toFixed(4)}`)
-    });
 
-    while (small.length && large.length) {
-        const less = small.pop();
-        const more = large.pop();
-
-        prob[less] = scaledProb[less];
-        alias[less] = more;
-
-        // Record the step
+    // Compute CDF
+    probabilities.forEach((p, i) => {
+        cumulative += p;
+        cdf.push(cumulative);
         steps.push({
-            stepNumber: steps.length,
-            title: `Step ${steps.length}`,
-            description: `Set probability of Outcome ${less + 1} to ${scaledProb[less].toFixed(4)} and alias it to Outcome ${more + 1}.`,
+            stepNumber: i + 1,
+            title: `Step ${i + 1}`,
+            description: `Compute CDF for Outcome ${i + 1}:`,
             data: [
-                `prob[${less}] = ${scaledProb[less].toFixed(4)}`,
-                `alias[${less}] = ${more}`
+                `CDF[${i}] = CDF[${i - 1 >= 0 ? i - 1 : 0}] + P${i + 1} = ${(cdf[i - 1] || 0).toFixed(4)} + ${p.toFixed(4)} = ${cumulative.toFixed(4)}`
             ]
         });
-
-        scaledProb[more] = scaledProb[more] + scaledProb[less] - 1;
-
-        if (scaledProb[more] < 1.0) {
-            small.push(more);
-        } else {
-            large.push(more);
-        }
-    }
-
-    // Remaining probabilities
-    while (large.length) {
-        const more = large.pop();
-        prob[more] = 1.0;
-        steps.push({
-            stepNumber: steps.length,
-            title: `Step ${steps.length}`,
-            description: `Set probability of Outcome ${more + 1} to 1.0 as it remains in the large list.`,
-            data: [
-                `prob[${more}] = 1.0`
-            ]
-        });
-    }
-    while (small.length) {
-        const less = small.pop();
-        prob[less] = 1.0;
-        steps.push({
-            stepNumber: steps.length,
-            title: `Step ${steps.length}`,
-            description: `Set probability of Outcome ${less + 1} to 1.0 as it remains in the small list.`,
-            data: [
-                `prob[${less}] = 1.0`
-            ]
-        });
-    }
-
-    // Update the small and large lists in the DOM
-    currentSmall = small.slice();
-    currentLarge = large.slice();
-}
-
-// Function to update small and large lists display
-function updateAliasLists() {
-    const smallList = document.getElementById('smallItems');
-    const largeList = document.getElementById('largeItems');
-    smallList.innerHTML = '';
-    largeList.innerHTML = '';
-
-    currentSmall.forEach(i => {
-        const li = document.createElement('li');
-        li.innerText = `Outcome ${i + 1}`;
-        smallList.appendChild(li);
-    });
-
-    currentLarge.forEach(i => {
-        const li = document.createElement('li');
-        li.innerText = `Outcome ${i + 1}`;
-        largeList.appendChild(li);
     });
 }
 
-// Function to draw the stacked bar chart
-function drawChart() {
-    const xLabels = probabilities.map((_, i) => `Slot ${i + 1}`);
+// Function to draw the probability bar chart
+function drawProbChart() {
+    const xLabels = probabilities.map((_, i) => `Outcome ${i + 1}`);
 
-    // Initialize data arrays
-    const traceBase = [];
-    const traceAlias = [];
-
-    // Prepare traces for each outcome
-    for (let i = 0; i < N; i++) {
-        // Base probability for the outcome itself
-        traceBase.push({
-            x: [xLabels[i]],
-            y: [prob[i]],
-            name: `Outcome ${i + 1}`,
-            type: 'bar',
-            marker: { color: outcomeColors[i % outcomeColors.length] },
-            hoverinfo: 'x+y+name',
-        });
-
-        // Alias probability
-        const aliasOutcome = alias[i];
-        if (aliasOutcome !== i) { // Avoid stacking the same outcome twice
-            traceAlias.push({
-                x: [xLabels[i]],
-                y: [1 - prob[i]],
-                name: `Outcome ${aliasOutcome + 1}`,
-                type: 'bar',
-                marker: { color: outcomeColors[aliasOutcome % outcomeColors.length] },
-                hoverinfo: 'x+y+name',
-            });
-        }
-    }
-
-    // Combine all traces
-    const data = [...traceBase, ...traceAlias];
-
-    const layout = {
-        title: 'Alias Sampling Method',
-        barmode: 'stack',
-        xaxis: { title: 'Alias Table Slots' },
-        yaxis: { title: 'Probability', range: [0, 1] },
-        legend: { orientation: 'h', y: -0.2 },
-        margin: { t: 50, b: 150 },
-        showlegend:false,
+    const trace = {
+        x: xLabels,
+        y: probabilities,
+        type: 'bar',
+        name: 'Probability',
+        marker: { color: outcomeColors.slice(0, N) },
+        hoverinfo: 'x+y+name',
     };
 
-    Plotly.newPlot('chart', data, layout);
-    createLegend();
+    const layout = {
+        title: 'Probabilities of Outcomes',
+        xaxis: { title: 'Outcomes' },
+        yaxis: { title: 'Probability', range: [0, 1] },
+        margin: { t: 50, b: 100 },
+    };
+
+    Plotly.newPlot('probChart', [trace], layout);
+}
+
+// Function to draw the CDF line chart
+function drawCDFChart() {
+    const xLabels = probabilities.map((_, i) => `Outcome ${i + 1}`);
+    const yValues = cdf;
+
+    const trace = {
+        x: xLabels,
+        y: yValues,
+        mode: 'lines+markers',
+        type: 'scatter',
+        name: 'CDF',
+        line: { color: 'rgba(255, 165, 0, 1)' },
+        marker: { color: 'rgba(255, 165, 0, 1)', size: 8 },
+        hoverinfo: 'x+y+name',
+    };
+
+    const layout = {
+        title: 'Cumulative Distribution Function (CDF)',
+        xaxis: { title: 'Outcomes' },
+        yaxis: { title: 'Cumulative Probability', range: [0, 1] },
+        showlegend: true,
+        margin: { t: 50, b: 100 },
+    };
+
+    Plotly.newPlot('cdfChart', [trace], layout);
 }
 
 // Function to create a custom legend
@@ -277,34 +195,50 @@ function createLegend() {
     });
 }
 
-function sampleAlias() {
-    const column = Math.floor(Math.random() * N);
-    const coinToss = Math.random();
-
-    if (coinToss < prob[column]) {
-        return {
-            slotPicked: column,
-            rollValue: coinToss.toFixed(4),
-            aliasUsed: false,
-            outcome: column
-        };
-    } else {
-        return {
-            slotPicked: column,
-            rollValue: coinToss.toFixed(4),
-            aliasUsed: true,
-            outcome: alias[column]
-        };
-    }
+// Function to compute the CDF and initialize charts
+function initializeCharts() {
+    constructCDF();
+    drawProbChart();
+    drawCDFChart();
+    createLegend();
 }
 
+// Function to sample using inverse transform sampling
+function sampleInverseTransform() {
+    const uniformValue = Math.random();
+    let outcome = -1;
+
+    for (let i = 0; i < cdf.length; i++) {
+        if (uniformValue <= cdf[i]) {
+            outcome = i;
+            break;
+        }
+    }
+
+    // Determine if condition is met (for detailed logging)
+    let conditionMet = 'No';
+    if (outcome === 0) {
+        conditionMet = uniformValue <= cdf[outcome];
+    } else {
+        conditionMet = uniformValue > cdf[outcome - 1] && uniformValue <= cdf[outcome];
+    }
+
+    return {
+        sampleNumber: sampleCountTotal + 1,
+        uniformValue: uniformValue.toFixed(4),
+        outcome: outcome,
+        conditionMet: conditionMet ? 'Yes' : 'No'
+    };
+}
+
+// Function to perform multiple samples and update histogram and table
 function performSampling(count) {
     const maxDetailedSamples = 100; // Limit detailed logs to 100 samples to prevent performance issues
 
     for (let i = 0; i < count; i++) {
-        const sample = sampleAlias();
+        const sample = sampleInverseTransform();
         sampleCountTotal++;
-        const sampleNumber = sampleCountTotal;
+        const sampleNumber = sample.sampleNumber;
 
         // Update sample counts
         const outcomeName = `Outcome ${sample.outcome + 1}`;
@@ -318,10 +252,9 @@ function performSampling(count) {
         if (sampleNumber <= maxDetailedSamples) {
             sampleDetails.push({
                 sampleNumber: sampleNumber,
-                slotPicked: `Slot ${sample.slotPicked + 1}`,
-                rollValue: sample.rollValue,
-                aliasUsed: sample.aliasUsed ? 'Yes' : 'No',
-                outcome: outcomeName
+                uniformValue: sample.uniformValue,
+                outcome: outcomeName,
+                conditionMet: sample.conditionMet
             });
         }
     }
@@ -352,8 +285,7 @@ function updateHistogram() {
         type: 'bar',
         marker: {
             color: outcomeColors.slice(0, N)
-        },
-        showLegend:false,
+        }
     };
 
     const layout = {
@@ -361,7 +293,6 @@ function updateHistogram() {
         xaxis: { title: 'Outcomes' },
         yaxis: { title: 'Count' },
         margin: { t: 50 },
-        showLegend:false,
     };
 
     Plotly.newPlot('samplingHistogram', [trace], layout);
@@ -397,21 +328,17 @@ function updateSampleDetailsTable() {
         cellSample.innerText = sample.sampleNumber;
         row.appendChild(cellSample);
 
-        const cellSlot = document.createElement('td');
-        cellSlot.innerText = sample.slotPicked;
-        row.appendChild(cellSlot);
-
-        const cellRoll = document.createElement('td');
-        cellRoll.innerText = sample.rollValue;
-        row.appendChild(cellRoll);
-
-        const cellAlias = document.createElement('td');
-        cellAlias.innerText = sample.aliasUsed;
-        row.appendChild(cellAlias);
+        const cellUniform = document.createElement('td');
+        cellUniform.innerText = sample.uniformValue;
+        row.appendChild(cellUniform);
 
         const cellOutcome = document.createElement('td');
         cellOutcome.innerText = sample.outcome;
         row.appendChild(cellOutcome);
+
+        const cellCondition = document.createElement('td');
+        cellCondition.innerText = sample.conditionMet;
+        row.appendChild(cellCondition);
 
         tbody.appendChild(row);
     });
@@ -420,14 +347,13 @@ function updateSampleDetailsTable() {
     if (sampleDetails.length > 100) {
         const row = document.createElement('tr');
         const cell = document.createElement('td');
-        cell.colSpan = 5;
+        cell.colSpan = 4;
         cell.innerText = `...and ${sampleDetails.length - 100} more samples not displayed.`;
         cell.style.fontStyle = 'italic';
         row.appendChild(cell);
         tbody.appendChild(row);
     }
 }
-
 
 // Function to update the derivation list
 function updateDerivationList() {
@@ -452,12 +378,52 @@ function updateDerivationList() {
     });
 }
 
-// Initialize the visualization
-createSliders();
-constructAliasTables();
-drawChart();
-// updateAliasLists();
-updateDerivationList();
+// Function to add a new outcome
+function addOutcome() {
+    if (N >= MAX_OUTCOMES) {
+        alert(`Maximum of ${MAX_OUTCOMES} outcomes reached.`);
+        return;
+    }
+
+    probabilities.push(0.1); // Assign a default probability
+    N++;
+    createSliders();
+    constructCDF();
+    drawProbChart();
+    drawCDFChart();
+    createLegend();
+    updateDerivationList();
+    resetSampling();
+}
+
+// Function to remove the last outcome
+function removeOutcome() {
+    if (N <= 1) {
+        alert('At least one outcome is required.');
+        return;
+    }
+
+    probabilities.pop();
+    N--;
+    createSliders();
+    constructCDF();
+    drawProbChart();
+    drawCDFChart();
+    createLegend();
+    updateDerivationList();
+    resetSampling();
+}
+
+// Function to initialize everything
+function initializeVisualization() {
+    initializeCharts();
+    createLegend();
+    updateDerivationList();
+}
+
+// Event listeners for add/remove outcome buttons
+document.getElementById('addOutcomeButton').addEventListener('click', addOutcome);
+document.getElementById('removeOutcomeButton').addEventListener('click', removeOutcome);
 
 // Event listener for sampling
 document.getElementById('sampleButton').addEventListener('click', () => {
@@ -468,6 +434,12 @@ document.getElementById('sampleButton').addEventListener('click', () => {
     }
     performSampling(count);
 });
+
+// Event listener for reset sampling
 document.getElementById('resetSampleButton').addEventListener('click', () => {
     resetSampling();
 });
+
+// Initialize sliders, charts, and derivation
+createSliders();
+initializeVisualization();

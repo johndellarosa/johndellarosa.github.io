@@ -94,7 +94,7 @@
 
                 $$P(X=k)={n \choose k} p^k(1-p)^{n-k};\quad k=0,1,\dots,n$$
 
-                <h3>Multinomial Distribution</h3>
+                <h3><a href="./multinomial-sampling.html">Multinomial Distribution</a></h3>
                 The multinomial distribution extends the binomial distribution into more than 2 possible outcomes.
                 <br><br>
                 Let n be the total number of trials; \(p_1,p_2,\dots,p_k\) be the probabilities for the k categories such that \(\sum_{i=1}^kp_i=1\); and \(x_1,x_2,\dots,x_k\) be the number of times each category is observed, where \(\sum_{i=1}^kx_i=n\).
@@ -130,6 +130,108 @@
                 Represents the number of events in a fixed interval of time or space when events occur independently at a constant rate \(\lambda\)
                 $$P(X=k)=\frac{\lambda^ke^{-\lambda}}{k!};\quad k=0,1,2,\dots$$
 
+                <h2>Distribution-Specific Algorithms</h2>
+
+                While general methods like Inverse Transform Sampling and Rejection Sampling can be applied to any distribution, there are distribution-specific algorithms that offer more efficient sampling for particular distributions. These algorithms often take advantage of the structure of the distribution's probability mass function (PMF) or cumulative distribution function (CDF). Other properties that can be taken advantage of are convolution relationships, such as Bernoulli and Binomial; Geometric and Negative Binomial. 
+
+
+
+                <h3>Bernoulli</h3>
+                The Bernoulli distribution can be sampled directly using a uniform random variable. 
+
+                <h4>Generate a U(0,1)</h4>
+                Generate a random uniform number \(U\sim\mathcal{U}(0,1)\)
+
+                <h4>Compare Against P</h4>
+                If \(U\leq p\), return 1; else, return 0.
+
+                <h3>Binomial</h3>
+
+                <h4>Direct Summation</h4>
+                We can take advantage of the fact that the sum of iid Bernoullis is equivalent to a Binomial distribution. 
+
+                <br><br>
+                For \(i=1\) to \(n\), sample \(X_i\sim\) Bernoulli(p). Return the sum of all \(X_i\)
+
+                <h5>Python Implemnetation</h5>
+                <code style="margin: auto; width: 50%;"><pre>
+import random
+
+def sample_bernoulli(p):
+    U = random.uniform(0, 1)
+    if U <= p:
+        return 1
+    else:
+        return 0
+                    
+def sample_binomial(n, p):
+    successes = 0
+    for _ in range(n):
+        successes += sample_bernoulli(p)
+    return successes
+                                           
+                                    </pre></code>
+                <br><br>
+                This has time complexity of O(n). While this is a simple algorithm and not super computationally heavy, if you can avoid generating many uniform random variables, it can sometimes lead to noticeably better performance. 
+
+
+                <h4>BINV</h4>
+
+                For large n, an alternative is the BINV Algorithm, which uses a similar approach to inverse transform sampling.
+
+                <h5>Python Implementation</h5>
+                <code style="margin: auto; width: 50%;"><pre>
+import math
+import random
+
+def sample_binomial_binv(n, p):
+    q = (1 - p)**n
+    F = q
+    X = 0
+    U = random.uniform(0, 1)
+    
+    while U > F:
+        X += 1
+        q = q * (n - X + 1) * p / (X * (1 - p))
+        F += q
+    
+    return X
+                    
+
+
+                </pre></code>
+
+
+                <h3>Multinomial</h3>
+                
+                <h4>Naive Algorithm</h4>
+                Similar to the binomial distribution, we can just sample n times from the associated categorical distribution. 
+
+                $$P(k)=p_k$$
+
+                The categorical distribution sampling algorithm is very similar to that of the Bernoulli. The only difference is that we no longer have a single threshold. 
+
+                <h5>Generate a U(0,1)</h5>
+                Same as with the Bernoulli, we generate a realization \(U\sim \mathcal{U}(0,1)\). 
+
+                <h5>Use cumulative probability</h5>
+
+                While the Bernoulli had a threshold based on p, we have more than 3 areas that we break the line segment from 0 to 1 into. We do this based on something similar to a CDF:
+
+                $$P(C_i)=\sum_{j=1}^ip_j$$
+
+                We then output the sample based on which region it lies in. An example will make this more clear.
+
+
+                <h5>Example</h5>
+
+                Let's say we have k=3, and our p-vector is \([0.2,0.3,0.5]\). Our thresholds are 
+
+                <ul>
+                    <li>k=1 if \(0\lt U \leq 0.2\)</li>
+                    <li>k=2 if \(0.2 \lt U \leq 0.5\)</li>
+                    <li>k=3 if \(U \gt 0.5\)</li>
+                </ul>
 
                 <h2>General Sampling Methods</h2>
 
@@ -263,109 +365,7 @@
                 
 
 
-                <h2>Distribution-Specific Algorithms</h2>
-
-                While general methods like Inverse Transform Sampling and Rejection Sampling can be applied to any distribution, there are distribution-specific algorithms that offer more efficient sampling for particular distributions. These algorithms often take advantage of the structure of the distribution's probability mass function (PMF) or cumulative distribution function (CDF). Other properties that can be taken advantage of are convolution relationships, such as Bernoulli and Binomial; Geometric and Negative Binomial. 
-
-
-
-                <h3>Bernoulli</h3>
-                The Bernoulli distribution can be sampled directly using a uniform random variable. 
-
-                <h4>Generate a U(0,1)</h4>
-                Generate a random uniform number \(U\sim\mathcal{U}(0,1)\)
-
-                <h4>Compare Against P</h4>
-                If \(U\leq p\), return 1; else, return 0.
-
-                <h3>Binomial</h3>
-
-                <h4>Direct Summation</h4>
-                We can take advantage of the fact that the sum of iid Bernoullis is equivalent to a Binomial distribution. 
-
-                <br><br>
-                For \(i=1\) to \(n\), sample \(X_i\sim\) Bernoulli(p). Return the sum of all \(X_i\)
-
-                <h5>Python Implemnetation</h5>
-                <code style="margin: auto; width: 50%;"><pre>
-import random
-
-def sample_bernoulli(p):
-    U = random.uniform(0, 1)
-    if U <= p:
-        return 1
-    else:
-        return 0
-                    
-def sample_binomial(n, p):
-    successes = 0
-    for _ in range(n):
-        successes += sample_bernoulli(p)
-    return successes
-                                           
-                                    </pre></code>
-                <br><br>
-                This has time complexity of O(n). While this is a simple algorithm and not super computationally heavy, if you can avoid generating many uniform random variables, it can sometimes lead to noticeably better performance. 
-
-
-                <h4>BINV</h4>
-
-                For large n, an alternative is the BINV Algorithm, which uses a similar approach to inverse transform sampling.
-
-                <h5>Python Implementation</h5>
-                <code style="margin: auto; width: 50%;"><pre>
-import math
-import random
-
-def sample_binomial_binv(n, p):
-    q = (1 - p)**n
-    F = q
-    X = 0
-    U = random.uniform(0, 1)
-    
-    while U > F:
-        X += 1
-        q = q * (n - X + 1) * p / (X * (1 - p))
-        F += q
-    
-    return X
-                    
-
-
-                </pre></code>
-
-
-                <h3>Multinomial</h3>
                 
-                <h4>Naive Algorithm</h4>
-                Similar to the binomial distribution, we can just sample n times from the associated categorical distribution. 
-
-                $$P(k)=p_k$$
-
-                The categorical distribution sampling algorithm is very similar to that of the Bernoulli. The only difference is that we no longer have a single threshold. 
-
-                <h5>Generate a U(0,1)</h5>
-                Same as with the Bernoulli, we generate a realization \(U\sim \mathcal{U}(0,1)\). 
-
-                <h5>Use cumulative probability</h5>
-
-                While the Bernoulli had a threshold based on p, we have more than 3 areas that we break the line segment from 0 to 1 into. We do this based on something similar to a CDF:
-
-                $$P(C_i)=\sum_{j=1}^ip_j$$
-
-                We then output the sample based on which region it lies in. An example will make this more clear.
-
-
-                <h5>Example</h5>
-
-                Let's say we have k=3, and our p-vector is \([0.2,0.3,0.5]\). Our thresholds are 
-
-                <ul>
-                    <li>k=1 if \(0\lt U \leq 0.2\)</li>
-                    <li>k=2 if \(0.2 \lt U \leq 0.5\)</li>
-                    <li>k=3 if \(U \gt 0.5\)</li>
-                </ul>
-
                 </div>
 
 
