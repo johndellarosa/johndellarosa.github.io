@@ -122,6 +122,25 @@
 input[type=number]::-webkit-inner-spin-button {
     opacity: 1
         }
+
+        .data-table tr:hover {
+              background-color: #ffe9c3;
+            }
+            .data-table tr:nth-child(even):hover {
+              background-color: #ffe9c3;
+            }
+
+            .data-table table thead{
+    align-self: flex-start;
+    position: sticky !important; 
+    top: 0;
+    z-index: 1;
+    }
+
+.data-table {
+    overflow-y: auto;  /* Enable vertical scrolling */
+    max-height:80vh;
+}
 </style>
 
 </head>

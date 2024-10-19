@@ -96,11 +96,27 @@
         text-align: center; /* Centers header text */
         padding: 8px; /* Adds space inside table headers and cells */
     }
+    thead {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  /* Optional: Add a bottom border for separation */
+  border-bottom: 2px solid #ddd;
+  /* Optional: Add padding and text alignment */
+  padding: 10px;
+  text-align: left;
+}
 
     tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-
+.data-table tr:hover {
+              background-color: #ffe9c3;
+            }
+            .data-table tr:nth-child(even):hover {
+              background-color: #ffe9c3;
+            }
+    
 
     .input-container {
             margin: 0 auto; /* Centers the container */
@@ -151,13 +167,17 @@ input[type=checkbox] {
 
 }
 
-thead tr th {
+.data-table table thead{
     align-self: flex-start;
-    position: sticky;
+    position: sticky !important; 
     top: 0;
     z-index: 1;
     }
 
+.data-table {
+    overflow-y: auto;  /* Enable vertical scrolling */
+    max-height:80vh;
+}
 </style>
 
 </head>
