@@ -19,11 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle the form submission
     document.getElementById('submitBtn').addEventListener('click', function() {
-        try {
             // Get data points for Sample 1
             const dataPoints1 = getDataPoints('1');
             // Get data points for Sample 2
             const dataPoints2 = getDataPoints('2');
+            if (dataPoints1.length === 0 || dataPoints2.length === 0) {
+                alert('Please enter valid data points for both samples.');
+                return;
+            }
+        try {
+
 
             if (dataPoints1.length === 0 || dataPoints2.length === 0) {
                 alert('Please enter valid data points for both samples.');
@@ -90,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to get data points for a sample
 function getDataPoints(sampleNumber) {
     const dataInput = document.getElementById('dataPoints' + sampleNumber).value;
+    if (dataInput == '') return [];
     let dataPoints = dataInput.split(/[\s,]+/)
         .map(Number)
         .filter(n => !isNaN(n))

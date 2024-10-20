@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle the form submission
     document.getElementById('submitBtn').addEventListener('click', function() {
+        const dataInput = document.getElementById('dataPoints').value;
+        if (dataInput == '') return;
         try {
             // Get data points
             const dataInput = document.getElementById('dataPoints').value;

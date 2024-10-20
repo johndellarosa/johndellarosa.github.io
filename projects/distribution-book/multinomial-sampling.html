@@ -88,11 +88,16 @@
         }
         #samplingSection {
             margin-top: 40px;
+            margin:0 auto;
+            width: 100%;
+              display: flex;
+              flex-direction: column;
         }
         #samplingSection button, #samplingSection input {
             padding: 10px 20px;
             font-size: 16px;
-            margin-right: 10px;
+            margin-top:10px;
+            /* margin-right: 10px; */
         }
         #samplingResult, #samplingHistogram {
             margin-top: 20px;
@@ -217,6 +222,25 @@
             
         }
 
+        @media (max-width: 600px) {
+
+#sampleDetailsTable th, #sampleDetailsTable td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+
+    #addRemoveSection {
+            margin-top: 50px;
+        }
+        
+    .slider-container {
+        margin-top: 30px;
+    }
+}
+
 </style>
 <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
 <script src="multinomial-sampling-funcs.js" defer></script>
@@ -256,7 +280,7 @@
     <div id="legend"></div>
     <div id="samplingSection">
         <h3>Sampling Simulation:</h3>
-        <input type="number" id="sampleCount" min="1" value="1" style="width: 100px;">
+        <input type="number" id="sampleCount" min="1" value="1" >
         <button id="sampleButton">Generate Sample</button>
         <button id="resetSampleButton">Reset Samples</button>
         <div id="samplingResult"></div>

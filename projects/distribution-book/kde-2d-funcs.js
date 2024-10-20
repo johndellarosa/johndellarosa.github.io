@@ -397,8 +397,8 @@ function generateKDE2D() {
             },
             showlegend: true,
             margin: { l: 40, r: 40, t: 40, b: 40 },
-            width: 700,
-            height: 700,
+            // width: 700,
+            // height: 700,
         };
     } else if (plotType === 'surface') {
         // 3D surface plot trace
@@ -448,8 +448,8 @@ function generateKDE2D() {
                 zaxis: { title: 'Density' },
             },
             margin: { l: 0, r: 0, t: 50, b: 0 },
-            width: 700,
-            height: 700,
+            // width: 700,
+            // height: 700,
         };
     }
 

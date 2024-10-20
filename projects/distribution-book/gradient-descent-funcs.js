@@ -488,8 +488,10 @@ let currentDistribution = 'normal';
                     title: (applyLog ? 'Log ' : '') + 'Cost Function Heatmap',
                     xaxis: { title: capitalize(param2) },
                     yaxis: { title: capitalize(param1) },
-                    width: 800,
-                    height: 600,
+                    responsive: true,
+                    // width: 800,
+                    // width: '1000vw',
+                    // height: 600,
                     hovermode: 'closest'
                 };
 
