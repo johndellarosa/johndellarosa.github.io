@@ -98,10 +98,12 @@ body {
 
 }
 
-.input-group label {
+label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .input-group input, .input-group select {
@@ -183,6 +185,10 @@ h2 {
   margin-bottom: 20px;
 }
 
+select{
+  padding: 5px;
+}
+
 h1 {
   text-align: center;
 }
@@ -195,7 +201,15 @@ h1 {
             margin: 0 auto;
             
         }
-
+        textarea {
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
 #summary-stats {
             width: 60%;
             margin: 20px auto;
@@ -238,6 +252,10 @@ h1 {
             }
             #distributionParams label, #distributionParams input {
                 flex: 1 0 100%;
+            }
+
+            input, selcct {
+              padding: 5px;
             }
 }
 
@@ -299,7 +317,7 @@ h1 {
                   </select>
                   <br><br>
                   <!-- Parameters for Theoretical Distribution -->
-                  <div id="distributionParams">
+                  <div class ="input-section" id="distributionParams">
                       <!-- Parameters will be dynamically added here -->
                   </div>
                   <div class="input-section" id="axisLimits">

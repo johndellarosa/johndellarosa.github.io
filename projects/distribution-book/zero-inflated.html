@@ -85,7 +85,13 @@
               background-color: #6699CC
             
             }
-
+            label {
+  display: block;
+  /* font-weight: bold; */
+  margin-bottom: 5px;
+  margin: 0 auto;
+  text-align: center;
+}
             #mixtureChart {
               max-width: 900px;
               /* width:100%; */
@@ -110,7 +116,7 @@
               margin-bottom: 5px;
               border: 1px solid #ccc;
               border-radius: 4px;
-            
+            margin: 0 auto;
             }
             
             button {
@@ -123,6 +129,10 @@
               cursor: pointer;
               transition: background-color 0.3s ease;
             
+            }
+
+            select {
+                margin: 0 auto;
             }
             
             button:hover {
@@ -160,7 +170,7 @@
                     width: 100%;
                     padding: 10px;
                 }
-                .data-point-button {
+                .data-point-button, select, input {
                     padding: 8px; /* Larger touch targets */
                 }
                 input[type="number"], input[type="range"] {

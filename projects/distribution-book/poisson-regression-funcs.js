@@ -177,11 +177,12 @@ function generateScatterData(plotType) {
             size: 10,
             color: labels,
             colorscale: 'Viridis',
-            showscale: true,
+            showscale: !isMobile,
             colorbar: {
                 title: 'Counts',
-                display: isMobile ? false : true,
+                //display: false,//isMobile ? false : true,
             },
+            showlegend:false,
             line: {
                 color: '#000000',
                 width: 1,

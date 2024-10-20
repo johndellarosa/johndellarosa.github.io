@@ -138,9 +138,12 @@ function drawProbChart() {
 
     const layout = {
         title: 'Probabilities of Outcomes',
+        titlefont:{
+            size:12,
+        },
         xaxis: { title: 'Outcomes' },
         yaxis: { title: 'Probability', range: [0, 1] },
-        margin: { t: 50, b: 100 },
+        margin: { t: 50, b: 100, l:40,r:40 },
     };
 
     Plotly.newPlot('probChart', [trace], layout);
@@ -164,10 +167,13 @@ function drawCDFChart() {
 
     const layout = {
         title: 'Cumulative Distribution Function (CDF)',
+        titlefont:{
+            size:12,
+        },
         xaxis: { title: 'Outcomes' },
         yaxis: { title: 'Cumulative Probability', range: [0, 1] },
         showlegend: true,
-        margin: { t: 50, b: 100 },
+        margin: { t: 50, b: 100, l:40,r:40 },
     };
 
     Plotly.newPlot('cdfChart', [trace], layout);
@@ -292,7 +298,7 @@ function updateHistogram() {
         title: `Sampling Histogram`,
         xaxis: { title: 'Outcomes' },
         yaxis: { title: 'Count' },
-        margin: { t: 50 },
+        margin: { t: 50, b: 100, l:40,r:40 },
     };
 
     Plotly.newPlot('samplingHistogram', [trace], layout);

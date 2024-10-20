@@ -399,6 +399,8 @@ function generateKDE2D() {
             },
             showlegend: true,
             margin: { l: 40, r: 40, t: 40, b: 40 },
+            responsive:true,
+
             // width: 700,
             // height: 700,
         };
@@ -451,6 +453,7 @@ function generateKDE2D() {
                 yaxis: { title: 'Y', range: [adjustedYMin, adjustedYMax] },
                 zaxis: { title: 'Density' },
             },
+            responsive:true,
             margin: { l: 0, r: 0, t: 50, b: 0 },
             // width: 700,
             // height: 700,

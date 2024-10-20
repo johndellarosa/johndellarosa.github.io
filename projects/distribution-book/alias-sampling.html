@@ -95,14 +95,7 @@ body {
         .step-container h4 {
             margin-top: 0;
         }
-        #samplingSection {
-            margin-top: 40px;
-        }
-        #samplingSection button, #samplingSection input {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-right: 10px;
-        }
+
         #samplingResult, #samplingHistogram {
             margin-top: 20px;
         }
@@ -197,6 +190,16 @@ body {
     background-color: #0056b3;
 }
 
+#chart {
+    margin: 0 auto;
+}
+
+#samplingSection {
+            margin-top: 40px;
+            margin: 0 auto;
+
+}
+
 @media (max-width: 600px) {
 
     #sampleDetailsTable th, #sampleDetailsTable td {
@@ -204,6 +207,22 @@ body {
             padding: 8px;
             text-align: center;
             font-size: 12px;
+        }
+
+        #samplingSection {
+            margin-top: 40px;
+            margin: 0 auto;
+            display: flex;
+              flex-direction: column;
+              /* align-items: flex-start; */
+        }
+        #samplingSection button, #samplingSection input, #sampleCount {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 0 auto;
+            margin-top: 10px;
+
+            /* margin-right: 10px; */
         }
 }
 </style>

@@ -74,6 +74,7 @@ legend {
     padding: 0 10px;
     font-weight: bold;
     color: #333;
+    margin: 0 auto;
 }
 
             
@@ -87,7 +88,7 @@ legend {
             .input-group, #dataPointsList {
               width: 100%;
               margin-bottom: 5px;
-              max-width: 500px;
+              /* max-width: 500px; */
               margin: 0% auto;
               align-items: center;
             }
@@ -206,6 +207,7 @@ button:hover {
                 border-radius: 3px;
                 outline: none;
                 transition: border-color 0.3s;
+                width:50%;
             }
 
             .input-group input[type="number"]:focus,
@@ -216,6 +218,7 @@ button:hover {
 
             .input-group textarea {
                 resize: vertical;
+                width:100%;
             }
             
             input, select {
@@ -235,7 +238,8 @@ button:hover {
           .bandwidth-matrix input {
               width: 80px;
               margin-right: 10px;
-              margin-bottom: 10px;
+              /* margin-bottom: 10px; */
+              padding: 10px;
           }
 
           .button-group {
@@ -251,11 +255,12 @@ button:hover {
 }
 
             
-            #kdeChart {
-              max-width: 900px;
+            #plot {
+              /* max-width: 900px; */
               /* width:100%; */
-            width: 80vw;
-            max-height: 50vh;
+            width: 100vw;
+            max-height: 80vh;
+            /* max-height: 50vh; */
               /* height: 20%; */
               /* height: 600px; */
               /* max-height: 1000px; */
@@ -276,9 +281,11 @@ button:hover {
             }
 
             input[type=checkbox] {
+
+
     -webkit-transform: scale(2); 
     transform: scale(2);
-    max-width: 100%;
+    max-width: 20%;
     margin: 0 auto;
 }
 
@@ -297,6 +304,9 @@ button:hover {
     input[type=checkbox] {
       display: inline-block;
     }
+    input[type="number"], input[type="range"], select {
+                    width: 95%; /* Full width inputs for easier access */
+                }
 }
             
             /* Smaller screens (e.g., smartphones) */
@@ -308,8 +318,12 @@ button:hover {
                 .data-point-button {
                     padding: 8px; /* Larger touch targets */
                 }
-                input[type="number"], input[type="range"] {
+                input[type="number"], input[type="range"], select {
                     width: 95%; /* Full width inputs for easier access */
+                }
+
+                legend, label {
+                  font-size: 15px;
                 }
             }
             

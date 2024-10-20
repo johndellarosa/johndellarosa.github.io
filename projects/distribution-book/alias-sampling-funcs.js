@@ -222,6 +222,7 @@ function drawChart() {
             type: 'bar',
             marker: { color: outcomeColors[i % outcomeColors.length] },
             hoverinfo: 'x+y+name',
+            responsive: true,
         });
 
         // Alias probability
@@ -234,6 +235,7 @@ function drawChart() {
                 type: 'bar',
                 marker: { color: outcomeColors[aliasOutcome % outcomeColors.length] },
                 hoverinfo: 'x+y+name',
+                responsive: true,
             });
         }
     }
@@ -247,8 +249,9 @@ function drawChart() {
         xaxis: { title: 'Alias Table Slots' },
         yaxis: { title: 'Probability', range: [0, 1] },
         legend: { orientation: 'h', y: -0.2 },
-        margin: { t: 50, b: 150 },
+        margin: { t: 50, b: 100, l:40,r:40 },
         showlegend:false,
+        responsive: true,
     };
 
     Plotly.newPlot('chart', data, layout);
@@ -360,8 +363,9 @@ function updateHistogram() {
         title: `Sampling Histogram`,
         xaxis: { title: 'Outcomes' },
         yaxis: { title: 'Count' },
-        margin: { t: 50 },
+        margin: { t: 50, b: 100, l:40,r:40 },
         showLegend:false,
+        responsive:true,
     };
 
     Plotly.newPlot('samplingHistogram', [trace], layout);
