@@ -449,7 +449,7 @@ let currentDistribution = 'normal';
                         color: document.getElementById('pathColor').value, // Use user-selected color
                         width: parseFloat(document.getElementById('pathThickness').value), // Use user-selected thickness
                     },
-                    text: path.map((p, idx) => (idx % 100 === 0 ? `Iter ${idx}` : '')),
+                    text: path.map((p, idx) => (idx % 250 === 0 ? `Iter ${idx}` : '')),
                     textfont: {
                         family: 'Arial',
                         size: 12,
@@ -512,7 +512,7 @@ let currentDistribution = 'normal';
                                         color: document.getElementById('pathColor').value, // Use user-selected color
                                         width: parseFloat(document.getElementById('pathThickness').value) // Use user-selected thickness
                                     },
-                                    text: path.map((p, idx) => (idx % 100 === 0 ? `Iter ${idx}` : '')),
+                                    text: path.map((p, idx) => (idx % 250 === 0 ? `Iter ${idx}` : '')),
                                     textfont: {
                                         family: 'Arial',
                                         size: 10,

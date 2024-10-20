@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Hodgkin-Huxley Simulator</title>
+    
+        <!-- Meta tags -->
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.min.js"></script>
+        <!-- p5.gui Library -->
+        <script src="https://cdn.jsdelivr.net/npm/p5.gui@0.0.4/dist/p5.gui.min.js"></script>
+
+
+        <meta name="keywords" content="Bayesian, Gamma, Poisson">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Hodgkin-Huxley differential equation visualizer.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/hodgkin-huxley-simulator"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+
+
+<style>
+    /* Basic styling for layout */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    .controls {
+      margin: 10px;
+      width: 800px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      margin: 5px;
+      flex: 1 1 30%;
+    }
+    .control-group label {
+      margin-bottom: 5px;
+    }
+    .control-group input[type="range"] {
+      width: 100%;
+    }
+    #resetButton {
+      align-self: center;
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #canvasContainer {
+      border: 2px solid #000;
+      margin-top: 10px;
+    }
+</style>
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Biophysics Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div class="container">
+<!-- Controls Section -->
+<div class="controls">
+    <div class="control-group">
+      <label for="leftSoluteSlider">Left Solute Count: <span id="leftSoluteValue">150</span></label>
+      <input type="range" id="leftSoluteSlider" min="0" max="300" value="150">
+    </div>
+    <div class="control-group">
+      <label for="rightSoluteSlider">Right Solute Count: <span id="rightSoluteValue">50</span></label>
+      <input type="range" id="rightSoluteSlider" min="0" max="300" value="50">
+    </div>
+    <div class="control-group">
+      <label for="waterMoleculeSlider">Water Molecule Count: <span id="waterMoleculeValue">200</span></label>
+      <input type="range" id="waterMoleculeSlider" min="0" max="400" value="200">
+    </div>
+    <div class="control-group">
+      <label for="waterPermeabilitySlider">Water Permeability: <span id="waterPermeabilityValue">0.05</span></label>
+      <input type="range" id="waterPermeabilitySlider" min="0" max="100" value="5">
+    </div>
+    <div class="control-group">
+      <label for="solutePermeabilitySlider">Solute Permeability: <span id="solutePermeabilityValue">0.00</span></label>
+      <input type="range" id="solutePermeabilitySlider" min="0" max="100" value="0">
+    </div>
+    <div class="control-group">
+      <label for="temperatureSlider">Temperature: <span id="temperatureValue">1.0</span></label>
+      <input type="range" id="temperatureSlider" min="1" max="10" value="1">
+    </div>
+    <div class="control-group" style="flex: 1 1 100%; text-align: center;">
+      <button id="resetButton">Reset Simulation</button>
+    </div>
+  </div>
+
+  <!-- Canvas Container -->
+  <div id="canvasContainer"></div>
+  </div>
+    <script src="osmosis-funcs.js" defer></script>
+      </div>
+
+
+
+                  
+
+
+
+             
+
+
+
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/mathjs"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+
+
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script> -->
+    
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

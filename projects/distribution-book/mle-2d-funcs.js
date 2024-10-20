@@ -1,5 +1,14 @@
 // script.js
 
+
+function togglePlotView() {
+    const view = document.getElementById('plotType').value;
+    // Show contour options only when 'contour' view is selected
+    document.getElementById('contourOptions').style.display = (view === 'contour') ? 'block' : 'none';
+
+    // plotCostFunction();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const plotButton = document.getElementById('plotButton');
     const distributionSelect = document.getElementById('distribution');
@@ -536,7 +545,7 @@ function displaySummaryStatistics(data) {
             zToPlot = normalizedZ.map(row => row.map(z => z < 0 ? Math.log(-z) : null));
         }
 
-        const dataPlot = [{
+         dataPlot = [{
             x: xRange,
             y: yRange,
             z: zToPlot,
@@ -559,7 +568,13 @@ function displaySummaryStatistics(data) {
                 zaxis: { title: useLogScale ? 'Log(-ΔLL)' : 'ΔLL' }
             };
              dataPlot[0].showscale = false; // Hide colorbar if not needed
-        } else {
+        } else if (plotType == 'contour'){
+            const numContours = parseInt(document.getElementById('numContours').value);
+       
+            dataPlot[0].ncontours = numContours;
+        }
+        
+        else {
             layout.xaxis = { title: xLabel };
             layout.yaxis = { title: yLabel };
         }
@@ -723,3 +738,12 @@ function hideLoadingIndicator() {
         return arr;
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+
+    
+    // Function to handle file upload and parse data points
+    document.getElementById('plotType').addEventListener('change', togglePlotView());
+  
+}
+
+    );

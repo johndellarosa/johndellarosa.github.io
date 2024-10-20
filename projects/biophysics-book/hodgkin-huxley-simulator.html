@@ -15,13 +15,13 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Distribution Distance Simulator</title>
+            <title>Hodgkin-Huxley Simulator</title>
     
         <!-- Meta tags -->
         
         <meta name="keywords" content="Bayesian, Gamma, Poisson">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to Bayesian poisson simulator with a gamma distribution prior.">
+        <meta name="description" content="Hodgkin-Huxley differential equation visualizer.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/distance-visualizer"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/biophysics-book/hodgkin-huxley-simulator"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -239,60 +239,63 @@ input[type=checkbox] {
             <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
         
         </div>
-        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+        <h2><a href= "table-of-contents.html">Biophysics Textbook (Work in Progress)</a></h2>
 
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div class="container">
-                <h1>Probability Distribution Comparison</h1>
+                <h1>Hodgkin-Huxley Equation Simulator</h1>
+    <div>
+        <h2>Input Constants</h2>
+        <div class="input-group">
+            <label>Membrane Capacitance (C<sub>m</sub>) (μF/cm²):</label>
+            <input type="number" id="Cm" value="1" step="0.1">
+        </div>
+        <div class="input-group">
+            <label>g<sub>Na</sub> (mS/cm²):</label>
+            <input type="number" id="gNa" value="120" step="1">
+        </div>
+        <div class="input-group">
+            <label>E<sub>Na</sub> (mV):</label>
+            <input type="number" id="ENa" value="50" step="1">
+        </div>
+        <div class="input-group">
+            <label>g<sub>K</sub> (mS/cm²):</label>
+            <input type="number" id="gK" value="36" step="1">
+        </div>
+        <div class="input-group">
+            <label>E<sub>K</sub> (mV):</label>
+            <input type="number" id="EK" value="-77" step="1">
+        </div>
+        <div class="input-group">
+            <label>g<sub>L</sub> (mS/cm²):</label>
+            <input type="number" id="gL" value="0.3" step="0.1">
+        </div>
+        <div class="input-group">
+            <label>E<sub>L</sub> (mV):</label>
+            <input type="number" id="EL" value="-54.4" step="0.1">
+        </div>
+        <div class="input-group">
+            <label>External Current (I<sub>ext</sub>) (μA/cm²):</label>
+            <input type="number" id="Iext" value="10" step="1">
+        </div>
+        <div class="input-group">
+            <label>Total Simulation Time (ms):</label>
+            <input type="number" id="tMax" value="50" step="1">
+        </div>
+        <div class="input-group">
+            <label>Time Step (dt) (ms):</label>
+            <input type="number" id="dt" value="0.01" step="0.01">
+        </div>
+        <div class="button-group">
+            <button onclick="simulate()">Run Simulation</button>
+            <button onclick="exportData()">Export Data</button>
+        </div>
+    </div>
 
-                <!-- Distribution 1 -->
-                <h3>Distribution 1</h3>
-                <label for="dist1">Select Distribution:</label>
-                <select id="dist1">
-                    <option value="normal">Normal Distribution</option>
-                    <option value="exponential">Exponential Distribution</option>
-                    <option value="uniform">Uniform Distribution</option>
-                    <option value="binomial">Binomial Distribution</option>
-                    <option value="poisson">Poisson Distribution</option>
-                    <option value="beta">Beta Distribution</option>
-                    <option value="gamma">Gamma Distribution</option>
-                </select>
-                <div id="params1"></div>
-                <label for="color1">Select Color:</label>
-    <input type="color" id="color1" value="#1f77b4"><br>
+    <div id="plots" style="width: 100%; height: auto; display: flex; flex-direction: column;"></div>
 
-
-                <!-- Distribution 2 -->
-                <h3>Distribution 2</h3>
-                <label for="dist2">Select Distribution:</label>
-                <select id="dist2">
-                    <option value="normal">Normal Distribution</option>
-                    <option value="exponential">Exponential Distribution</option>
-                    <option value="uniform">Uniform Distribution</option>
-                    <option value="binomial">Binomial Distribution</option>
-                    <option value="poisson">Poisson Distribution</option>
-                    <option value="beta">Beta Distribution</option>
-                    <option value="gamma">Gamma Distribution</option>
-                </select>
-                <div id="params2"></div>
-                <label for="color2">Select Color:</label>
-                <input type="color" id="color2" value="#ff7f0e"><br>
-
-                <h3>X-Axis Bounds</h3>
-                <label for="x_min">X-Axis Minimum:</label>
-                <input type="number" id="x_min" value="-10" step="0.1"><br>
-                <label for="x_max">X-Axis Maximum:</label>
-                <input type="number" id="x_max" value="10" step="0.1"><br>
-            
-                <!-- Button to update the plot -->
-                <button onclick="updatePlot()">Update Plot</button>
-            
-                <!-- Div for the plot -->
-                <div id="plot"></div>
-            
-                <!-- Div for divergence measures -->
-                <div id="divergence"></div>
+    <script src="hodgkin-huxley.js"></script>
       </div>
 
 
@@ -306,20 +309,11 @@ input[type=checkbox] {
 
 
 
-                <div id="Exercises">
-                    <h2>Distribution Distance Practice Problems</h2>
-
-                    <ol>
-                      
-                    </ol>
-    
-    
-                </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/mathjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
 
-        <script src="./distribution-distance-funcs.js"></script>
+
         <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script> -->
     
         <script>

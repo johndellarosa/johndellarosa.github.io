@@ -245,11 +245,7 @@
                   
 
                     </div>
-                    <label for="plotType">Plot Type:</label>
-                    <select id="plotType">
-                        <option value="heatmap">2D Heatmap</option>
-                        <option value="surface">3D Surface</option>
-                    </select>
+
                       
                       <label for="colorScheme">Select Color Scheme:</label>
                       <select id="colorScheme">
@@ -266,7 +262,16 @@
                       </select>
                       <label for="granularity">Grid Granularity (Number of Points per Axis):</label>
                       <input type="number" id="granularity" min="50" max="500" step="50" value="100" inputmode="numeric">
-                  
+                      <label for="plotType">Plot Type:</label>
+                      <select id="plotType" onchange="togglePlotView()">
+                          <option value="contour">Contour Plot (2D)</option>
+                          <option value="heatmap">2D Heatmap</option>
+                          <option value="surface">3D Surface</option>
+                      </select>
+                    <div id="contourOptions" >
+                        <label for="numContours">Number of Contour Lines:</label>
+                        <input type="number" id="numContours" value="20" min="1" step="1" inputmode="numeric">
+                    </div>
                   </div>
           
                   <button id="plotButton">Plot Likelihood Function</button>
@@ -292,6 +297,7 @@
     
                 </div>
         </div>
+
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;
