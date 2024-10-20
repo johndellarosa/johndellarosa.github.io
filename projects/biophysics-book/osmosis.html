@@ -15,7 +15,7 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Hodgkin-Huxley Simulator</title>
+            <title>Osmosis Simulator</title>
     
         <!-- Meta tags -->
         <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.min.js"></script>
@@ -38,14 +38,14 @@
 
 
 <style>
-    /* Basic styling for layout */
-    body {
+   body {
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 0;
       padding: 0;
+      background-color: #f0f0f0;
     }
     .controls {
       margin: 10px;
@@ -53,6 +53,10 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .control-group {
       display: flex;
@@ -71,10 +75,66 @@
       padding: 10px 20px;
       margin-top: 10px;
       font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
+    #resetButton:hover {
+      background-color: #0056b3;
+    }
+    /* Canvas Container */
     #canvasContainer {
-      border: 2px solid #000;
+      /* border: 2px solid #000; */
       margin-top: 10px;
+      padding-top: 100px;
+      border-radius: 8px;
+       /* Light green to represent water */
+      position: relative;
+      /* width: 80vw;
+  height: 80vh; */
+    }
+    /* Pressure Indicators */
+    .pressure-indicator {
+      position: absolute;
+      top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #008000;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    #pressureLeft {
+      left: 10px;
+    }
+    #pressureRight {
+      right: 10px;
+    }
+    /* Water Molecule Count Indicators */
+    #waterLeftCount {
+      top: 40px;
+      left: 10px;
+      color: #0000ff;
+    }
+    #waterRightCount {
+      top: 40px;
+      right: 10px;
+      color: #0000ff;
+    }
+
+        /* Water Molecule Count Indicators */
+        #soluteLeftCount {
+      top: 40px;
+      left: 10px;
+      color: #ff0000;
+    }
+    #soluteRightCount {
+      top: 40px;
+      right: 10px;
+      color: #ff0000;
     }
 </style>
     </head>
@@ -99,34 +159,47 @@
             <div class="container">
 <!-- Controls Section -->
 <div class="controls">
-    <div class="control-group">
-      <label for="leftSoluteSlider">Left Solute Count: <span id="leftSoluteValue">150</span></label>
-      <input type="range" id="leftSoluteSlider" min="0" max="300" value="150">
-    </div>
-    <div class="control-group">
-      <label for="rightSoluteSlider">Right Solute Count: <span id="rightSoluteValue">50</span></label>
-      <input type="range" id="rightSoluteSlider" min="0" max="300" value="50">
-    </div>
-    <div class="control-group">
-      <label for="waterMoleculeSlider">Water Molecule Count: <span id="waterMoleculeValue">200</span></label>
-      <input type="range" id="waterMoleculeSlider" min="0" max="400" value="200">
-    </div>
-    <div class="control-group">
-      <label for="waterPermeabilitySlider">Water Permeability: <span id="waterPermeabilityValue">0.05</span></label>
-      <input type="range" id="waterPermeabilitySlider" min="0" max="100" value="5">
-    </div>
-    <div class="control-group">
-      <label for="solutePermeabilitySlider">Solute Permeability: <span id="solutePermeabilityValue">0.00</span></label>
-      <input type="range" id="solutePermeabilitySlider" min="0" max="100" value="0">
-    </div>
-    <div class="control-group">
-      <label for="temperatureSlider">Temperature: <span id="temperatureValue">1.0</span></label>
-      <input type="range" id="temperatureSlider" min="1" max="10" value="1">
-    </div>
-    <div class="control-group" style="flex: 1 1 100%; text-align: center;">
-      <button id="resetButton">Reset Simulation</button>
-    </div>
+  <div class="control-group">
+    <label for="leftSoluteSlider">Left Solute Count: <span id="leftSoluteValue">150</span></label>
+    <input type="range" id="leftSoluteSlider" min="0" max="300" value="150">
   </div>
+  <div class="control-group">
+    <label for="rightSoluteSlider">Right Solute Count: <span id="rightSoluteValue">50</span></label>
+    <input type="range" id="rightSoluteSlider" min="0" max="300" value="50">
+  </div>
+  <div class="control-group">
+    <label for="waterMoleculeSlider">Water Molecule Count: <span id="waterMoleculeValue">200</span></label>
+    <input type="range" id="waterMoleculeSlider" min="0" max="400" value="200">
+  </div>
+  <div class="control-group">
+    <label for="waterPermeabilitySlider">Water Permeability: <span id="waterPermeabilityValue">0.05</span></label>
+    <input type="range" id="waterPermeabilitySlider" min="0" max="100" value="20">
+  </div>
+  <div class="control-group">
+    <label for="solutePermeabilitySlider">Solute Permeability: <span id="solutePermeabilityValue">0.00</span></label>
+    <input type="range" id="solutePermeabilitySlider" min="0" max="100" value="0">
+  </div>
+  <div class="control-group">
+    <label for="temperatureSlider">Temperature: <span id="temperatureValue">1.0</span></label>
+    <input type="range" id="temperatureSlider" min="0.1" max="2" value="1" step="0.1">
+  </div>
+  <div class="control-group" style="flex: 1 1 100%; text-align: center;">
+    <button id="resetButton">Reset Simulation</button>
+  </div>
+</div>
+
+<!-- Canvas Container with Pressure Indicators -->
+<div id="canvasContainer">
+  <div class="pressure-indicator" id="pressureLeft">Osmotic Pressure: 0</div>
+  <div class="pressure-indicator" id="pressureRight">Osmotic Pressure: 0</div>
+<div class="pressure-indicator" id="soluteLeftCount" style="top: 80px; left: 10px;">Left Solute: 0</div>
+<div class="pressure-indicator" id="soluteRightCount" style="top: 80px; right: 10px;">Right Solute: 0</div>
+
+  <div class="pressure-indicator" id="waterLeftCount" style="top: 40px; left: 10px;">Left Water: 0</div>
+  <div class="pressure-indicator" id="waterRightCount" style="top: 40px; right: 10px;">Right Water: 0</div>
+
+</div>
+
 
   <!-- Canvas Container -->
   <div id="canvasContainer"></div>
