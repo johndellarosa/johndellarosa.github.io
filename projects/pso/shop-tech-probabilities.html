@@ -130,6 +130,12 @@ input[type=checkbox] {
     -webkit-transform: scale(1.5); /* Safari and Chrome */
     transform: scale(1.5);
 }
+.data-table tr:hover {
+              background-color: #ffe9c3;
+            }
+            .data-table tr:nth-child(even):hover {
+              background-color: #ffe9c3;
+            }
 
 
 </style>
@@ -378,10 +384,10 @@ input[type=checkbox] {
     <li>~26.0% for Ryuker, Reverser</li>
 </ul>
 <h2>Level 26-42</h2>
-<table>
+<table class="data-table">
     <thead>
       <tr style="text-align: right;">
-        <th>Disk</th>
+        <th>Disk (Player Level 26-42)</th>
         <th>Probability (%)</th>
       </tr>
 
@@ -570,10 +576,10 @@ input[type=checkbox] {
     </tbody>
   </table>
 <h2>Level 43-60</h2>
-<table border="1" class="dataframe">
+<table border="1" class="data-table">
     <thead>
       <tr style="text-align: right;">
-        <th>Disk</th>
+        <th>Disk (Player Level 43-60)</th>
         <th>Probability (%)</th>
       </tr>
 
@@ -990,10 +996,10 @@ input[type=checkbox] {
     </tbody>
   </table>
 <h2>Level 61+</h2>
-<table >
+<table class="data-table">
     <thead>
       <tr style="text-align: right;">
-        <th>Disk</th>
+        <th>Disk (Player Level 61-200)</th>
         <th>Probability (%)</th>
       </tr>
 
