@@ -48,7 +48,8 @@
       background-color: #f0f0f0;
     }
     .controls {
-      margin: 10px;
+      /* margin: 10px; */
+      margin: 0 auto;
       width: 800px;
       display: flex;
       flex-wrap: wrap;
@@ -58,6 +59,11 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
+    .container {
+      margin: 0 auto;
+    }
+
     .control-group {
       display: flex;
       flex-direction: column;
@@ -127,15 +133,49 @@
 
         /* Water Molecule Count Indicators */
         #soluteLeftCount {
-      top: 40px;
+      top: 30px;
       left: 10px;
       color: #ff0000;
     }
     #soluteRightCount {
-      top: 40px;
+      top: 30px;
       right: 10px;
       color: #ff0000;
     }
+
+    #canvasContainer{
+      margin: 0 auto;
+    }
+
+            /* Adjustments for smaller screens */
+      @media (max-width: 600px) {
+            .input-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-section label, .input-section input[type=number], .input-section input[type=text], .input-section select, .input-section button {
+                flex: 1 0 100%;
+                max-width: 100%;
+            }
+
+            .controls {
+      /* margin: 10px; */
+      width: 90%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type='range']{
+      margin-bottom:20px;
+    
+    }
+
+        }
 </style>
     </head>
     <body>

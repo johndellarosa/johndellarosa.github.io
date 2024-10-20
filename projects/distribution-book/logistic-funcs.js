@@ -148,14 +148,15 @@ function generateHeatmap() {
         colorscale: fadedRdBu,
         showscale: true,
         colorbar: {
-            thickness: isMobile? 5:10,  // Reduce the thickness of the colorbar
+            title:"Prob Red",
+            thickness: isMobile? 7.5:10,  // Reduce the thickness of the colorbar
             orientation: isMobile? 'h':'v',  // Change orientation to horizontal if needed
         }
     };
 
     if (window.innerWidth < 500) {
         console.log(window.innerWidth);
-        heatmapData.colorbar.thickness = 5;  // Further reduce colorbar on mobile
+        heatmapData.colorbar.thickness = 7.5;  // Further reduce colorbar on mobile
         heatmapData.colorbar.orientation = 'h';
     }
 

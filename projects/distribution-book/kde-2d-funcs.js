@@ -357,7 +357,9 @@ function generateKDE2D() {
             opacity: 0.8,
             showscale: true,
             colorbar: {
-                title: 'Density'
+                title: 'Density',
+                orientation:'h',
+                thickness:10,
             }
         };
 
@@ -411,7 +413,9 @@ function generateKDE2D() {
             name: `KDE (${capitalizeFirstLetter(kernelType)})`,
             showscale: true,
             colorbar: {
-                title: 'Density'
+                title: 'Density',
+                orientation:'h',
+                thickness:10,
             },
             opacity: 0.9,
             contours: {

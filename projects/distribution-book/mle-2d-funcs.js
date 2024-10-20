@@ -537,7 +537,8 @@ function displaySummaryStatistics(data) {
         const maxZ = Math.max(...zData.flat());
         const minZ = Math.min(...zData.flat());
         const normalizedZ = zData.map(row => row.map(z => z - maxZ));
-
+        let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
         let zToPlot = normalizedZ;
 
         if (useLogScale) {
@@ -553,13 +554,24 @@ function displaySummaryStatistics(data) {
             colorscale: colorScheme,
     
             zsmooth: false,
-            colorbar: { title: useLogScale ? 'Log(-ΔLL)' : 'ΔLL' },
+            colorbar: { title: useLogScale ? 'Log(-ΔLL)' : 'ΔLL' ,
+                orientation:'h',
+                thickness:10,
+            },
             reversescale: false
         }];
 
 
         let layout = {
-            title: title
+            title: title,
+            margin:{
+                l:isMobile? 50:70,
+                r:isMobile? 20:40,
+              },
+  
+                xaxis: { title: xLabel },
+                yaxis: { title: yLabel },
+              
         };
         if (plotType === 'surface') {
             layout.scene = {

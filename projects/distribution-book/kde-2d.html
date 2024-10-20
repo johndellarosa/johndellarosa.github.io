@@ -12,7 +12,7 @@
 
   gtag('config', 'G-2C44LTKBE1');
 </script>
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
             <title>Kernel Density Estimation</title>
@@ -276,9 +276,10 @@ button:hover {
             }
 
             input[type=checkbox] {
-    -webkit-transform: scale(2); /* Safari and Chrome */
+    -webkit-transform: scale(2); 
     transform: scale(2);
-    
+    max-width: 100%;
+    margin: 0 auto;
 }
 
             /* Responsive Design */
@@ -290,6 +291,7 @@ button:hover {
     .bandwidth-matrix input {
         width: 100%;
         margin-right: 0;
+        
     }
 
     input[type=checkbox] {

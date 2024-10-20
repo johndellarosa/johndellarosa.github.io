@@ -355,7 +355,8 @@ let currentDistribution = 'normal';
             const dist = distributions[currentDistribution];
             const param1 = dist.parameters[0];
             const param2 = dist.parameters[1];
-
+            let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
             const param1Min = parseFloat(document.getElementById(param1 + 'Min').value);
             const param1Max = parseFloat(document.getElementById(param1 + 'Max').value);
             const param2Min = parseFloat(document.getElementById(param2 + 'Min').value);
@@ -390,7 +391,9 @@ let currentDistribution = 'normal';
                     type: 'heatmap',
                     colorscale: selectedColormap,
                     colorbar: {
-                        title: applyLog ? 'log(Cost)' : 'Cost'
+                        title: applyLog ? 'log(Cost)' : 'Cost',
+                        orientation:'h',
+                        thickness:10,
                     }
                 });
 
@@ -414,7 +417,9 @@ let currentDistribution = 'normal';
                         }
                     },
                     colorbar: {
-                        title: applyLog ? 'log(Cost)' : 'Cost'
+                        title: applyLog ? 'log(Cost)' : 'Cost',
+                        orientation:'h',
+                        thickness:10,
                     }
                 });
             } 
@@ -429,7 +434,9 @@ let currentDistribution = 'normal';
                     type: 'surface',
                     colorscale: selectedColormap,
                     colorbar: {
-                        title: applyLog ? 'log(Cost)' : 'Cost'
+                        title: applyLog ? 'log(Cost)' : 'Cost',
+                        orientation:'h',
+                        thickness:10,
                     }
                 });
 
@@ -492,7 +499,15 @@ let currentDistribution = 'normal';
                     // width: 800,
                     // width: '1000vw',
                     // height: 600,
-                    hovermode: 'closest'
+                    hovermode: 'closest',
+                    colorbar: {
+                        orientation:'h',
+                    },
+                    margin:{
+                        l:isMobile? 40:60,
+                        r:isMobile? 20:40,
+                      }
+
                 };
 
                 Plotly.newPlot('plot', data, layout);
@@ -557,8 +572,13 @@ let currentDistribution = 'normal';
                                         yaxis: { title: capitalize(param1) },
                                         zaxis: { title: applyLog ? 'log(Cost)' : 'Cost' }
                                     },
-                                    width: 800,
-                                    height: 600
+                                    // width: 800,
+                                    // height: 600,
+                                    margin:{
+                                        l:isMobile? 40:60,
+                                        r:isMobile? 20:40,
+                                        t:20,
+                                      }
                                 };
                 
                                 Plotly.newPlot('plot', data, layout);

@@ -522,6 +522,7 @@ function plotSamples(samples) {
   const xData = samples.map(s => s[0]);
   const yData = samples.map(s => s[1]);
   const markerSize = parseInt(document.getElementById('markerSize').value);  // Get marker size from slider
+  let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
   
   const marginalX = document.getElementById('marginalX').value;
   const marginalY = document.getElementById('marginalY').value;
@@ -556,6 +557,10 @@ function plotSamples(samples) {
       yaxis: { title: 'Y' },
       showlegend: false,
       autosize:true,
+      margin:{
+        l:isMobile? 50:70,
+        r:isMobile? 20:40,
+      },
   };
 
   Plotly.newPlot('plot', data, layout,{ responsive: true });
@@ -569,7 +574,8 @@ function isDiscrete(marginal) {
 function plotMarginalHistograms(samples) {
   const xData = samples.map(s => s[0]);
   const yData = samples.map(s => s[1]);
-
+  let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
   const traceX = {
       x: xData,
       type: 'histogram',
@@ -584,7 +590,11 @@ function plotMarginalHistograms(samples) {
       xaxis: { title: 'X' },
       yaxis: { title: 'Frequency' },
       bargap: 0.05,
-      autosize: true
+      autosize: true,
+      margin:{
+        l:isMobile? 50:70,
+        r:isMobile? 20:40,
+      },
   };
 
   const traceY = {
@@ -601,7 +611,11 @@ function plotMarginalHistograms(samples) {
       xaxis: { title: 'Y' },
       yaxis: { title: 'Frequency' },
       bargap: 0.05,
-      autosize: true
+      autosize: true,
+      margin:{
+        l:isMobile? 50:70,
+        r:isMobile? 20:40,
+      },
   };
 
   Plotly.newPlot('histogramX', [traceX], layoutX, { responsive: true });

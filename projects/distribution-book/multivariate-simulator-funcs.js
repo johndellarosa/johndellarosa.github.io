@@ -326,6 +326,11 @@ function plotContour(gridData, samples = null) {
       z: gridData.z,
       type: 'contour',
       colorscale: heatmapColor,
+      colorbar: {
+        title:'Density',
+        orientation:'h',
+        thickness:10,
+    },
       // showscale: isMobile? false:true,
       contours: {
           coloring: 'heatmap',
@@ -359,6 +364,10 @@ function plotContour(gridData, samples = null) {
       yaxis: { title: 'Y' },
       showlegend: false,
       autosize:true,
+      margin:{
+        l:isMobile? 40:60,
+        r:isMobile? 20:40,
+      }
   };
 
   Plotly.newPlot('plot', data, layout, { responsive: true });

@@ -179,13 +179,13 @@
             margin: 0 auto;
             
         }
-        .input-group, #parameterBoundaries, #initialGuessInputs {
+        .input-group, #parameterBoundaries, #initialGuessInputs, #contourOptions {
     display: flex;
     flex-direction: column;
     margin-bottom: 5px;
 }
 
-.input-group label, #parameterBoundaries label {
+.input-group label, #parameterBoundaries label, #contourOptions label {
     font-weight: bold;
     margin-top:5px;
     /* margin-bottom: 5px; */
@@ -234,11 +234,16 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-#finalParams {
+#finalParams, #MLE-explanation {
             margin-top: 20px;
             font-size: 16px;
             font-weight: bold;
+            margin: 0 auto;
         }
+
+#finalParams{
+    text-align: center;
+}
 </style>
 <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
 <script src="gradient-descent-funcs.js" defer></script>

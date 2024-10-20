@@ -64,6 +64,7 @@
         background-color: #007bff; /* Sets a background color for the button */
         color: white; /* Sets the text color for the button */
         border: none; /* Removes the border from the button */
+        margin-top:20px;
     }
 
     #process-btn:hover {
@@ -150,6 +151,10 @@
     min-width: 25px;
 }
 
+button {
+    margin-top: 20px;
+}
+
 input[type=checkbox] {
     -webkit-transform: scale(1.5); /* Safari and Chrome */
     transform: scale(1.5);
@@ -178,6 +183,37 @@ input[type=checkbox] {
     overflow-y: auto;  /* Enable vertical scrolling */
     max-height:80vh;
 }
+
+.input-container {
+      /* margin: 10px; */
+      margin: 0 auto;
+      /* width: 800px; */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom:20px;
+    }
+
+
+    .center-container{
+        
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 1800px;
+  width:100%;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    }
 </style>
 
 </head>
@@ -230,10 +266,12 @@ input[type=checkbox] {
                         <!-- Input field for the user to enter a value -->
                         <input type="number" id="user-input-distance" value="0" min="0" onchange="OnValueChanged()"/>
                     </div>
-                    <div class="input-group">
+            </div>
+                    <!-- <div class="input-group"> -->
             <!-- Label for the dropdown menu -->
 
             <div class="input-container">
+                <div class="input-group">
                 <!-- Label for the dropdown menu -->
                 <label for="mode-select">Mode:</label>
                 <!-- Dropdown menu for the user to select a value -->
@@ -243,10 +281,9 @@ input[type=checkbox] {
                     <option value="Online">Online</option>
         
                 </select>
-                
-            </div>
-            <div class="input-container">
-            <label for="difficulty-select">Difficulty:</label>
+                </div>
+                <div class="input-group">
+                <label for="difficulty-select">Difficulty:</label>
             <!-- Dropdown menu for the user to select a value -->
             <select id="difficulty-select" onchange="OnValueChanged()">
                 <!-- Option elements for the dropdown -->
@@ -264,6 +301,11 @@ input[type=checkbox] {
                 <option value="Ep4 Ultimate">Ep4 Ultimate</option>
             </select>
             </div>
+            </div>
+            <!-- <div class="input-container">
+            
+            </div> -->
+
             <div class="input-group">
                 <!-- Label for the dropdown menu -->
                 <label for="status-select"><abbr title="Enemy's status">Status Effect:</abbr></label>
@@ -282,7 +324,7 @@ input[type=checkbox] {
             <label for="auto-update-box">Auto-update:</label>
             <input type="checkbox" id="auto-update-box" checked>
             </div>
-        </div>
+        
         
         <!-- Button that will trigger processData when clicked -->
         <button id="process-btn">Calculate</button>
