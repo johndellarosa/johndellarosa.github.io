@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Markov Chain</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Copulas">
+                <h1>Markov Chain</h1>
+                <h2>Introduction to Markov Chains</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+
+                <h2>Basic Concepts</h2>
+
+                <h3>Stochastic Process</h3>
+
+                A stochastic process is a collection of random variables \(\{X_t\}_{t\in T}\).
+
+                <h3>Markov Property</h3>
+                
+                A stochastic process \(\{X_t\}_{t\geq 0}\) satisfies the Markov property if, for all \(t\geq 0\) and for all states \(x_0, x_1, \dots, x_{t}, x_{t+1}\),
+
+                $$P(X_{t+1}=x_{t+1}|X_{t}=x_{t},X_{t-1}=x_{t-1},\dots,X_0=x_0)=P(X_{t+1}=x_{t+1}|X_t=x_t)$$
+                In other words, only the present state affects the probability of the next transition. 
+
+                <h3>Markov Chain</h3>
+                A Markov Chain is a discrete-time stochastic process with the Markov property and a discrete state space \(S\). This state space can be:
+
+                <ul>
+                    <li>Finite: \(S=\{1,2,\dots,N\}\)</li>
+                    <li>Countably Infinite: \(S=\mathbb{N}\) or any countable set.</li>
+                </ul>
+
+                <h3>Transition Probability</h3>
+                The dynamics of a Markov Chain are characterized by transition probabilities:
+                $$P_{ij}=P(X_{t+1}=j|X_{t}=i),\quad\forall i,j\in S$$
+                These transition probabilities can be arranged into a transition matrix where:
+
+                <ul>
+                    <li>Each element \(P_{ij}\) represents the probability of transitioning from state \(i\) to state \(j\) in one time step</li>
+                    <li>Each row sums to 1 \(\sum_{j}P_{ij}=1\)</li>
+                    <li>All entries are non-negative: \(P_{ij}\geq 0\)</li>
+                </ul>
+                The second and third characteristics imply that \(P_{ij}\leq 1\).
+
+                <h2>Intermediate Concepts</h2>
+
+                <h3>Chapman-Kolmogorov Equations</h3>
+
+                The \(n\)-step transition probability is the probability of transitioning from state \(i\) to state \(j\) in \(n\) steps:
+
+                $$P_{ij}^{(n)}=P(X_{t+n}=j|X_t=i)$$
+
+                This leads to the Chapman-Kolmogorov Equations:
+
+                $$P_{ij}^{(n+m)}=\sum_{k\in S}P_{ik}^{(n)}P_{kj}^{(m)}$$
+
+                <h3>Stationary Distribution</h3>
+                
+                A stationary distribution \(\pi=\pi_{i\in S}\) satisfies:
+
+                $$\pi_j=\sum_{i\in S}\pi_i P_{ij},\quad \forall j\in S,$$
+                or alternatively written:
+                $$\vec{\pi}=\vec{\pi}\mathbf{P}$$
+
+                where \(pi\) is a vector of the probability distribution over states and \(P\) is the transition matrix
+
+                However, this need not be something that is initially true. We care more about convergence.
+
+                <h4>Convergence</h4>
+                It is said that the distribution of \(X_t\) converges to the stationary distribution \(\pi\) as \(t\to\infty\) if:
+
+                $$\lim_{n\to\infty}P(X_t=j|X_0=i)=\pi_j,\quad \forall i,j\in S$$
+
+                <h4>Total Variation Distance</h4>
+
+                The total variation distance between two probability distributions \(\mu\) and \(\nu\) on \(S\) is:
+
+                $$||\mu-\nu||_{TV}=\frac{1}{2}\sum_{i\in S}|\mu_i-\mu_i|$$
+
+                The mixing time is the time it takes for the Markov Chain to get close to its stationary distribution in total variation distance.
+
+                <h3>Ergodicity</h3>
+
+                For a Markov Chain to be <strong>ergodic</strong>, it must satisfy the following 3 properties:
+                <ol>
+                    <li>Irreducible</li>
+                    <li>Aperiodic</li>
+                    <li>Positive Recurrent</li>
+                </ol>
+
+                <h4>Irreducibility</h4>
+                A Markov chain state \(j\) is accessible from state \(i\) (denoted \(i\rightarrow j\)) if there exists 
+                \(n\geq 0\) such that \(P_{ij}^{(n)}\gt 0\) where \(P_{ij}^{(n)}\) is the \(n\)-step transition probability.
+
+                It is said that states \(i\) and \(j\) communicate (denoted \(i\leftrightarrow j\)) if \(i\rightarrow j\) and \(j\rightarrow i\).
+
+                A Markov Chain is irreducible if every pair of states communicates, meaning that it's possible to reach any state from any other state.
+
+                <h4>Periodicity</h4>
+
+                The period of a state \(i\) is:
+                $$d(i)=\text{gcd}\{n\geq 1: P_{ii}^{(n)}\gt 0\}$$
+
+                <ul>
+                    <li>A state i is aperiodic if \(d(i)=1\)</li>
+                    <li>A state i is periodic if \(d(i)\gt 1\)</li>
+                </ul>
+
+                An aperiodic chain is one where all states are aperiodic.
+
+
+                <h3>Reversible Markov Chains</h3>
+
+                <h4>Detailed Balance Condition</h4>
+
+                A Markov Chain satisfies the detailed balance condition with respect to a distribution \(\pi\) if:
+
+                $$\pi_{i}P_{ij}=\pi_{j}P_{ji},\quad\forall i,j\in S$$
+
+                This implies that the flow of probability from $i$ to $j$ is exactly balanced by the flow from $j$ to $i$.
+
+                A chain is reversible if it satisfies thee detailed balance condition.
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Copula Practice Problems</h2>
+
+                    <ol>
+                        <li>Generate pairs of random variables (X,Y) such that:
+                            <ol>
+                                <li>The marginal distribution of X is exponential with \(\lambda=1\)</li>
+                                <li>The marginal distribution of Y is uniform on interval \([0,1]\)</li>
+                                <li>The dependence structure between X and Y is given by a Gaussian copula coefficients \(\rho=0.7\)</li>
+
+                            </ol>
+                            Output this as a scatter plot. Also output histograms of each marginal.
+                        </li>
+                        <li>Generate pairs of random variables (X,Y) such that:
+                            <ol>
+                                <li>The marginal distribution of X is exponential with \(\lambda=2\)</li>
+                                <li>The marginal distribution of Y is exponential with \(\lambda=3\)</li>
+                                <li>The dependence structure between X and Y is given by a Gaussian copula coefficients \(\rho=-0.3\)</li>
+
+                            </ol>
+                            Output this as a scatter plot. Also output histograms of each marginal.
+                        </li>
+
+
+                        <li>Generate pairs of random variables \((X, Y)\) such that: <ol> <li>The marginal distribution of \(X\) is a standard normal distribution.</li> <li>The marginal distribution of \(Y\) follows a Pareto distribution with shape parameter \(\alpha = 2\) and scale parameter \(x_m = 1\).</li> <li>The dependence structure is defined by a Gaussian copula with correlation coefficient \(\rho = -0.5\).</li> </ol> Compute the sample correlation coefficient between \(X\) and \(Y\), and discuss whether it aligns with the specified dependence. </li>
+                        <li>Create pairs \((X, Y)\) where: <ol> <li>\(X\) follows a gamma distribution with shape \(k=2\) and scale \(\theta=2\).</li> <li>\(Y\) follows a logistic distribution with location \(m=0\) and scale \(s=1\).</li> <li>The dependence is modeled using a Gaussian copula with correlation coefficient \(\rho = 0.3\).</li> </ol> Simulate 2,000 pairs and plot the histograms of \(X\) and \(Y\) to verify the marginals. Assess the dependence by calculating Kendall's tau and interpret the result. </li> 
+
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

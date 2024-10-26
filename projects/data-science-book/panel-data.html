@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Confidence Intervals for Parameter Estimates</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Confidence Interval">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to confidence intervals for distribution parameter estimates.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/confidence-interval"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Confidence-Interval">
+                <h1>Confidence Intervals for Parameter Estimates</h1>
+                <h2>Introduction</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/statistics">Statistics</a></li>
+                    <li><a href="./mle.html">MLE</a></li>
+                    <li><a href="./method-of-moments.html">Method of Moments</a></li>
+                </ol>
+                
+                <h3>Introduction</h3>
+                Panel Data refers to datasets that contain observations of multiple entities (such as individuals, firms, countries) over multiple time periods. Unlike purely cross-sectional or time-series data, panel data captures both inter-individual (cross-sectional) and intra-individual (time-series) variations.
+                <h4>Balanced</h4>
+                <ul>
+                    <li>Balanced Panel: Every entity is observed in every time period</li>
+                    <li>Unbalanced Panel: Entities are not observed in all time periods, leading to gaps in the data</li>
+                </ul>
+                <h4>General Structure</h4>
+
+                Panel data has two indices:
+                <ul>
+                    <li>Entity index (i): Denotes the individual units.</li>
+                    <li>Time Index (t): Denotes the time periods.</li>
+                </ul>
+
+                A general panel data model can be expressed as: 
+
+                $$Y_{it}=\alpha_i+\beta X_{it}+\varepsilon_{it}$$
+                <ul>
+                    <li>\(Y_{it}\) is the dependent variable for entity i at time t.</li>
+                    <li>\(\alpha_{i}\) represents entity-specific effects</li>
+                    <li>\(X_{it}\) is a vector of independent variables.</li>
+                    <li>\(\varepsilon_{it}\) is the error term.</li>
+                </ul>
+
+                <h2>Pooled OLS</h2>
+                Pooled OLS assumes no entity-specific effects and is the simplest panel model.
+
+                $$Y_{it}+\beta_{0}+\beta_{1}X_{it}+\varepsilon$$
+
+                <h3>Assumptions</h3>
+                <ul>
+                    <li>No unobserved heterogeneity \((\alpha_i=0)\)</li>
+                    <li>Error terms \(\varepsilon_{it}\) are i.i.d.</li>
+                    <li>No serial correlation or heteroskedasticity</li>
+                </ul>
+
+                <h3>Pros</h3>
+
+                Simplicity and ease of implementation
+
+                <h3>Cons</h3>
+                Biased and inconsistent estimates if unobserved heterogeneity is present and correlated with regressors. 
+
+                <h2>Fixed Effects Model</h2>
+
+                $$Y_{it}=\alpha_i+\beta X_{it}+\varepsilon$$
+
+                <h3>Estimation Methods</h3>
+                <ul>
+                    <li>De-meaning</li>
+                    <li>Dummy Variable Approach: Including entity-specific dummy variables in the regression</li>
+                </ul>
+
+                <h3>Assumptions</h3>
+                <ul>
+                    <li>\(\mathbb{E}[\varepsilon|X_{it},\alpha_i]=0\)</li>
+                    <li>\(\alpha_i\) may be correlated with \(X_{it}\)</li>
+                </ul>
+
+                <h3>Pros</h3>
+                <ul>
+                    <li>Controls for all time-invariant unobserved heterogeneity</li>
+                    <li>Consistent estimates even if \(\alpha_i\) is correlated with regressors.</li>
+                </ul>
+
+                <h3>Cons</h3>
+                <ul>
+                    <li>Cannot estimate the effects of time-invariant variables</li>
+                    <li>Potential loss of degrees of freedom with many entities</li>
+                </ul>
+
+                <h2>Random Effects Model</h2>
+
+                $$Y_{it}=\alpha+\beta X_{it}+u_i +\varepsilon$$
+
+                <h3>Estimation Method</h3>
+                Generalized Least Squares
+
+                <h3>Assumptions</h3>
+                <ul>
+                    <li>\(u_i\) is uncorrelated with \(X_{it}\) across all entities and time periods</li>
+                    <li>\(\mathbb{E}[u_i]=0,\quad \mathbb{E}[\varepsilon_{it}=0\)</li>
+                </ul>
+
+                <h3>Pros</h3>
+                <ul>
+                    <li>More efficient than Fixed Effect Model if the Random Effect assumptions hold</li>
+                    <li>Can estimate time-invariant variables</li>
+                </ul>
+
+                <h3>Cons</h3>
+                <ul>
+                    <li>Biased and inconsistent estimates if \(u_i\) is correlated with regressors</li>
+                </ul>
+
+
+                <h2>Dynamic Panel Models</h2>
+
+                $$Y_{it}=\alpha Y_{it-1}+\beta X_{it}+\varepsilon_{it}$$
+
+                <h3>Estimation Methods</h3>
+                <ul>
+                    <li>Arellano-Bond Estimator: Uses lagged levels as instruments for differenced equations</li>
+                    <li>System Generalized Method of Moments: Combines equations in levels and differences for more efficient estimates</li>
+                </ul>
+                <h3>Assumptions</h3>
+                <ul>
+                    <li>No serial correlation in error terms</li>
+                    <li>Validity of instruments (no correlation with error terms)</li>
+                </ul>
+
+                <h3>Pros</h3>
+                <ul>
+                    <li>Captures dynamic relationships and inertia in the dependent variable</li>
+                    <li>Addresses endogeneity of lagged dependent variables</li>
+                </ul>
+
+                <h3>Cons</h3>
+
+                <ul>
+                    <li>Requires strong instruments, which may lead to finite sample biases</li>
+                    <li>Complex to implement and validate</li>
+                </ul>
+
+
+
+                
+
+                <div id="Exercises">
+                    <h2>Confidence Interval Practice Problems</h2>
+                    <ol>
+                        <li>Derive the score confidence interval for p for a binomial distribution with an unknown parameter p and a known, generic parameter n.</li>
+                        </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

@@ -172,7 +172,7 @@ function drawCDFChart() {
         },
         xaxis: { title: 'Outcomes' },
         yaxis: { title: 'Cumulative Probability', range: [0, 1] },
-        showlegend: true,
+        showlegend: false,
         margin: { t: 50, b: 100, l:40,r:40 },
     };
 
