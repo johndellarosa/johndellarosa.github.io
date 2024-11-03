@@ -3,7 +3,7 @@
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 <url>
 	<loc>https://johndellarosa.github.io/</loc>
-	<lastmod>2024-10-11T13:41:36+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:30+01:00</lastmod>
 	<priority>1.0</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/portrait.jpg</image:loc>
@@ -11,32 +11,32 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/index.html</loc>
-	<lastmod>2024-10-11T13:41:36+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:30+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/table-of-contents</loc>
-	<lastmod>2024-10-11T13:41:36+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:30+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/resume</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:32+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/miscellaneous</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:32+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/biography</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>1.0</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/distribution-library-example-1.png</image:loc>
@@ -74,107 +74,107 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/probability-book/table-of-contents</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/table-of-contents</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Math-Trial</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Volterra-Defense</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Right-Ascension</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.8</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/section-id</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/accuracy-calculator</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/tech-damage-calculator</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/tech-damage-calculator-v2</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/player-stats</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/enemy-stats</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/damage-from-enemies</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/special-attack-calculator</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/experience-to-level</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/rare-enemy-telepiping</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/rare-drop-farming</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/xcom/reaper-banish</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/miscellaneous/options</loc>
-	<lastmod>2024-10-11T13:41:38+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:33+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/introduction</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/probability</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/set-subset.png</image:loc>
@@ -242,7 +242,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/statistics</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/law-of-large-numbers.png</image:loc>
@@ -253,7 +253,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/basic-thermodynamics</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/pendulum-conservation-of-energy.gif</image:loc>
@@ -294,12 +294,12 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/advanced-thermodynamics</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/kinetics-equilibrium</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/rate-law-comparison.png</image:loc>
@@ -319,12 +319,12 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/kinetics-equilibrium-simulator</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/statistical-mechanics</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/boltzmann-distribution-graph.png</image:loc>
@@ -335,7 +335,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/finite-difference</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/euler-method-ode.png</image:loc>
@@ -358,7 +358,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo-pi-animation.gif</image:loc>
@@ -372,12 +372,12 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/protein-biochemistry</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/protein-folding</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/local-minima.png</image:loc>
@@ -391,7 +391,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/nucleic-acids</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/chargaffs-rules.png</image:loc>
@@ -402,7 +402,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/ligand-binding</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/ligand-binding-saturation-plot.png</image:loc>
@@ -419,7 +419,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/michaelis-menten</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/michaelis-menten-graph.png</image:loc>
@@ -460,7 +460,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/stochastic-processes</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/markov-states.png</image:loc>
@@ -504,7 +504,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/diffusion</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/osmosis-simulation.gif</image:loc>
@@ -518,7 +518,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/electrochemistry</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/biophysics-book/hodgkin-huxley.gif</image:loc>
@@ -532,22 +532,22 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/quantum-mechanics</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/glossary</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/monte-carlo-exercises</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/battle-parameter-editor</loc>
-	<lastmod>2024-10-11T13:41:39+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:35+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/pso/images/pso-module-import.png</image:loc>
@@ -576,7 +576,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/first-order</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/differential-equations-book/slope-field.png</image:loc>
@@ -587,7 +587,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/higher-order</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/differential-equations-book/spring-dampening.png</image:loc>
@@ -598,12 +598,12 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/first-order-system-of-equations</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/laplace-transform</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/differential-equations-book/sine-laplace-transform.png</image:loc>
@@ -611,7 +611,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/series-solutions</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/differential-equations-book/harmonic-oscillator-series-approximation.png</image:loc>
@@ -619,7 +619,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/fourier-series</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/differential-equations-book/fourier-series-square-wave.gif</image:loc>
@@ -630,7 +630,7 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/differential-equations-book/other-figures</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/differential-equations-book/runge-kutta-euler-method-comparison.png</image:loc>
@@ -638,136 +638,107 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Math-Trial/Privacy</loc>
-	<lastmod>2024-10-11T13:41:40+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/Volterra-Defense/Privacy</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/Right-Ascension/Privacy</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/table-of-contents</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/kde</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/Volterra-Defense/Privacy</loc>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/compound-poisson</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/introduction</loc>
+	<lastmod>2024-11-03T03:51:36+01:00</lastmod>
 	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/glm</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/marginal-likelihood</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/multivariate-intro</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/distribution-book/elliptical-distribution.png</image:loc>
-	</image:image>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/copula</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
-	<priority>0.6</priority>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/distribution-book/gaussian-copula.png</image:loc>
-	</image:image>
-	<image:image>
-			<image:loc>https://johndellarosa.github.io/projects/distribution-book/t-copula.png</image:loc>
-	</image:image>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/name-generator</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:37+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/shop-tech-probabilities</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:37+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/shop-weapon-specials</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:37+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/pso/dice</loc>
-	<lastmod>2024-10-11T13:41:41+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:37+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/biophysics-book/sde-simulation</loc>
-	<lastmod>2024-10-11T13:41:45+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/probability-book/sigma-algebra</loc>
-	<lastmod>2024-10-11T13:41:46+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/probability-book/measure</loc>
-	<lastmod>2024-10-11T13:41:46+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:40+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/probability-book/set-theory</loc>
-	<lastmod>2024-10-11T13:41:46+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:42+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/probability-book/measure</loc>
+	<lastmod>2024-11-03T03:51:42+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/probability-book/sigma-algebra</loc>
+	<lastmod>2024-11-03T03:51:42+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/parameter-families</loc>
-	<lastmod>2024-10-11T13:41:47+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/bounds</loc>
-	<lastmod>2024-10-11T13:41:47+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:43+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/estimators</loc>
-	<lastmod>2024-10-11T13:41:47+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:43+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/mle-2d</loc>
-	<lastmod>2024-10-11T13:41:47+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/bounds</loc>
+	<lastmod>2024-11-03T03:51:43+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/mle</loc>
-	<lastmod>2024-10-11T13:41:47+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:44+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/mle-2d</loc>
+	<lastmod>2024-11-03T03:51:44+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/confidence-interval</loc>
-	<lastmod>2024-10-11T13:41:48+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:44+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/method-of-moments</loc>
+	<lastmod>2024-11-03T03:51:44+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/empirical-distribution</loc>
-	<lastmod>2024-10-11T13:41:48+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:44+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/projects/distribution-book/brownian-bridge.gif</image:loc>
@@ -777,73 +748,147 @@
 	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/method-of-moments</loc>
-	<lastmod>2024-10-11T13:41:48+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/ks-test</loc>
+	<lastmod>2024-11-03T03:51:44+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/rejection-sampling</loc>
-	<lastmod>2024-10-11T13:41:48+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/copula</loc>
+	<lastmod>2024-11-03T03:51:45+01:00</lastmod>
 	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/distribution-book/gaussian-copula.png</image:loc>
+	</image:image>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/distribution-book/t-copula.png</image:loc>
+	</image:image>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/sampling-discrete</loc>
-	<lastmod>2024-10-11T13:41:48+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/multivariate-intro</loc>
+	<lastmod>2024-11-03T03:51:45+01:00</lastmod>
+	<priority>0.6</priority>
+	<image:image>
+			<image:loc>https://johndellarosa.github.io/projects/distribution-book/elliptical-distribution.png</image:loc>
+	</image:image>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/gradient-descent</loc>
+	<lastmod>2024-11-03T03:51:45+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/ziggurat</loc>
-	<lastmod>2024-10-11T13:41:48+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:45+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/rejection-sampling</loc>
+	<lastmod>2024-11-03T03:51:45+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/multinomial-sampling</loc>
+	<lastmod>2024-11-03T03:51:46+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/sampling-discrete</loc>
+	<lastmod>2024-11-03T03:51:46+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/alias-sampling</loc>
+	<lastmod>2024-11-03T03:51:46+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/extreme-value-theory</loc>
-	<lastmod>2024-10-11T13:41:49+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:46+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/kde</loc>
+	<lastmod>2024-11-03T03:51:46+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/mixture-distributions</loc>
-	<lastmod>2024-10-11T13:41:49+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:46+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/compound-distributions</loc>
-	<lastmod>2024-10-11T13:41:49+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:47+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/compound-poisson</loc>
+	<lastmod>2024-11-03T03:51:47+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/logistic-regression-app</loc>
+	<lastmod>2024-11-03T03:51:47+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/glm</loc>
+	<lastmod>2024-11-03T03:51:47+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/poisson-regression</loc>
+	<lastmod>2024-11-03T03:51:47+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/zero-inflated</loc>
-	<lastmod>2024-10-11T13:41:49+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:48+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
-	<loc>https://johndellarosa.github.io/projects/distribution-book/beta-binomial</loc>
-	<lastmod>2024-10-11T13:41:50+01:00</lastmod>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/marginal-likelihood</loc>
+	<lastmod>2024-11-03T03:51:48+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/bayesian</loc>
-	<lastmod>2024-10-11T13:41:50+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:48+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/beta-binomial</loc>
+	<lastmod>2024-11-03T03:51:48+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/regularization</loc>
-	<lastmod>2024-10-11T13:41:50+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:48+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/gamma-poisson</loc>
-	<lastmod>2024-10-11T13:41:50+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:48+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/kendall</loc>
+	<lastmod>2024-11-03T03:51:49+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/distance-visualizer</loc>
+	<lastmod>2024-11-03T03:51:49+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/dependence</loc>
-	<lastmod>2024-10-11T13:41:50+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:49+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/combinations</loc>
-	<lastmod>2024-10-11T13:41:50+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:49+01:00</lastmod>
 	<priority>0.6</priority>
 	<image:image>
 			<image:loc>https://johndellarosa.github.io/./../biophysics-book/convolution.png</image:loc>
@@ -851,17 +896,37 @@
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/convolution</loc>
-	<lastmod>2024-10-11T13:41:51+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/copula-simulator</loc>
+	<lastmod>2024-11-03T03:51:50+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/random-matrix</loc>
-	<lastmod>2024-10-11T13:41:51+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/metropolis</loc>
+	<lastmod>2024-11-03T03:51:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/distribution-book/metropolis-visualizer</loc>
+	<lastmod>2024-11-03T03:51:50+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://johndellarosa.github.io/projects/biophysics-book/hodgkin-huxley-simulator</loc>
+	<lastmod>2024-11-03T03:51:52+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 <url>
 	<loc>https://johndellarosa.github.io/projects/distribution-book/probability-2</loc>
-	<lastmod>2024-10-11T13:41:52+01:00</lastmod>
+	<lastmod>2024-11-03T03:51:54+01:00</lastmod>
 	<priority>0.6</priority>
 </url>
 </urlset>
