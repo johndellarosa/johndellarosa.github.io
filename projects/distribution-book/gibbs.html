@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Markov Chain Monte Carlo</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Copulas">
+                <h1>Metropolis Algorithm</h1>
+
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./markov-chain.html">Introduction to Markov Chains</a></li>
+                    <li><a href="./markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a></li>
+                </ol>
+            
+            <h2>Gibbs Sampling</h2>
+
+            Gibbs Sampling is particularly useful when direct sampling is challenging due to the intricacies of the joint distribution, but the conditional distributions of each variable are tractable.
+
+            Gibbs sampling generates a sequence of samples by iteratively sampling each variable from its conditional distribution, given the current values of all other variables. This process constructs a Markov chain whose stationary distribution is the joint distribution \(p(X)\).
+
+            <h3>Steps involved</h3>
+            <ul>
+                <li>A target joint distribution \(p(X_1,X_2,\dots,X_n)\) from which we wish to sample</li>
+                <li>The ability to sample from the condition distributions \(p(X_i|X_{-i})\) for each \(i\)</li>
+            </ul>
+
+            <h3>Algorithm</h3>
+            <h4>Initialization</h4>
+            Start with an initial state
+            $$X^{(0)}=(X_{1}^{(0)},X_{2}^{(0)},\dots,X_{n}^{(0)})$$
+            <h4>Iteration</h4>
+            For \(t=1\) to \(N\):
+            <ol>
+                <li>For \(i=1\) to \(n\):
+                    <ul>
+                        <li>Sample \(X_{i}^{(t)}\) from the conditional distribution
+                            \(p(X_i|X_{1}^{(t)},\dots,X_{i-1}^{(t)},X_{i+1}^{(t-1)},\dots,X_{n}^{(t-1)})\)
+
+                        </li>
+                    </ul>
+
+                </li>
+                <li>This results in a new state \(X^{(t)}=(X_{1}^{(t)},X_{2}^{(t)},\dots,X_{n}^{(t)})\)</li>
+
+            </ol>
+
+            <h3>Repeat</h3>
+            Continue the process to generate a sequence of samples \(\left\{X^{(t)}\right\}\)
+
+
+            <h3>Implementation</h3>
+            <ul>
+                <li>Ordering: Variables can be updated sequentially or in random order.</li>
+                <li>Block Sampling: Groups of variables can be updated simulatneously if their joint conditional distribution is known</li>
+            </ul>
+
+            <h2>Example</h2>
+            Suppose we have a bivariate normal distribution with variables \(X\) and \(Y\), mean vector \(\mu=(\mu_X,\mu_Y)\), and covariance matrix:
+
+            $$\Sigma=\begin{bmatrix}\sigma_{X}^{2} & \rho\sigma_X\sigma_Y\\
+            \rho\sigma_X\sigma_Y & \sigma_{Y}^{2}\end{bmatrix}$$
+
+            <h3>Conditional Distributions</h3>
+
+            In a multivariate normal distribution, the conditional distributions are also normal. The conditional distribution of X given Y is:
+
+            $$p(X|Y)=\mathcal{N}(X;\mu_{X|Y},\sigma_{X|Y}^2)$$
+            where
+            <ul>
+                <li>\(\mu_{X|Y}=\mu_{X}+\rho\frac{\sigma_X}{\sigma_Y}(Y-\mu_Y)\)</li>
+                <li>\(\sigma_{X|Y}^2=(1-\rho^2)\sigma_{X}^{2}\)</li>
+            </ul>
+            Similarly for \(Y|X\):
+            <ul>
+                <li>\(\mu_{Y|X}=\mu_{Y}+\rho\frac{\sigma_Y}{\sigma_X}(X-\mu_X)\)</li>
+                <li>\(\sigma_{Y|X}^2=(1-\rho^2)\sigma_{Y}^{2}\)</li>
+            </ul>
+
+            <h3>Algorithm Steps</h3>
+            <h4>Initialization</h4>
+
+            <ul>
+                <li>Choose initial values \(X^{(0)}\) and \(Y^{(0)}\)</li>
+                <li>For simplicity, let \(X^{(0)}=\mu_X\) and \(Y^{(0)}=\mu_Y\)</li>
+            </ul>
+
+            <h4>Iteration</h4>
+            For \(t=1\) to \(N\):
+            <ol>
+                <li>Sample X Given Y
+                    <ol>Compute \(\mu_{X|Y^{(t-1)}}=\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(Y^{(t-1)}-\mu_Y)\)</ol>
+                    <ol>Sample \(X^{(t)}\sim\mathcal{N}(\mu_{X|Y^{(t-1)}},\sigma_{X|Y}^{2})\)</ol>
+                </li>
+                <li>Sample Y Given X
+                    <ol>Compute \(\mu_{Y|X^{(t-1)}}=\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(X^{(t-1)}-\mu_X)\)</ol>
+                    <ol>Sample \(Y^{(t)}\sim\mathcal{N}(\mu_{Y|X^{(t-1)}},\sigma_{Y|X}^{2})\)</ol>
+                </li>
+            </ol>
+
+            <h4>Repeat</h4>
+            Continue for \(N\) iterations.
+
+
+            </div>
+
+
+
+             
+
+
+
+
+                <div id="Exercises">
+                    <h2>Copula Practice Problems</h2>
+
+                    <ol>
+                        
+                    </ol>
+    
+    
+                </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            } 
+            </script>
+</body>
+</html>

@@ -102,6 +102,9 @@
                 </ul>
                 The second and third characteristics imply that \(P_{ij}\leq 1\).
 
+
+                <h4>Absorbing State</h4>
+                An absorbing state \(i\) satisfies \(P_{ii}=1\). Once entered, the chain remains in this state indefinitely.
                 <h2>Intermediate Concepts</h2>
 
                 <h3>Chapman-Kolmogorov Equations</h3>
@@ -168,6 +171,19 @@
 
                 An aperiodic chain is one where all states are aperiodic.
 
+                <h4>Recurrence and Transience</h4>
+
+                <ul>
+                    <li>A state \(i\) is recurrent if, starting from \(i\), the chain is guaranteed to return to \(i\) eventually</li>
+                    <li>A state \(i\) is transient if there is a non-zero probability that the chain will enver return to \(i\) after leaving it.</li>
+                </ul>
+
+                There are two categories of recurrent states:
+
+                <ul>
+                    <li>Positive Recurrent: If the expected return time to state \(i\) is finite.</li>
+                    <li>Null Recurrent: If the expected return time to state \(i\) is infinite, even though the chain returns to \(i\) with probability 1.</li>
+                </ul>
 
                 <h3>Reversible Markov Chains</h3>
 
@@ -180,8 +196,16 @@
                 This implies that the flow of probability from $i$ to $j$ is exactly balanced by the flow from $j$ to $i$.
 
                 A chain is reversible if it satisfies thee detailed balance condition.
+                <h3>Limit Theorems for Markov Chains</h3>
+                <h4>Law of Large Numbers</h4>
 
+                For an ergodic Markov Chain, the time average of a function converges to its expectation under the stationary distribution:
 
+                $$\lim_{n\to\infty}\frac{1}{n}\sum_{t=1}^{n}f(X_t)=\mathbb{E}_{\pi}[f(X)],\quad\text{almost surely}$$
+
+                <h4>Central Limit Theorem</h4>
+
+                $$\sqrt{n}\left(\frac{1}{n}\sum_{i=1}^{n}f(X_t)-\mathbb{E}_{\pi}[f(X)]\right)\overset{d}{\rightarrow}\mathcal{N}(0,\sigma^2)$$
 
                 </div>
 

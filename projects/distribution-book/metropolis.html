@@ -15,7 +15,7 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Markov Chain Monte Carlo</title>
+            <title>Metropolis Algorithm</title>
     
         <!-- Meta tags -->
         
@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
         <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
-        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/copula"/>    
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/metropolis"/>    
         <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
 <!-- 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -57,8 +57,8 @@
 <h3>by John Della Rosa</h3>
         <div id="text-contents" style="width:90%; margin:auto">
             <div id="Copulas">
-                <h1>Markov Chain Monte Carlo</h1>
-                <h2>Introduction to MCMC</h2>
+                <h1>Metropolis Algorithm</h1>
+
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
@@ -66,34 +66,10 @@
                     <li><a href="./probability-2.html">Probability II</a></li>
                     <li><a href="./sampling-continuous.html">Sampling</a></li>
                     <li><a href="./markov-chain.html">Introduction to Markov Chains</a></li>
-               
+                    <li><a href="./markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a></li>
                 </ol>
-
-                <h3>Theory</h3>
-                By constructing a Markov Chain whose stationary distribution is the target distribution, \(\pi\), and simulating the chain for a sufficient number of steps, we can obtain samples from \(\pi\). 
-
-                <h3>Coupling</h3>
-                Coupling involves constructing two copies of a Markov Chain on the same probability space such that they eventually meet and evolve together.
-                <ul>
-                    <li>Coupling Time: The expected time until the two chains meet.</li>
-                </ul>
-
-                <h3>Example: Simple Random Walk</h3>
-                Consider a simple random walk on the integers modulo \(N\) (a circle of \(N\) states):
-                <ul>
-                    <li>State Space: \(S=\{0,1,2,\dots,N-1\}\)</li>
-                    <li>Transition probabilities:
-                        $$P_{i,(i+1) \text{ mod }N}=P_{i,(i-1) \text{ mod }N}=\frac{1}{2}$$
-
-                    </li>
-                    <li>Stationary Distribution: Uniform over \(S\)</li>
-
-                </ul>
-
-                This approximates the uniform distribution over \(S\).
-                
             
-                <h2>Metropolis Algorithm</h2>
+                <h2><a href="./metropolis-visualizer.html">Metropolis Algorithm</a></h2>
             The Metropolis Algorithm is one of the most common MCMC methods. Its primary purpose is to generate a sequence of samples from a target distribution \(\pi(x)\), 
             especially when \(\pi(x)\) is known only up to a normalizing constant or is too complex for direct sampling.
 
@@ -212,9 +188,83 @@
             <ul>
                 <li><strong>Burn-in Period</strong>: Discard the initial \(B\) samples (e.g., first 1,000 iterations) to reduce the influence of the starting value.</li>
                 <li><strong>Thinning (optional)</strong>: To reduce autocorrelation, keep every \(k\)-th sample</li>
-                <li></li>
+   
 
             </ul>
+
+
+    <h2>Metropolis-Hastings</h2>
+            <h3>Introduction</h3>
+While the original Metropolis algorithm uses a symmetric proposal distribution (the probability of proposing a move from state \(x\) to \(y\) is the same as from \(y\) to \(x\)), 
+The Metropolis-Hastings algorithm relaxes this requirement. It introduces an acceptance probability that corrects for the asymmetry, ensuring that the Markov chain still converges to the target distribution.
+
+<h3>Algorithm</h3>
+<h4>Acceptance Probability</h4>
+The acceptance probability (\alpha(x,x')\) is defined as:
+$$\alpha(x,x')=\min\left(1,\frac{\pi(x')q(x|x')}{\pi(x)q(x'|x)}\right)$$
+
+<h4>Initialization</h4>
+Start with an initial state \(x_0\).
+
+<h4>iteration</h4>
+For \(t=0\) to \(N-1\):
+<ol>
+    <li>Proposal: Generate a proposed state \(x'\) from the proposal distribution (q(x'|x_t)\).</li>
+    <li>Acceptance Probability: Compute \(\alpha(x_t,x')\)</li>
+    <li>Acceptance/Rejection:
+        <ol type="a">
+            <li>Generate a uniform random number \(u\sim\mathcal{U}(0,1)\)</li>
+            <li>If \(u\leq\alpha(x_t,x')\), accept the proposal and set \(x_{t+1}=x'\)</li>
+            <li>Else, reject the proposal and set \(x_{t+1}=x_t\)</li>
+        </ol>
+    </li>
+    <li></li>
+</ol>
+<h4>Repeat</h4>
+Repeat: Continue the process to generate a sequence of \(\{x_t\}\)
+
+<h3>Metropolis-Hastings Detailed Balance</h3>
+$$\pi(x)P(x\rightarrow x')=\pi(x')P(x'\rightarrow x)$$
+
+<h3>Example</h3>
+Suppose we want to sample from the target distribution:
+$$\pi(x)=\frac{1}{Z}e^{-\frac{x^2}{2}},\quad x\in\mathbb{R}$$
+Since this is a standard normal distribution, we know the value of \(Z\), but normalization constants aren't important for this algorithm.
+
+<h4>Proposal Distribution</h4>
+We will choose a normal distribution centered at the current state \(x_t\):
+$$q(x'|x_t)=\mathcal{N}(x';x_t,\sigma^2)$$
+where \(\sigma^2\) is the variance of the proposal distribution.
+
+<h4>Algorithm Steps</h4>
+<h5>Initialization</h5>
+Let \(x_0=0\).
+<h5>Iteration</h5>
+For \(t=0\) to \(N-1\):
+<h6>Proposal</h6>
+Sample: \(x'\sim\mathcal{N}(x_t,\sigma^2)\)
+<h6>Acceptance Probability</h6>
+Since \(q(x'|x_t)=q(x_t|x')\) (symmetric proposal), the acceptance probability simplifies to:
+$$\alpha(x_t,x')=\min\left(1,\frac{\pi(x')}{\pi(x_t)}\right)$$
+
+Since \(pi(x)=e^{-\frac{x^2}{2}}\) (ignoring the constant \(Z\)), we have:
+$$\alpha(x_t,x')=\min\left(e^{-\frac{x'^2-x_{t}^2}{2}}\right)$$
+
+<h6>Acceptance/Rejection</h6>
+<ol>
+    <li>Generate \(u\sim\mathcal{U}(0,1)\)</li>
+    <li>If \(u\leq\alpha(x_t,x')\), accept \(x'\) and set \(x_{t+1}=x'\)</li>
+    <li>Else, set \(x_{t+1}=x_t\)</li>
+</ol>
+<h6>Repeat</h6>
+Continue for \(N\) iterations.
+
+<h3>Considerations</h3>
+<h4>Choice of Proposal Distribution</h4>
+A small variance leads to high acceptance rates but slow exploration. A large variance leads to low acceptance rates but can explore the space more quickly.
+
+
+
 
 
             </div>
@@ -230,29 +280,7 @@
                     <h2>Copula Practice Problems</h2>
 
                     <ol>
-                        <li>Generate pairs of random variables (X,Y) such that:
-                            <ol>
-                                <li>The marginal distribution of X is exponential with \(\lambda=1\)</li>
-                                <li>The marginal distribution of Y is uniform on interval \([0,1]\)</li>
-                                <li>The dependence structure between X and Y is given by a Gaussian copula coefficients \(\rho=0.7\)</li>
-
-                            </ol>
-                            Output this as a scatter plot. Also output histograms of each marginal.
-                        </li>
-                        <li>Generate pairs of random variables (X,Y) such that:
-                            <ol>
-                                <li>The marginal distribution of X is exponential with \(\lambda=2\)</li>
-                                <li>The marginal distribution of Y is exponential with \(\lambda=3\)</li>
-                                <li>The dependence structure between X and Y is given by a Gaussian copula coefficients \(\rho=-0.3\)</li>
-
-                            </ol>
-                            Output this as a scatter plot. Also output histograms of each marginal.
-                        </li>
-
-
-                        <li>Generate pairs of random variables \((X, Y)\) such that: <ol> <li>The marginal distribution of \(X\) is a standard normal distribution.</li> <li>The marginal distribution of \(Y\) follows a Pareto distribution with shape parameter \(\alpha = 2\) and scale parameter \(x_m = 1\).</li> <li>The dependence structure is defined by a Gaussian copula with correlation coefficient \(\rho = -0.5\).</li> </ol> Compute the sample correlation coefficient between \(X\) and \(Y\), and discuss whether it aligns with the specified dependence. </li>
-                        <li>Create pairs \((X, Y)\) where: <ol> <li>\(X\) follows a gamma distribution with shape \(k=2\) and scale \(\theta=2\).</li> <li>\(Y\) follows a logistic distribution with location \(m=0\) and scale \(s=1\).</li> <li>The dependence is modeled using a Gaussian copula with correlation coefficient \(\rho = 0.3\).</li> </ol> Simulate 2,000 pairs and plot the histograms of \(X\) and \(Y\) to verify the marginals. Assess the dependence by calculating Kendall's tau and interpret the result. </li> 
-
+                        
                     </ol>
     
     
