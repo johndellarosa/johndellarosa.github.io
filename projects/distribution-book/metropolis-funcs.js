@@ -73,7 +73,8 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
     Plotly.purge(traceplotDiv);
     Plotly.purge(autocorrDiv);
     Plotly.purge(qqplotDiv);
-
+    let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+  
     const result = metropolisAlgorithm(sigma, numIterations, x0);
     const samples = result.samples;
     const acceptanceRate = result.acceptanceRate;
@@ -110,6 +111,7 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
                 width: 1
             }
         },
+        showscale:false,
         opacity: 0.5,
         name: 'Sampled Distribution'
     };
@@ -120,19 +122,32 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
         mode: 'lines',
         line: {
             color: 'rgb(31, 119, 180)',
-            width: 2
+            width: isMobile? 0.5:1,
         },
+        showscale:false,
         name: 'Target Distribution'
     };
 
     const histogramData = [histogramTrace, targetTrace];
 
     const histogramLayout = {
-        title: 'Histogram of Sampled Values',
+        title:{
+            text:'Histogram of Sampled Values',
+            font:{size:12}
+        } ,
         xaxis: { title: 'x' },
         yaxis: { title: 'Probability Density' },
         bargap: 0.05,
-        hovermode: 'closest'
+        hovermode: 'closest',
+        autosize:true,
+        margin:{
+          l:isMobile? 50:70,
+          r:isMobile? 20:40,
+        },
+        legend:{
+            display:false
+        },
+        showlegend:false,
     };
 
     Plotly.newPlot('histogram', histogramData, histogramLayout, { responsive: true });
@@ -146,7 +161,7 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
         mode: 'lines',
         line: {
             color: 'rgb(255, 127, 14)',
-            width: 1
+            width: isMobile? 0.25:1,
         },
         name: 'Trace Plot'
     };
@@ -154,10 +169,19 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
     const tracePlotData = [tracePlotTrace];
 
     const tracePlotLayout = {
-        title: 'Trace Plot of Samples Over Iterations',
+        title: {text:'Trace Plot of Samples Over Iterations',
+            font:{
+                size:12,
+            }
+        },
         xaxis: { title: 'Iteration' },
         yaxis: { title: 'Sample Value' },
-        hovermode: 'closest'
+        hovermode: 'closest',
+        autosize:true,
+        margin:{
+          l:isMobile? 50:70,
+          r:isMobile? 20:40,
+        },
     };
 
     Plotly.newPlot('traceplot', tracePlotData, tracePlotLayout, { responsive: true });
@@ -181,7 +205,7 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
         mode: 'lines',
         line: {
             color: 'rgb(31, 119, 180)',
-            width: 2
+            width: isMobile? 1:2,
         },
         name: 'Full Data'
     };
@@ -192,7 +216,7 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
         mode: 'lines',
         line: {
             color: 'rgb(255, 127, 14)',
-            width: 2,
+            width: isMobile? 1:2,
             dash: 'dash'
         },
         name: 'Thinned Data'
@@ -201,11 +225,18 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
     const autocorrData = [autocorrTraceFull, autocorrTraceThinned];
 
     const autocorrLayout = {
-        title: 'Autocorrelation Function',
+        title: {text:'Autocorrelation Function',
+            font:{size:12,}
+        },
         xaxis: { title: 'Lag' },
         yaxis: { title: 'Autocorrelation' },
         hovermode: 'closest',
-        legend: { x: 0.1, y: 0.9 }
+        legend: { x: 0.1, y: 0.9 },
+        autosize:true,
+        margin:{
+          l:isMobile? 50:70,
+          r:isMobile? 20:40,
+        },
     };
 
     Plotly.newPlot('autocorrelation', autocorrData, autocorrLayout);
@@ -244,11 +275,18 @@ function runMetropolisAlgorithm(sigma, numIterations, x0, burnIn, thin) {
     const qqData = [qqTrace, qqLine];
 
     const qqLayout = {
-        title: 'QQ Plot of Thinned Samples vs. Standard Normal',
+        title: {text:'QQ Plot of Thinned Samples vs. Standard Normal',
+            font:{size:12}
+        },
         xaxis: { title: 'Theoretical Quantiles' },
         yaxis: { title: 'Sample Quantiles' },
         hovermode: 'closest',
-        showlegend: false
+        showlegend: false,
+        autosize:true,
+        margin:{
+          l:isMobile? 50:70,
+          r:isMobile? 20:40,
+        },
     };
 
     Plotly.newPlot('qqplot', qqData, qqLayout, { responsive: true });

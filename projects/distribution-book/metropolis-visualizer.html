@@ -23,7 +23,7 @@
         
         <meta name="keywords" content="Copula, Probability Integral Transform">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        <meta name="description" content="Metropolis Algorithm visualizer.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -49,6 +49,10 @@ body {
 h1 {
     text-align: center;
     color: #444;
+}
+
+label{
+    margin-bottom: 10px;
 }
 
 .controls {
@@ -107,7 +111,13 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    width:100%;
 }
+
+#histogram, #traceplot, #autocorrelation, #qqplot{
+    width:100%;
+}
+
 /* 
 #histogram, #traceplot, #autocorrelation, #qqplot {
     width: 100%;
@@ -151,11 +161,11 @@ h1 {
                 <div class="controls">
                     <div class="control-group">
                         <label for="sigma">Proposal Std Dev (\( \sigma \)):</label>
-                        <input type="number" id="sigma" value="2" step="0.1" min="0.1">
+                        <input type="number" id="sigma" value="2" step="0.1" min="0.1" inputmode="decimal">
                     </div>
                     <div class="control-group">
                         <label for="iterations">Number of Iterations:</label>
-                        <input type="number" id="iterations" value="5000" step="100" min="100">
+                        <input type="number" id="iterations" value="5000" step="100" min="100" inputmode="numeric">
                     </div>
                     <div class="control-group">
                         <label for="x0">Starting Point (\( x_0 \)):</label>
@@ -163,11 +173,11 @@ h1 {
                     </div>
                     <div class="control-group">
                         <label for="burnIn">Burn-in Period:</label>
-                        <input type="number" id="burnIn" value="100" step="10" min="0">
+                        <input type="number" id="burnIn" value="100" step="10" min="0" inputmode="numeric">
                     </div>
                     <div class="control-group">
                         <label for="thin">Thinning Interval:</label>
-                        <input type="number" id="thin" value="5" step="1" min="1">
+                        <input type="number" id="thin" value="5" step="1" min="1" inputmode="numeric">
                     </div>
                     <button id="runButton">Run Metropolis Algorithm</button>
                 </div>

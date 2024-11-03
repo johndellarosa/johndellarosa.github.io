@@ -21,7 +21,7 @@
         
         <meta name="keywords" content="Copula, Probability Integral Transform">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to copulas, probability integral transforms, multivariate distributions.">
+        <meta name="description" content="Introduction to the Metropolis Algorithm for sampling.">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -148,7 +148,7 @@
             <h5>Compute the Acceptance Probability</h5>
             Since the proposal distribution is symmetric, \(q(x^*|x_t)=q(x_t|x^*)\), so the acceptance probability simplifies to:
 
-            $$\alpha=\min\left(1,\frac{\pi(x^*)}{\pi(x_t)})$$
+            $$\alpha=\min\left(1,\frac{\pi(x^*)}{\pi(x_t)}\right)$$
 
             Compute the ratio of target densities:
 
@@ -277,7 +277,7 @@ A small variance leads to high acceptance rates but slow exploration. A large va
 
 
                 <div id="Exercises">
-                    <h2>Copula Practice Problems</h2>
+                    <h2>Metropolis Algorithm Practice Problems</h2>
 
                     <ol>
                         
