@@ -128,8 +128,39 @@
                 <div id="Exercises">
                     <h2>Marginal Likelihood Practice Problems</h2>
                     <ol>
-                        
-                        </ol>
+                        <li>
+                            Consider a set of \( n \) independent observations \( x_1, x_2, \ldots, x_n \) drawn from a Gaussian distribution 
+                            \( N(\mu, \sigma^2) \). The marginal likelihood for the data is given by:
+                            \[
+                            p(x_1, x_2, \ldots, x_n | \sigma^2) = \int_{-\infty}^\infty p(x_1, x_2, \ldots, x_n | \mu, \sigma^2) p(\mu) \, d\mu
+                            \]
+                            Assume a prior \( \mu \sim N(0, \tau^2) \).<br>
+                            - Derive the marginal likelihood expression in terms of \( \sigma^2 \), \( \tau^2 \), and the data.
+                        </li>
+                        <li>
+                            For \( x_i \sim \text{Bernoulli}(\theta) \), consider the dataset \( \{1, 0, 1, 1\} \). Assume a Beta prior \( \theta \sim \text{Beta}(2, 2) \).<br>
+                            - Compute the marginal likelihood:
+                            \[
+                            p(x_1, x_2, x_3, x_4) = \int_0^1 p(x_1, x_2, x_3, x_4 | \theta) p(\theta) \, d\theta
+                            \]
+                            - Evaluate the integral analytically.
+                        </li>
+                        <li>
+                            Let \( x_i \sim \text{Exponential}(\lambda) \) and consider the dataset \( \{1.2, 0.8, 1.5, 2.0\} \). Assume a prior \( \lambda \sim \text{Gamma}(3, 2) \).<br>
+                            - Compute the marginal likelihood:
+                            \[
+                            p(x_1, x_2, x_3, x_4) = \int_0^\infty p(x_1, x_2, x_3, x_4 | \lambda) p(\lambda) \, d\lambda
+                            \]
+                            - Simplify and compute the integral numerically if necessary.
+                        </li>
+                        <li>
+                            You are comparing two models for a dataset \( \{2.3, 1.8, 2.7\} \):<br>
+                            - Model 1: \( x_i \sim \text{Normal}(\mu, 1) \), with \( \mu \sim N(0, 5) \).<br>
+                            - Model 2: \( x_i \sim \text{Laplace}(\mu, b) \), with \( \mu \sim N(0, 5) \) and \( b = 1 \).<br>
+                            - Derive the marginal likelihood for each model.<br>
+                            - Which model has a higher marginal likelihood, and what does this indicate about the fit to the data?
+                        </li>
+                    </ol>
     
     
                 </div>

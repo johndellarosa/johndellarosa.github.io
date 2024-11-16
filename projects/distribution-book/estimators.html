@@ -63,6 +63,7 @@
                 <h3>Recommended Prerequesites</h3>
                 <ol>
                     <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./bounds.html">Bounds and Limits</a></li>
                 </ol>
                 
                 <h3>Introduction</h3>
@@ -94,6 +95,11 @@
 
                 has bias \(\frac{n-1}{n}\sigma^2\), making it a biased estimator of the population variance. 
 
+                <h4>Asymptotic Unbiasedness</h4>
+                AN estimator is asymptotically unbiased if 
+                $$\lim_{n\to\infty}\text{Bias}(\hat{\theta}_n)=0$$
+
+
                 <h4>Variance of an Estimator</h4>
                 The variance of an estimator measures the expected deviation of the estimator from its expected value. The variance of \(\hat{\theta}^2\) is given by:
                 $$\text{Var}(\hat{\theta})=\mathbb{E}[(\hat{\theta}-\mathbb{E}[\hat{\theta}])^2]$$
@@ -106,14 +112,21 @@
                 <h3>Consistency</h3>
                 Formally stated, consistency is that the probability that the bias deviates from the true parameter by a given amount goes to 0 as the sample sizes goes to infinity:
 
-                $$\lim_{n\rightarrow\infty}P(|\hat{\theta}-\theta|>\varepsilon)=0$$
-
+                $$\lim_{n\rightarrow\infty}P(|\hat{\theta}_n-\theta|\geq\varepsilon)=0$$
+                This means that the probability that \(\hat{\theta}_n\) deviates from \(\theta\) by more than \(\varepsilon\) approaches zero as n increases. 
                 The previously mentioned biased sample variance estimator is consistent. 
 
-                
+                <h4>Weak Consistency</h4>
+                Convergence in probability to \(\theta\)
+
+                <h4>Strong Consistency</h4>
+                Almost sure convergence to \(\theta\).
+
                 <h2>Sufficient Statistics</h2>
 
-                
+                An estimator is sufficient if it captures all the information in the data relevant to estimating the parameter. Formally, a statistic 
+                \(T(X_1,X_2,\dots,X_n)\) is sufficient for \(\theta\) if the conditional distribution of the sample given \(T\) does not depend on \(\theta\).
+
 
 
                 <h2>Estimation methods</h2>
@@ -124,6 +137,18 @@
                 <h3>Maximum Likelihood Estimation</h3>
                 MLE estimates by trying to find the parameter values that maximize the likelihood function, which represents the probability of observing the given sample. 
                 
+                <h3>Cramer-Rao Lower Bound</h3>
+
+                The Cramer-Rao Lower Bound (CRLB) provides a lower bound on the variance of unbiased estimators:
+
+                $$\text{Var}(\hat{\theta}_n)\geq\frac{1}{n\mathcal{I}(\theta)}$$
+
+                where \(\mathcal{I}(\theta)\) is the Fisher Information:
+
+                $$\mathcal{I}(\theta)=\mathbb{E}\left[(\frac{\partial}{\partial\theta}\log f(X;\theta))^2\right]$$
+
+                An estimator that achieves the CRLB is said to be efficient.
+
                 </div>
 
 

@@ -324,7 +324,28 @@ While it's apparent that Newton's Method takes fewer steps than Gradient Descent
                     <h2>Multivariate Optimization Practice Problems</h2>
 
                     <ol>
-
+                        <li>
+                            Minimize the function \( f(x, y) = x^2 + y^2 + 2xy - 4x - 6y + 9 \).<br>
+                            - Find the critical points by solving \( \nabla f(x, y) = 0 \).<br>
+                            - Classify the critical points as minima, maxima, or saddle points using the Hessian matrix.
+                        </li>
+                        <li>
+                            Consider the likelihood function for a bivariate normal distribution \( f(x, y | \mu_x, \mu_y, \sigma_x, \sigma_y, \rho) \):
+                            \[
+                            f(x, y) = \frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}} 
+                            \exp\left( -\frac{1}{2(1-\rho^2)} \left[ \frac{(x-\mu_x)^2}{\sigma_x^2} + \frac{(y-\mu_y)^2}{\sigma_y^2} 
+                            - 2\rho \frac{(x-\mu_x)(y-\mu_y)}{\sigma_x\sigma_y} \right] \right).
+                            \]
+                            - Write the log-likelihood function for a dataset \( \{(x_i, y_i)\}_{i=1}^n \).
+                            - Derive the equations for \( \mu_x, \mu_y, \sigma_x, \sigma_y, \) and \( \rho \) that maximize the log-likelihood.
+                        </li>
+                        <li>
+                            The negative log-likelihood for a bivariate exponential distribution with parameters \( \lambda_1 \) and \( \lambda_2 \) is given by:
+    \[
+    -\mathcal{L}(\lambda_1, \lambda_2) = \sum_{i=1}^n \left[ \lambda_1 x_i + \lambda_2 y_i - \ln(\lambda_1) - \ln(\lambda_2) \right].
+    \]
+    - Find the maximum likelihood estimates \( \hat{\lambda}_1 \) and \( \hat{\lambda}_2 \).
+                        </li>
                     </ol>
     
     
