@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Compilation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to distribution distance metrics">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/c-book/compiling"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">C in Python Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Introduction">
+                <h1>Introduction</h1>
+                <h2>Basic Compilation</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+
+                <h3>Automatic Memory Management</h3>
+               
+                When you create a ctypes object, Python will track it just like any other object. However, if you are working with external memory (allocated via C libraries), you may need to manually free that memory. When dealing with a C function that returns a pointer or requires manually allocated memory, you need to take care of memory allocation and deallocation yourself.
+
+                <pre><code>
+                    import ctypes
+
+                    # Define a simple struct with ctypes
+                    class Point(ctypes.Structure):
+                        _fields_ = [("x", ctypes.c_int),
+                                    ("y", ctypes.c_int)]
+
+                    # Create an instance of the struct
+                    p = Point(10, 20)
+
+                    # Python will handle the memory cleanup automatically when the object goes out of scope
+
+                </code></pre>
+
+                <h3>Manual Memory Management</h3>
+
+                ctypes provides several ways to allocate memory manually, such as using ctypes.create_string_buffer or ctypes.malloc.
+
+                <h4>create_string_buffer</h4>
+
+                This function creates a mutable buffer in memory, which is typically used for handling C-style strings.
+
+
+                <pre><code>
+                    # Create a buffer of 20 bytes
+                    buffer = ctypes.create_string_buffer(20)
+
+                    # Fill the buffer with data
+                    buffer.value = b"Hello, ctypes!"
+
+                    # Print the buffer contents
+                    print(f"Buffer contents: {buffer.value}")
+
+                </code></pre>
+
+                <h4>malloc</h4>
+
+                To manually allocate memory in a more low-level way, you can use ctypes.malloc to allocate memory blocks. However, you need to manually free this memory once you're done using it.
+
+                <pre><code>
+                    # Allocate a block of memory (e.g., for an integer)
+                    ptr = ctypes.cast(ctypes.create_string_buffer(4), ctypes.POINTER(ctypes.c_int))
+
+                    # You can now use `ptr` as a pointer to an integer
+
+                    # Freeing memory: In Python, ctypes objects will be cleaned up by GC, but external memory needs manual cleanup
+
+                </code></pre>
+
+                <h4>Manually ALlocating and Freeing Memory</h4>
+
+                In cases where you're allocating memory manually (e.g., using malloc or create_string_buffer), you must ensure that the memory is properly freed to prevent memory leaks. While Python’s GC automatically handles Python objects, memory allocated by C functions requires explicit management. 
+
+                To manage this, you can use the ctypes function ctypes.free():
+
+                <pre><code>
+                    import ctypes
+
+                    # Allocate memory manually with ctypes (simulating malloc in C)
+                    ptr = ctypes.cast(ctypes.create_string_buffer(4), ctypes.POINTER(ctypes.c_int))
+
+                    # Use the pointer
+                    ptr.contents.value = 42
+                    print(f"Value at pointer: {ptr.contents.value}")
+
+                    # Manually free the memory (this is necessary when using malloc-style allocation)
+                    ctypes.free(ptr)
+                </code></pre>
+
+
+                </div>
+
+
+
+             
+
+
+
+
+        </div>
+
+</body>
+</html>

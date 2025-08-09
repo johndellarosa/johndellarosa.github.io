@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Distribution E-book Table of Contents</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="probability, measure, sigma, textbook">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Probability textbook">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/distribution-book/table-of-contents"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        <!-- </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+                padding: 20px;
+            }
+            .toc-container {
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                max-width: 800px;
+                margin: auto;
+            }
+            .toc-container ol {
+                list-style-type: decimal;
+                padding-left: 20px;
+            }
+            .toc-container li {
+                margin: 10px 0;
+            }
+            .toc-container a {
+                color: #007bff;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            .toc-container a:hover {
+                text-decoration: underline;
+            }
+            .toc-container a:visited {
+                color: #6c757d; /* A darker gray color to indicate visited links */
+            }
+            .toc-container h2 {
+                margin-top: 30px;
+                border-bottom: 2px solid #007bff;
+                padding-bottom: 5px;
+                font-size: 1.2em;
+                color: #333;
+            }
+            /* Nested ordered list for subitems */
+            .toc-container ol ol {
+                list-style-type: lower-alpha;
+                padding-left: 20px;
+            }
+    
+            /* For larger screen responsiveness */
+            @media (min-width: 768px) {
+                .toc-container {
+                    padding: 40px;
+                }
+            }
+        </style>
+
+
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h1><a href= "table-of-contents.html">Distribution Textbook (Work in Progress)</a></h1>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Table-of-Contents">
+
+              <!-- <img src="cover-image.png" alt="Cover Image" style="margin:auto; display: block;  width:50%" /> -->
+
+              <div class="toc-container">
+                <h2>Part 0: Introduction</h2>
+                <ol>
+                    <li><a href="./introduction">Introduction</a></li>
+                </ol>
+                
+                <h2>Part I: Foundations</h2>
+                <ol>
+                    <li><a href="./compiling.html">Compiling</a></li>
+                    <li><a href="./argtypes-restype.html">artypes and restype</a></li>
+                    <li><a href="./memory-management.html">Memory Management</a></li>
+                    <li><a href="./structs.html">Structs</a></li>
+                                        <li><a href="./cpp-ctypes.html">C++ in ctypes</a></li>
+                </ol>
+                
+                <h2>Part II: Estimation</h2>
+                <ol>
+                    <li><a href="./numpy-ctypeslib.html">Numpy ctypeslib</a></li>
+                    <li><a href="./avx2.html">Bounds</a></li>
+                    <li><a href="./estimators.html">Estimators</a></li>
+                    <li><a href="./mle.html">Maximum Likelihood Estimation</a>
+                        <ol>
+                            <li><a href="./mle-2d.html">2-D MLE Simulation</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./method-of-moments.html">Method of Moments</a></li>
+                    <li><a href="./confidence-interval.html">Confidence Interval for Parameter Estimates</a></li>
+                    <li><a href="./empirical-distribution.html">Empirical Distribution Function</a>
+                        <ol>
+                            <li><a href="./ks-test.html">KS Test Simulator</a></li>
+                            <li><a href="./ks-test-two-sample.html">Two Sample KS Test Simulator</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./goodness-of-fit.html">Goodness of Fit</a></li>
+                </ol>
+        
+                <h2>Part III: Parallel</h2>
+                <ol>
+                    <li><a href="./avx2.html">AVX2</a></li>
+                    <li><a href="./multivariate-optimization.html">Multivariate Optimization</a>
+                        <ol>
+                            <li><a href="./gradient-descent.html">Gradient Descent Simulation</a></li>
+                        </ol>
+                    </li>
+                </ol>
+        
+                <h2>Part IV: Sampling</h2>
+                <ol>
+                    <li><a href="./sampling-continuous.html">Sampling (Continuous Distributions)</a>
+                        <ol>
+                            <li><a href="./rejection-sampling.html">Rejection Sampling Simulation</a></li>
+                            <li><a href="./ziggurat.html">Ziggurat Sampling Simulation</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./sampling-discrete.html">Sampling (Discrete)</a>
+                    
+                        <ol>
+                            <li><a href="./multinomial-sampling.html">Multinomial Sampling Simulation</a></li>
+
+                            <li><a href="./alias-sampling.html">Alias Sampling Simulation</a></li>
+                        </ol>
+                    </li>
+                </ol>
+        
+                <h2>Part V: Building More Complex Distributions</h2>
+                <ol>
+                    <li><a href="./extreme-value-theory.html">Extreme Value Theory</a></li>
+                    <li><a href="./mixture-distributions.html">Mixture Distributions</a></li>
+                    <li><a href="./kde.html">Kernel Density Estimation</a>
+                        <ol>
+                            <li><a href="./kde-2d.html">2-D KDE Simulation</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./compound-distributions.html">Compound Distributions</a></li>
+                    <li><a href="./compound-poisson.html">Compound Poisson Distributions</a></li>
+                    <li><a href="./glm.html">Generalized Linear Models (GLM)</a>
+                        <ol>
+                            <li><a href="./logistic-regression-app.html">Logistic Regression Visualizer</a></li>
+                            <li><a href="./poisson-regression.html">Poisson Regression Visualizer</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./zero-inflated.html">Modeling Zero-Inflated Data</a></li>
+                </ol>
+        
+                <h2>Part VI: Bayesian Methods</h2>
+                <ol>
+                    <li><a href="./marginal-likelihood.html">Marginal Likelihood</a></li>
+                    <li><a href="./bayesian.html">Bayesian Inference</a>
+                        <ol>
+                            <li><a href="./beta-binomial.html">Beta-Binomial Simulation</a></li>
+                            <li><a href="./gamma-poisson.html">Gamma-Poisson Simulation</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./regularization.html">Regularization</a></li>
+                </ol>
+        
+                <h2>Part VII: Multivariate</h2>
+                <ol>
+                    <li><a href="./multivariate-intro.html">Introduction to Multivariate Distributions</a>
+                        <ol>
+                            <li><a href="./multivariate-simulator.html">Multivariate Distribution Visualizer</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./distribution-distance.html">Distribution Distance</a>
+                        <ol>
+                            <li><a href="./distance-visualizer.html">Distribution Distance Visualizer</a></li>
+                            
+                        </ol>
+                    </li>
+                    <li><a href="./dependence.html">Dependence</a>
+                        <ol>
+                            <li><a href="./kendall.html">Kendall's Tau Visualizer</a></li>
+                            
+                        </ol>
+                    </li>
+                    <li><a href="./combinations.html">Combinations of Random Variables</a>
+                        <ol>
+                            <li><a href="./convolution.html">Convolution Visualizer</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./copula.html">Copula</a>
+                        <ol>
+                            <li><a href="./copula-simulator.html">Copula Visualizer</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./random-matrix.html">Random Matrices</a></li>
+                </ol>
+                <h2>Markov Chain Monte Carlo</h2>
+                <ol>
+                    <li><a href="./markov-chain.html">Introduction to Markov Chains</a></li>
+                    <li><a href="./markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a></li>
+                    <li><a href="./metropolis.html">Metropolis Algorithm</a>
+                        <ol>
+                            <li><a href="./metropolis-visualizer.html">Metropolis Visualizer</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="./gibbs.html">Introduction to Gibbs Sampling</a>
+                        <ol>
+                            <li><a href="./gibbs-visualizer.html">Gibbs Visualizer</a></li>
+                        </ol>
+                    </li>
+                    
+                    
+                </ol>
+
+                <h2>Part VIII: Other</h2>
+                <ol>
+                    <li><a href="./../biophysics-book/stochastic-processes.html">Stochastic Processes</a></li>
+                </ol>
+            </div>
+<br><br>
+                <h2>Help Support this Project</h2>
+                <h3>Reach Support</h3>
+                Sharing and linking to this textbook helps drive traffic to the website, which in turn helps out the project. 
+                Any advertisement is greatly appreciated!
+
+                <h3><a href="https://www.paypal.com/donate/?business=2UK3653ZA5PCE&no_recurring=0&item_name=Donations+help+me+provide+content+and+are+greatly+appreciated%21&currency_code=USD">Monetary Support</a></h3>
+                This textbook is currently just an effort by me. 
+                You can donate through <a href="https://www.paypal.com/donate/?business=2UK3653ZA5PCE&no_recurring=0&item_name=Donations+help+me+provide+content+and+are+greatly+appreciated%21&currency_code=USD">Paypal</a> if you wish to support the project. 
+                Donations help me continue to provide content since the content is intended to be free and accessible. 
+                Any amount is greatly appreciated.
+                <h3>Content Support</h3>
+                Two major limitations to this project are:
+                <ol>
+                    <li>Limits to the author's knowledge</li>
+                    <li>Limited figures and diagrams</li>
+                </ol>
+                If you wish to help flesh out the content in this eTextbook, please get in contact with the main author.
+                <!-- <a href= "./Combined.html">Combined version</a> -->
+                <h2>Contact the Author</h2>
+                The best way to reach out to me is on <a href="https://www.linkedin.com/in/johndellarosa/">Linkedin</a>.
+            </div>
+
+        </div>
+</body>
+</html>

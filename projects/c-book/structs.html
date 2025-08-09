@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Structs</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to distribution distance metrics">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/c-book/argtypes-restype"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">C in Python Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Introduction">
+                <h1>Structs</h1>
+                <h2>Introduction</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+                
+                
+                <p>Structs are a way of grouping related data together into one object, similar to classes in Python (and C++).</p>
+
+                Let's say that we have struct defined in C as follows:
+                <pre><code class="language-c">
+                    struct Point {
+                        int x;
+                        int y;
+                    };
+                </code></pre>
+
+                We can represent this struct in Python using ctypes as follows:
+                <pre><code class="language-python">
+                    from ctypes import Structure, c_int
+
+                    class Point(Structure):
+                        _fields_ = [("x", c_int), ("y", c_int)]
+                
+                p = Point(10, 20)
+                </code></pre>
+
+
+                <h3>Passing Structs to and from C Functions</h3>
+
+                Let's expand our C code to include a function which takes a struct as an argument:
+                
+                <pre><code class="language-c">
+                    #include &lt;stdio.h&gt;
+
+                    struct Point {
+                        int x;
+                        int y;
+                    };
+
+                    void modify_point(struct Point* p, int new_x, int new_y) {
+                        p->x = new_x;
+                        p->y = new_y;
+                    }
+                </code></pre>
+
+                Compile this code into a DLL, which we will call my_struct.dll.
+
+                <pre><code>
+                    import ctypes
+
+                    # Define the struct using ctypes
+                    class Point(ctypes.Structure):
+                        _fields_ = [("x", ctypes.c_int),
+                                    ("y", ctypes.c_int)]
+
+                    # Load the C library
+                    my_functions = ctypes.CDLL(r'.\my_struct.dll')  # Adjust the path as necessary
+
+                    # Set up the function argument and return types
+                    my_functions.modify_point.argtypes = [ctypes.POINTER(Point), ctypes.c_int, ctypes.c_int]
+                    my_functions.modify_point.restype = None
+
+                    # Create an instance of the struct
+                    p = Point(10, 20)
+                    print(f"Before modify_point: ({p.x}, {p.y})")
+
+                    # Call the C function
+                    my_functions.modify_point(ctypes.byref(p), 25, 30)
+
+                    # Print the modified values
+                    print(f"After modify_point: ({p.x}, {p.y})")
+                </code></pre>
+
+
+                <h3>Structs with Arrays and Pointers</h3>
+
+                <pre><code>
+                    struct ArrayPoint {
+                        int x;
+                        int y;
+                        int data[5];  // Array of 5 integers
+                    };
+
+                    // Function to modify the array inside the struct
+                    void modify_array(struct ArrayPoint* ap) {
+                        for (int i = 0; i &lt; 5; i++) {
+                            ap->data[i] *= 2;  // Multiply each element of the array by 2
+                        }
+                    }
+                </code></pre>
+
+                <pre><code>
+                    import ctypes
+
+
+                    class ArrayPoint(ctypes.Structure):
+                        _fields_ = [("x", ctypes.c_int),
+                                    ("y", ctypes.c_int),
+                                    ("data", ctypes.c_int * 5)]  # Array of 5 integers
+
+                    my_functions = ctypes.CDLL(r'.\my_struct_2.dll')  # Adjust the path as necessary
+                    my_functions.modify_array.argtypes = [ctypes.POINTER(ArrayPoint)]
+                    my_functions.modify_array.restype = None
+
+                    # Create an instance of the struct
+                    ap = ArrayPoint(10, 20, (1, 2, 3, 4, 5))
+
+                    # Print original data
+                    print(f"Original ArrayPoint data: {ap.data[:]}")
+
+                    # Call the C function to modify the array
+                    my_functions.modify_array(ctypes.byref(ap))
+
+                    # Print the modified data
+                    print(f"Modified ArrayPoint data: {ap.data[:]}")
+                </code></pre>
+
+
+                </div>
+
+
+
+             
+
+
+
+
+        </div>
+
+</body>
+</html>

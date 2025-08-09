@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Compilation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to distribution distance metrics">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/c-book/compiling"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">C in Python Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Introduction">
+                <h1>Introduction</h1>
+                <h2>Basic Compilation</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+
+                <h3>Recommended Software</h3>
+                Let's start by writing a simple C script that we will compile into a DLL. This C script will include a basic function that adds two integers.
+
+Create a file named my_functions.c with the following content:
+
+                <pre>
+                <code>
+                    #include <stdio.h>
+
+                    // Function to add two integers
+                    int add(int a, int b) {
+                        return a + b;
+                    }
+                </code>
+                </pre>
+                
+                Inside the terminal, navigate to the directory where you saved my_functions.c and compile it into a shared library (DLL) using the following command:
+
+                <pre>
+                <code>
+                    gcc -shared -o my_functions.dll my_functions.c
+                </code>
+                </pre>
+
+                This command compiles my_functions.c into a shared library named my_functions.dll. The -shared flag tells GCC to create a shared library, and the -o flag specifies the output file name.
+
+                <h4>Troubleshooting</h4>
+
+
+
+
+
+                Now, we can use this DLL in Python using the ctypes library. Create a Python script named use_my_functions.py (name doesn't have to be the same as the c file) with the following content:
+
+                <pre>
+                <code>
+                    import ctypes
+
+                    # Load the shared library
+                    mylib = ctypes.CDLL("./my_functions.dll")
+
+                    # Define the argument types for the add function
+                    mylib.add.argtypes = [ctypes.c_int, ctypes.c_int]
+
+                    # Define the return type for the add function
+                    mylib.add.restype = ctypes.c_int
+
+                    # Call the add function
+                    result = mylib.add(3, 5)
+                    print(f"Result of adding 3 and 5: {result}")
+                </code>
+                </pre>
+
+                <h2>More Advanced Compilation</h2>
+
+                <h3>Common gcc Compilation Flags</h3>
+
+                <ul>
+                    <li><code>-shared</code>: This flag tells the compiler to generate a shared library (DLL)</li>
+                    <li><code>-o</code>: This flag specifies the output file name</li>
+                    <li><code>-Wall</code>: This flag enables all compiler's warning messages</li>
+                    <li><code>-fPIC</code>: This option is used when generated position-independent code, which is generally needed when compiling shared libraries</li>
+                    <li><code>-I</code>: This flag specifies the directory to search for header files</li>
+                    <li><code>-L</code>: This flag specifies the directory to search for libraries (e.g. <code>-L/path/to/library</code>)</li>
+                    <li><code>-l</code> (lower case L): This flag links against a specific library (e.g., <code>-lm</code> for the math library)</li>
+                </ul>
+
+                <h3>Compiling Multiple Source Files into a DLL</h3>
+
+                If you have multiple C source files that you want to compile into a single DLL, you can do so by listing all the source files in the gcc command. For example, if you have two source files, my_functions.c and another_file.c, you can compile them into a DLL like this:
+
+                <pre>
+                <code>
+                    gcc -shared -o my_functions.dll my_functions.c another_file.c -Wall -fPIC
+                </code>
+                </pre>
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+        </div>
+
+</body>
+</html>

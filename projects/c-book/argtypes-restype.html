@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Distribution Distance</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to distribution distance metrics">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/c-book/argtypes-restype"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">C in Python Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Introduction">
+                <h1>argtypes and restype</h1>
+                <h2>Introduction</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./sampling-continuous.html">Sampling</a></li>
+                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
+               
+                </ol>
+                When using ctypes to call functions in shared libraries or DLLs, we need to inform ctypes about the types of the function arguments and return values.
+                
+                <h3>argtypes</h3>
+                The <code>argtypes</code> attribute of a ctypes function specifies the types of the arguments that the function expects. 
+                This allows ctypes to convert Python types to C types correctly when calling the function. 
+                
+                <h4>Defining argtypes</h4>
+                
+                <p>
+                    
+
+                To define the argument types, we assign a list of ctypes types to the <code>argtypes</code> attribute of the function. 
+
+                Let's define a simple C function that takes two integers and returns their sum:
+                <pre><code>
+                    int add(int a, int b) {
+                        return a + b;
+                    }
+                </code></pre>
+                We can load this function in Python using ctypes and define its argument types:
+                <pre>
+                <code>
+                    import ctypes
+
+                    # Load the shared library
+                    mylib = ctypes.CDLL("mylib.so")  # or "mylib.dll" on Windows
+
+                    # Define the argument types
+                    mylib.add.argtypes = [ctypes.c_int, ctypes.c_int]
+
+                    # Call the function
+                    result = mylib.add(3, 5)
+                    print(result)  # Output: 8
+                </code></pre>
+                
+
+                <h3>restype</h3>
+                The <code>restype</code> attribute of a ctypes function specifies the type of the return value of the function.
+                <pre>
+                <code>
+                    import ctypes
+
+                    # Load a shared library
+                    # libc = ctypes.CDLL("libc.so.6")  # For Linux/macOS
+                    libc = ctypes.CDLL("msvcrt.dll")
+
+                    # Define a C function prototype
+                    # Let's say the function we want to call is: double sqrt(double x)
+                    libc.sqrt.argtypes = [ctypes.c_double]
+                    libc.sqrt.restype = ctypes.c_double
+
+                    # Now we can call the function and get a double result
+                    result = libc.sqrt(16.0)
+                    print(f"Square root of 16 is: {result}")
+
+                </code></pre>
+
+
+                </p>
+
+                <h2>More Advanced Types</h2>
+
+
+                <h3>Pointers</h3>
+                When dealing with pointers, you'll need to use ctypes.POINTER to specify argument and return types.
+
+                Let's say that we have a C function defined as follows:
+                <pre>
+                <code>
+                    void increment(int *x){
+                        (*x)++;
+                    }
+                </code></pre>
+
+                Now, we have not yet gotten into how to compile custom C code yet, but let us assume that we have the above function in a DLL called <code>mylib.dll</code> in the same directory.
+
+                We can call this function from Python using ctypes as follows:
+                <pre>
+                <code>
+                    import ctypes
+
+                    # Load a shared library
+                    # libc = ctypes.CDLL(".\libc.so.6")  # For Linux/macOS
+                    libc = ctypes.CDLL("./mylib.dll")
+
+                    # Define a C function: void increment(int *x)
+                    libc.increment.argtypes = [ctypes.POINTER(ctypes.c_int)]  # Pointer to int
+                    libc.increment.restype = None  # No return value
+
+                    # Create a variable to pass by reference
+                    x = ctypes.c_int(5)
+
+                    # Call the function
+                    libc.increment(ctypes.byref(x))
+
+                    # Print the updated value
+                    print(f"Incremented value: {x.value}")
+                </code></pre>
+
+                <h3>Code</h3>
+
+                
+                ctypes is part of the Python Standard Library, so you do not need to install it separately and can readily import it.
+                <code>
+                    import cytpes
+                </code>
+
+                We can use ctypes to call C functions from Python. This is useful for performance-critical applications or when you want to use existing C libraries in Python. 
+                The ctypes module provides C compatible data types and allows calling functions in DLLs (dynamic-link libraries) or shared libraries. 
+
+                The ctypes module can load DLLs using the <code>CDLL</code> function. When loading a DLL, <code>ctypes</code> will look in the following locations:
+                <ul>
+                    <li>Current working directory</li>
+                    <li>System directories (e.g., C:\Windows\System32 on Windows)</li>
+                    <li>Directories specified in the PATH environment variable</li>
+                </ul>
+
+                <code>
+                    libc = ctypes.CDLL("msvcrt.dll")  # Load the C standard library on Windows
+                </code>
+
+                You can also load a DLL from a specific path by providing the full path to the DLL file:
+                <code>
+                    libc = ctypes.CDLL("C:\\path\\to\\your\\library.dll")
+                </code>
+
+                Basic example of using ctypes to call a C function from Python:
+                <code>
+                    import ctypes
+
+                    # Load the C standard library
+                    libc = ctypes.CDLL("msvcrt.dll")
+
+                    # Call the C function
+                    libc.printf(b"Hello from C!\n")
+                </code>
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+             
+
+
+
+
+        </div>
+
+</body>
+</html>
