@@ -15,13 +15,13 @@
         <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
-            <title>Compilation</title>
+            <title>Global Interpreter Lock</title>
     
         <!-- Meta tags -->
         
-        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="keywords" content="GIL, Global Interpreter Lock, Python, C API, ctypes">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Introduction to distribution distance metrics">
+        <meta name="description" content="Introduction to the Global Interpreter Lock in Python and how to release it in C extensions">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -62,8 +62,8 @@
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
-                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
-                    <li><a href="./probability-2.html">Probability II</a></li>
+                    <li><a href="./argtypes-restype.html">argtypes and restypes</a></li>
+                    <li><a href="./c-api.html"> C-API</a></li>
                     <li><a href="./sampling-continuous.html">Sampling</a></li>
                     <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
                
@@ -85,21 +85,60 @@
 
                 <h2>Python C API</h2>
 
+                In the C-API, you can release the GIL using the <code>Py_BEGIN_ALLOW_THREADS</code> and <code>Py_END_ALLOW_THREADS</code> macros. These macros save the current thread state and release the GIL, allowing other threads to run. When the operation is complete, the GIL is reacquired, and the thread state is restored.
+
+                <pre><code>
+                    #include <Python.h>
+
+                    // A long-running C function
+                    static PyObject* long_running_function(PyObject* self, PyObject* args) {
+                        // Release the GIL
+                        Py_BEGIN_ALLOW_THREADS
+
+                        // Perform long-running operation here
+                        for (long i = 0; i &lt; 1e9; i++);
+
+                        // Reacquire the GIL
+                        Py_END_ALLOW_THREADS
+
+                        Py_RETURN_NONE;
+                    }
+
+                    static PyMethodDef MyMethods[] = {
+                        {"long_running_function", long_running_function, METH_VARARGS, "A long-running function."},
+                        {NULL, NULL, 0, NULL}
+                    };
+
+                    static struct PyModuleDef mymodule = {
+                        PyModuleDef_HEAD_INIT, // Always have this macro
+                        "mymodule", // name of module
+                        NULL, // module documentation, may be NULL
+                        -1, // size of per-interpreter state of the module, or -1 if the module keeps state in global variables.
+                        MyMethods // the PyMethodDef array defining methods of the module
+                    };
+
+                    PyMODINIT_FUNC PyInit_mymodule(void) {
+                        return PyModule_Create(&mymodule);
+                    }
+
+
                 <h2>ctypes</h2>
                 
-                <p>When using ctypes to call C functions from Python, you can release the GIL by using the <code>ctypes.pythonapi.PyEval_SaveThread()</code> and <code>ctypes.pythonapi.PyEval_RestoreThread()</code> functions. This allows your C code to run without holding the GIL, enabling other Python threads to execute concurrently.</p>
-
+                When using ctypes, the GIL is automatically released when calling C functions that do not interact with Python objects. This means that if you call a long-running C function from Python using ctypes, the GIL will be released during the execution of that function, allowing other Python threads to run concurrently. 
                 Each foreign function call is wrapped in Py_BEGIN_ALLOW_THREADS and Py_END_ALLOW_THREADS macros, which automatically save and restore the GIL around the call. This is particularly useful for long-running C functions that do not need to interact with Python objects.
 
-                This means CPU-bound C routines invoked via ctypes can execute truly in parallel with other Python threads (so long as they're also in ctypes calls or I/O).
+                
+                <h3>Calling Python's C-API from ctypes</h3>
 
+                If you need to call CPython API functions via ctypes.pythonapi, do so through PyDLL, which keeps the GIL held while calling the function.
 
+                
 
 
                 <h2>See Also</h2>
                 <ol>
                     <li><a href="https://docs.python.org/3/glossary.html#term-global-interpreter-lock">Glossary Entry</a></li>
-                    
+
                 </ol>
                 
                 </div>

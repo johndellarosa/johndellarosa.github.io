@@ -71,6 +71,12 @@
                  While ctypes is commonly used to call C functions directly, it can also be used to interact with C++ libraries. This chapter will explore how to use ctypes to work with C++ code, focusing on handling C++ classes, constructors, and destructors from Python.
                 
                 <h3>Basic Compatibility</h3>
+
+                C++ ABIs are not stable across compilers or versions, and C++ adds features (overloading, templates, exceptions, name mangling) that don't map directly to ctypes. By writing a C wrapper around the C++ code, we can expose a C interface that ctypes can easily work with while still having the features of C++. This involves using `extern "C"` to prevent name mangling and ensure that the function names are compatible with C.
+
+                
+
+
                 
 
                 <pre><code>
@@ -117,8 +123,39 @@
                 </code></pre>
 
 
+                <h3>Macro</h3>
 
+                <pre><code>
+                    // api_export.h
+                    #pragma once
 
+                    #if defined(_WIN32)
+                    #define API_EXPORT extern "C" __declspec(dllexport)
+                    #elif defined(__GNUC__)
+                    #define API_EXPORT extern "C" __attribute__((visibility("default")))
+                    #else
+                    #define API_EXPORT extern "C"
+                    #endif
+                </code></pre>
+
+                This macro defines API_EXPORT as an extern "C" function with the appropriate export attributes for different platforms. You can include this header in your C++ code to ensure that the functions are exported correctly.
+
+                <pre><code>
+                    #pragma once
+                    #include "api_export.h"
+
+                    API_EXPORT MyClass* MyClass_new() {
+                        return new MyClass();
+                    }
+
+                    API_EXPORT void MyClass_delete(MyClass* obj) {
+                        delete obj;
+                    }
+
+                    API_EXPORT void MyClass_greet(MyClass* obj, const char* name) {
+                        obj->greet(name);
+                    }
+                </code></pre>
 
 
                 </div>

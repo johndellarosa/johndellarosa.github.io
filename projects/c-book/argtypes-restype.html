@@ -62,11 +62,8 @@
                 
                 <h3>Recommended Prerequesites</h3>
                 <ol>
-                    <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
-                    <li><a href="./probability-2.html">Probability II</a></li>
-                    <li><a href="./sampling-continuous.html">Sampling</a></li>
-                    <li><a href="./multivariate-intro">Introduction to Multivariate Distributions</a></li>
-               
+                    <li><a href="./compiling.html">Compiling</a></li>
+
                 </ol>
                 When using ctypes to call functions in shared libraries or DLLs, we need to inform ctypes about the types of the function arguments and return values.
                 
@@ -167,43 +164,6 @@
                     print(f"Incremented value: {x.value}")
                 </code></pre>
 
-                <h3>Code</h3>
-
-                
-                ctypes is part of the Python Standard Library, so you do not need to install it separately and can readily import it.
-                <code>
-                    import cytpes
-                </code>
-
-                We can use ctypes to call C functions from Python. This is useful for performance-critical applications or when you want to use existing C libraries in Python. 
-                The ctypes module provides C compatible data types and allows calling functions in DLLs (dynamic-link libraries) or shared libraries. 
-
-                The ctypes module can load DLLs using the <code>CDLL</code> function. When loading a DLL, <code>ctypes</code> will look in the following locations:
-                <ul>
-                    <li>Current working directory</li>
-                    <li>System directories (e.g., C:\Windows\System32 on Windows)</li>
-                    <li>Directories specified in the PATH environment variable</li>
-                </ul>
-
-                <code>
-                    libc = ctypes.CDLL("msvcrt.dll")  # Load the C standard library on Windows
-                </code>
-
-                You can also load a DLL from a specific path by providing the full path to the DLL file:
-                <code>
-                    libc = ctypes.CDLL("C:\\path\\to\\your\\library.dll")
-                </code>
-
-                Basic example of using ctypes to call a C function from Python:
-                <code>
-                    import ctypes
-
-                    # Load the C standard library
-                    libc = ctypes.CDLL("msvcrt.dll")
-
-                    # Call the C function
-                    libc.printf(b"Hello from C!\n")
-                </code>
 
 
 
