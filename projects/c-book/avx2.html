@@ -209,13 +209,13 @@
 
                 <pre>
                 <code>
-                #include <stddef.h>
-                #include <immintrin.h>
+                #include &lt;stddef.h&gt;
+                #include &lt;immintrin.h&gt;
 
                 void add_arrays(const double *a, const double *b, double *out, size_t length) {
                 size_t i = 0;
                 // Vectorized loop: process 4 doubles per iteration
-                for (; i+3 < length; i += 4) {
+                for (; i+3 &lt; length; i += 4) {
                     __m256d va = _mm256_loadu_pd(&a[i]); // unaligned load of vector a
                     __m256d vb = _mm256_loadu_pd(&b[i]); // unaligned load of vector b
                     __m256d vc = _mm256_add_pd(va, vb); // vector addition
@@ -223,7 +223,7 @@
                 }
 
                 // Scalar tail for any remaining elements
-                for (; i < length; ++i) {
+                for (; i &lt; length; ++i) {
                     out[i] = a[i] + b[i];
                 }
             }

@@ -88,7 +88,7 @@
                 In the C-API, you can release the GIL using the <code>Py_BEGIN_ALLOW_THREADS</code> and <code>Py_END_ALLOW_THREADS</code> macros. These macros save the current thread state and release the GIL, allowing other threads to run. When the operation is complete, the GIL is reacquired, and the thread state is restored.
 
                 <pre><code>
-                    #include <Python.h>
+                    #include &lt;Python.h&gt;
 
                     // A long-running C function
                     static PyObject* long_running_function(PyObject* self, PyObject* args) {
