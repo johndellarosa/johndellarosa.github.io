@@ -167,99 +167,16 @@
                 Taking a step back, let's look at each component of the C extension in more detail.
 
 
-                <!-- <h3>PyModuleDef</h3>
-                PyModuleDef is the C struct that describes how the module should be constructed.
-
-                <h4>Outline</h4>
-
-                Basic:
-                <pre><code>
-                static int demo_exec(PyObject *m); // forward
-
-                static PyModuleDef_Slot demo_slots[] = {
-                    {Py_mod_exec, demo_exec},
-                    {0, NULL} // sentinel
-                };
-
-                typedef struct {
-                    int counter;
-                    PyObject *Error; // references in state must be managed
-                } demo_state;
-
-                static struct PyModuleDef moddef = {
-                    PyModuleDef_HEAD_INIT,
-                    "demo",
-                    "Demo module (multiphase)",
-                    sizeof(demo_state),        // m_size > 0 → per-module state
-                    mod_methods,               // still fine to provide functions here
-                    demo_slots,                // hook exec/create if needed
-                    NULL, NULL, NULL           // GC hooks optional but recommended if state holds PyObject*
-                };
-
-                PyMODINIT_FUNC PyInit_demo(void) {
-                    return PyModuleDef_Init(&moddef);
-                }
-                </code></pre>
-
-
-                Single Phase:
-                <pre><code>
-                typedef struct PyModuleDef {
-                PyModuleDef_Base m_base;       // must be first; use PyModuleDef_HEAD_INIT
-                const char      *m_name;       // "mymod"
-                const char      *m_doc;        // module docstring (UTF-8) or NULL
-                Py_ssize_t       m_size;       // per-module state size; -1, 0, or >0
-                PyMethodDef     *m_methods;    // table of functions (PyMethodDef[])
-                struct PyModuleDef_Slot *m_slots; // for multi-phase init (Py_mod_exec/…)
-                traverseproc     m_traverse;   // optional GC traversal for state
-                inquiry          m_clear;      // optional GC clear for state
-                freefunc         m_free;       // optional destructor for state
-                } PyModuleDef;
-
-                PyMODINIT_FUNC PyInit_demo(void) {
-                    PyObject *m = PyModule_Create(&moddef);
-                    if (!m) return NULL;
-                    // add objects, types, constants here
-                    return m;
-                }
-                </code></pre>
-
-                <h4>m_size</h4>
-                m_size determines how your module keeps state:
-
-                <ul>
-                    <li>-1: Legacy/global state. You must store globals in C statics. WOrks with single-phase. Not subinterpreter-safe. Reloads can be tricky.</li>
-                    <li>0: No per-module state, but compatible with multi-phase. Good if you have nothing to store and your types are heap-allocated and owned by the module.</li>
-                    <li>>0: Per-module</li>
-                </ul>
-
-                For per module (>0), you can access states by the following pattern:
-
-                <pre><code>
-                    static inline demo_state *demo_get_state(PyObject *m) {
-                        return (demo_state *)PyModule_GetState(m);
-                    }
-                </code></pre>
-                Use when holding counters, cached objects, custom exceptions, or heap-allocated types. If you store at least 1 PyObject* or mutable setting, it's advisable to use m_size > 0.
-
-
-
-                <h4>Slots: Py_mod_create and Py_mod_exec</h4>
-
-                <h5>Py_mod_exec</h5>
-                Created after the module object is created but before the import completes. Initialize everything here: add constants, create exceptions, build heap types, store pointers in the module state. Must return 0 on success, -1 on error. -->
-
-                
 
                 <h3>PyMethodDef</h3>
 
-                PyMethodDef is a structure that defines a Python module, class, instance, or static method. It contains the name of the method, a pointer to the C function that implements it, the calling convention (e.g., METH_VARARGS), and a docstring.
+                PyMethodDef is a structure that defines a Python module, class, instance, or static method. It contains the name of the method, a pointer to the C function that implements it, the calling convention (e.g., METH_VARARGS), and a docstring. You place these within NULL-terminated arrays for either 1. module method tables or 2. tp_methods table for bound instance/class/static methods.
 
                 <pre><code>
                     typedef struct PyMethodDef {
                     const char  *ml_name;   /* Python-level name */
                     PyCFunction  ml_meth;   /* C function pointer (type depends on flags) */
-                    int          ml_flags;  /* calling-convention + binding flags */
+                    int          ml_flags;  /* calling-convention + binding bitmask (flags) */
                     const char  *ml_doc;    /* __doc__ (UTF-8), or NULL */
                 } PyMethodDef;
 
@@ -276,28 +193,71 @@
 
                 The pointer's actual type depends on ml_flags and should be consistent with the calling convention specified in ml_flags. For example, if ml_flags is METH_VARARGS, ml_meth should be a PyCFunction that takes a PyObject* self and a PyObject* args.
 
+                <h5>Example signature</h5>
+                
+                <pre><code>
+                    PyObject *func(PyObject *self, PyObject *args);
+                </code></pre>
+
                 <h4>ml_flags</h4>
 
                 The <code>ml_flags</code> field specifies the calling convention and binding flags for the method. Common flags include:
                 <ul>
-                    <li><code>METH_VARARGS</code>: The function takes a variable number of positional arguments.</li>
-                    <li><code>METH_KEYWORDS</code>: The function can accept keyword arguments. This can only be used in certain combinations with other flags.</li>
-                    <li><code>METH_NOARGS</code>: The function does not take any arguments.</li>
-                    <li><code>METH_O</code>: This function takes exactly one position arg</li>
+                    <li><code>METH_VARARGS</code>: The function takes a variable number of positional arguments. Example: <code>PyObject *func(PyObject *self, PyObject *args);</code></li>
+                    <li><code>METH_KEYWORDS</code>: The function can accept keyword arguments. This can only be used in certain combinations with other flags, such as METH_VARARGS. Example: <code>PyObject *func(PyObject *self, PyObject *args, PyObject *kwargs);</code></li>
+                    <li><code>METH_NOARGS</code>: The function does not take any arguments. CPython will pass NULL as the second parameter. Example: <code>PyObject *func(PyObject *self, PyObject *Py_UNUSED(ignored));</code></li>
+                    <li><code>METH_O</code>: This function takes exactly one position arg. Example: <code>PyObject *func(PyObject *self, PyObject *arg);</code></li>
 
 
                 </ul>
+
+                Do not mix <code>METH_NOARGS</code> or <code>METHO_O</code> with other flags.
+
+                <h5>FASTCALL & vectorcall</h5>
+
+                With FASTCALL, positional arguments arrive as a C array rather than a tuple:
+
+                <pre><code>
+                    // METH_FASTCALL (positional-only)
+                    PyObject *func(PyObject *self, PyObject *const *args, Py_ssize_t nargs);
+
+                </code></pre>
+
+
+                This can be combined with the <code>METH_KEYWORDS</code> flag:
+
+                <code>METH_FASTCALL | METH_KEYWORDS</code>
+
+                <pre><code>
+                PyObject *func(PyObject *self,
+                    PyObject *const *args, Py_ssize_t nargs,
+                    PyObject *kwnames /* tuple of keyword names or NULL */);
+
+                </code></pre>
+
+
 
                 <h5>Binding Modifiers</h5>
 
                 The <code>ml_flags</code> field can also include binding modifiers that affect how the method is bound to the Python object. These modifiers are used to control how the method behaves when called from Python. Some common binding modifiers include:
 
                 <ul>
-                    <li><code>METH_METHOD</code>: Adds a the defining class parameter before args.</li>
+                    <li><code>METH_METHOD</code>: Adds the defining class parameter before args.</li>
                     <li><code>METH_STATIC</code>: The method is a static method and does not receive the instance (self) as the first argument.</li>
                     <li><code>METH_CLASS</code>: The method is a class method and receives the class (cls) as the first argument instead of the instance.</li>
                     <li><code>METH_COEXIST</code>: This modifier allows the method to coexist with other methods that have the same name but different signatures.</li>
                 </ul>
+
+
+                <h5>Self</h5>
+
+                <code>self</code> is used in regular Python, but how does it come into play in C-API? 
+                <ul>
+                    <li>For module functions, <code>self</code> is the module object</li>
+                    <li>For type methods, <code>self</code> is the instance (or the type object for METH_CLASS)</li>
+                </ul>
+
+                
 
                 <h5>Example</h5>
 
@@ -381,92 +341,6 @@
                     {NULL, NULL, 0, NULL}
                 };
 
-
-                <!-- <h3>PyMODINIT_FUNC</h3>
-
-                <code>PyMODINIT_FUNC</code> is a macro used to declare the module initialization function which CPython calls when it loads an extension module, returning a PyObject * on success and NULL on failure. 
-
-                The basic structure is as follows:
-
-                <pre><code>
-                    PyMODINIT_FUNC PyInit_mymod(void) {
-                        /* ... create & initialize a module object ... */
-                        return module;  // PyObject*
-                    }
-                </code></pre>
-
-                Note: The name must be PyInit_<basename>, where <basename> is the module's build name (the filename without the extension suffix).
-
-                
-                <br><br>
-                <h4>Import Lifecycle</h4>
-                When you import an extension module, CPython's dynamic loader:
-                <ol>
-                    <li>Loads the shared library (.so, .pyd, .dylib)</li>
-                    <li>Looks up the symbol PyInit_&lt;basename&gt;</li>
-                    <li>Calls it</li>
-                    <li>If it returns a non-NULL PyObject *, that object becomes the module placed in sys.modules. If it returns NULL, the import fails and the current exception is raised.</li>
-                </ol>
-
-
-                If you have an extension compiled as C++, <code>extern "C"</code> stops name mangling which can prevent the loader from finding the PyMODINIT_FUNC.
-
-                <pre><code>
-                    extern "C"
-                    PyMODINIT_FUNC PyInit_mymod(void) {
-                        return PyModuleDef_Init(&moddef);
-                    }
-
-                </code></pre> -->
-
-
-
-
-                <h2>Other Topics</h2>
-
-                <h3>Memory Management</h3>
-                In CPython, every object is represented by a PyObject (or a type derived from it). The <a href="https://svn.python.org/projects/python/trunk/Include/object.h">PyObject struct</a> always starts with a reference count.
-
-                
-
-                <h4>Reference Counting</h4>
-                Reference counting is the primary memory management technique in CPython. Each object has a reference count that is incremented when a new reference to the object is created and decremented when a reference is deleted. When the reference count reaches zero, the object's memory is freed.
-
-                There are two types of reference counts:
-                <ul>
-                   <li>Strong Reference: A strong reference is defined in the Python C API glossary as "a reference to an object which is owned by the code holding the reference." The functions Py_IncRef and Py_DecRef will increase and release a strong reference to an object respectively.</li>
-                   <li>Borrowed Reference: A borrowed reference does not increase the reference count. It is used when you want to temporarily use an object without taking ownership of it.</li>
-                </ul>
-
-                When working with the Python C API, it's crucial to manage reference counts correctly to avoid memory leaks or crashes.
-                
-                Example of a new reference:
-                <pre><code>
-                    PyObject* obj = PyFloat_FromDouble(3.14); // Create a new reference to a float object
-                    // Use obj
-                    Py_DECREF(obj); // Decrement reference count
-                </code></pre>
-
-                Example of a borrowed reference:
-                <pre><code>
-                    PyObject* obj = PyList_GetItem(my_list, 0); // Get a borrowed reference to the first item in a list
-                    Py_INCREF(item); // make it yours
-
-                    // ... do work ...
-
-                    Py_DECREF(item); // free when done
-                </code></pre>
-
-                The <a href="https://docs.python.org/3/c-api/">C API</a> will explain which type of reference a function returns.
-
-                <h4>Cycles</h4>
-
-                Cycles can occur when two or more objects reference each other, preventing their reference counts from reaching zero. To handle this, Python uses a cyclic garbage collector that periodically checks for cycles and breaks them.
-
-
-
-                <h3>Accessing Python Functions from C</h3>
-                You can call Python functions from C using the Python C API using the PyRun_SimpleString function. Additionally, you can use PyObject_CallObject to call specific Python functions.
 
       
                 </div>

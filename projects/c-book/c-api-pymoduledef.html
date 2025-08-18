@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Compilation</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Copula, Probability Integral Transform">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to distribution distance metrics">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/c-book/compiling"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">C in Python Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Introduction">
+                <h1>PyModuleDef</h1>
+                <h2>Introduction</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <li><a href="./c-api.html">C-API general</a></li>
+
+               
+                </ol>
+
+
+                <h2>Outline</h2>
+                PyModuleDef is the C struct that describes how the module should be constructed.
+
+
+                Basic:
+                <pre><code>
+                static int demo_exec(PyObject *m); // forward
+
+                static PyModuleDef_Slot demo_slots[] = {
+                    {Py_mod_exec, demo_exec},
+                    {0, NULL} // sentinel
+                };
+
+                typedef struct {
+                    int counter;
+                    PyObject *Error; // references in state must be managed
+                } demo_state;
+
+                static struct PyModuleDef moddef = {
+                    PyModuleDef_HEAD_INIT,
+                    "demo",
+                    "Demo module (multiphase)",
+                    sizeof(demo_state),        // m_size > 0 → per-module state
+                    mod_methods,               // still fine to provide functions here
+                    demo_slots,                // hook exec/create if needed
+                    NULL, NULL, NULL           // GC hooks optional but recommended if state holds PyObject*
+                };
+
+                PyMODINIT_FUNC PyInit_demo(void) {
+                    return PyModuleDef_Init(&moddef);
+                }
+                </code></pre>
+
+
+                Single Phase:
+                <pre><code>
+                typedef struct PyModuleDef {
+                PyModuleDef_Base m_base;       // must be first; use PyModuleDef_HEAD_INIT
+                const char      *m_name;       // "mymod"
+                const char      *m_doc;        // module docstring (UTF-8) or NULL
+                Py_ssize_t       m_size;       // per-module state size; -1, 0, or >0
+                PyMethodDef     *m_methods;    // table of functions (PyMethodDef[])
+                struct PyModuleDef_Slot *m_slots; // for multi-phase init (Py_mod_exec/…)
+                traverseproc     m_traverse;   // optional GC traversal for state
+                inquiry          m_clear;      // optional GC clear for state
+                freefunc         m_free;       // optional destructor for state
+                } PyModuleDef;
+
+                PyMODINIT_FUNC PyInit_demo(void) {
+                    PyObject *m = PyModule_Create(&moddef);
+                    if (!m) return NULL;
+                    // add objects, types, constants here
+                    return m;
+                }
+                </code></pre>
+
+                <h3>m_size</h3>
+                m_size determines how your module keeps state:
+
+                <ul>
+                    <li>-1: Legacy/global state. You must store globals in C statics. WOrks with single-phase. Not subinterpreter-safe. Reloads can be tricky.</li>
+                    <li>0: No per-module state, but compatible with multi-phase. Good if you have nothing to store and your types are heap-allocated and owned by the module.</li>
+                    <li>>0: Per-module</li>
+                </ul>
+
+                For per module (>0), you can access states by the following pattern:
+
+                <pre><code>
+                    static inline demo_state *demo_get_state(PyObject *m) {
+                        return (demo_state *)PyModule_GetState(m);
+                    }
+                </code></pre>
+                Use when holding counters, cached objects, custom exceptions, or heap-allocated types. If you store at least 1 PyObject* or mutable setting, it's advisable to use m_size > 0.
+
+
+
+                <h3>Slots: Py_mod_create and Py_mod_exec</h3>
+
+                Slots are CPython's way to pass a table of hooks (IDs + pointers) into the runtime. There are two main types of slots:
+                <ol>
+                    <li>Module slots (PyModuleDef_Slot[]): how a module is created and executed in multi-phase initialization</li>
+                    <li>Type slots (PyType_Slot[]): how a heap type announces its behaviors (constructor, repr, methods, etc) without a monolithic static PyTypeObject.</li>
+                </ol>
+
+                <h4>Slot table structure</h4>
+
+                /* Module slots */
+                typedef struct PyModuleDef_Slot {
+                    int slot;           /* which hook? e.g., Py_mod_exec */
+                    void *value;        /* function pointer or data for that hook */
+                } PyModuleDef_Slot;
+
+                /* Type slots */
+                typedef struct PyType_Slot {
+                    int slot;           /* which field? e.g., Py_tp_new, Py_tp_repr, ... */
+                    void *pfunc;        /* function pointer or struct pointer */
+                } PyType_Slot;
+
+                /* Always end with a zeroed sentinel: */
+                {0, NULL}
+                
+                <h4>Multi-Phase module initialization</h4>
+
+                The single-phase style forces you to do everything inside PyInit_modname: creating the module object, filling it, stashing globals, then returning it. This cuases issues with reloads, subinterpreters, and per-module states.
+
+                Multi-phase initialization splits this into steps, described by module slots:
+
+                <ul>
+                    <li>Create the module object</li>
+                    <li>Execute initialization code that populates it (add constants, exceptions, types)</li>
+                    <li>Keep state per module instance (not process-global)</li>
+                </ul>
+
+                
+                Created after the module object is created but before the import completes. Initialize everything here: add constants, create exceptions, build heap types, store pointers in the module state. Must return 0 on success, -1 on error.
+
+                <h5>Py_mod_exec</h5>
+
+                Basic structure:
+                <pre><code>
+                    static int my_exec(PyObject *module);  // return 0 on success, -1 on error
+
+                    static PyModuleDef_Slot slots[] = {
+                        { Py_mod_exec, my_exec },
+                        { 0, NULL }
+                    };
+                </code></pre>
+
+                <h6>When exec runs</h6>
+
+                <ul>
+                    <li>Normal import: exactly once for this module instance</li>
+                    <li>Reload (importlib.reload): CPython creates a fresh module object and re-runs exec on that new object. The old module remains intact unless the reload succeeds, in which case the new one replaces it in sys.modules.</li>
+                    <li>Subinterpreters: each interpreter creates its own module object and runs exec for that instance</li>
+                    <li>Failure: if exec fails, the new module being initialized is discarded. Your earlier, already-imported module (if any) stays unchanged</li>
+                </ul>
+
+                By the time exec runs, CPython has already:
+                <ul>
+                    <li>Created the module object with your name and docstring</li>
+                    <li>Populated standard attributes: __name__, __spec__, __loader__, __package__</li>
+                    <li>If your PyModuleDef.m_methods is non-NULL, added those functions to the module</li>
+                </ul>
+
+                So inside exec, you can assume module has a dict, your function objects (if any), and (if m_size > 0) a zero-initialized state block reachable via PyModule_GetState(module).
+
+                <h6>Example Exec Pattern</h6>
+
+                <pre><code>
+                    #define PY_SSIZE_T_CLEAN
+                    #include <Python.h>
+
+                    /* Per-module state */
+                    typedef struct {
+                        long counter;
+                        PyObject *Error;          /* custom exception */
+                        PyObject *PointType;      /* a heap type, optional */
+                        /* other resources... */
+                    } mod_state;
+
+                    static inline mod_state *STATE(PyObject *m) {
+                        return (mod_state *)PyModule_GetState(m);
+                    }
+
+                    static int my_exec(PyObject *m) {
+                        /* 1) Fetch and initialize state (zero-initialized by CPython). */
+                        mod_state *st = STATE(m);
+                        st->counter = 0;
+
+                        /* 2) Create exception and export it. PyModule_AddObject steals on success. */
+                        st->Error = PyErr_NewException("pkg.Error", NULL, NULL);
+                        if (!st->Error) goto fail;
+                        if (PyModule_AddObject(m, "Error", st->Error) < 0) {  // steals ref if OK
+                            Py_DECREF(st->Error); st->Error = NULL;
+                            goto fail;
+                        }
+
+                        /* 3) Add constants / simple objects. */
+                        if (PyModule_AddIntConstant(m, "ANSWER", 42) < 0) goto fail;
+
+                        /* 4) Build heap types from spec, owned by this module. */
+                        extern PyType_Spec Point_spec;  /* defined elsewhere */
+                        st->PointType = PyType_FromModuleAndSpec(m, &Point_spec, NULL);
+                        if (!st->PointType) goto fail;
+                        if (PyModule_AddObject(m, "Point", st->PointType) < 0) {
+                            Py_DECREF(st->PointType); st->PointType = NULL;
+                            goto fail;
+                        }
+
+
+                        /* 5) Success. */
+                        return 0;
+
+                    fail:
+                        /* Leave objects in state as NULL or valid PyObjects that will be cleared. */
+                        return -1;  /* an exception must already be set */
+                    }
+                </code></pre>
+
+
+
+                <h2>Example</h2>
+                <pre><code>
+                    #define PY_SSIZE_T_CLEAN
+                    #include <Python.h>
+
+                    /* 1) Define per-module state (m_size > 0 to allocate it). */
+                    typedef struct {
+                        long counter;
+                        PyObject *Error;
+                    } mod_state;
+
+                    static inline mod_state *STATE(PyObject *m) {
+                        return (mod_state *)PyModule_GetState(m);
+                    }
+
+                    /* 2) Your module's functions can access state via 'self' (the module). */
+                    static PyObject *inc(PyObject *self, PyObject *Py_UNUSED(ignored)) {
+                        mod_state *st = STATE(self);
+                        st->counter += 1;
+                        return PyLong_FromLong(st->counter);
+                    }
+
+                    static PyMethodDef METHODS[] = {
+                        {"inc", (PyCFunction)inc, METH_NOARGS, "Increment and return the counter"},
+                        {NULL, NULL, 0, NULL}
+                    };
+
+                    /* 3) The exec slot: populate module + initialize state */
+                    static int mod_exec(PyObject *m) {
+                        mod_state *st = STATE(m);
+                        st->counter = 0;
+
+                        st->Error = PyErr_NewException("demo.Error", NULL, NULL);
+                        if (!st->Error) return -1;
+
+                        /* PyModule_AddObject steals a reference on success. */
+                        if (PyModule_AddObject(m, "Error", st->Error) < 0) {
+                            Py_DECREF(st->Error);
+                            st->Error = NULL;
+                            return -1;
+                        }
+                        if (PyModule_AddIntConstant(m, "ANSWER", 42) < 0) return -1;
+                        return 0;
+                    }
+
+                    /* 4) GC hooks if your state holds PyObject* (recommended) */
+                    static int mod_traverse(PyObject *m, visitproc visit, void *arg) {
+                        Py_VISIT(STATE(m)->Error);
+                        return 0;
+                    }
+                    static int mod_clear(PyObject *m) {
+                        Py_CLEAR(STATE(m)->Error);
+                        return 0;
+                    }
+
+                    /* 5) Slots table + module def */
+                    static PyModuleDef_Slot SLOTS[] = {
+                        {Py_mod_exec, mod_exec},
+                        {0, NULL}
+                    };
+
+                    static struct PyModuleDef DEF = {
+                        PyModuleDef_HEAD_INIT,
+                        "demo",
+                        "Demo module using multi-phase init",
+                        sizeof(mod_state),        /* m_size > 0 → per-module state allocated */
+                        METHODS,                  /* functions exported by name */
+                        SLOTS,                    /* module slots drive creation/execution */
+                        mod_traverse,             /* optional but wise if you keep PyObject* */
+                        mod_clear,
+                        NULL                      /* m_free: non-PyObject cleanup */
+                    };
+
+                    /* 6) Entry point: return a module object built from DEF + SLOTS */
+                    PyMODINIT_FUNC PyInit_demo(void) {
+                        return PyModuleDef_Init(&DEF);
+                    }
+                </code></pre>
+      
+                </div>
+
+
+
+             
+
+
+
+
+        </div>
+
+</body>
+</html>

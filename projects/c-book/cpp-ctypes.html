@@ -114,7 +114,7 @@
 
                 </code></pre>
 
-                In this code, we define a simple C++ class MyClass with a constructor, destructor, and a greet method. The extern "C" block is crucial because it tells the compiler to use C-style linkage, which is necessary for ctypes to interact with the functions without name mangling.
+                In this code, we define a simple C++ class MyClass with a constructor, destructor, and a greet method. The extern "C" block is crucial because it tells the compiler to use C-style linkage, which is necessary for ctypes to interact with the functions without name mangling. See the <a href="./c-api.html">C-API page</a> for more about that.
 
                 <h3>Compiling</h3>
                 We can use g++ to compile the C++ code into a shared library. The command is similar to compiling C code, but we use g++ instead of gcc:
