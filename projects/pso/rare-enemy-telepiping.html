@@ -156,7 +156,7 @@ input[type=checkbox] {
 }
 
 
-#histogramContainer {
+#histogramContainer, #timeHistogramContainer {
     max-height: 50vh; /* Set the maximum height you want */
     min-height: 40vh;
     position: relative;
@@ -164,7 +164,7 @@ input[type=checkbox] {
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
 }
-#cdfContainer {
+#cdfContainer, #timeCdfContainer {
     max-height: 50vh; /* Set the maximum height you want */
     min-height: 20vh;
     position: relative;
@@ -236,12 +236,26 @@ input[type=checkbox] {
 <button id="process-btn" onclick="runSimulation()">Run Simulation</button>
 <br><br>
 <div class="input-group">
+    <label for="timePerQuest"><abbr title="Time in minutes to start/finish a quest (quit and re-enter)."> Time per Quest (min):</abbr></label>
+    <input type="number" id="timePerQuest" value="15" min="0" step="0.1" style="width:6em;">
+</div>
+<div class="input-group">
+    <label for="timePerWave"><abbr title="Time in minutes between telepipes / per wave when piping."> Time per Wave (min):</abbr></label>
+    <input type="number" id="timePerWave" value="0.35" min="0" step="0.01" style="width:6em;">
+</div>
+<div class="input-group">
     <label for="binSize"><abbr title="Specifies x-axis bin size for graph.">Histogram Bin Size:</abbr></label>
     <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
 </div>
+<div class="input-group">
+    <label for="timeBinSize"><abbr title="Specifies x-axis bin size for time histograms (minutes).">Time Histogram Bin Size:</abbr></label>
+    <input type="number" id="timeBinSize" value="5" min="1" max="5000" onblur="OnValueChanged()" style="width:6em;">
+</div>
 <div id="progressbar" style="display:none;"></div>
 <hr>
-<div id="meanDisplay" style="margin-top:10px;font-weight:bold;text-align:center;"></div>
+<div id="meanStatsDisplay" style="margin-top:6px;text-align:center;font-weight:bold;"></div>
+<div id="wavesStatsDisplay" style="margin-top:6px;text-align:center;"></div>
+<div id="timeStatsDisplay" style="margin-top:6px;text-align:center;"></div>
 <div id="histogramContainer">
 <canvas id="wavesHistogram"></canvas>
 </div>
@@ -249,7 +263,32 @@ input[type=checkbox] {
 <canvas id="cdfChart"></canvas>
 </div>
 
+<hr>
+<h3 style="text-align:center;">Time Distribution</h3>
+<div id="timeHistogramContainer">
+<canvas id="timeHistogram"></canvas>
+</div>
+<div id="timeCdfContainer">
+<canvas id="timeCdfChart"></canvas>
+</div>
+
     <script>
+
+    /** Statistics helper: mean, sd (sample), Q1, median, Q3 */
+    function computeStats(arr) {
+        if (!arr || arr.length === 0) return null;
+        const n = arr.length;
+        const mean = arr.reduce((a, b) => a + b, 0) / n;
+        const sorted = [...arr].sort((a, b) => a - b);
+        const median = (n % 2 === 1) ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
+        const lower = sorted.slice(0, Math.floor(n / 2));
+        const upper = sorted.slice(Math.ceil(n / 2));
+        const q1 = (lower.length % 2 === 1) ? lower[(lower.length - 1) / 2] : (lower.length ? (lower[lower.length / 2 - 1] + lower[lower.length / 2]) / 2 : median);
+        const q3 = (upper.length % 2 === 1) ? upper[(upper.length - 1) / 2] : (upper.length ? (upper[upper.length / 2 - 1] + upper[upper.length / 2]) / 2 : median);
+        const variance = arr.reduce((s, x) => s + Math.pow(x - mean, 2), 0) / (n > 1 ? (n - 1) : 1);
+        const sd = Math.sqrt(variance);
+        return { mean, sd, q1, median, q3 };
+    }
 
     let trialData;
     runSimulation();
@@ -267,6 +306,9 @@ input[type=checkbox] {
         const P_NAR_LILY_ = parseFloat(document.getElementById('narLilyChance').value);
         const P_RARE_DROP_ = parseFloat(document.getElementById('rareDropChance').value);
         const bin_size_ = parseInt(document.getElementById('binSize').value);
+        const time_bin_size_ = parseInt(document.getElementById('timeBinSize').value);
+        const TIME_PER_WAVE_ = parseFloat(document.getElementById('timePerWave').value);
+        const TIME_PER_QUEST_ = parseFloat(document.getElementById('timePerQuest').value);
         
 
 
@@ -277,23 +319,50 @@ input[type=checkbox] {
                 trialData = runMultipleTrials(NUM_TRIALS_, 
             LILY_THRESHOLD_, ORIGINAL_LILIES_,
             ORIGINAL_LILIES_, DESIRED_DROPS_,
-            P_NAR_LILY_, P_RARE_DROP_
-
+            P_NAR_LILY_, P_RARE_DROP_,
+            TIME_PER_WAVE_, TIME_PER_QUEST_
             );
                 let numWavesArray = trialData.map(trial => trial['Num Waves']);
+                let questsArray = trialData.map(trial => trial['Quests']);
+                let timePerQuestArray = trialData.map(trial => trial['Time Per Quest']);
+                let timePerWaveArray = trialData.map(trial => trial['Time Per Wave']);
+                let timersArray = trialData.map(trial => trial['Timer']);
+                let resetsArray = trialData.map(trial => trial['Mission Resets']);
+                let timePerDropArray = trialData.map(trial => trial['Time Per Drop']);
                 let cdfData = prepareCdfData(numWavesArray);
 
                 
                 createHistogram(numWavesArray, bin_size_);
                 createCdfChart(cdfData,x_title="Number of Waves");
+                // Time distribution charts (pink)
+                createTimeHistogram(timersArray, time_bin_size_, x_title="Time (min)");
+                let timeCdfData = prepareCdfData(timersArray).map(p => ({ x: p.x, y: p.y }));
+                createTimeCdfChart(timeCdfData, x_title="Time (min)");
 
-                // Calculate and display mean of Num Waves
-                if (numWavesArray.length > 0) {
-                    let sum = numWavesArray.reduce((a, b) => a + b, 0);
-                    let mean = sum / numWavesArray.length;
-                    document.getElementById('meanDisplay').textContent = `Mean waves required: ${mean.toFixed(2)}`;
+                // Compute and display waves stats (mean, sd, quartiles)
+                const wavesStats = computeStats(numWavesArray);
+                if (wavesStats) {
+                    document.getElementById('wavesStatsDisplay').textContent = `Waves — mean: ${wavesStats.mean.toFixed(2)}; sd: ${wavesStats.sd.toFixed(2)}; Q1: ${wavesStats.q1.toFixed(2)}; median: ${wavesStats.median.toFixed(2)}; Q3: ${wavesStats.q3.toFixed(2)}`;
                 } else {
-                    document.getElementById('meanDisplay').textContent = '';
+                    document.getElementById('wavesStatsDisplay').textContent = '';
+                }
+                // Compute and display time stats
+                const timeStats = computeStats(timersArray);
+                if (timeStats) {
+                    document.getElementById('timeStatsDisplay').textContent = `Time (min) — mean: ${timeStats.mean.toFixed(2)}; sd: ${timeStats.sd.toFixed(2)}; Q1: ${timeStats.q1.toFixed(2)}; median: ${timeStats.median.toFixed(2)}; Q3: ${timeStats.q3.toFixed(2)}`;
+                } else {
+                    document.getElementById('timeStatsDisplay').textContent = '';
+                }
+                // (Simple mean displays removed — detailed stats shown below)
+                // Detailed means: mean time, mean time per drop, mean quests, mean resets
+                if (timersArray.length > 0) {
+                    let meanTime = timersArray.reduce((a,b)=>a+b,0)/timersArray.length;
+                    let meanTimePerDrop = timePerDropArray.reduce((a,b)=>a+b,0)/timePerDropArray.length;
+                    let meanQuests = questsArray.reduce((a,b)=>a+b,0)/questsArray.length;
+                    let meanResets = resetsArray.reduce((a,b)=>a+b,0)/resetsArray.length;
+                    document.getElementById('meanStatsDisplay').textContent = `Mean time: ${meanTime.toFixed(2)} min — Mean time/drop: ${meanTimePerDrop.toFixed(2)} min — Mean quests: ${meanQuests.toFixed(2)} — Mean resets: ${meanResets.toFixed(2)}`;
+                } else {
+                    document.getElementById('meanStatsDisplay').textContent = '';
                 }
             } catch (error) {
 
@@ -307,16 +376,41 @@ input[type=checkbox] {
 
 
         function OnValueChanged(){
-        const bin_size_ = parseInt(document.getElementById('binSize').value);
-        // const autoupdate = document.getElementById('auto-update-box').checked;
-        let numWavesArray = trialData.map(trial => trial['Num Waves']);
-        createHistogram(numWavesArray, bin_size_);
-            if (numWavesArray.length > 0) {
-                let sum = numWavesArray.reduce((a, b) => a + b, 0);
-                let mean = sum / numWavesArray.length;
-                document.getElementById('meanDisplay').textContent = `Mean waves required: ${mean.toFixed(2)}`;
+            const bin_size_ = parseInt(document.getElementById('binSize').value);
+            const time_bin_size_ = parseInt(document.getElementById('timeBinSize').value);
+            // const autoupdate = document.getElementById('auto-update-box').checked;
+            if (!trialData) return;
+            let numWavesArray = trialData.map(trial => trial['Num Waves']);
+            let questsArray = trialData.map(trial => trial['Quests']);
+            let timePerQuestArray = trialData.map(trial => trial['Time Per Quest']);
+            let timePerWaveArray = trialData.map(trial => trial['Time Per Wave']);
+            let timersArray = trialData.map(trial => trial['Timer']);
+            let timeCdfData = prepareCdfData(timersArray).map(p => ({ x: p.x, y: p.y }));
+            createHistogram(numWavesArray, bin_size_);
+                // (Simple mean displays removed — detailed stats refreshed instead)
+            // refresh time charts on bin-size change (uses independent time bin size)
+            createTimeHistogram(timersArray, time_bin_size_, x_title="Time (min)");
+            createTimeCdfChart(timeCdfData, x_title="Time (min)");
+            // refresh waves/time stats
+            const wavesStats = computeStats(numWavesArray);
+            if (wavesStats) {
+                document.getElementById('wavesStatsDisplay').textContent = `Waves — mean: ${wavesStats.mean.toFixed(2)}; sd: ${wavesStats.sd.toFixed(2)}; Q1: ${wavesStats.q1.toFixed(2)}; median: ${wavesStats.median.toFixed(2)}; Q3: ${wavesStats.q3.toFixed(2)}`;
             }
-    }
+            const timeStats = computeStats(timersArray);
+            if (timeStats) {
+                document.getElementById('timeStatsDisplay').textContent = `Time (min) — mean: ${timeStats.mean.toFixed(2)}; sd: ${timeStats.sd.toFixed(2)}; Q1: ${timeStats.q1.toFixed(2)}; median: ${timeStats.median.toFixed(2)}; Q3: ${timeStats.q3.toFixed(2)}`;
+            }
+                // refresh detailed means on bin-size change (reuse timersArray)
+                let timePerDropArray = trialData.map(trial => trial['Time Per Drop']);
+                let resetsArray = trialData.map(trial => trial['Mission Resets']);
+                if (timersArray.length > 0) {
+                    let meanTime = timersArray.reduce((a,b)=>a+b,0)/timersArray.length;
+                    let meanTimePerDrop = timePerDropArray.reduce((a,b)=>a+b,0)/timePerDropArray.length;
+                    let meanQuests = questsArray.reduce((a,b)=>a+b,0)/questsArray.length;
+                    let meanResets = resetsArray.reduce((a,b)=>a+b,0)/resetsArray.length;
+                    document.getElementById('meanStatsDisplay').textContent = `Mean time: ${meanTime.toFixed(2)} min — Mean time/drop: ${meanTimePerDrop.toFixed(2)} min — Mean quests: ${meanQuests.toFixed(2)} — Mean resets: ${meanResets.toFixed(2)}`;
+                }
+        }
 
 
     </script>

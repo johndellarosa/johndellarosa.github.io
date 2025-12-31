@@ -60,12 +60,26 @@ function runMultipleTrials(NUM_TRIALS = 1000,LILY_THRESHOLD = 7, ORIGINAL_LILIES
         let trialResult = simulateTrial(LILY_THRESHOLD, ORIGINAL_LILIES, LILIES_AFTER_RESET, DESIRED_DROPS,
             p_nar_lily, p_god_hp,
             time_per_pipe, time_for_to_get_to_spot, time_to_kill_lily);
+        // derive additional stats: quests, time per quest, time per wave
+        let waves = trialResult[0];
+        let timer = trialResult[1];
+        let mission_resets = trialResult[4];
+        let quests = mission_resets + 1;
+        let time_per_quest = quests > 0 ? timer / quests : timer;
+        let time_per_wave = waves > 0 ? timer / waves : timer;
+        // time per desired drop (use DESIRED_DROPS passed into runMultipleTrials)
+        let time_per_drop = DESIRED_DROPS > 0 ? timer / DESIRED_DROPS : timer;
+
         results.push({
-            'Num Waves': trialResult[0],
-            'Timer': trialResult[1],
+            'Num Waves': waves,
+            'Timer': timer,
             'Lilies Seen': trialResult[2],
             'Nar Lilies': trialResult[3],
-            'Mission Resets': trialResult[4]
+            'Mission Resets': mission_resets,
+            'Quests': quests,
+            'Time Per Quest': time_per_quest,
+            'Time Per Wave': time_per_wave
+            , 'Time Per Drop': time_per_drop
         });
     }
 
@@ -203,6 +217,90 @@ function createCdfChart(data, x_title='Waves Required',y_title='Probability') {
                         text: y_title
                     }
                 }
+            }
+        }
+    });
+}
+
+// Pink time histogram (uses same binning logic as createHistogram)
+function createTimeHistogram(data,binSize,x_title="Time (min)",y_title="Percentage (%)") {
+    if (!data || data.length === 0) return;
+    let maxVal = Math.max(...data);
+    let minVal = Math.min(...data);
+    // create bins over range [minVal, maxVal]
+    let range = maxVal - minVal;
+    let numBins = Math.ceil((range + 1) / binSize) || 1;
+    let binCounts = new Array(numBins).fill(0);
+    data.forEach(value => {
+        let binIndex = Math.floor((value - minVal) / binSize);
+        if (binIndex < 0) binIndex = 0;
+        if (binIndex >= numBins) binIndex = numBins - 1;
+        binCounts[binIndex]++;
+    });
+    let totalTrials = data.length;
+    let percentages = binCounts.map(count => (count / totalTrials) * 100);
+
+    const canvas = document.getElementById('timeHistogram');
+    const ctx = canvas.getContext('2d');
+    for (let key in Chart.instances) {
+        if (Chart.instances[key].ctx === ctx) {
+            Chart.instances[key].destroy();
+            break;
+        }
+    }
+
+    const labels = percentages.map((_, index) => {
+        let start = (minVal + index * binSize).toFixed(2);
+        let end = (minVal + index * binSize + binSize).toFixed(2);
+        return `${start} - ${end}`;
+    });
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Percentage',
+                data: percentages,
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: y_title } },
+                x: { title: { display: true, text: x_title } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+function createTimeCdfChart(data, x_title='Time (min)', y_title='Probability') {
+    if (!data || data.length === 0) return;
+    const ctx = document.getElementById('timeCdfChart').getContext('2d');
+    if (window.timeCdfChartInstance) window.timeCdfChartInstance.destroy();
+    window.timeCdfChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'CDF',
+                data: data,
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+                pointRadius: 2,
+                pointHoverRadius: 5,
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                x: { type: 'linear', position: 'bottom', title: { display: true, text: x_title } },
+                y: { title: { display: true, text: y_title } }
             }
         }
     });
