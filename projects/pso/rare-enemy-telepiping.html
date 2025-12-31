@@ -240,13 +240,15 @@ input[type=checkbox] {
     <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
 </div>
 <div id="progressbar" style="display:none;"></div>
-
+<hr>
+<div id="meanDisplay" style="margin-top:10px;font-weight:bold;text-align:center;"></div>
 <div id="histogramContainer">
 <canvas id="wavesHistogram"></canvas>
 </div>
 <div id="cdfContainer">
 <canvas id="cdfChart"></canvas>
 </div>
+
     <script>
 
     let trialData;
@@ -284,6 +286,15 @@ input[type=checkbox] {
                 
                 createHistogram(numWavesArray, bin_size_);
                 createCdfChart(cdfData,x_title="Number of Waves");
+
+                // Calculate and display mean of Num Waves
+                if (numWavesArray.length > 0) {
+                    let sum = numWavesArray.reduce((a, b) => a + b, 0);
+                    let mean = sum / numWavesArray.length;
+                    document.getElementById('meanDisplay').textContent = `Mean waves required: ${mean.toFixed(2)}`;
+                } else {
+                    document.getElementById('meanDisplay').textContent = '';
+                }
             } catch (error) {
 
             } finally{
@@ -300,6 +311,11 @@ input[type=checkbox] {
         // const autoupdate = document.getElementById('auto-update-box').checked;
         let numWavesArray = trialData.map(trial => trial['Num Waves']);
         createHistogram(numWavesArray, bin_size_);
+            if (numWavesArray.length > 0) {
+                let sum = numWavesArray.reduce((a, b) => a + b, 0);
+                let mean = sum / numWavesArray.length;
+                document.getElementById('meanDisplay').textContent = `Mean waves required: ${mean.toFixed(2)}`;
+            }
     }
 
 
