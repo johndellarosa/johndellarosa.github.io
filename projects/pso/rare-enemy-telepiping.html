@@ -201,7 +201,7 @@ input[type=checkbox] {
 <p>Simulates how many pipes it would take to get a set number of rare drops from a rare enemy by doing the piping strategy. The time estimation has the following sources of time loss:</p>
 <ul>
     <li>Time to get to farming spot (default 15 min)</li>
-    <li>Time per wave / telepipe. This would include the time required to scan each enemy to see if it is a rare mob, return to town if none are, then reenter the pipe. (default 0.25 min)</li>
+    <li>Time per wave / telepipe. This would include the time required to scan each enemy to see if it is a rare mob, return to town if none are, then reenter the pipe. (default 0.75 min)</li>
     <li>Time to kill each rare enemy (default 1 min)</li>
     <li>Time to save and quit, or the time to reset the quest in some other manner. This is not inclusive of the time to get to the farming spot after reloading. (default 1 min)</li>
 </ul>
@@ -248,7 +248,7 @@ input[type=checkbox] {
 </div>
 <div class="input-group">
     <label for="timePerWave"><abbr title="Time in minutes between telepipes / per wave when piping."> Time per Telepipie (min):</abbr></label>
-    <input type="number" id="timePerWave" value="0.25" min="0" step="0.01" style="width:6em;">
+    <input type="number" id="timePerWave" value="0.75" min="0" step="0.01" style="width:6em;">
 </div>
 <div class="input-group">
     <label for="timePerReset"><abbr title="Additional time to reset the quest from saving and quitting. DOES NOT INCLUDE QUEST TIME."> Save and Quit Timeloss (min):</abbr></label>
