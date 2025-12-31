@@ -1,6 +1,6 @@
 function simulateTrial(LILY_THRESHOLD = 7, ORIGINAL_LILIES = 9, LILIES_AFTER_RESET = 9, DESIRED_DROPS = 4,
     p_nar_lily = 1/500, p_god_hp = 7/8,
-    time_per_pipe = 0.35, time_for_to_get_to_spot = 15, time_to_kill_lily = 0.25) {
+    time_per_pipe = 0.35, time_for_to_get_to_spot = 15, time_per_reset = 1, time_to_kill_lily = 1) {
 let num_god_hp = 0;
 let waves = 0;
 let lilies_seen = 0;
@@ -27,6 +27,7 @@ if (lilies_in_wave <= LILY_THRESHOLD) {
 timer += time_for_to_get_to_spot; // technically should be a bit longer since it takes time to quit
 lilies_in_wave = LILIES_AFTER_RESET;
 mission_resets++;
+timer += time_per_reset;
 } else {
 // continue piping
 timer += time_per_pipe;

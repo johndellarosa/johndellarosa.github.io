@@ -198,7 +198,14 @@ input[type=checkbox] {
 
 <h1>Phantasy Star Online Rare Enemy Piping Simulation</h1>
 <h3><a href="./../pso">Return to Menu</a></h3>
-<p>Simulates how many pipes it would take to get a set number of rare drops from a rare enemy by doing the piping strategy.</p>
+<p>Simulates how many pipes it would take to get a set number of rare drops from a rare enemy by doing the piping strategy. The time estimation has the following sources of time loss:</p>
+<ul>
+    <li>Time to get to farming spot (default 15 min)</li>
+    <li>Time per wave / telepipe. This would include the time required to scan each enemy to see if it is a rare mob, return to town if none are, then reenter the pipe. (default 0.25 min)</li>
+    <li>Time to kill each rare enemy (default 1 min)</li>
+    <li>Time to save and quit, or the time to reset the quest in some other manner. This is not inclusive of the time to get to the farming spot after reloading. (default 1 min)</li>
+</ul>
+<p>Of course, your parameters may differ drastically depending on what you are farming and where. This simulation was originally designed for farming Nar Lilies in Waterfall of Tears, and the default parameters reflect that.</p>
 <br>
 <p>The first graph (histogram) tells what percentage of trials ended up requiring that number. The second graph shows the cumulative distribution function (CDF), which shows what fraction of trials that required fewer than a given number of waves.</p><br>
 <p>For example, find the x-value for the pointer corresponding to y=0.25. 25% of the time, you would finish in fewer waves than whatever that x-value is.</p>
@@ -236,15 +243,23 @@ input[type=checkbox] {
 <button id="process-btn" onclick="runSimulation()">Run Simulation</button>
 <br><br>
 <div class="input-group">
-    <label for="timePerQuest"><abbr title="Time in minutes to start/finish a quest (quit and re-enter)."> Time per Quest (min):</abbr></label>
+    <label for="timePerQuest"><abbr title="Time in minutes to start to get farming spot."> Time per Quest (min):</abbr></label>
     <input type="number" id="timePerQuest" value="15" min="0" step="0.1" style="width:6em;">
 </div>
 <div class="input-group">
-    <label for="timePerWave"><abbr title="Time in minutes between telepipes / per wave when piping."> Time per Wave (min):</abbr></label>
-    <input type="number" id="timePerWave" value="0.35" min="0" step="0.01" style="width:6em;">
+    <label for="timePerWave"><abbr title="Time in minutes between telepipes / per wave when piping."> Time per Telepipie (min):</abbr></label>
+    <input type="number" id="timePerWave" value="0.25" min="0" step="0.01" style="width:6em;">
 </div>
 <div class="input-group">
-    <label for="binSize"><abbr title="Specifies x-axis bin size for graph.">Histogram Bin Size:</abbr></label>
+    <label for="timePerReset"><abbr title="Additional time to reset the quest from saving and quitting. DOES NOT INCLUDE QUEST TIME."> Save and Quit Timeloss (min):</abbr></label>
+    <input type="number" id="timePerReset" value="1" min="0" step="0.01" style="width:6em;">
+</div>
+<div class="input-group">
+    <label for="timePerKill"><abbr title="Time spent killing the rare enemy."> Time per Kill (min):</abbr></label>
+    <input type="number" id="timePerKill" value="1" min="0" step="0.01" style="width:6em;">
+</div>
+<div class="input-group">
+    <label for="binSize"><abbr title="Specifies x-axis bin size for waves graph.">Waves Histogram Bin Size:</abbr></label>
     <input type="number" id="binSize" value="10" min="1" max="5000" onblur="OnValueChanged()">
 </div>
 <div class="input-group">
@@ -309,6 +324,8 @@ input[type=checkbox] {
         const time_bin_size_ = parseInt(document.getElementById('timeBinSize').value);
         const TIME_PER_WAVE_ = parseFloat(document.getElementById('timePerWave').value);
         const TIME_PER_QUEST_ = parseFloat(document.getElementById('timePerQuest').value);
+        const TIME_PER_RESET_ = parseFloat(document.getElementById('timePerReset').value);
+        const TIME_PER_KILL_ = parseFloat(document.getElementById('timePerKill').value);
         
 
 
@@ -320,7 +337,8 @@ input[type=checkbox] {
             LILY_THRESHOLD_, ORIGINAL_LILIES_,
             ORIGINAL_LILIES_, DESIRED_DROPS_,
             P_NAR_LILY_, P_RARE_DROP_,
-            TIME_PER_WAVE_, TIME_PER_QUEST_
+            TIME_PER_WAVE_, TIME_PER_QUEST_,
+            TIME_PER_RESET_, TIME_PER_KILL_
             );
                 let numWavesArray = trialData.map(trial => trial['Num Waves']);
                 let questsArray = trialData.map(trial => trial['Quests']);
