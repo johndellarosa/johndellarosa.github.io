@@ -223,10 +223,16 @@ button[disabled], #run[disabled] { opacity:0.6; cursor:default }
 
 <br>
 <p>
-    Section ID and difficulty impact the slot probabilities. Player level impacts the armor type probabilities.
+    Section ID and difficulty impact the slot probabilities. Player level impacts the armor type probabilities (as well as the number of items in the shop).
 </p>
 
+<p>
+    The mechanics of the shop disallows "duplicates," which it takes to mean items with the same type AND slot. E.g., you could have 2 Psy Frames, but they would have different slots. Statistically, this could be thought of as sampling without replacement where the elements are (armor+slot) combinations. Keep in mind that not each combination has equal probability. The hypergeometric distribution describes the probability when all elements are equal; however, the shop dynamics don't obey the equal probability assumption. There are extensions such as the noncentral hypergeometric distribution, but that deals with a binary case with bias, while we have more than 2 categories. Thus, we can instead estimate the value numerically using Monte Carlo simulations to get the probability of getting it in a given shop. From there, the outcome is a simple success or failure; thus, we can then model the distribution of number of shop visits needed as being a geometric distribution with p being the probability of success.
+</p>
 
+<p>
+    Note that this is a Monte Carlo simulation, so results may vary slightly each time you run it. In practice, the default 10,000 trials should give a good approximation of the actual probabilities.  
+</p>
 
 <main>
     <h1>PSO Armor Shop Monte Carlo</h1>
