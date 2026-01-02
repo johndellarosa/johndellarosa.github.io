@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <title>PSO Armor Shop Simulation</title>
+
+    <!-- Meta tags -->
+    
+    <meta name="keywords" content="PSO, Phantasy Star Online, rare enemy, telepipe">
+    <meta name="author" content="John Della Rosa" >
+    <meta name="description" content="Phantasy Star Online Armor Shop Chance Simulator">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://johndellarosa.github.io//site.webmanifest">
+    <link rel="canonical" href="https://johndellarosa.github.io/projects/pso/rare-enemy-telepiping">     
+    <link rel="stylesheet" href="https://johndellarosa.github.io/style.css">    
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript" src="./pso-monte-carlo-functions-.js"></script>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif; /* Use a nice font */
+    }
+
+    .center-container {
+        text-align: center; /* Center-aligns the content */
+        margin-top: 30px; /* Adds some space at the top */
+    }
+
+    #user-input,.input-group input, #process-btn, .input-group select {
+        margin: 10px; /* Adds space around the input and button */
+        padding: 10px; /* Adds space inside the input and button */
+        border: 1px solid #ccc; /* Adds a border to the input and button */
+        border-radius: 5px; /* Rounds the corners of the input and button */
+  
+    }
+
+    #process-btn {
+        cursor: pointer; /* Changes the cursor when hovering over the button */
+        background-color: #007bff; /* Sets a background color for the button */
+        color: white; /* Sets the text color for the button */
+        border: none; /* Removes the border from the button */
+    }
+
+    #process-btn:hover {
+        background-color: #0056b3; /* Darkens the button when hovered */
+    }
+
+    #data-table {
+        margin-top: 20px; /* Adds some space between the button and the table */
+        text-align: left; /* Aligns the table content to the left */
+        width: 100%; /* Makes the table take up the full width */
+    }
+
+    table {
+        width: 95%; /* Set the width of the table to be 95% of its container */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapses the borders of the table */
+    }
+
+    thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* Adds a border to table headers and cells */
+        text-align: center; /* Centers header text */
+        padding: 6px; /* Adds space inside table headers and cells */
+    }
+
+    th {
+        background-color: #e0e0e0; /* Sets a background color for headers */
+        text-align: center; /* Centers header text */
+        padding: 8px; /* Adds space inside table headers and cells */
+    }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+    .input-container {
+            margin: 0 auto; /* Centers the container */
+            width: fit-content; /* Ensures the container only takes up as much width as needed */
+            padding: 10px; /* Adds some padding around the container */
+        }
+
+        label {
+            white-space: nowrap;
+            margin-right: 10px; /* Adds some space between the label and the input field */
+        }
+
+        .input-group {
+    display: inline-flex; /* This will keep the label and input together */
+    margin-right: 10px; /* Space between groups */
+    flex-wrap: nowrap; /* Prevent wrapping within the group */
+    align-items: center; /* Centers the label vertically relative to the input */
+  }
+
+  .input-group label,
+  .input-group input {
+    white-space: nowrap; /* This will keep the text of label and the input on the same line */
+  }
+
+        input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+        }
+
+        th, td {
+    min-width: 25px;
+}
+
+#data-table {
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+
+
+}
+input[type=checkbox] {
+    -webkit-transform: scale(1.5); /* Safari and Chrome */
+    transform: scale(1.5);
+}
+
+
+#histogramContainer, #timeHistogramContainer {
+    max-height: 50vh; /* Set the maximum height you want */
+    min-height: 40vh;
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+#cdfContainer, #timeCdfContainer {
+    max-height: 50vh; /* Set the maximum height you want */
+    min-height: 20vh;
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+
+body{font-family:system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial; padding:20px}
+main{max-width:960px;margin:0 auto}
+section{margin:12px 0}
+label{display:inline-block;margin-right:12px}
+#status{font-weight:600}
+#metrics p{margin:6px 0}
+canvas{background:#fff;border:1px solid #ddd}
+
+/* Stylish checkbox-as-button controls */
+#armor-controls, #slot-controls { margin-top:8px }
+#armor-controls label, #slot-controls label { position:relative; display:inline-flex; align-items:center; margin:6px; }
+#armor-controls input[type=checkbox], #slot-controls input[type=checkbox] { position:absolute; opacity:0; width:0; height:0; }
+#armor-controls span, #slot-controls span { display:inline-block; padding:8px 10px; border-radius:8px; background:#f0f6ff; color:#0b3d91; border:1px solid #dbe9ff; cursor:pointer; transition: all 120ms ease; opacity:0.6 }
+#armor-controls input[type=checkbox]:checked + span, #slot-controls input[type=checkbox]:checked + span { background:#0b69ff; color:#fff; border-color:#0b69ff; opacity:1; box-shadow:0 2px 6px rgba(11,105,255,0.18) }
+#armor-controls span:hover, #slot-controls span:hover { transform:translateY(-1px); opacity:0.95 }
+
+/* buttons */
+button[type=button], button[type=submit], #run { margin-right:8px; padding:6px 10px; border-radius:6px; border:1px solid #bbb; background:#fff; cursor:pointer }
+button[disabled], #run[disabled] { opacity:0.6; cursor:default }
+
+
+</style>
+
+</head>
+<body>
+    <div class="navbar">
+        <b style="margin-right:10px">John Della Rosa</b>| 
+        <a href="https://johndellarosa.github.io/index.html">Home</a>|
+        <a href="https://johndellarosa.github.io/resume.html">Resume</a>
+        <!-- <a href="./index.html#education">Education</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#skills">Skills</a> -->
+        |
+        <a href="https://johndellarosa.github.io/biography.html">About</a>|
+        <a href="https://johndellarosa.github.io/projects.html"><u>Projects</u></a>|
+        <a href="https://johndellarosa.github.io/miscellaneous.html">Misc</a>|
+        <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+        <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+        <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+        <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+    
+    </div> 
+
+
+<h1>Phantasy Star Online Armor Shop Probability</h1>
+<h3><a href="./../pso">Return to Menu</a></h3>
+<p>Simulates how many times you have to go to the shop to get a particular armor+slot combination. Select only a subset and click run simulation.</p>
+
+<br>
+<p>
+    Section ID and difficulty impact the slot probabilities. Player level impacts the armor type probabilities.
+</p>
+
+
+
+<main>
+    <h1>PSO Armor Shop Monte Carlo</h1>
+
+
+    <div class="center-container">
+        <div class="input-group">
+      <label>Trials: <input id="trials" type="number" value="10000" min="1" /></label><br>
+        </div>
+      <div class="input-group">
+        <label>Player level: <input id="playerLevel" type="number" value="10" min="1" max="200"/></label><br>
+        </div>
+      <div class="input-group">
+        <label>Section id: <select id="sectionId"></select></label><br>
+        </div>
+      <div class="input-group">
+        <label>Difficulty: <select id="difficulty"></select></label><br>
+             </div>
+      <div class="input-group">
+        <label>Seed (optional): <input id="seed" type="number" value="0" /></label>
+      </div>
+        <br><br>
+      <button id="run">Run Simulation</button>
+    </div>
+
+    <section>
+      <h3>Filter by Armor Types</h3>
+      <div id="armor-controls"></div>
+    </section>
+
+    <section>
+      <h3>Filter by Slot Counts</h3>
+      <div id="slot-controls"></div>
+    </section>
+
+    <section id="status"></section>
+
+    <section id="results">
+      <h2>Results</h2>
+      <div id="metrics"></div>
+      <canvas id="hist" width="800" height="300"></canvas>
+    </section>
+  </main>
+
+
+    <h3>References</h3>
+    <p style="text-align: center;">
+
+        Parsing data and file help done in collaboration with <a href="https://www.youtube.com/@akdylie">AKDylie</a>.<br>
+
+
+        Data and formula taken from <a href="https://github.com/fuzziqersoftware/newserv/tree/master" rel="external">Newserv</a>
+    </p>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        } 
+        </script>
+
+  <script src="armor-shop.js"></script>
+</body>
+</html>
