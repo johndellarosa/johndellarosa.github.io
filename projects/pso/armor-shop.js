@@ -50,7 +50,22 @@ let armor_random_tables_global = null; let slot_weight_lookup_global = null;
 
 async function initData(){ try{ const [resTypes, resSlots] = await Promise.all([ fetch('armor_type_weights.json'), fetch('armor_slot_weights.json') ]); if (!resTypes.ok || !resSlots.ok) throw new Error('Failed to load bundled JSON'); const objTypes = await resTypes.json(); const objSlots = await resSlots.json(); armor_random_tables_global = parseArmorRandomTables(objTypes); slot_weight_lookup_global = parseSlotWeightLookup(objSlots); const difficultySelect = document.getElementById('difficulty'); difficultySelect.innerHTML = ''; Object.keys(slot_weight_lookup_global).forEach(d => { const opt = document.createElement('option'); opt.value = d; opt.textContent = d; difficultySelect.appendChild(opt); }); populateSections(difficultySelect.value || Object.keys(slot_weight_lookup_global)[0]); }catch(err){ setStatus('Error loading built-in JSON: ' + err.message); console.error(err); } }
 
-function populateSections(difficulty){ const sec = document.getElementById('sectionId'); sec.innerHTML = ''; const sheet = slot_weight_lookup_global && slot_weight_lookup_global[difficulty.toUpperCase()]; if (!sheet) return; Object.keys(sheet).forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; sec.appendChild(opt); }); }
+
+function populateSections(difficulty){
+  const sec = document.getElementById('sectionId');
+  if (!sec) return;
+  const previous = sec.value;
+  sec.innerHTML = '';
+  const sheet = slot_weight_lookup_global && slot_weight_lookup_global[difficulty.toUpperCase()];
+  if (!sheet) return;
+  Object.keys(sheet).forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; sec.appendChild(opt); });
+  // try to preserve previous selection when switching difficulty
+  if (previous && sheet[previous] !== undefined) {
+    sec.value = previous;
+  } else {
+    sec.selectedIndex = 0;
+  }
+}
 
 const armorIndexMap = { 0: 'Frame', 1: 'Armor', 2: 'Psy Armor', 3: 'Giga Frame', 4: 'Soul Frame', 5: 'Cross Armor', 6: 'Solid Frame', 7: 'Brave Armor', 8: 'Hyper Frame', 9: 'Grand Armor', 10: 'Shock Frame', 11: "King's Frame", 12: 'Dragon Frame', 13: 'Absorb Armor', 14: 'Protect Frame', 15: 'General Armor', 16: 'Perfect Frame', 17: 'Valiant Frame', 18: 'Imperial Armor', 19: 'Holiness Armor', 20: 'Guardian Armor' };
 
