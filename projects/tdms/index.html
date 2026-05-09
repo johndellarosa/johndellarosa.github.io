@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+       
+            <title>TDMS Inspector</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="TDMS, Inspector, Local-only, Browser viewer">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="TDMS Inspector: Local-only browser viewer for NI TDMS files.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/c-book/compiling"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        <link rel="stylesheet" href="styles.css" />        
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+
+
+  <main>
+    <h1>TDMS Inspector</h1>
+    <h2>by John Della Rosa</h2>    
+    <p class="subtitle">Local-only browser viewer for NI TDMS files.</p>
+    <section class="notice">
+    <strong>Important notice:</strong>
+    This tool is experimental and may contain parsing or calculation bugs.
+    Do not rely on it as the sole source for safety-critical, regulatory,
+    medical, legal, engineering, or production decisions. Always verify important
+    results against trusted software or the original data source.
+    </section>
+
+    <p>Sample file is available at <a href="https://www-personal.acfr.usyd.edu.au/zubizarreta/EDatabase.php" target="_blank">https://www-personal.acfr.usyd.edu.au/zubizarreta/EDatabase.php</a></p>
+        <br>
+    <section class="dropzone">
+      <input id="fileInput" type="file" accept=".tdms,.tdms_index" />
+      <p>Select a TDMS file. Nothing is uploaded.</p>
+    </section>
+
+    <section class="layout">
+      <aside>
+        <h2>Objects</h2>
+        <div id="objectTree"></div>
+      </aside>
+
+      <section>
+        <h2>Summary</h2>
+        <pre id="summary"></pre>
+        <h2>Channels</h2>
+        <div class="table-wrap">
+        <table id="channelTable">
+            <thead>
+            <tr>
+                <th>Channel</th>
+                <th>Unit</th>
+                <th>Type</th>
+                <th>Samples</th>
+                <th>Segments</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Mean</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        </div>      
+        <h2>Channel Plot</h2>
+        <div id="channelPlot" style="width: 100%; height: 420px;"></div>        
+        <h2>Selected Object</h2>
+        <pre id="selectedObject"></pre>
+  
+        <h2>Channel Preview</h2>
+        <pre id="channelPreview"></pre>
+
+        <h2>Warnings</h2>
+        <pre id="warnings"></pre>
+      </section>
+    </section>
+  </main>
+<script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
