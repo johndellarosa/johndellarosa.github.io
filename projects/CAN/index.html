@@ -13,14 +13,14 @@
   gtag('config', 'G-2C44LTKBE1');
 </script>
        
-            <title>BLF/ASC CAN Log Inspector</title>
+            <title>CAN ASC Log Viewer Online - Decode and Plot CAN Bus Logs</title>
     
         <!-- Meta tags -->
         
         <meta name="keywords" content="CAN, BLF, ASC Inspector, Local-only, Browser viewer">
         <meta name="author" content="John Della Rosa" >
-        <meta name="description" content="Inspect CAN bus ASC logs, summarize message IDs, filter frames, and plot raw payload bytes.">
-        
+        <meta name="description" content="Upload a CAN ASC log in your browser, inspect CAN messages, summarize IDs, plot payload bytes, and decode DBC signals locally. No install required.">
+        <meta name="robots" content="index, follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
         <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
@@ -63,7 +63,14 @@
       </p>
     </div>
   </header>
-        
+<p>
+  Upload a Vector-style ASC CAN bus log and inspect messages directly in your browser.
+The viewer summarizes CAN IDs, filters frames, plots raw payload bytes, and can decode
+little-endian DBC signals.
+</p>
+<p>
+  It is not a replacement for Vector CANalyzer, CANoe, busmaster, SavvyCAN, python-can, or cantools, but it can be useful for quick inspection when you only need to view, filter, plot, or decode a small log file.
+</p>
 <main class="app-shell">
     <section class="panel upload-panel">
       <div class="upload-row">
@@ -337,7 +344,31 @@
       </div>
     </section>
   </main>
-
+<h2>What this tool supports</h2>
+<ul>
+  <li>ASC CAN log upload</li>
+  <li>Raw CAN message table</li>
+  <li>CAN ID summary</li>
+  <li>Raw payload byte plotting</li>
+  <li>DBC upload and signal browser</li>
+  <li>Little-endian DBC signal decoding</li>
+  <li>Decoded signal CSV export</li>
+</ul>
   <script src="main.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CAN ASC Log Viewer",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "description": "Browser-based viewer for CAN ASC logs with CAN ID summaries, raw byte plotting, and DBC signal decoding.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </body>
 </html>

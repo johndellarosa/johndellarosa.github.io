@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LabVIEW VI / LLB Inspector MVP</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Local labview file inspector with resource scanning, string extraction, and dependency inference.">
+        <meta name="author" content="John Della Rosa" >
+<style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+      --border: rgba(148, 163, 184, 0.24);
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 34rem),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.12), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      padding: 32px 24px 20px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 900px;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto 48px;
+    }
+
+    .drop-zone {
+      border: 1px dashed rgba(56, 189, 248, 0.55);
+      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.72);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+      align-items: center;
+      grid-template-columns: 1fr auto;
+    }
+
+    .drop-zone.dragover {
+      border-color: var(--accent-2);
+      background: rgba(34, 197, 94, 0.09);
+    }
+
+    .drop-title {
+      font-size: 1.25rem;
+      font-weight: 750;
+      margin-bottom: 6px;
+    }
+
+    .drop-copy {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    button, .button-label {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 750;
+      color: #06202d;
+      background: linear-gradient(135deg, var(--accent), #7dd3fc);
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.22);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    button.secondary {
+      color: var(--text);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card h2, .card h3 {
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .card-header {
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(31, 41, 55, 0.72);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      min-height: 86px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+    font-size: 1.05rem;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .pill.good { color: #bbf7d0; border-color: rgba(34, 197, 94, 0.38); }
+    .pill.warn { color: #fde68a; border-color: rgba(245, 158, 11, 0.42); }
+    .pill.bad { color: #fecaca; border-color: rgba(239, 68, 68, 0.42); }
+
+    .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.45);
+    }
+
+    .tab {
+    border: 1px solid var(--border);
+    background: rgba(31, 41, 55, 0.6);
+    color: var(--muted);
+    padding: 9px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.88rem;
+    height: auto;
+    flex: 0 0 auto;
+    }
+
+    .tab.active {
+      color: #061923;
+      background: var(--accent);
+      border-color: transparent;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.88rem;
+    user-select: none;
+    }
+
+    .checkbox-label input {
+    accent-color: var(--accent);
+    }
+    input[type="search"], select {
+      width: 100%;
+      max-width: 320px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 12px;
+      color: var(--text);
+      outline: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 10px 9px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #cbd5e1;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(15, 23, 42, 0.48);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    .scroll {
+      max-height: 540px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .mono { font-family: var(--mono); }
+    .muted { color: var(--muted); }
+
+    .notice {
+      border: 1px solid rgba(245, 158, 11, 0.38);
+      background: rgba(245, 158, 11, 0.08);
+      border-radius: 16px;
+      padding: 12px 14px;
+      line-height: 1.5;
+      color: #fde68a;
+      margin-bottom: 14px;
+    }
+
+    .ok-notice {
+      border-color: rgba(34, 197, 94, 0.38);
+      background: rgba(34, 197, 94, 0.08);
+      color: #bbf7d0;
+    }
+
+    .resource-chip {
+      font-family: var(--mono);
+      color: #e0f2fe;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 8px;
+      padding: 2px 6px;
+      display: inline-block;
+    }
+
+    .hex-view {
+      font-family: var(--mono);
+      white-space: pre;
+      overflow: auto;
+      max-height: 460px;
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      line-height: 1.45;
+      font-size: 0.82rem;
+    }
+
+    .string-list, .dependency-list, .warnings-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .list-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.55);
+      padding: 10px 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .preview-img {
+    max-width: 100%;
+    min-width: 32px;
+    min-height: 32px;
+    image-rendering: pixelated;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: #020617;
+    padding: 10px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.9rem;
+      margin-top: 18px;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 20px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.4);
+    }
+    .graph-wrap {
+    width: 100%;
+    min-height: 520px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.08), transparent 18rem),
+        rgba(2, 6, 23, 0.72);
+    overflow: hidden;
+    }
+
+    .dependency-graph {
+    width: 100%;
+    height: 520px;
+    display: block;
+    }
+
+    .graph-edge {
+    stroke: rgba(148, 163, 184, 0.58);
+    stroke-width: 1.6;
+    fill: none;
+    marker-end: url(#arrowHead);
+    }
+
+    .graph-node circle,
+    .graph-node rect {
+    stroke: rgba(226, 232, 240, 0.52);
+    stroke-width: 1.2;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+    }
+
+    .graph-node.main circle { fill: rgba(56, 189, 248, 0.88); }
+    .graph-node.vi rect { fill: rgba(34, 197, 94, 0.72); }
+    .graph-node.ctl rect { fill: rgba(168, 85, 247, 0.70); }
+    .graph-node.library rect { fill: rgba(245, 158, 11, 0.72); }
+    .graph-node.unknown rect { fill: rgba(100, 116, 139, 0.82); }
+
+    .graph-label {
+    fill: #e5e7eb;
+    font: 700 12px var(--sans);
+    text-anchor: middle;
+    pointer-events: none;
+    }
+
+    .graph-sub-label {
+    fill: #cbd5e1;
+    font: 10px var(--mono);
+    text-anchor: middle;
+    pointer-events: none;
+    }
+    @media (max-width: 900px) {
+      .drop-zone, .layout { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      .button-label { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LabVIEW VI / LLB Inspector</h1>
+    <p class="subtitle">
+      A browser-only experimental viewer for LabVIEW-style resource containers. It does not execute VIs and does not render full block diagrams. The goal is quick triage: identify whether a file looks like an RSRC container, list resource-like chunks, extract visible strings/dependencies, and flag common signs of stripped or protected files.
+    </p>
+  </header>
+
+  <main>
+    <section id="dropZone" class="drop-zone">
+      <div>
+        <div class="drop-title">Drop a <span class="mono">.vi</span>, <span class="mono">.ctl</span>, <span class="mono">.llb</span>, or related LabVIEW file here</div>
+        <div class="drop-copy">Everything runs locally in your browser. No file is uploaded. This MVP uses conservative parsing plus heuristic scanning because LabVIEW resource internals are not a normal public web format.</div>
+      </div>
+      <label class="button-label" for="fileInput">Choose file</label>
+      <input id="fileInput" class="file-input" type="file" accept=".vi,.ctl,.llb,.vit,.lvlib,.lvclass,.rsc,.uir,.mnu,.ctt,.dlog,*/*" />
+    </section>
+
+    <section class="layout">
+      <aside class="card">
+        <div class="card-header">
+          <h2>Summary</h2>
+          <button id="exportJsonBtn" class="secondary" disabled>Export JSON</button>
+        </div>
+        <div class="card-body">
+          <div class="stats" id="summaryStats">
+            <div class="stat"><div class="stat-label">File</div><div class="stat-value muted">No file loaded</div></div>
+            <div class="stat"><div class="stat-label">Status</div><div class="stat-value muted">Waiting</div></div>
+          </div>
+          <div class="pill-row" id="pillRow"></div>
+          <div class="footer-note">
+            This tool is intentionally read-only. Treat results as best-effort inspection, not authoritative decompilation.
+          </div>
+        </div>
+      </aside>
+
+      <section class="card">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="resources">Resources</button>
+          <button class="tab" data-tab="metadata">Metadata</button>
+          <button class="tab" data-tab="dependencies">Dependencies</button>
+          <button class="tab" data-tab="graph">Graph</button>
+          <button class="tab" data-tab="strings">Strings</button>
+          <button class="tab" data-tab="images">Images</button>
+          <button class="tab" data-tab="hex">Hex Preview</button>
+          <button class="tab" data-tab="warnings">Warnings</button>
+        </div>
+
+        <div class="card-body">
+          <div id="resources" class="section active">
+            <div class="notice">
+              The resource table below is a scanner output. When a valid RSRC header is found, offsets are interpreted cautiously; otherwise, the scanner falls back to searching for known four-character LabVIEW resource codes.
+            </div>
+            <div class="toolbar">
+            <input id="resourceSearch" type="search" placeholder="Filter resource types, offsets, descriptions…" />
+            <select id="resourceTypeFilter"><option value="">All resource types</option></select>
+
+            <label class="checkbox-label">
+                <input id="showLowConfidenceResources" type="checkbox" />
+                Show low-confidence candidates
+            </label>
+            </div>
+            <div class="scroll"><table id="resourcesTable"></table></div>
+          </div>
+
+          <div id="metadata" class="section">
+            <div id="metadataPane" class="empty">Load a file to inspect metadata.</div>
+          </div>
+
+          <div id="dependencies" class="section">
+            <div class="notice ok-notice">Dependency detection looks for embedded paths and file names ending in common LabVIEW extensions. It can catch useful hints even when the complete hierarchy is not parseable.</div>
+            <div id="dependencyList" class="dependency-list"></div>
+          </div>
+            <div id="graph" class="section">
+            <div class="notice ok-notice">
+                This graph is a best-effort dependency view. For a single VI, it shows likely outgoing references discovered from embedded strings. It does not prove that every listed VI is actually called on the block diagram.
+            </div>
+
+            <div class="toolbar">
+                <button id="fitGraphBtn" class="secondary">Fit graph</button>
+                <button id="exportGraphSvgBtn" class="secondary">Export SVG</button>
+            </div>
+
+            <div id="graphSummary" class="pill-row" style="margin-bottom:14px;"></div>
+
+            <div class="graph-wrap">
+                <svg id="dependencyGraph" class="dependency-graph" viewBox="0 0 900 520" role="img" aria-label="Dependency graph"></svg>
+            </div>
+
+            <div id="graphLegend" class="footer-note"></div>
+            </div>
+          <div id="strings" class="section">
+            <div class="toolbar">
+              <input id="stringSearch" type="search" placeholder="Filter extracted strings…" />
+              <select id="stringKindFilter">
+                <option value="">ASCII and UTF-16 strings</option>
+                <option value="ascii">ASCII only</option>
+                <option value="utf16">UTF-16 only</option>
+              </select>
+            </div>
+            <div id="stringList" class="string-list"></div>
+          </div>
+
+          <div id="images" class="section">
+            <div class="notice">LabVIEW VI icons are often stored in LabVIEW-specific resources, not always as browser-native PNG/JPEG/GIF/BMP. This tab shows any embedded standard images plus hints around icon-like resources.</div>
+            <div id="imagePane"></div>
+          </div>
+
+          <div id="hex" class="section">
+            <div class="toolbar">
+              <input id="hexOffset" type="search" placeholder="Offset decimal or 0xHEX" />
+              <button id="jumpHexBtn" class="secondary">Jump</button>
+            </div>
+            <div id="hexView" class="hex-view">No file loaded.</div>
+          </div>
+
+          <div id="warnings" class="section">
+            <div id="warningsList" class="warnings-list"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const KNOWN_RESOURCE_TYPES = {
+      RSRC: 'LabVIEW resource container signature',
+      LVSR: 'LabVIEW version / save record candidate',
+      BDHP: 'Block diagram heap candidate',
+      BDPW: 'Block diagram password/protection candidate',
+      BDFL: 'Block diagram flags candidate',
+      BDSE: 'Block diagram section candidate',
+      FPHP: 'Front panel heap candidate',
+      FPSE: 'Front panel section candidate',
+      FPTD: 'Front panel type descriptor candidate',
+      CPST: 'Connector pane / terminal pattern candidate',
+      CONP: 'Connector pane candidate',
+      ICON: 'VI icon resource candidate',
+      IcoN: 'VI icon resource candidate',
+      STRG: 'String table candidate',
+      STR: 'String candidate',
+      MItm: 'Menu item resource candidate',
+      MUID: 'Menu UID candidate',
+      DLGH: 'Dialog header candidate',
+      LSTN: 'List names candidate',
+      VITS: 'VI type/save info candidate',
+      VCTP: 'VI consolidated types candidate',
+      TYPD: 'Type descriptor candidate',
+      TMPL: 'Resource template candidate',
+      PATH: 'Path resource candidate',
+      HLPT: 'Help text candidate',
+      CPD: 'Connector pane data candidate',
+      LIvi: 'LabVIEW VI library item candidate',
+      LIBN: 'Library name candidate',
+      LLBM: 'LLB metadata candidate'
+    };
+
+    const LABVIEW_EXTENSIONS = ['.vi', '.ctl', '.vit', '.llb', '.lvlib', '.lvclass', '.xctl', '.mnu', '.uir', '.rsc'];
+    const TEXT_ENCODER = new TextEncoder();
+    const state = { file: null, buffer: null, bytes: null, result: null, objectUrls: [] };
+
+    const el = (id) => document.getElementById(id);
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        el(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    const dropZone = el('dropZone');
+    dropZone.addEventListener('dragover', (event) => { event.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', async (event) => {
+      event.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = event.dataTransfer.files?.[0];
+      if (file) await loadFile(file);
+    });
+    el('fileInput').addEventListener('change', async (event) => {
+      const file = event.target.files?.[0];
+      if (file) await loadFile(file);
+    });
+
+    el('resourceSearch').addEventListener('input', renderResources);
+    el('resourceTypeFilter').addEventListener('change', renderResources);
+    el('stringSearch').addEventListener('input', renderStrings);
+    el('stringKindFilter').addEventListener('change', renderStrings);
+    el('jumpHexBtn').addEventListener('click', () => renderHex(parseOffset(el('hexOffset').value)));
+    el('exportJsonBtn').addEventListener('click', exportJson);
+    el('fitGraphBtn').addEventListener('click', () => renderDependencyGraph());
+    el('exportGraphSvgBtn').addEventListener('click', exportGraphSvg);
+    el('showLowConfidenceResources').addEventListener('change', renderResources);
+    async function loadFile(file) {
+      cleanupUrls();
+      state.file = file;
+      state.buffer = await file.arrayBuffer();
+      state.bytes = new Uint8Array(state.buffer);
+      state.result = inspectLabviewFile(file, state.bytes);
+      renderAll();
+      el('exportJsonBtn').disabled = false;
+    }
+
+    function inspectLabviewFile(file, bytes) {
+      const header = parseHeader(bytes);
+      const strings = extractStrings(bytes);
+      const deps = extractDependencies(strings);
+      const scannedResources = scanForResourceTypes(bytes);
+      const directoryResources = header.isLikelyRsrc ? tryParseDirectory(bytes, header) : [];
+      const resources = mergeResources(directoryResources, scannedResources);
+      const version = inferLabviewVersion(bytes, strings, resources);
+      const images = extractEmbeddedImages(bytes);
+      const warnings = buildWarnings(file, bytes, header, strings, resources, deps, images);
+
+      return {
+        file: {
+          name: file.name,
+          sizeBytes: file.size,
+          type: file.type || '(unknown)',
+          extension: getExtension(file.name)
+        },
+        header,
+        inferred: {
+          labviewVersion: version,
+          likelyContainer: header.isLikelyRsrc,
+          likelyLlb: looksLikeLlb(file, strings, resources),
+          passwordOrProtectionHints: resources.filter(r =>
+            r.type === 'BDPW' ||
+            /password|protected/i.test(r.description) && r.source !== 'generic-fourcc-scan'
+            ).length,
+          sourceStrippedHints: detectSourceStripped(resources, strings)
+        },
+        resources,
+        dependencies: deps,
+        strings,
+        images,
+        warnings
+      };
+    }
+
+    function parseHeader(bytes) {
+      const ascii = bytesToAscii(bytes, 0, Math.min(bytes.length, 64));
+      const startsRsrc = ascii.startsWith('RSRC');
+      const hasRsrcEarly = ascii.includes('RSRC');
+      const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const candidates = [];
+      for (const endian of [false, true]) {
+        const label = endian ? 'little-endian' : 'big-endian';
+        const fields = [];
+        for (let off = 4; off + 4 <= Math.min(40, bytes.length); off += 4) {
+          fields.push({ offset: off, value: safeU32(dv, off, endian) });
+        }
+        const plausibleOffsets = fields.filter(f => f.value > 0 && f.value < bytes.length).length;
+        candidates.push({ endian: label, fields, plausibleOffsets });
+      }
+      const best = candidates.sort((a, b) => b.plausibleOffsets - a.plausibleOffsets)[0];
+      return {
+        magicPreview: ascii.replace(/[\x00-\x1F\x7F]/g, '.'),
+        isLikelyRsrc: startsRsrc || hasRsrcEarly,
+        startsWithRsrc: startsRsrc,
+        rsrcOffset: indexOfAscii(bytes, 'RSRC'),
+        guessedEndian: best?.endian || 'unknown',
+        headerCandidates: candidates,
+        note: startsRsrc
+          ? 'File begins with RSRC signature.'
+          : hasRsrcEarly
+            ? 'RSRC signature appears near the beginning but not at byte 0.'
+            : 'No RSRC signature found near the beginning.'
+      };
+    }
+
+    function tryParseDirectory(bytes, header) {
+        const candidates = [];
+        const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+        const endian = header.guessedEndian === 'little-endian';
+
+        // Candidate 1: offsets hinted near each RSRC marker.
+        const rsrcOffsets = findAllAscii(bytes, 'RSRC').slice(0, 20);
+
+        for (const rsrcOffset of rsrcOffsets) {
+            for (let off = rsrcOffset + 8; off + 4 <= Math.min(rsrcOffset + 64, bytes.length); off += 4) {
+            const value = safeU32(dv, off, endian);
+            if (value > 0 && value < bytes.length) {
+                candidates.push({
+                base: value,
+                reason: `header offset near RSRC at 0x${rsrcOffset.toString(16).toUpperCase()}`
+                });
+            }
+            }
+
+            // Candidate 2: the bytes immediately after RSRC itself.
+            // In Example.vi, the directory-like area starts right at the later RSRC.
+            candidates.push({
+            base: rsrcOffset,
+            reason: `direct RSRC scan at 0x${rsrcOffset.toString(16).toUpperCase()}`
+            });
+        }
+
+        const scored = uniqueBy(candidates, c => c.base)
+            .map(c => {
+            const records = parseResourceRecordsNear(bytes, c.base, endian);
+            return {
+                ...c,
+                records,
+                score: scoreResourceRecordSet(records, c.base)
+            };
+            })
+            .filter(c => c.records.length > 0)
+            .sort((a, b) => b.score - a.score);
+
+        const best = scored[0];
+
+        if (!best || best.score < 10) {
+            return [];
+        }
+
+        return best.records.map(rec => ({
+            ...rec,
+            source: 'resource-directory',
+            directoryBase: best.base,
+            directoryScore: best.score
+        }));
+        }
+        function findAllAscii(bytes, text) {
+        const out = [];
+        const needle = TEXT_ENCODER.encode(text);
+        let offset = 0;
+
+        while (offset < bytes.length) {
+            const found = indexOfBytes(bytes, needle, offset);
+            if (found < 0) break;
+            out.push(found);
+            offset = found + Math.max(1, needle.length);
+        }
+
+        return out;
+        }
+
+        function uniqueBy(items, keyFn) {
+        const seen = new Set();
+        const out = [];
+
+        for (const item of items) {
+            const key = keyFn(item);
+            if (seen.has(key)) continue;
+            seen.add(key);
+            out.push(item);
+        }
+
+        return out;
+        }
+
+        function scoreResourceRecordSet(records, base) {
+        const knownTypes = new Set(Object.keys(KNOWN_RESOURCE_TYPES));
+
+        let score = 0;
+
+        for (const r of records) {
+            const known = knownTypes.has(r.type);
+            const nearBase = Math.abs(r.offset - base) < 2000;
+
+            if (known) score += 5;
+            else score += 1;
+
+            if (nearBase) score += 1;
+
+            // Very suspicious fake counts came from the early noisy section.
+            if (r.countHint === 100000) score -= 4;
+
+            // Strong LabVIEW directory markers.
+            if (['LVSR', 'LIvi', 'CONP', 'FPTD', 'FPSE', 'BDSE', 'VCTP', 'MUID', 'STRG', 'BDPW'].includes(r.type)) {
+            score += 8;
+            }
+        }
+
+        // Bonus for a compact cluster of records, which real directories tend to have.
+        if (records.length >= 8) {
+            const offsets = records.map(r => r.offset).sort((a, b) => a - b);
+            const span = offsets[offsets.length - 1] - offsets[0];
+
+            if (span < 2000) score += 12;
+            if (span < 1000) score += 8;
+        }
+
+        return score;
+        }
+    function parseResourceRecordsNear(bytes, base, littleEndian) {
+      const records = [];
+      const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const limit = Math.min(bytes.length - 12, base + 4096);
+      for (let off = Math.max(0, base - 16); off < limit; off++) {
+        const type = bytesToAscii(bytes, off, off + 4);
+        if (!isFourCharCode(type)) continue;
+        const countA = safeU32(dv, off + 4, littleEndian);
+        const countB = safeU16(dv, off + 4, littleEndian);
+        const pointerA = safeU32(dv, off + 8, littleEndian);
+        const looksKnown = KNOWN_RESOURCE_TYPES[type] || /[A-Z][A-Za-z0-9_ ]{3}/.test(type);
+        if (!looksKnown) continue;
+        const plausiblePointer = pointerA > 0 && pointerA < bytes.length;
+        const plausibleCount = (countA > 0 && countA < 100000) || (countB > 0 && countB < 10000);
+        if (plausiblePointer || plausibleCount || KNOWN_RESOURCE_TYPES[type]) {
+          records.push({
+            type,
+            offset: off,
+            size: null,
+            countHint: plausibleCount ? Math.min(countA || countB, 100000) : null,
+            dataOffsetHint: plausiblePointer ? pointerA : null,
+            description: KNOWN_RESOURCE_TYPES[type] || 'Four-character resource code candidate'
+          });
+          off += 3;
+        }
+      }
+      return records;
+    }
+
+    function scanForResourceTypes(bytes) {
+      const resources = [];
+      const known = Object.keys(KNOWN_RESOURCE_TYPES);
+      for (const type of known) {
+        const needle = TEXT_ENCODER.encode(type);
+        let offset = 0;
+        while (offset < bytes.length) {
+          const found = indexOfBytes(bytes, needle, offset);
+          if (found < 0) break;
+          resources.push({
+            type,
+            offset: found,
+            size: estimateChunkSize(bytes, found),
+            countHint: null,
+            dataOffsetHint: null,
+            source: 'signature-scan',
+            description: KNOWN_RESOURCE_TYPES[type]
+          });
+          offset = found + Math.max(1, needle.length);
+        }
+      }
+
+      // Add generic four-character uppercase-ish codes around the first few MB, capped to avoid noise.
+        const maxScan = Math.min(bytes.length - 4, 2_500_000);
+        const generic = new Map();
+
+        // Conservative generic scan:
+        // - skip header
+        // - step by 4 to avoid sliding-window fragments
+        // - ignore candidates embedded inside longer readable words
+        for (let i = 256; i < maxScan; i += 4) {
+        const s = bytesToAscii(bytes, i, i + 4);
+
+        const before = i > 0 ? bytes[i - 1] : 0;
+        const after = i + 4 < bytes.length ? bytes[i + 4] : 0;
+        const embeddedInWord =
+            (before >= 48 && before <= 122) ||
+            (after >= 48 && after <= 122);
+
+        if (!embeddedInWord && isFourCharCode(s) && !KNOWN_RESOURCE_TYPES[s]) {
+            generic.set(s, (generic.get(s) || 0) + 1);
+        }
+        }
+      for (const [type, count] of [...generic.entries()].filter(([, count]) => count <= 20).slice(0, 80)) {
+        const first = indexOfAscii(bytes, type);
+        if (first >= 0) {
+          resources.push({
+            type,
+            offset: first,
+            size: estimateChunkSize(bytes, first),
+            countHint: count,
+            dataOffsetHint: null,
+            source: 'generic-fourcc-scan',
+            description: 'Low-confidence four-character text candidate'
+          });
+        }
+      }
+      return resources;
+    }
+
+    function estimateChunkSize(bytes, offset) {
+      if (offset + 8 > bytes.length) return null;
+      const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const be = safeU32(dv, offset + 4, false);
+      const le = safeU32(dv, offset + 4, true);
+      for (const value of [be, le]) {
+        if (value > 0 && value < Math.min(bytes.length - offset, 100_000_000)) return value;
+      }
+      return null;
+    }
+
+    function mergeResources(...groups) {
+    const priority = {
+        'resource-directory': 4,
+        'directory-candidate': 3,
+        'signature-scan': 2,
+        'generic-fourcc-scan': 1
+    };
+
+    const map = new Map();
+
+    for (const group of groups) {
+        for (const r of group) {
+        const key = `${r.type}:${r.offset}`;
+        const existing = map.get(key);
+
+        if (!existing || (priority[r.source] || 0) > (priority[existing.source] || 0)) {
+            map.set(key, r);
+        }
+        }
+    }
+
+    return [...map.values()].sort((a, b) => a.offset - b.offset || a.type.localeCompare(b.type));
+    }
+
+    function extractStrings(bytes) {
+      const ascii = [];
+      let run = [];
+      let start = 0;
+      for (let i = 0; i < bytes.length; i++) {
+        const b = bytes[i];
+        const printable = b >= 32 && b <= 126;
+        if (printable) {
+          if (run.length === 0) start = i;
+          run.push(String.fromCharCode(b));
+        } else {
+          if (run.length >= 4) ascii.push({ kind: 'ascii', offset: start, value: run.join('') });
+          run = [];
+        }
+      }
+      if (run.length >= 4) ascii.push({ kind: 'ascii', offset: start, value: run.join('') });
+
+      const utf16 = [];
+      for (let i = 0; i + 7 < bytes.length; i += 2) {
+        const chars = [];
+        const startOff = i;
+        while (i + 1 < bytes.length) {
+          const code = bytes[i] | (bytes[i + 1] << 8);
+          if (code >= 32 && code <= 126) {
+            chars.push(String.fromCharCode(code));
+            i += 2;
+          } else break;
+        }
+        if (chars.length >= 4) utf16.push({ kind: 'utf16', offset: startOff, value: chars.join('') });
+      }
+
+      return [...ascii, ...utf16]
+        .filter(s => !/^\s+$/.test(s.value))
+        .sort((a, b) => a.offset - b.offset)
+        .slice(0, 3000);
+    }
+
+    function extractDependencies(strings) {
+      const deps = new Map();
+      const extPattern = new RegExp(`([^\\n\\r\\t\\0<>:"|?*]{1,240}(${LABVIEW_EXTENSIONS.map(e => e.replace('.', '\\.')).join('|')}))`, 'ig');
+      for (const s of strings) {
+        const value = s.value.replace(/\\/g, '/');
+        let match;
+        while ((match = extPattern.exec(value))) {
+          let dep = match[1].trim();
+          dep = dep.replace(/^.*?(?=[A-Za-z0-9_ .\-\/]+\.(vi|ctl|vit|llb|lvlib|lvclass|xctl|mnu|uir|rsc)$)/i, '');
+          if (dep.length >= 4 && dep.length <= 260) {
+            deps.set(dep.toLowerCase(), { value: dep, offset: s.offset, source: s.kind });
+          }
+        }
+      }
+      return [...deps.values()].sort((a, b) => a.value.localeCompare(b.value));
+    }
+
+    function inferLabviewVersion(bytes, strings, resources) {
+      const labviewStrings = strings
+        .map(s => s.value)
+        .filter(v => /labview|national instruments|ni /i.test(v))
+        .slice(0, 12);
+      const versionish = strings
+        .map(s => s.value.match(/(?:LabVIEW\s*)?(\d{1,2}\.\d(?:\.\d)?|20\d{2})/i))
+        .filter(Boolean)
+        .map(m => m[0])
+        .slice(0, 12);
+      const lvsr = resources.find(r => r.type === 'LVSR');
+      return {
+        bestGuess: versionish[0] || (lvsr ? 'LVSR resource found, exact version not decoded' : 'Unknown'),
+        stringHints: unique([...labviewStrings, ...versionish]).slice(0, 20),
+        lvsrOffset: lvsr?.offset ?? null
+      };
+    }
+
+    function extractEmbeddedImages(bytes) {
+      const signatures = [
+        { kind: 'PNG', sig: [0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A], end: findPngEnd, mime: 'image/png' },
+        { kind: 'JPEG', sig: [0xFF,0xD8,0xFF], end: findJpegEnd, mime: 'image/jpeg' },
+        { kind: 'GIF', sig: [0x47,0x49,0x46,0x38], end: findGifEnd, mime: 'image/gif' },
+        { kind: 'BMP', sig: [0x42,0x4D], end: findBmpEnd, mime: 'image/bmp' }
+      ];
+      const images = [];
+      for (const item of signatures) {
+        let off = 0;
+        const sig = new Uint8Array(item.sig);
+        while (off < bytes.length && images.length < 20) {
+          const start = indexOfBytes(bytes, sig, off);
+          if (start < 0) break;
+          const end = item.end(bytes, start);
+          if (end && end > start && end - start < 20_000_000) {
+            images.push({ kind: item.kind, offset: start, size: end - start, mime: item.mime });
+            off = end;
+          } else {
+            off = start + sig.length;
+          }
+        }
+      }
+      return images.sort((a, b) => a.offset - b.offset);
+    }
+
+    function findPngEnd(bytes, start) {
+      const iend = new Uint8Array([0x49,0x45,0x4E,0x44,0xAE,0x42,0x60,0x82]);
+      const end = indexOfBytes(bytes, iend, start + 8);
+      return end >= 0 ? end + iend.length : null;
+    }
+    function findJpegEnd(bytes, start) {
+      for (let i = start + 2; i + 1 < bytes.length; i++) if (bytes[i] === 0xFF && bytes[i + 1] === 0xD9) return i + 2;
+      return null;
+    }
+    function findGifEnd(bytes, start) {
+      for (let i = start + 10; i < Math.min(bytes.length, start + 8_000_000); i++) if (bytes[i] === 0x3B) return i + 1;
+      return null;
+    }
+    function findBmpEnd(bytes, start) {
+      if (start + 6 > bytes.length) return null;
+      const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const size = safeU32(dv, start + 2, true);
+      return size > 0 && start + size <= bytes.length ? start + size : null;
+    }
+
+    function buildWarnings(file, bytes, header, strings, resources, deps, images) {
+      const warnings = [];
+      if (!header.isLikelyRsrc) warnings.push({ level: 'bad', title: 'Not recognized as an RSRC container', detail: 'The file does not begin with or contain an early RSRC signature. It may be compressed, packaged differently, or not a LabVIEW binary resource file.' });
+      if (file.size > 75_000_000) warnings.push({ level: 'warn', title: 'Large file', detail: 'Very large files may make browser-side scanning slower. Consider adding streaming/chunked parsing in a later version.' });
+      if (resources.length === 0) warnings.push({ level: 'warn', title: 'No resource-like chunks found', detail: 'This can happen with packed libraries, stripped files, password-protected VIs, or unsupported file variants.' });
+      if (resources.some(r =>
+        r.type === 'BDPW' ||
+        (/password|protected/i.test(r.description) && r.source !== 'generic-fourcc-scan')
+        )) warnings.push({
+  level: 'warn',
+  title: 'Protection-related resource found',
+  detail: 'A BDPW/protection-related resource was detected. This does not prove that the VI is password-protected; it only means the file contains a resource associated with protection metadata.'
+        });
+      const hasPanel = resources.some(r => /FPSE|FPHP|front panel/i.test(r.type + r.description));
+      const hasDiagram = resources.some(r => /BDSE|BDHP|block diagram/i.test(r.type + r.description));
+      if (hasPanel && !hasDiagram) warnings.push({ level: 'warn', title: 'Possible source-stripped VI', detail: 'Front-panel resources appear to be present, but block-diagram resources were not detected by the scanner.' });
+      if (!images.length && resources.some(r => /ICON|IcoN/i.test(r.type))) warnings.push({ level: 'warn', title: 'Icon resource is not browser-native', detail: 'An icon-like resource was found, but no PNG/JPEG/GIF/BMP image could be extracted directly. A LabVIEW-specific icon decoder would be a good next step.' });
+      if (!deps.length) warnings.push({ level: 'warn', title: 'No dependencies detected', detail: 'The file may have no visible dependency strings, or the dependency list may be encoded in a resource format this MVP does not decode yet.' });
+      return warnings;
+    }
+
+    function detectSourceStripped(resources, strings) {
+      const hasFP = resources.some(r => ['FPSE','FPHP','FPTD'].includes(r.type));
+      const hasBD = resources.some(r => ['BDSE','BDHP','BDFL'].includes(r.type));
+      const sourceTerms = strings.some(s => /source.*stripped|no diagram|remove.*diagram/i.test(s.value));
+      return Boolean(sourceTerms || (hasFP && !hasBD));
+    }
+
+    function looksLikeLlb(file, strings, resources) {
+    const ext = getExtension(file.name);
+
+    if (ext === '.llb') return true;
+
+    // Avoid classifying normal .vi files as LLB just because some noisy generic
+    // four-character scan found "LLB" somewhere in binary data.
+    if (ext === '.vi' || ext === '.vit' || ext === '.ctl' || ext === '.xctl') {
+        return false;
+    }
+
+    const strongStringHint = strings.some(s =>
+        /\bLabVIEW Library\b|\bLLB\b/i.test(s.value)
+    );
+
+    const strongResourceHint = resources.some(r =>
+        (r.type === 'LLBM' || r.type === 'LIBN') &&
+        r.source !== 'generic-fourcc-scan'
+    );
+
+    return strongStringHint || strongResourceHint;
+    }
+
+    function renderAll() {
+    renderSummary();
+    renderResources();
+    renderMetadata();
+    renderDependencies();
+    renderDependencyGraph();
+    renderStrings();
+    renderImages();
+    renderHex(0);
+    renderWarnings();
+    }
+
+    function renderSummary() {
+      const r = state.result;
+      if (!r) return;
+      const stats = [
+        ['File', r.file.name],
+        ['Size', formatBytes(r.file.sizeBytes)],
+        ['Kind', r.inferred.likelyLlb ? 'LLB / library-like' : r.header.isLikelyRsrc ? 'RSRC container' : 'Unknown'],
+        ['LabVIEW version', r.inferred.labviewVersion.bestGuess],
+        ['Resources', String(r.resources.length)],
+        ['Dependencies', String(r.dependencies.length)],
+        ['Strings', String(r.strings.length)],
+        ['Images', String(r.images.length)]
+      ];
+      el('summaryStats').innerHTML = stats.map(([label, value]) => `
+        <div class="stat"><div class="stat-label">${escapeHtml(label)}</div><div class="stat-value">${escapeHtml(value)}</div></div>
+      `).join('');
+
+      const pills = [];
+      pills.push(`<span class="pill ${r.header.isLikelyRsrc ? 'good' : 'bad'}">${r.header.isLikelyRsrc ? 'RSRC signature found' : 'RSRC not found'}</span>`);
+      if (r.inferred.passwordOrProtectionHints) pills.push(`<span class="pill warn">Protection resource</span>`);
+      if (r.inferred.sourceStrippedHints) pills.push(`<span class="pill warn">Possibly source stripped</span>`);
+      if (r.dependencies.length) pills.push(`<span class="pill good">Dependency hints</span>`);
+      el('pillRow').innerHTML = pills.join('');
+    }
+
+    function renderResources() {
+      const table = el('resourcesTable');
+      const r = state.result;
+      if (!r) { table.innerHTML = ''; return; }
+      const q = el('resourceSearch').value.toLowerCase();
+      const typeFilter = el('resourceTypeFilter').value;
+      const types = unique(r.resources.map(x => x.type)).sort();
+      const select = el('resourceTypeFilter');
+      const current = select.value;
+      select.innerHTML = '<option value="">All resource types</option>' + types.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
+      select.value = types.includes(current) ? current : '';
+
+        let rows = r.resources;
+
+        const showLowConfidence = el('showLowConfidenceResources').checked;
+
+        if (!showLowConfidence) {
+        rows = rows.filter(x => x.source !== 'generic-fourcc-scan');
+        }
+
+        if (typeFilter) rows = rows.filter(x => x.type === typeFilter);
+        if (q) rows = rows.filter(x => JSON.stringify(x).toLowerCase().includes(q));
+
+        rows = rows.slice(0, 1000);
+      table.innerHTML = `
+        <thead><tr><th>Type</th><th>Offset</th><th>Size / Count hints</th><th>Source</th><th>Description</th></tr></thead>
+        <tbody>${rows.map(x => `
+          <tr>
+            <td><span class="resource-chip">${escapeHtml(x.type)}</span></td>
+            <td class="mono">${x.offset} / 0x${x.offset.toString(16).toUpperCase()}</td>
+            <td class="mono">${x.size ? formatBytes(x.size) : '—'}${x.countHint ? `<br>count? ${escapeHtml(String(x.countHint))}` : ''}${x.dataOffsetHint ? `<br>data? 0x${x.dataOffsetHint.toString(16).toUpperCase()}` : ''}</td>
+            <td>${escapeHtml(x.source || 'unknown')}</td>
+            <td>${escapeHtml(x.description || '')}</td>
+          </tr>`).join('')}</tbody>`;
+    }
+
+    function renderMetadata() {
+      const r = state.result;
+      if (!r) return;
+      el('metadataPane').className = '';
+      const candidateRows = r.header.headerCandidates.map(c => `
+        <h3>${escapeHtml(c.endian)} header interpretation</h3>
+        <div class="scroll" style="max-height:220px;margin:10px 0 18px;"><table>
+          <thead><tr><th>Header offset</th><th>u32 value</th><th>Plausible file offset?</th></tr></thead>
+          <tbody>${c.fields.map(f => `<tr><td class="mono">${f.offset}</td><td class="mono">${f.value} / 0x${f.value.toString(16).toUpperCase()}</td><td>${f.value > 0 && f.value < r.file.sizeBytes ? 'yes' : 'no'}</td></tr>`).join('')}</tbody>
+        </table></div>`).join('');
+
+      el('metadataPane').innerHTML = `
+        <div class="notice ${r.header.isLikelyRsrc ? 'ok-notice' : ''}">${escapeHtml(r.header.note)}</div>
+        <div class="stats" style="margin-bottom:18px;">
+          <div class="stat"><div class="stat-label">Magic preview</div><div class="stat-value mono">${escapeHtml(r.header.magicPreview)}</div></div>
+          <div class="stat"><div class="stat-label">RSRC offset</div><div class="stat-value mono">${r.header.rsrcOffset >= 0 ? r.header.rsrcOffset : 'not found'}</div></div>
+          <div class="stat"><div class="stat-label">Guessed endian</div><div class="stat-value">${escapeHtml(r.header.guessedEndian)}</div></div>
+          <div class="stat"><div class="stat-label">LVSR offset</div><div class="stat-value mono">${r.inferred.labviewVersion.lvsrOffset ?? 'not found'}</div></div>
+        </div>
+        <h3>Version string hints</h3>
+        <div class="string-list" style="margin:10px 0 18px;">
+          ${r.inferred.labviewVersion.stringHints.length ? r.inferred.labviewVersion.stringHints.map(x => `<div class="list-item mono">${escapeHtml(x)}</div>`).join('') : '<div class="empty">No version strings found.</div>'}
+        </div>
+        ${candidateRows}
+      `;
+    }
+
+    function renderDependencies() {
+      const deps = state.result?.dependencies || [];
+      el('dependencyList').innerHTML = deps.length
+        ? deps.map(d => `<div class="list-item"><div class="mono">${escapeHtml(d.value)}</div><div class="muted">offset ${d.offset} · ${escapeHtml(d.source)}</div></div>`).join('')
+        : '<div class="empty">No dependency-like paths or LabVIEW file references found.</div>';
+    }
+    function buildGraphModel() {
+        const r = state.result;
+        if (!r) return { nodes: [], edges: [] };
+
+        const rootId = 'root';
+        const rootName = r.file.name || 'Uploaded file';
+
+        const nodes = [{
+            id: rootId,
+            label: rootName,
+            kind: kindForFile(rootName),
+            role: 'main',
+            path: rootName
+        }];
+
+        const edges = [];
+        const seen = new Set([rootName.toLowerCase(), basename(rootName).toLowerCase()]);
+
+        for (const dep of r.dependencies.slice(0, 80)) {
+            const label = basename(dep.value);
+            const key = dep.value.toLowerCase();
+            const labelKey = label.toLowerCase();
+
+            if (seen.has(key) || seen.has(labelKey)) continue;
+
+            seen.add(key);
+            seen.add(labelKey);
+
+            const id = `dep-${nodes.length}`;
+            nodes.push({
+            id,
+            label,
+            kind: kindForFile(label),
+            role: 'dependency',
+            path: dep.value,
+            offset: dep.offset
+            });
+
+            edges.push({
+            from: rootId,
+            to: id,
+            label: dep.source || 'string'
+            });
+        }
+
+        return { nodes, edges };
+        }
+
+        function renderDependencyGraph() {
+        const svg = el('dependencyGraph');
+        if (!svg) return;
+
+        const model = buildGraphModel();
+        const deps = model.nodes.filter(n => n.role === 'dependency');
+
+        el('graphSummary').innerHTML = state.result
+            ? `
+            <span class="pill good">${deps.length} probable dependency node${deps.length === 1 ? '' : 's'}</span>
+            <span class="pill">${model.edges.length} edge${model.edges.length === 1 ? '' : 's'}</span>
+            <span class="pill warn">Best-effort string-derived graph</span>
+            `
+            : '';
+
+        if (!state.result) {
+            svg.innerHTML = emptyGraphSvg('Load a file to build a dependency graph.');
+            el('graphLegend').textContent = '';
+            return;
+        }
+
+        if (!deps.length) {
+            svg.innerHTML = emptyGraphSvg('No dependency-like references were found in the file.');
+            el('graphLegend').textContent = 'Tip: multi-file or zip upload would make this stronger because references could be cross-checked against actual uploaded VI/CTL files.';
+            return;
+        }
+
+        const width = 900;
+        const height = 520;
+
+        const root = {
+            ...model.nodes[0],
+            x: 155,
+            y: height / 2
+        };
+
+        const laidOutDeps = layoutDependencyNodes(deps, width, height);
+        const nodePositions = new Map([
+            [root.id, root],
+            ...laidOutDeps.map(n => [n.id, n])
+        ]);
+
+        const defs = `
+            <defs>
+            <marker id="arrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(148, 163, 184, 0.75)"></path>
+            </marker>
+            </defs>
+        `;
+
+        const edgeSvg = model.edges.map(edge => {
+            const a = nodePositions.get(edge.from);
+            const b = nodePositions.get(edge.to);
+            if (!a || !b) return '';
+
+            const midX = (a.x + b.x) / 2;
+            const d = `M ${a.x + 54} ${a.y} C ${midX} ${a.y}, ${midX} ${b.y}, ${b.x - 74} ${b.y}`;
+
+            return `
+            <path class="graph-edge" d="${d}">
+                <title>${escapeHtml(a.label)} → ${escapeHtml(b.path || b.label)}</title>
+            </path>
+            `;
+        }).join('');
+
+        const nodeSvg = [root, ...laidOutDeps].map(nodeToSvg).join('');
+
+        svg.innerHTML = `${defs}<g>${edgeSvg}${nodeSvg}</g>`;
+
+        el('graphLegend').innerHTML =
+            'Colors: blue root file, green VI-like references, purple controls, orange libraries/classes. Hover nodes to see full paths.';
+        }
+
+        function layoutDependencyNodes(deps, width, height) {
+        const sorted = [...deps].sort((a, b) =>
+            a.kind.localeCompare(b.kind) || a.label.localeCompare(b.label)
+        );
+
+        const columnCount = sorted.length <= 12 ? 1 : sorted.length <= 36 ? 2 : 3;
+        const perColumn = Math.ceil(sorted.length / columnCount);
+        const xValues = columnCount === 1 ? [610] : columnCount === 2 ? [520, 735] : [430, 620, 810];
+
+        return sorted.map((node, i) => {
+            const col = Math.min(columnCount - 1, Math.floor(i / perColumn));
+            const inCol = i - col * perColumn;
+
+            const itemsInCol = sorted.filter((_, j) =>
+            Math.min(columnCount - 1, Math.floor(j / perColumn)) === col
+            ).length;
+
+            const y = itemsInCol === 1
+            ? height / 2
+            : 58 + inCol * ((height - 116) / Math.max(1, itemsInCol - 1));
+
+            return {
+            ...node,
+            x: xValues[col],
+            y
+            };
+        });
+        }
+
+        function nodeToSvg(node) {
+        const label = truncateMiddle(node.label, node.role === 'main' ? 26 : 22);
+        const sub = node.role === 'main' ? 'uploaded file' : node.kind.toUpperCase();
+
+        if (node.role === 'main') {
+            return `
+            <g class="graph-node main" transform="translate(${node.x},${node.y})">
+                <title>${escapeHtml(node.path || node.label)}</title>
+                <circle r="58"></circle>
+                <text class="graph-label" y="-3">${escapeHtml(label)}</text>
+                <text class="graph-sub-label" y="16">${escapeHtml(sub)}</text>
+            </g>
+            `;
+        }
+
+        return `
+            <g class="graph-node ${escapeHtml(node.kind)}" transform="translate(${node.x},${node.y})">
+            <title>${escapeHtml(node.path || node.label)}</title>
+            <rect x="-72" y="-24" width="144" height="48" rx="12"></rect>
+            <text class="graph-label" y="-3">${escapeHtml(label)}</text>
+            <text class="graph-sub-label" y="15">${escapeHtml(sub)}</text>
+            </g>
+        `;
+        }
+
+        function emptyGraphSvg(message) {
+        return `
+            <text x="450" y="260" fill="#94a3b8" font-size="16" text-anchor="middle">
+            ${escapeHtml(message)}
+            </text>
+        `;
+        }
+
+        function exportGraphSvg() {
+        const svg = el('dependencyGraph');
+        if (!svg || !state.result) return;
+
+        const clone = svg.cloneNode(true);
+        clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+        const blob = new Blob([clone.outerHTML], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${state.file?.name || 'labview-dependency-graph'}.svg`;
+        a.click();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function basename(path) {
+        return String(path || '').split(/[\\/]/).filter(Boolean).pop() || String(path || 'dependency');
+        }
+
+        function kindForFile(name) {
+        const ext = getExtension(name);
+
+        if (ext === '.vi' || ext === '.vit') return 'vi';
+        if (ext === '.ctl' || ext === '.xctl') return 'ctl';
+        if (ext === '.llb' || ext === '.lvlib' || ext === '.lvclass') return 'library';
+
+        return 'unknown';
+        }
+
+        function truncateMiddle(text, max) {
+        const s = String(text || '');
+        if (s.length <= max) return s;
+
+        const keep = Math.floor((max - 1) / 2);
+        return `${s.slice(0, keep)}…${s.slice(-keep)}`;
+        }
+    function renderStrings() {
+      const strings = state.result?.strings || [];
+      const q = el('stringSearch').value.toLowerCase();
+      const kind = el('stringKindFilter').value;
+      let rows = strings;
+      if (kind) rows = rows.filter(s => s.kind === kind);
+      if (q) rows = rows.filter(s => s.value.toLowerCase().includes(q));
+      rows = rows.slice(0, 800);
+      el('stringList').innerHTML = rows.length
+        ? rows.map(s => `<div class="list-item"><div class="mono">${escapeHtml(s.value)}</div><div class="muted">${escapeHtml(s.kind)} · offset ${s.offset}</div></div>`).join('')
+        : '<div class="empty">No matching strings.</div>';
+    }
+
+    function renderImages() {
+      const r = state.result;
+      if (!r) return;
+      const iconResources = r.resources.filter(x => /ICON|IcoN/i.test(x.type));
+      const standardImages = r.images.map(img => {
+        const blob = new Blob([state.bytes.slice(img.offset, img.offset + img.size)], { type: img.mime });
+        const url = URL.createObjectURL(blob);
+        state.objectUrls.push(url);
+        return `<div class="list-item"><strong>${escapeHtml(img.kind)}</strong> at <span class="mono">0x${img.offset.toString(16).toUpperCase()}</span>, ${formatBytes(img.size)}<br><img class="preview-img" src="${url}" alt="embedded ${escapeHtml(img.kind)} preview"></div>`;
+      });
+      el('imagePane').innerHTML = `
+        ${iconResources.length ? `<h3>Icon-like resources</h3><div class="string-list" style="margin:10px 0 18px;">${iconResources.map(x => `<div class="list-item"><span class="resource-chip">${escapeHtml(x.type)}</span> offset <span class="mono">0x${x.offset.toString(16).toUpperCase()}</span> · ${escapeHtml(x.description)}</div>`).join('')}</div>` : '<div class="empty">No ICON/IcoN resource signatures found.</div>'}
+        <h3>Embedded standard images</h3>
+        <div class="string-list" style="margin-top:10px;">${standardImages.length ? standardImages.join('') : '<div class="empty">No PNG/JPEG/GIF/BMP images found.</div>'}</div>
+      `;
+    }
+
+    function renderHex(startOffset = 0) {
+      if (!state.bytes) { el('hexView').textContent = 'No file loaded.'; return; }
+      const start = Math.max(0, Math.min(state.bytes.length - 1, Number.isFinite(startOffset) ? startOffset : 0));
+      const end = Math.min(state.bytes.length, start + 2048);
+      const lines = [];
+      for (let i = start; i < end; i += 16) {
+        const slice = state.bytes.slice(i, Math.min(i + 16, end));
+        const hex = [...slice].map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ').padEnd(47, ' ');
+        const ascii = [...slice].map(b => b >= 32 && b <= 126 ? String.fromCharCode(b) : '.').join('');
+        lines.push(`${i.toString(16).toUpperCase().padStart(8, '0')}  ${hex}  |${ascii}|`);
+      }
+      el('hexView').textContent = lines.join('\n');
+    }
+
+    function renderWarnings() {
+      const warnings = state.result?.warnings || [];
+      el('warningsList').innerHTML = warnings.length
+        ? warnings.map(w => `<div class="list-item"><strong>${escapeHtml(w.title)}</strong><br><span class="muted">${escapeHtml(w.detail)}</span></div>`).join('')
+        : '<div class="empty">No warnings generated.</div>';
+    }
+
+    function exportJson() {
+      if (!state.result) return;
+      const safe = JSON.parse(JSON.stringify(state.result));
+      const blob = new Blob([JSON.stringify(safe, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${state.file?.name || 'labview-inspection'}.json`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function bytesToAscii(bytes, start, end) {
+      let s = '';
+      for (let i = start; i < end && i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+      return s;
+    }
+
+    function indexOfAscii(bytes, text, from = 0) {
+      return indexOfBytes(bytes, TEXT_ENCODER.encode(text), from);
+    }
+
+    function indexOfBytes(haystack, needle, from = 0) {
+      outer: for (let i = from; i <= haystack.length - needle.length; i++) {
+        for (let j = 0; j < needle.length; j++) if (haystack[i + j] !== needle[j]) continue outer;
+        return i;
+      }
+      return -1;
+    }
+
+    function isFourCharCode(s) {
+      if (s.length !== 4) return false;
+      if (!/^[A-Za-z0-9_ ][A-Za-z0-9_ ][A-Za-z0-9_ ][A-Za-z0-9_ ]$/.test(s)) return false;
+      const letters = s.replace(/[^A-Za-z]/g, '').length;
+      return letters >= 2 && !/^\d+$/.test(s);
+    }
+
+    function safeU32(dv, off, little) {
+      try { return dv.getUint32(off, little); } catch { return 0; }
+    }
+    function safeU16(dv, off, little) {
+      try { return dv.getUint16(off, little); } catch { return 0; }
+    }
+    function unique(arr) { return [...new Set(arr)]; }
+    function getExtension(name) { const i = name.lastIndexOf('.'); return i >= 0 ? name.slice(i).toLowerCase() : ''; }
+    function formatBytes(n) {
+      if (!Number.isFinite(n)) return '—';
+      const units = ['B', 'KB', 'MB', 'GB'];
+      let value = n, unit = 0;
+      while (value >= 1024 && unit < units.length - 1) { value /= 1024; unit++; }
+      return `${value.toFixed(value >= 10 || unit === 0 ? 0 : 1)} ${units[unit]}`;
+    }
+    function parseOffset(value) {
+      const s = String(value || '').trim();
+      if (!s) return 0;
+      if (/^0x/i.test(s)) return parseInt(s, 16);
+      return parseInt(s, 10);
+    }
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[ch]));
+    }
+    function cleanupUrls() {
+      for (const url of state.objectUrls) URL.revokeObjectURL(url);
+      state.objectUrls = [];
+    }
+  </script>
+</body>
+</html>
