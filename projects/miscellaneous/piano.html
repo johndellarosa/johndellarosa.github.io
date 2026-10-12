@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+            <title>Option Value Calculator</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Option, Put, Call, Black-Scholes, Stock">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Option Value Calculator using Black-Scholes model">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/miscellaneous/options">   
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+         
+<main><header><div><div class="eyebrow">Interactive music learning</div><h1>Piano Sight-Reading Studio</h1><p>Play notes. Hear them. Watch them appear on the staff.</p></div><span class="pill">No installation required</span></header>
+<section class="panel"><div class="row"><strong>Live music notation</strong><div class="spacer"></div><span class="live"><span class="dot"></span><span id="status">Ready to play</span></span><span class="note-label" id="current">—</span></div><div class="score-scroll"><svg id="score" class="score" viewBox="0 0 1020 310" role="img" aria-label="Grand staff with notes played"></svg></div><div class="row" style="margin-top:13px"><button class="control primary" id="replay">▶ Replay melody</button><button class="control" id="undo">↶ Undo note</button><button class="control" id="clear">Clear score</button><div class="spacer"></div><label>Tempo <input type="range" id="tempo" min="50" max="180" value="100" step="5"> <span id="bpm">100</span> BPM</label></div><p class="score-help">Treble and bass clefs • All notes currently appear as quarter notes • Simultaneous notes appear together in a chord.</p></section>
+<section class="panel"><div class="title-row"><strong>Interactive piano</strong><span class="pill">C3–C5 · 25 keys</span><div class="spacer"></div><label>Sound <select id="voice"><option value="piano">Soft piano</option><option value="sine">Pure tone</option><option value="organ">Organ</option></select></label></div><div class="piano-frame"><div class="keys" id="keys"></div></div><div class="tip">Click or hold a key, or use your computer keyboard. <span class="keyboard">Lower octave: Z S X D C V G B H N J M ,</span> · <span class="keyboard">Upper octave: Q 2 W 3 E R 5 T 6 Y 7 U I</span>. Multiple keys can be played at once. On a phone, tap the keys.</div></section><div class="footer">Uses the Web Audio API for sound and SVG for music notation. Works offline in a modern browser.</div></main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),score=$('score'),keys=$('keys');
+const low=48,high=72; // C3 to C5
+const names=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+const noteName=m=>names[m%12]+(Math.floor(m/12)-1);
+const whites=[0,2,4,5,7,9,11], blackSet=new Set([1,3,6,8,10]);
+const keymap=['z','s','x','d','c','v','g','b','h','n','j','m',',','q','2','w','3','e','r','5','t','6','y','7','u'];
+const mapping=new Map(keymap.map((k,i)=>[k,low+(i<13?i:i-1)]));
+let audio=null, active=new Map(), held=new Set(), events=[], lastOnset=-9999, busy=false;
+function audioReady(){if(!audio)audio=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();return audio;}
+function pitch(m){return 440*Math.pow(2,(m-69)/12)}
+function createVoice(m){const a=audioReady(), t=a.currentTime, type=$('voice').value, osc=a.createOscillator(), gain=a.createGain(),filter=a.createBiquadFilter();let end=()=>{};
+ osc.frequency.value=pitch(m);osc.type=type==='sine'?'sine':type==='organ'?'triangle':'triangle';filter.type='lowpass';filter.frequency.value=type==='piano'?2600:8000;osc.connect(filter);filter.connect(gain);gain.connect(a.destination);
+ if(type==='piano'){gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.21,t+.012);gain.gain.exponentialRampToValueAtTime(.065,t+.45)}else{gain.gain.setValueAtTime(.0001,t);gain.gain.linearRampToValueAtTime(.14,t+.015)}osc.start(t);
+ let stopped=false;end=()=>{if(stopped)return;stopped=true;let now=a.currentTime;gain.gain.cancelScheduledValues(now);gain.gain.setTargetAtTime(.0001,now,type==='piano'?.10:.045);osc.stop(now+.38)};return end;}
+function renderKeys(){let wi=0;for(let m=low;m<=high;m++){if(blackSet.has(m%12))continue;let b=document.createElement('button');b.type='button';b.className='white';b.dataset.m=m;b.setAttribute('aria-label',noteName(m));b.textContent=(m%12===0)?noteName(m):'';keys.appendChild(b);wi++}let allWhites=[...keys.children];for(let m=low;m<=high;m++){if(!blackSet.has(m%12))continue;let prior=0;for(let j=low;j<m;j++)if(!blackSet.has(j%12))prior++;let b=document.createElement('button');b.type='button';b.className='black';b.dataset.m=m;b.setAttribute('aria-label',noteName(m));b.style.left=(prior*54-17.5)+'px';keys.appendChild(b)}keys.style.width=(allWhites.length*54)+'px';}
+function start(m){if(active.has(m))return;let stop=createVoice(m);active.set(m,stop);document.querySelector(`[data-m="${m}"]`)?.classList.add('active');$('current').textContent=noteName(m);$('status').textContent='Playing '+noteName(m);
+ if(!busy){let now=performance.now();if(now-lastOnset<85 && events.length){let last=events[events.length-1];if(!last.includes(m))last.push(m)}else events.push([m]);lastOnset=now;draw();}}
+function end(m){const stop=active.get(m);if(!stop)return;stop();active.delete(m);document.querySelector(`[data-m="${m}"]`)?.classList.remove('active');if(!active.size)$('status').textContent='Ready to play';}
+keys.addEventListener('pointerdown',e=>{let b=e.target.closest('[data-m]');if(!b)return;e.preventDefault();let m=+b.dataset.m;b.setPointerCapture(e.pointerId);b.dataset.pointerNote=m;start(m)});
+keys.addEventListener('pointerup',e=>{let b=e.target.closest('[data-pointer-note]');if(b){end(+b.dataset.pointerNote);delete b.dataset.pointerNote}});
+keys.addEventListener('pointercancel',e=>{let b=e.target.closest('[data-pointer-note]');if(b){end(+b.dataset.pointerNote);delete b.dataset.pointerNote}});
+window.addEventListener('keydown',e=>{if(e.repeat||e.ctrlKey||e.altKey||e.metaKey||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;let m=mapping.get(e.key.toLowerCase());if(m===undefined)return;e.preventDefault();held.add(e.key.toLowerCase());start(m)});
+window.addEventListener('keyup',e=>{let k=e.key.toLowerCase(),m=mapping.get(k);if(m===undefined)return;held.delete(k);end(m)});
+window.addEventListener('blur',()=>{for(let m of [...active.keys()])end(m);held.clear()});
+// Diatonic staff coordinates. Treble staff: E4 at y=125, bass staff: G2 at y=255.
+const letters=['C','D','E','F','G','A','B'];
+function diatonic(m){let n=m%12,oct=Math.floor(m/12)-1, l=({0:0,1:0,2:1,3:1,4:2,5:3,6:3,7:4,8:4,9:5,10:5,11:6})[n];return oct*7+l}
+function yPosition(m,clef){let reference=clef==='treble'? (4*7+2):(2*7+4);let base=clef==='treble'?125:255;return base-(diatonic(m)-reference)*10}
+const svg=(tag,attrs={},txt)=>{let el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(let[k,v]of Object.entries(attrs))el.setAttribute(k,v);if(txt!==undefined)el.textContent=txt;return el};
+function line(x1,y1,x2,y2,stroke='#293440',width=1){score.append(svg('line',{x1,y1,x2,y2,stroke,'stroke-width':width}))}
+function draw(){score.replaceChildren();score.append(svg('rect',{width:1020,height:310,fill:'#fff'}));for(let yy of [85,95,105,115,125,215,225,235,245,255])line(16,yy,1005,yy,'#303b48',1.25);line(16,85,16,255,'#303b48',2);
+ score.append(svg('text',{x:27,y:123,'font-size':59,fill:'#182632','font-family':'Georgia, serif'},'𝄞'));score.append(svg('text',{x:27,y:256,'font-size':59,fill:'#182632','font-family':'Georgia, serif'},'𝄢'));
+ score.append(svg('text',{x:90,y:55,'font-size':13,fill:'#637386','font-family':'sans-serif'},'Your melody'));
+ const visible=events.slice(-18);let offset=Math.max(0,events.length-18);for(let i=0;i<visible.length;i++){let chord=visible[i],x=125+i*48;for(let m of chord){let clef=m>=60?'treble':'bass',y=yPosition(m,clef);if(y<36||y>292)continue;let base=clef==='treble'?125:255,top=clef==='treble'?85:215;
+ if(y>=base+10)for(let ly=base+10;ly<=y;ly+=10)line(x-13,ly,x+13,ly,'#242c36',1.3);
+ if(y<=top-10)for(let ly=top-10;ly>=y;ly-=10)line(x-13,ly,x+13,ly,'#242c36',1.3);
+ score.append(svg('ellipse',{cx:x,cy:y,rx:7.5,ry:5.3,fill:'#131d28',transform:`rotate(-20 ${x} ${y})`}));line(x+7,y,x+7,y-33,'#131d28',1.7);
+ if(blackSet.has(m%12))score.append(svg('text',{x:x-21,y:y+5,'font-family':'Georgia,serif','font-size':23,fill:'#131d28'},'♯'));
+ }
+ if(i%4===3)line(x+25,85,x+25,125,'#cad2da',1);
+ }
+ if(!events.length)score.append(svg('text',{x:530,y:175,'text-anchor':'middle',fill:'#9aa6b5','font-size':17,'font-family':'sans-serif'},'Play a piano key to start writing music'));
+ if(offset)score.append(svg('text',{x:985,y:55,'text-anchor':'end',fill:'#93a0ae','font-size':12,'font-family':'sans-serif'},`Showing last 18 of ${events.length} beats`));}
+$('clear').onclick=()=>{events=[];$('current').textContent='—';draw()};$('undo').onclick=()=>{events.pop();draw()};$('tempo').oninput=()=>{$('bpm').textContent=$('tempo').value};
+$('replay').onclick=async()=>{if(busy||!events.length)return;busy=true;$('replay').disabled=true;const snapshot=events.map(v=>v.slice()),ms=60000/+$('tempo').value;for(const chord of snapshot){if(!busy)break;for(const m of chord)start(m);await new Promise(r=>setTimeout(r,ms*.65));for(const m of chord)end(m);await new Promise(r=>setTimeout(r,ms*.35));}busy=false;$('replay').disabled=false};
+renderKeys();draw();
+})();
+</script>
+    </body>
+</html>

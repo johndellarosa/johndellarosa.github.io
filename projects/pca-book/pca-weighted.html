@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+    <head>
+
+
+
+        <meta charset="UTF-8">
+
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('js', new Date());
+
+
+
+  gtag('config', 'G-2C44LTKBE1');
+
+</script>
+
+
+
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+            <title>Weighted Principal Component Analysis</title>
+
+
+
+        <!-- Meta tags -->
+
+
+
+        <meta name="keywords" content="Measure Theory">
+
+        <meta name="author" content="John Della Rosa" >
+
+        <meta name="description" content="Introduction to Measure Theory.">
+
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/measure"/>    
+
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+
+<!-- 
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
+
+
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+
+
+    <style>
+
+/* PCA widget: fully scoped to avoid interference from the textbook's style.css */
+#pca-widget {box-sizing:border-box; width:100%; max-width:1100px; margin:16px auto; font:14px/1.45 system-ui,sans-serif; color:#e9edf6; background:#101722; border-radius:12px; padding:16px; overflow:hidden;}
+#pca-widget *, #pca-widget *::before, #pca-widget *::after {box-sizing:border-box;}
+#pca-widget p {color:#aabbd0; margin:0 0 14px;}
+#pca-widget .layout {display:grid; grid-template-columns:minmax(0, 1fr) 320px; gap:14px; align-items:start;}
+#pca-widget .panel {display:block; min-width:0; margin:0; padding:13px; border:1px solid #314053; background:#192331; border-radius:10px;}
+#pca-widget .viz {min-width:0; overflow:hidden;}
+#pca-widget #plot-frame {position:relative; display:block; width:100%; height:460px; min-width:0; max-height:460px; overflow:hidden; contain:layout size; background:#101722;}
+#pca-widget #plot {display:block !important; position:absolute !important; inset:0 !important; width:100% !important; height:100% !important; max-width:100% !important; max-height:100% !important; margin:0 !important; padding:0 !important; border:0 !important; touch-action:none; cursor:grab;}
+#pca-widget .hint {position:absolute; bottom:12px; left:12px; pointer-events:none; font-size:12px; color:#aabbd0;}
+#pca-widget .legend {display:flex; flex-wrap:wrap; gap:13px; margin-top:10px; font-size:12px;}
+#pca-widget .legend span::before {content:''; display:inline-block; vertical-align:middle; width:10px; height:10px; margin-right:5px; border-radius:2px; background:var(--c);}
+#pca-widget label {display:block; margin:0 0 8px; font-size:13px; color:#e9edf6;}
+#pca-widget textarea {display:block; width:100%; height:170px; resize:vertical; background:#101722; color:#e9edf6; border:1px solid #46566b; border-radius:6px; padding:8px; font:12px/1.4 ui-monospace,monospace;}
+#pca-widget .buttons {display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;}
+#pca-widget button {padding:8px 9px; border:0; border-radius:6px; background:#2679b6; color:white; cursor:pointer; font:600 12px system-ui;}
+#pca-widget button.secondary {background:#35475b;}
+#pca-widget .check {display:flex; align-items:center; gap:7px; margin:9px 0; font-weight:400;}
+#pca-widget .check input {margin:0;}
+#pca-widget .stat {border-radius:7px; padding:8px; margin-top:9px; background:#101c2b;}
+#pca-widget .sub {font-size:12px; color:#aebed1; overflow-wrap:anywhere; margin-top:4px;}
+#pca-widget progress {display:block; width:100%; height:7px; accent-color:#3abcb0; margin-top:6px;}
+#pca-widget #status {font-size:12px; min-height:18px; color:#d8ab71;}
+#pca-widget footer {display:block; margin-top:15px; font-size:12px; color:#aabbd0;}
+@media(max-width:800px){#pca-widget .layout{grid-template-columns:minmax(0,1fr);}#pca-widget #plot-frame{height:360px;max-height:360px;}}
+
+</style>
+</head>
+
+    <body>
+
+        <div class="navbar">
+
+            <b style="margin-right:10px">John Della Rosa</b>| 
+
+            <a href="https://johndellarosa.github.io/">Home</a>|
+
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+
+
+
+        </div>
+
+        <h2><a href= "table-of-contents.html">Probability Textbook (Work in Progress)</a></h2>
+
+
+
+<h3>by John Della Rosa</h3>
+
+        <div id="text-contents" style="width:90%; margin:auto">
+
+            <div id="Measures">
+
+                <h1>Principal Component Analysis</h1>
+
+                <h2>Weighted Principal Component Analysis</h2>
+
+
+
+                <h3>Recommended Prerequesites</h3>
+
+                <ol>
+
+                    <!-- <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+
+                    <li><a href="https://johndellarosa.github.io/projects/probability-book/sigma-algebra">Sigma Algebra</a></li> -->
+
+
+
+                </ol>
+
+                <h3>Definition</h3>
+
+<div id="pca-widget">
+<p>Enter observations as <code>x, y, z, weight</code> (the fourth value is optional and defaults to 1). Weights change the weighted mean, covariance, and principal axes. Marker size and opacity indicate relative observation weight. Drag to rotate and scroll to zoom.</p>
+
+<div class="layout"><section class="panel viz"><div class="plot-frame" id="plot-frame"><canvas id="plot" aria-label="Interactive weighted three-dimensional PCA scatterplot"></canvas><div class="hint">Drag: rotate · Scroll: zoom · Double-click: reset view</div></div><div class="legend"><span style="--c:#7eaad8">Data points</span><span style="--c:#ff786e">PC1</span><span style="--c:#4cd6b3">PC2</span><span style="--c:#ebc46b">PC3</span><span style="--c:#fff">Unweighted PC1 (optional)</span></div></section>
+
+<aside class="panel"><label for="data">Data points (x, y, z, weight; one per line)</label><textarea id="data" spellcheck="false" aria-label="Data points"></textarea><div class="buttons"><button id="compute">Compute PCA</button><button id="sample" class="secondary">Generate sample</button><button id="clear" class="secondary">Clear</button><button id="equal" class="secondary">Equal weights</button></div><label class="check"><input type="checkbox" id="centred" checked> Show weighted-mean marker</label><label class="check"><input type="checkbox" id="compare"> Show unweighted PC1 (dashed white)</label><label class="check"><input type="checkbox" id="projection"> Show projection lines onto PC1</label><label class="check"><input type="checkbox" id="normalize"> Standardize each variable first</label><label for="emphasis">Weight emphasis: <output id="emphasis-value">1.0×</output></label><input id="emphasis" type="range" min="0" max="3" step="0.1" value="1" style="width:100%"><div class="sub">Exponent applied to each supplied weight. 0 = equal weights, 1 = original weights, 2 = stronger emphasis.</div><div id="status" role="status"></div><div id="stats"></div><div id="result" class="sub"></div></aside></div>
+
+<footer><b>Method:</b> Nonnegative observation weights are normalized to sum to one. The mean is μ = Σwᵢxᵢ, and weighted covariance is S = Σwᵢ(xᵢ − μ)(xᵢ − μ)ᵀ. This is a probability-weighted covariance (no sample degrees-of-freedom correction). Optional standardization uses weighted variances. Arrows represent ±2.2 weighted standard deviations in PCA directions; signs are arbitrary. Zero weights exclude rows from the fitted PCA but not from the scatterplot. The unweighted comparison uses equal row weights. All coordinates shown are in the weighted-centered coordinate system, including when the unweighted PC1 is compared.</footer>
+</div>
+
+
+
+<script>
+
+'use strict';
+
+const $=id=>document.getElementById(id), canvas=$('plot'),ctx=canvas.getContext('2d');
+
+const colors=['#ff786e','#4cd6b3','#ebc46b'];
+
+const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
+
+const norm=a=>Math.sqrt(dot(a,a));
+
+const mul=(a,s)=>a.map(x=>x*s),add=(a,b)=>a.map((x,i)=>x+b[i]);
+
+const sub=(a,b)=>a.map((x,i)=>x-b[i]);
+
+let points=[],result=null,unweighted=null,yaw=.72,pitch=.38,zoom=1,showMean=true,showProj=false,showCompare=false;
+
+function jacobi3(A){
+
+  // Symmetric 3x3 eigenvalue decomposition using Jacobi rotations.
+
+  A=A.map(r=>r.slice()); let V=[[1,0,0],[0,1,0],[0,0,1]];
+
+  for(let iter=0;iter<80;iter++){
+
+    let p=0,q=1,best=Math.abs(A[0][1]);
+
+    for(const [i,j] of [[0,2],[1,2]])if(Math.abs(A[i][j])>best){p=i;q=j;best=Math.abs(A[i][j]);}
+
+    if(best<1e-12)break;
+
+    const angle=.5*Math.atan2(2*A[p][q],A[q][q]-A[p][p]);
+
+    // Rotation columns p,q, with off-diagonal driven to zero.
+
+    const c=Math.cos(angle),s=Math.sin(angle);
+
+    const app=A[p][p],aqq=A[q][q],apq=A[p][q];
+
+    A[p][p]=c*c*app-2*c*s*apq+s*s*aqq;
+
+    A[q][q]=s*s*app+2*c*s*apq+c*c*aqq;
+
+    A[p][q]=A[q][p]=0;
+
+    for(let k=0;k<3;k++)if(k!==p&&k!==q){let akp=A[k][p],akq=A[k][q];A[k][p]=A[p][k]=c*akp-s*akq;A[k][q]=A[q][k]=s*akp+c*akq;}
+
+    for(let k=0;k<3;k++){let vkp=V[k][p],vkq=V[k][q];V[k][p]=c*vkp-s*vkq;V[k][q]=s*vkp+c*vkq;}
+
+  }
+
+  return [0,1,2].map(i=>({value:Math.max(0,A[i][i]),vector:V.map(r=>r[i])})).sort((a,b)=>b.value-a.value);
+
+}
+
+function parseRows(text){
+  const rows=[];
+  for(const [i,line] of text.split(/\r?\n/).entries()){
+    const t=line.trim(); if(!t || t.startsWith('#'))continue;
+    const v=t.split(/[\s,;]+/).map(Number);
+    if((v.length!==3 && v.length!==4) || v.some(x=>!Number.isFinite(x)))
+      throw Error(`Line ${i+1}: use x, y, z, weight (weight optional).`);
+    if(v.length===3)v.push(1);
+    if(v[3]<0)throw Error(`Line ${i+1}: weight must be nonnegative.`);
+    rows.push(v);
+  }
+  if(rows.length<2)throw Error('Enter at least two data points.');
+  if(rows.filter(r=>r[3]>0).length<2)throw Error('At least two points must have positive weight.');
+  return rows;
+}
+function calculate(rows,standardize,emphasis=1){
+  const n=rows.length;
+  const effective=rows.map(r=>r[3]===0 ? 0 : Math.pow(r[3],emphasis));
+  const sumW=effective.reduce((a,b)=>a+b,0);
+  if(!Number.isFinite(sumW)||sumW<=0)throw Error('Invalid total weight.');
+  const weights=effective.map(w=>w/sumW);
+  const mean=[0,1,2].map(j=>rows.reduce((s,r,i)=>s+weights[i]*r[j],0));
+  let centered=rows.map(r=>[0,1,2].map(j=>r[j]-mean[j]));
+  const sd=[0,1,2].map(j=>Math.sqrt(centered.reduce((s,r,i)=>s+weights[i]*r[j]*r[j],0)));
+  if(standardize){
+    if(sd.some(v=>v<1e-12))throw Error('Cannot standardize a constant variable.');
+    centered=centered.map(r=>r.map((v,j)=>v/sd[j]));
+  }
+  const S=Array.from({length:3},(_,i)=>Array.from({length:3},(_,j)=>centered.reduce((s,r,k)=>s+weights[k]*r[i]*r[j],0)));
+  const pcs=jacobi3(S),total=pcs.reduce((s,p)=>s+p.value,0);
+  if(total<1e-15)throw Error('There is no weighted variation to analyze.');
+  return {n,mean,sd,centered,S,pcs,total,weights};
+}
+
+function formatVec(v){return '('+v.map(x=>x.toFixed(3)).join(', ')+')';}
+
+function renderStats(){
+
+  if(!result){$('stats').innerHTML='';$('result').textContent='';return;}
+
+  const r=result;
+
+  $('stats').innerHTML=r.pcs.map((pc,i)=>`<div class="stat" style="border-left:3px solid ${colors[i]}"><strong>PC${i+1}: ${(100*pc.value/r.total).toFixed(1)}% explained</strong><div class="sub">Eigenvalue: ${pc.value.toFixed(4)}</div><div class="sub">Eigenvector: ${formatVec(pc.vector)}</div><progress max="100" value="${100*pc.value/r.total}"></progress></div>`).join('');
+
+  $('result').innerHTML=`<b>Observations:</b> ${r.n}<br><b>Weighted mean:</b> ${formatVec(r.mean)}<br><b>Effective sample size:</b> ${(1/r.weights.reduce((a,w)=>a+w*w,0)).toFixed(1)}<br><b>PC1 + PC2 variance:</b> ${(100*(r.pcs[0].value+r.pcs[1].value)/r.total).toFixed(1)}%`;
+
+}
+
+function recalc(){
+
+  try{points=parseRows($('data').value);result=calculate(points,$('normalize').checked,Number($('emphasis').value));unweighted=calculate(points.map(r=>[...r.slice(0,3),1]),$('normalize').checked,1);$('status').textContent='';renderStats();draw();}
+
+  catch(e){result=null;unweighted=null;$('status').textContent=e.message;renderStats();draw();}
+
+}
+
+function sample(){
+
+  // Deterministic synthetic cloud with correlated directions (no external library).
+
+  let seed=1913;const rand=()=>{seed=(1664525*seed+1013904223)>>>0;return (seed+.5)/4294967296;};
+
+  const normal=()=>Math.sqrt(-2*Math.log(rand()))*Math.cos(2*Math.PI*rand());
+
+  const rows=[];
+
+  for(let i=0;i<90;i++){let a=normal(),b=normal(),c=normal();rows.push([8+2.4*a+.2*b,3+1.25*a+.7*b,5+.75*a-.65*b+.38*c, i<45?1:5]);}
+
+  $('data').value=rows.map(r=>r.map((x,j)=>j===3?x.toFixed(1):x.toFixed(3)).join(', ')).join('\n');recalc();
+
+}
+
+function project(p,w,h,scale){
+
+  let x=p[0]*Math.cos(yaw)-p[1]*Math.sin(yaw);
+
+  let depth=p[0]*Math.sin(yaw)+p[1]*Math.cos(yaw);
+
+  let y=p[2]*Math.cos(pitch)-depth*Math.sin(pitch);
+
+  let z=p[2]*Math.sin(pitch)+depth*Math.cos(pitch);
+
+  const perspective=3.8/(3.8+z/scale*.2);
+
+  return {x:w/2+x*scale*perspective,y:h/2-y*scale*perspective,z};
+
+}
+
+function line(a,b,color,width=1,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([]);}
+
+function arrow(a,b,color,width=3){line(a,b,color,width);let ang=Math.atan2(b.y-a.y,b.x-a.x);ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-10*Math.cos(ang-.5),b.y-10*Math.sin(ang-.5));ctx.lineTo(b.x-10*Math.cos(ang+.5),b.y-10*Math.sin(ang+.5));ctx.fill();}
+
+let drawnPixelWidth=0,drawnPixelHeight=0;
+
+function draw(){
+
+  const box=$('plot-frame').getBoundingClientRect();
+
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+
+  const w=Math.min(1600,box.width),h=Math.min(800,box.height);
+
+  if(!w||!h)return;
+
+  const pw=Math.max(1,Math.round(w*dpr)),ph=Math.max(1,Math.round(h*dpr));
+
+  // Only change backing-store dimensions when the container genuinely changes size.
+
+  // Assigning canvas.width/height on every draw can cause resizing and relayout loops.
+
+  if(pw!==drawnPixelWidth||ph!==drawnPixelHeight){
+
+    canvas.width=pw;canvas.height=ph;
+
+    drawnPixelWidth=pw;drawnPixelHeight=ph;
+
+  }
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+
+  const r=result;if(!r)return;
+
+  let extent=Math.max(1,...r.centered.map(p=>norm(p)),...r.pcs.map(pc=>2.2*Math.sqrt(pc.value)));
+
+  const scale=Math.min(w,h)*.35/extent*zoom;
+
+  const P=p=>project(p,w,h,scale),O=P([0,0,0]);
+
+  // Reference coordinates centered at the data mean.
+
+  for(let j=0;j<3;j++){let dir=[0,0,0];dir[j]=extent*.9;line(P(mul(dir,-1)),P(dir),'#47596d',1,[4,4]);const end=P(dir);ctx.fillStyle='#95a6ba';ctx.font='12px system-ui';ctx.fillText(['X','Y','Z'][j],end.x+5,end.y-6);}
+
+  if(showProj){let axis=r.pcs[0].vector;r.centered.forEach(p=>line(P(p),P(mul(axis,dot(axis,p))),'#566a7a',.9,[2,3]));}
+
+  r.centered.map((p,i)=>({p,xy:P(p),i})).sort((a,b)=>b.xy.z-a.xy.z).forEach(({xy,i})=>{const rel=r.weights[i]*r.n;ctx.beginPath();ctx.arc(xy.x,xy.y,2.2+Math.min(5,2*Math.sqrt(rel)),0,Math.PI*2);ctx.fillStyle='#84b8ea';ctx.globalAlpha=r.weights[i]===0?.12:Math.min(.95,.35+.18*Math.sqrt(rel));ctx.fill();ctx.globalAlpha=1;});
+
+  if(showMean){ctx.beginPath();ctx.arc(O.x,O.y,5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();}
+
+  r.pcs.forEach((pc,i)=>{
+
+    const length=2.2*Math.sqrt(pc.value),v=mul(pc.vector,length),pos=P(v),neg=P(mul(v,-1));
+
+    line(neg,O,colors[i],2,[5,5]);arrow(O,pos,colors[i],3.3);
+
+    ctx.font='bold 13px system-ui';ctx.fillStyle=colors[i];ctx.fillText('PC'+(i+1),pos.x+7,pos.y-6);
+
+  });
+
+}
+
+let dragging=false,lastX=0,lastY=0;
+
+canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});
+
+canvas.addEventListener('pointermove',e=>{if(!dragging)return;yaw+=(e.clientX-lastX)*.008;pitch=Math.max(-1.5,Math.min(1.5,pitch+(e.clientY-lastY)*.008));lastX=e.clientX;lastY=e.clientY;draw()});
+
+canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);
+
+canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.3,Math.min(5,zoom*Math.exp(-e.deltaY*.001)));draw()},{passive:false});
+
+canvas.addEventListener('dblclick',()=>{yaw=.72;pitch=.38;zoom=1;draw()});
+
+$('compute').addEventListener('click',recalc);$('sample').addEventListener('click',sample);
+
+$('clear').addEventListener('click',()=>{$('data').value='';recalc()});
+
+$('centred').addEventListener('change',e=>{showMean=e.target.checked;draw()});
+
+$('projection').addEventListener('change',e=>{showProj=e.target.checked;draw()});
+
+$('normalize').addEventListener('change',recalc);
+$('compare').addEventListener('change',e=>{showCompare=e.target.checked;draw()});
+$('emphasis').addEventListener('input',e=>{$('emphasis-value').textContent=Number(e.target.value).toFixed(1)+'×';recalc()});
+$('equal').addEventListener('click',()=>{$('data').value=$('data').value.split(/\r?\n/).map(line=>{const t=line.trim();if(!t||t.startsWith('#'))return line;const v=t.split(/[\s,;]+/);return (v.length===3||v.length===4)?v.slice(0,3).join(', ')+', 1':line}).join('\n');$('emphasis').value=1;$('emphasis-value').textContent='1.0×';recalc()});
+
+// Observe the stable frame, NOT the canvas whose bitmap we resize.
+
+let redrawPending=false;
+
+function requestDraw(){
+
+  if(redrawPending)return;
+
+  redrawPending=true;
+
+  requestAnimationFrame(()=>{redrawPending=false;draw();});
+
+}
+
+const resizeObserver=new ResizeObserver(requestDraw);
+
+resizeObserver.observe($('plot-frame'));
+
+window.addEventListener('resize',requestDraw);
+
+sample();
+</script>
+</body>
+</html>

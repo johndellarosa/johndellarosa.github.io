@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e9edf6;background:#101722}*{box-sizing:border-box}body{margin:0}main{max-width:1220px;margin:auto;padding:22px}h1{font-size:25px;margin:0 0 7px}p{color:#aabbd0;margin:6px 0 20px;line-height:1.5}.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px}.panel{background:#192331;border:1px solid #314053;border-radius:14px;padding:15px}.viz{position:relative;min-width:0;overflow:hidden}.plot-frame{position:relative;width:100%;height:520px;min-width:0;overflow:hidden}canvas{display:block;position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}canvas:active{cursor:grabbing}.hint{position:absolute;bottom:19px;left:22px;color:#aabbd0;font-size:12px;pointer-events:none}.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;margin-top:9px}.legend span:before{content:'';display:inline-block;width:11px;height:11px;background:var(--c);border-radius:2px;margin-right:5px}label{font-weight:600;font-size:14px;display:block;margin-bottom:9px}textarea{width:100%;height:188px;resize:vertical;color:#e9edf6;background:#101722;border:1px solid #46566b;border-radius:8px;padding:10px;line-height:1.5;font-family:ui-monospace,monospace;font-size:13px}button{background:#287bb6;border:none;border-radius:8px;color:white;font-weight:600;padding:9px 12px;cursor:pointer}button:hover{background:#3695d5}button.secondary{background:#35475b}.buttons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.check{display:flex;align-items:center;gap:9px;font-weight:400;font-size:13px;margin:12px 0}.check input{accent-color:#2e9bd8}.stat{background:#101c2b;padding:10px;border-radius:9px;margin:10px 0}.stat strong{font-size:13px}.sub{font-size:12px;color:#aebed1;margin-top:4px;overflow-wrap:anywhere}progress{width:100%;height:7px;accent-color:#3abcb0}#status{font-size:12px;min-height:32px;color:#d8ab71;white-space:pre-wrap}footer{margin-top:15px;color:#aabbd0;font-size:13px}code{background:#26344a;padding:2px 4px;border-radius:3px}@media(max-width:850px){.layout{grid-template-columns:1fr}.plot-frame{height:400px}}
+</style>
+        <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2C44LTKBE1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2C44LTKBE1');
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+            <title>Measures</title>
+    
+        <!-- Meta tags -->
+        
+        <meta name="keywords" content="Measure Theory">
+        <meta name="author" content="John Della Rosa" >
+        <meta name="description" content="Introduction to Measure Theory.">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="https://johndellarosa.github.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://johndellarosa.github.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://johndellarosa.github.io/favicon-16x16.png">
+        <link rel="manifest" href="https://johndellarosa.github.io/site.webmanifest">
+        <link rel="canonical" href="https://johndellarosa.github.io/projects/probability-book/measure"/>    
+        <link rel="stylesheet" href="https://johndellarosa.github.io/style.css"> 
+<!-- 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      
+
+        <script src="../../math.js" type="text/javascript"></script> -->
+
+    </head>
+    <body>
+        <div class="navbar">
+            <b style="margin-right:10px">John Della Rosa</b>| 
+            <a href="https://johndellarosa.github.io/">Home</a>|
+            <a href="https://johndellarosa.github.io/resume">Resume</a>|
+            <a href="https://johndellarosa.github.io/biography">About</a>|
+            <a href="https://johndellarosa.github.io/projects">Projects</a>|
+            <a href="https://johndellarosa.github.io/miscellaneous">Misc</a>|
+            <a href="https://www.linkedin.com/in/johndellarosa/" target="_blank">Linkedin</a>|
+            <a href="https://github.com/johndellarosa" target="_blank">Github</a>|
+            <a href="https://play.google.com/store/apps/developer?id=JohnDellaRosa" target="_blank">Google Play</a>|
+            <a href="https://apps.apple.com/us/developer/john-della-rosa/id1684177615" target="_blank">Apple Store</a>
+        
+        </div>
+        <h2><a href= "table-of-contents.html">Probability Textbook (Work in Progress)</a></h2>
+
+<h3>by John Della Rosa</h3>
+        <div id="text-contents" style="width:90%; margin:auto">
+            <div id="Measures">
+                <h1>Principal Component Analysis</h1>
+                <h2>Introduction to PCA</h2>
+                
+                <h3>Recommended Prerequesites</h3>
+                <ol>
+                    <!-- <li><a href="https://johndellarosa.github.io/projects/biophysics-book/probability">Probability</a></li>
+                    <li><a href="https://johndellarosa.github.io/projects/probability-book/sigma-algebra">Sigma Algebra</a></li> -->
+                
+                </ol>
+                <h3>Definition</h3>
+<p>Enter <code>x, y, z</code> observations. The colored arrows show the principal axes through the sample mean; arrow lengths are proportional to the standard deviations along them. Drag to orbit, scroll to zoom.</p>
+<div class="layout"><section class="panel viz"><div class="plot-frame" id="plot-frame"><canvas id="plot" aria-label="Interactive three-dimensional PCA scatterplot"></canvas><div class="hint">Drag: rotate · Scroll: zoom · Double-click: reset view</div></div><div class="legend"><span style="--c:#7eaad8">Data points</span><span style="--c:#ff786e">PC1</span><span style="--c:#4cd6b3">PC2</span><span style="--c:#ebc46b">PC3</span></div></section>
+<aside class="panel"><label for="data">Data points (one x, y, z triple per line)</label><textarea id="data" spellcheck="false" aria-label="Data points"></textarea><div class="buttons"><button id="compute">Compute PCA</button><button id="sample" class="secondary">Generate sample</button><button id="clear" class="secondary">Clear</button></div><label class="check"><input type="checkbox" id="centred" checked> Show data-mean marker</label><label class="check"><input type="checkbox" id="projection"> Show projection lines onto PC1</label><label class="check"><input type="checkbox" id="normalize"> Standardize each variable first</label><div id="status" role="status"></div><div id="stats"></div><div id="result" class="sub"></div></aside></div>
+<footer><b>Method:</b> PCA eigendecomposition of the <i>sample</i> covariance matrix, <code>S = XᵀX / (n−1)</code> after centering (and optional standardization). Axes are orthonormal; signs of eigenvectors are arbitrary. Eigenvalues are sorted descending. The plotted points are always mean-centered, and are additionally scaled to unit sample variance when standardization is enabled.</footer>
+
+</body>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), canvas=$('plot'),ctx=canvas.getContext('2d');
+const colors=['#ff786e','#4cd6b3','#ebc46b'];
+const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
+const norm=a=>Math.sqrt(dot(a,a));
+const mul=(a,s)=>a.map(x=>x*s),add=(a,b)=>a.map((x,i)=>x+b[i]);
+const sub=(a,b)=>a.map((x,i)=>x-b[i]);
+let points=[],result=null,yaw=.72,pitch=.38,zoom=1,showMean=true,showProj=false;
+function jacobi3(A){
+  // Symmetric 3x3 eigenvalue decomposition using Jacobi rotations.
+  A=A.map(r=>r.slice()); let V=[[1,0,0],[0,1,0],[0,0,1]];
+  for(let iter=0;iter<80;iter++){
+    let p=0,q=1,best=Math.abs(A[0][1]);
+    for(const [i,j] of [[0,2],[1,2]])if(Math.abs(A[i][j])>best){p=i;q=j;best=Math.abs(A[i][j]);}
+    if(best<1e-12)break;
+    const angle=.5*Math.atan2(2*A[p][q],A[q][q]-A[p][p]);
+    // Rotation columns p,q, with off-diagonal driven to zero.
+    const c=Math.cos(angle),s=Math.sin(angle);
+    const app=A[p][p],aqq=A[q][q],apq=A[p][q];
+    A[p][p]=c*c*app-2*c*s*apq+s*s*aqq;
+    A[q][q]=s*s*app+2*c*s*apq+c*c*aqq;
+    A[p][q]=A[q][p]=0;
+    for(let k=0;k<3;k++)if(k!==p&&k!==q){let akp=A[k][p],akq=A[k][q];A[k][p]=A[p][k]=c*akp-s*akq;A[k][q]=A[q][k]=s*akp+c*akq;}
+    for(let k=0;k<3;k++){let vkp=V[k][p],vkq=V[k][q];V[k][p]=c*vkp-s*vkq;V[k][q]=s*vkp+c*vkq;}
+  }
+  return [0,1,2].map(i=>({value:Math.max(0,A[i][i]),vector:V.map(r=>r[i])})).sort((a,b)=>b.value-a.value);
+}
+function parseRows(text){
+  const lines=text.split(/\r?\n/),rows=[];
+  for(let i=0;i<lines.length;i++){
+    const s=lines[i].trim(); if(!s||s.startsWith('#'))continue;
+    const vals=s.split(/[\s,;]+/).map(Number);
+    if(vals.length!==3||vals.some(v=>!Number.isFinite(v)))throw Error(`Line ${i+1}: expected exactly three finite numbers.`);
+    rows.push(vals);
+  }
+  if(rows.length<2)throw Error('Enter at least two 3D data points.');
+  return rows;
+}
+function calculate(rows,standardize){
+  const n=rows.length;const mean=[0,1,2].map(j=>rows.reduce((s,r)=>s+r[j],0)/n);
+  let centered=rows.map(r=>sub(r,mean));
+  const sd=[0,1,2].map(j=>Math.sqrt(centered.reduce((s,r)=>s+r[j]*r[j],0)/(n-1)));
+  if(standardize){
+    if(sd.some(v=>v<1e-12))throw Error('Cannot standardize a variable with zero variance.');
+    centered=centered.map(r=>r.map((v,j)=>v/sd[j]));
+  }
+  const S=Array.from({length:3},(_,i)=>Array.from({length:3},(_,j)=>centered.reduce((s,r)=>s+r[i]*r[j],0)/(n-1)));
+  const pcs=jacobi3(S),total=pcs.reduce((s,p)=>s+p.value,0);
+  if(total<1e-15)throw Error('All points are identical; PCA directions are undefined.');
+  return {n,mean,sd,centered,S,pcs,total};
+}
+function formatVec(v){return '('+v.map(x=>x.toFixed(3)).join(', ')+')';}
+function renderStats(){
+  if(!result){$('stats').innerHTML='';$('result').textContent='';return;}
+  const r=result;
+  $('stats').innerHTML=r.pcs.map((pc,i)=>`<div class="stat" style="border-left:3px solid ${colors[i]}"><strong>PC${i+1}: ${(100*pc.value/r.total).toFixed(1)}% explained</strong><div class="sub">Eigenvalue: ${pc.value.toFixed(4)}</div><div class="sub">Eigenvector: ${formatVec(pc.vector)}</div><progress max="100" value="${100*pc.value/r.total}"></progress></div>`).join('');
+  $('result').innerHTML=`<b>Observations:</b> ${r.n}<br><b>Original-variable mean:</b> ${formatVec(r.mean)}<br><b>Cumulative PC1–PC2 variance:</b> ${(100*(r.pcs[0].value+r.pcs[1].value)/r.total).toFixed(1)}%`;
+}
+function recalc(){
+  try{points=parseRows($('data').value);result=calculate(points,$('normalize').checked);$('status').textContent='';renderStats();draw();}
+  catch(e){result=null;$('status').textContent=e.message;renderStats();draw();}
+}
+function sample(){
+  // Deterministic synthetic cloud with correlated directions (no external library).
+  let seed=1913;const rand=()=>{seed=(1664525*seed+1013904223)>>>0;return (seed+.5)/4294967296;};
+  const normal=()=>Math.sqrt(-2*Math.log(rand()))*Math.cos(2*Math.PI*rand());
+  const rows=[];
+  for(let i=0;i<90;i++){let a=normal(),b=normal(),c=normal();rows.push([8+2.4*a+.2*b,3+1.25*a+.7*b,5+.75*a-.65*b+.38*c]);}
+  $('data').value=rows.map(r=>r.map(x=>x.toFixed(3)).join(', ')).join('\n');recalc();
+}
+function project(p,w,h,scale){
+  let x=p[0]*Math.cos(yaw)-p[1]*Math.sin(yaw);
+  let depth=p[0]*Math.sin(yaw)+p[1]*Math.cos(yaw);
+  let y=p[2]*Math.cos(pitch)-depth*Math.sin(pitch);
+  let z=p[2]*Math.sin(pitch)+depth*Math.cos(pitch);
+  const perspective=3.8/(3.8+z/scale*.2);
+  return {x:w/2+x*scale*perspective,y:h/2-y*scale*perspective,z};
+}
+function line(a,b,color,width=1,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([]);}
+function arrow(a,b,color,width=3){line(a,b,color,width);let ang=Math.atan2(b.y-a.y,b.x-a.x);ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-10*Math.cos(ang-.5),b.y-10*Math.sin(ang-.5));ctx.lineTo(b.x-10*Math.cos(ang+.5),b.y-10*Math.sin(ang+.5));ctx.fill();}
+let drawnPixelWidth=0,drawnPixelHeight=0;
+function draw(){
+  const box=$('plot-frame').getBoundingClientRect();
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const w=box.width,h=box.height;
+  if(!w||!h)return;
+  const pw=Math.max(1,Math.round(w*dpr)),ph=Math.max(1,Math.round(h*dpr));
+  // Only change backing-store dimensions when the container genuinely changes size.
+  // Assigning canvas.width/height on every draw can cause resizing and relayout loops.
+  if(pw!==drawnPixelWidth||ph!==drawnPixelHeight){
+    canvas.width=pw;canvas.height=ph;
+    drawnPixelWidth=pw;drawnPixelHeight=ph;
+  }
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  const r=result;if(!r)return;
+  let extent=Math.max(1,...r.centered.map(p=>norm(p)),...r.pcs.map(pc=>2.2*Math.sqrt(pc.value)));
+  const scale=Math.min(w,h)*.35/extent*zoom;
+  const P=p=>project(p,w,h,scale),O=P([0,0,0]);
+  // Reference coordinates centered at the data mean.
+  for(let j=0;j<3;j++){let dir=[0,0,0];dir[j]=extent*.9;line(P(mul(dir,-1)),P(dir),'#47596d',1,[4,4]);const end=P(dir);ctx.fillStyle='#95a6ba';ctx.font='12px system-ui';ctx.fillText(['X','Y','Z'][j],end.x+5,end.y-6);}
+  if(showProj){let axis=r.pcs[0].vector;r.centered.forEach(p=>line(P(p),P(mul(axis,dot(axis,p))),'#566a7a',.9,[2,3]));}
+  r.centered.map((p,i)=>({p,xy:P(p),i})).sort((a,b)=>b.xy.z-a.xy.z).forEach(({xy})=>{ctx.beginPath();ctx.arc(xy.x,xy.y,3.4,0,Math.PI*2);ctx.fillStyle='#84b8ea';ctx.globalAlpha=.79;ctx.fill();ctx.globalAlpha=1;});
+  if(showMean){ctx.beginPath();ctx.arc(O.x,O.y,5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();}
+  r.pcs.forEach((pc,i)=>{
+    const length=2.2*Math.sqrt(pc.value),v=mul(pc.vector,length),pos=P(v),neg=P(mul(v,-1));
+    line(neg,O,colors[i],2,[5,5]);arrow(O,pos,colors[i],3.3);
+    ctx.font='bold 13px system-ui';ctx.fillStyle=colors[i];ctx.fillText('PC'+(i+1),pos.x+7,pos.y-6);
+  });
+}
+let dragging=false,lastX=0,lastY=0;
+canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!dragging)return;yaw+=(e.clientX-lastX)*.008;pitch=Math.max(-1.5,Math.min(1.5,pitch+(e.clientY-lastY)*.008));lastX=e.clientX;lastY=e.clientY;draw()});
+canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);
+canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.3,Math.min(5,zoom*Math.exp(-e.deltaY*.001)));draw()},{passive:false});
+canvas.addEventListener('dblclick',()=>{yaw=.72;pitch=.38;zoom=1;draw()});
+$('compute').addEventListener('click',recalc);$('sample').addEventListener('click',sample);
+$('clear').addEventListener('click',()=>{$('data').value='';recalc()});
+$('centred').addEventListener('change',e=>{showMean=e.target.checked;draw()});
+$('projection').addEventListener('change',e=>{showProj=e.target.checked;draw()});
+$('normalize').addEventListener('change',recalc);
+// Observe the stable frame, NOT the canvas whose bitmap we resize.
+let redrawPending=false;
+function requestDraw(){
+  if(redrawPending)return;
+  redrawPending=true;
+  requestAnimationFrame(()=>{redrawPending=false;draw();});
+}
+const resizeObserver=new ResizeObserver(requestDraw);
+resizeObserver.observe($('plot-frame'));
+window.addEventListener('resize',requestDraw);
+sample();
+</script>
+</html>
